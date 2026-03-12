@@ -1,0 +1,1182 @@
+---
+name: rAthena Development
+description: คู่มือสำหรับการพัฒนา rAthena MMORPG Server Emulator รวมถึงการเขียน NPC script, แก้ไข C++ source code, และการตั้งค่า server
+การตอบคำถามให้ตอบเป็นภาษาไทย
+---
+
+# rAthena Development Skill
+
+## ภาพรวมโปรเจค
+
+rAthena เป็น Ragnarok Online Private Server Emulator เขียนด้วย C++ ประกอบด้วย:
+
+- **Login Server** - จัดการ authentication
+- **Char Server** - จัดการข้อมูลตัวละคร
+- **Map Server** - จัดการ game logic หลัก
+- **Web Server** - API สำหรับ web services
+
+## โครงสร้างโฟลเดอร์
+
+```
+rAthena/
+├── src/              # C++ source code
+│   ├── common/       # shared utilities และ libraries
+│   ├── login/        # login server
+│   ├── char/         # character server
+│   ├── map/          # map server (NPC, items, skills, mobs)
+│   ├── web/          # web server (REST API)
+│   └── config/       # compile-time configuration
+├── conf/             # runtime configuration files
+├── db/               # database files (YAML format)
+├── npc/              # NPC scripts
+├── sql-files/        # MySQL database schemas
+├── doc/              # documentation
+└── tools/            # utility scripts
+```
+
+## การพัฒนา NPC Script
+
+### รูปแบบหัวเอกสาร (Doc / Note Header)
+
+**⚠️ สำคัญ:** ทุกไฟล์ NPC Script และ SRC ที่สร้างหรือแก้ไขต้องมีหัวเอกสาร (documentation header) ที่เป็นมาตรฐาน
+
+**ชื่อเจ้าของ (Author Credit):**
+```
+V!be Coding [kreanlnwza] AI Assistant (ชื่อ Ai แต่ละ model)
+```
+
+#### NPC Script Header (ไฟล์ `.txt` ใน `npc/`)
+
+```c
+//===== rAthena Script =======================================
+//= ชื่อ Script
+//===== Description: =========================================
+//= คำอธิบายว่า script ทำอะไร
+//= บรรทัดที่ 2 (ถ้ามี)
+//=
+//= NOTE: หมายเหตุสำคัญ (ถ้ามี)
+//===== Changelogs: ==========================================
+//= 1.0 First version [ชื่อผู้สร้าง]
+//= 1.1 รายละเอียดการแก้ไข [ชื่อผู้แก้ไข]
+//= x.x Maintained by V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+//============================================================
+```
+
+**ตัวอย่างจริง** (จาก `npc/custom/card_seller.txt`):
+```c
+//===== rAthena Script =======================================
+//= Card Seller A-Z
+//===== Description: =========================================
+//= Sells all cards dropped by mobs, grouped alphabetically.
+//= MVP cards are excluded from the list.
+//=
+//= NOTE: Requires SQL item and mob databases.
+//===== Changelogs: ==========================================
+//= 1.0 First version [AnnieRuru]
+//= 1.1 Minor edits [Euphy]
+//= 1.2 Update for monster mode and enchants [Lemongrass]
+//============================================================
+```
+
+#### C++ Source Header (ไฟล์ `.cpp` / `.hpp` / `.inc`)
+
+สำหรับไฟล์ `src/custom/*.inc` และไฟล์ C++ ที่สร้างใหม่:
+
+```cpp
+/**
+ * ชื่อ/คำอธิบายสั้น
+ * รายละเอียดเพิ่มเติม
+ * Author: V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+ *
+ * NOTE: หมายเหตุสำคัญ (ถ้ามี)
+ **/
+```
+
+**สำหรับ function-level documentation:**
+```cpp
+/**
+ * ชื่อฟังก์ชัน - คำอธิบาย
+ * @param param1 คำอธิบาย parameter
+ * @return คำอธิบาย return value
+ * @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+ */
+```
+
+#### กฎการใส่ doc/note header
+
+1. **ไฟล์ NPC ใหม่** - ต้องมี header ครบทุกส่วน (Title, Description, Changelogs)
+2. **ไฟล์ NPC ที่แก้ไข** - เพิ่ม changelog บรรทัดใหม่ พร้อม version + ชื่อ
+3. **ไฟล์ SRC ใหม่** - ต้องมี `/**` doc block พร้อม Author
+4. **ไฟล์ SRC ที่แก้ไข** - เพิ่ม `@author` ในฟังก์ชันที่เพิ่ม/แก้ไข
+5. **ห้ามแก้ไข** header เดิมของผู้เขียนต้นฉบับ (เช่น `[AnnieRuru]`, `[Euphy]`)
+
+### ไฟล์ที่เกี่ยวข้อง
+- `npc/` - NPC script files
+- `doc/script_commands.txt` - คำสั่ง script ทั้งหมด (สำคัญมาก!)
+- `doc/sample/` - ตัวอย่าง script
+
+### เครื่องมือที่แนะนำ
+
+**rAthena Language Support** (VS Code Extension)
+- Syntax highlighting สำหรับ rAthena scripting language
+- Code snippets สำหรับ NPC scripts
+- ติดตั้ง: ค้นหา "rAthena" ใน VS Code Extensions
+
+### รูปแบบ NPC Script
+
+```c
+// NPC definition
+// map,x,y,direction	script	NPC_Name	sprite_id,{
+prontera,155,180,4	script	Sample NPC	100,{
+    mes "[Sample NPC]";
+    mes "Hello!";
+    next;
+    switch(select("Option 1:Option 2")) {
+        case 1:
+            // code
+            break;
+        case 2:
+            // code
+            break;
+    }
+    close;
+}
+```
+
+### คำสั่ง Script ที่ใช้บ่อย
+
+| คำสั่ง | คำอธิบาย |
+|--------|----------|
+| `mes "text"` | แสดงข้อความ |
+| `next` | รอการกดปุ่ม next |
+| `close` | ปิดหน้าต่าง NPC |
+| `select("opt1:opt2")` | แสดงตัวเลือก |
+| `getitem <id>,<amount>` | ให้ไอเทม |
+| `delitem <id>,<amount>` | ลบไอเทม |
+| `Zeny` | ตัวแปร Zeny ของผู้เล่น |
+| `#CASHPOINTS` | ตัวแปร Cash Point ของผู้เล่น |
+| `#KAFRAPOINTS` | ตัวแปร Kafra Point ของผู้เล่น |
+| `countitem(<id>)` | นับจำนวนไอเทม |
+| `BaseLevel` | เลเวลของผู้เล่น |
+| `strcharinfo(0)` | ชื่อตัวละคร |
+| `getitemname(<id>)` | ชื่อไอเทมจาก ID |
+
+### Best Practices: การใช้ตัวแปร
+
+**⚠️ สำคัญ:** ใช้ตัวแปรหรือ constants แทนการใส่ตัวเลขตรงๆ เสมอ!
+
+**❌ ไม่ดี:**
+```c
+if (countitem(12580) >= 2) {
+    delitem 12580, 2;
+    getitem 7227, 1;
+}
+```
+
+**✅ ดี:**
+```c
+.@required_item = 12580;  // Token of Siegfried
+.@reward_item = 7227;      // Silver Coin
+.@required_amount = 2;
+
+if (countitem(.@required_item) >= .@required_amount) {
+    delitem .@required_item, .@required_amount;
+    getitem .@reward_item, 1;
+}
+```
+
+### การแสดงรูปไอเทมพร้อมชื่อ
+
+ใช้ `^i[ItemID]` เพื่อแสดงรูปไอเทม และ `getitemname()` เพื่อแสดงชื่อ:
+
+```c
+// แสดงรูปไอเทม + ชื่อ + จำนวน
+mes "- ^i[12580] " + getitemname(12580) + " x2";
+
+// ใช้กับตัวแปร (แนะนำ)
+.@item_id = 12580;
+.@amount = 2;
+mes "- ^i[" + .@item_id + "] " + getitemname(.@item_id) + " x" + .@amount;
+```
+
+**ผลลัพธ์:** จะแสดง [รูปไอเทม] Token of Siegfried x2
+
+| รูปแบบ | คำอธิบาย |
+|--------|----------|
+| `^i[ItemID]` | แสดงรูป icon ของไอเทม |
+| `^e[EmotionID]` | แสดง emoticon/อีโมจิ |
+| `getitemname(ItemID)` | แสดงชื่อไอเทม |
+
+### Emoticon สำหรับ NPC (^e[])
+
+ใช้ `^e[EmotionID]` เพื่อแสดง emoticon ใน dialog:
+
+```c
+mes "ยินดีต้อนรับ! ^e[1]";   // แสดง emoticon หมายเลข 1
+mes "ขอบคุณมาก ^e[29]";      // หัวใจ
+mes "อย่าลืมนะ! ^e[5]";      // ตกใจ
+```
+
+**Emoticon ID ที่ใช้บ่อย:**
+
+| ID | Emoticon | คำอธิบาย |
+|----|----------|----------|
+| 0 | /! | ตกใจ |
+| 1 | /? | สงสัย |
+| 2 | /ho | ดีใจ |
+| 5 | /omg | OMG/ตกใจ |
+| 20 | /... | คิด |
+| 29 | /lv | หัวใจ |
+| 30 | /swt | เหงื่อตก |
+
+> 💡 ดูรายการ Emoticon ทั้งหมดได้ที่ `doc/effect_list.md`
+
+### Color Codes (สีข้อความ)
+
+ใช้ `^RRGGBB` เพื่อเปลี่ยนสีข้อความ:
+
+```c
+mes "^FF0000สีแดง^000000";
+mes "^00FF00สีเขียว^000000";
+mes "^0000FFสีน้ำเงิน^000000";
+mes "^FFD700สีทอง^000000";
+mes "^FF69B4สีชมพู^000000";
+```
+
+**หมายเหตุ:** ต้องปิดด้วย `^000000` (สีดำ) เพื่อรีเซ็ตสี
+
+### ประเภทตัวแปร NPC Script
+
+| ตัวแปร | Scope | คงอยู่ | ตัวอย่าง |
+|--------|-------|--------|----------|
+| `.@var` | Local | หายเมื่อจบ script | `.@i = 1;` |
+| `@var` | Player attached | หายเมื่อ logout | `@points = 100;` |
+| `$var` | Global server | ค้างถาวร | `$event_on = 1;` |
+| `$@var` | Global array | ค้างถาวร | `$@names$[0]` |
+| `.var` | NPC scope | ค้างถึง restart | `.count = 0;` |
+| `#var` | Character permanent | บันทึกใน DB | `#quest_done` |
+| `##var` | Account permanent | ทุก char ใช้ร่วม | `##vip_days` |
+
+**หมายเหตุ:** เพิ่ม `$` ท้ายตัวแปรสำหรับ string เช่น `.@name$`
+
+### Timer & Sleep
+
+```c
+// หยุด script ชั่วคราว
+sleep 1000;           // หยุด 1 วินาที (block player)
+sleep2 1000;          // หยุดแต่ไม่ block player
+
+// ตั้ง timer เรียก label
+addtimer 5000, "NPC::OnTimer";      // เรียกหลัง 5 วินาที
+deltimer "NPC::OnTimer";            // ยกเลิก timer
+
+// ตัวอย่าง timer NPC
+-	script	TimerNPC	-1,{
+OnTimer:
+    announce "5 วินาทีผ่านไป!", bc_all;
+    end;
+}
+```
+
+### Query SQL
+
+```c
+// SELECT
+query_sql("SELECT `account_id`, `userid` FROM `login` WHERE `account_id` = " + getcharid(3), .@aid, .@user$);
+mes "Account: " + .@user$;
+
+// INSERT/UPDATE/DELETE
+query_sql("UPDATE `login` SET `lastlogin` = NOW() WHERE `account_id` = " + getcharid(3));
+```
+
+**⚠️ ระวัง SQL Injection!** ใช้ `escape_sql()` สำหรับ user input
+
+### Array Functions
+
+```c
+// สร้าง array
+setarray .@items[0], 501, 502, 503, 504, 505;
+
+// ขนาด array
+.@size = getarraysize(.@items);
+
+// วนลูป array
+for (.@i = 0; .@i < .@size; .@i++) {
+    mes "Item: " + .@items[.@i];
+}
+
+// copy array
+copyarray .@copy[0], .@items[0], getarraysize(.@items);
+
+// ลบ element
+deletearray .@items[2], 1;  // ลบ index 2
+
+// clear array
+cleararray .@items[0], 0, getarraysize(.@items);
+```
+
+### Party & Guild Functions
+
+```c
+// ตรวจสอบ party
+if (getcharid(1) == 0) {
+    mes "คุณไม่มี Party!";
+    close;
+}
+
+// ดึงสมาชิก party
+getpartymember getcharid(1), 0;  // เก็บชื่อใน $@partymembername$
+getpartymember getcharid(1), 1;  // เก็บ char id ใน $@partymembercid
+getpartymember getcharid(1), 2;  // เก็บ account id ใน $@partymemberaid
+.@count = $@partymembercount;
+
+// ตรวจสอบ guild
+if (getcharid(2) == 0) {
+    mes "คุณไม่มี Guild!";
+    close;
+}
+```
+
+### Instance / Dungeon System
+
+```c
+// สร้าง instance
+.@instance_id = instance_create("Memorial Dungeon", getcharid(1), IOT_PARTY);
+
+if (.@instance_id < 0) {
+    mes "ไม่สามารถสร้าง Instance ได้!";
+    close;
+}
+
+// attach และ warp
+instance_attach(.@instance_id);
+warp "1@tower", 50, 50;
+
+// ตั้งเวลา
+instance_set_timeout 3600, 300, .@instance_id;  // 1 ชม., 5 นาที warning
+
+// ทำลาย
+instance_destroy .@instance_id;
+```
+
+### Common Event Labels
+
+| Label | เหตุการณ์ | หมายเหตุ |
+|-------|-----------|----------|
+| `OnInit` | Server start | โหลดครั้งแรก |
+| `OnPCLoginEvent` | Player login | - |
+| `OnPCLogoutEvent` | Player logout | - |
+| `OnPCDieEvent` | Player ตาย | - |
+| `OnPCKillEvent` | Player ฆ่า player | - |
+| `OnNPCKillEvent` | Player ฆ่า monster | - |
+| `OnPCBaseLvUpEvent` | Base level up | - |
+| `OnPCJobLvUpEvent` | Job level up | - |
+| `OnPCStatCalcEvent` | คำนวณ stat | - |
+| `OnWhisperGlobal` | ได้รับ whisper | - |
+
+```c
+// ตัวอย่าง Event NPC
+-	script	LoginBonus	-1,{
+OnPCLoginEvent:
+    if (#login_bonus < gettimetick(2)) {
+        getitem 501, 10;  // Red Potion x10
+        #login_bonus = gettimetick(2) + 86400;  // พรุ่งนี้
+        dispbottom "รับโบนัสล็อกอินวันนี้แล้ว!";
+    }
+    end;
+```
+
+### callfunc และ Global Functions
+
+ใช้ `callfunc` เพื่อเรียกใช้ global functions ที่อยู่ใน `npc/other/Global_Functions.txt`:
+
+#### F_InsertComma - Format ตัวเลขเป็น comma separated
+
+```c
+.@zeny = 7777777;
+mes "ราคา: " + callfunc("F_InsertComma", .@zeny) + " Zeny";
+// ผลลัพธ์: "ราคา: 7,777,777 Zeny"
+
+// ใช้ร่วมกับการแสดงไอเทม
+.@cost = 1500000;
+mes "ต้องใช้ ^FF0000" + callfunc("F_InsertComma", .@cost) + " Zeny^000000";
+```
+
+#### Global Functions ที่มีประโยชน์
+
+| Function | คำอธิบาย | ตัวอย่าง |
+|----------|----------|----------|
+| `F_InsertComma` | เพิ่ม comma ในตัวเลข | `callfunc("F_InsertComma", 1000000)` → `"1,000,000"` |
+| `F_InsertPlural` | พหูพจน์อัตโนมัติ | `callfunc("F_InsertPlural", 5, "item")` → `"5 items"` |
+| `F_Rand` | สุ่มจาก arguments | `callfunc("F_Rand", "A", "B", "C")` → random |
+| `F_GetNumSuffix` | เพิ่ม st/nd/rd/th | `callfunc("F_GetNumSuffix", 1)` → `"1st"` |
+| `Time2Str` | แปลงเวลาเป็นข้อความ | `callfunc("Time2Str", .@time)` → `"1 day, 2 hours"` |
+| `F_GetWeaponType` | ชื่อประเภทอาวุธ | `callfunc("F_GetWeaponType", 1201)` → `"Dagger"` |
+
+#### ตัวอย่างการใช้งานร่วมกัน
+
+```c
+// NPC ร้านค้าที่แสดงราคาสวยๆ
+.@price = 2500000;
+mes "^i[501] " + getitemname(501) + " x10";
+mes "ราคา: ^FF0000" + callfunc("F_InsertComma", .@price) + "^000000 Zeny";
+
+if (Zeny < .@price) {
+    mes "คุณมี Zeny ไม่พอ! (" + callfunc("F_InsertComma", Zeny) + ")";
+    close;
+}
+```
+
+> 📖 **อ้างอิง:** ดูคำสั่ง script ทั้งหมดได้ที่ `doc/script_commands.txt`
+> 📖 **Global Functions:** `npc/other/Global_Functions.txt`
+
+### การเพิ่ม NPC ใหม่
+
+1. สร้างไฟล์ในโฟลเดอร์ `npc/custom/`
+2. เพิ่ม path ในไฟล์ `npc/scripts_custom.conf`
+3. รีโหลดด้วย `@reloadscript` ใน game
+
+### NPC Duplicate (โคลน NPC)
+
+ใช้สำหรับสร้าง NPC หลายตัวที่ใช้โค้ดเดียวกัน:
+
+```c
+// NPC หลัก (floating NPC ไม่มีตำแหน่ง)
+-	script	MyNPC	-1,{
+    mes "[NPC]";
+    mes "Hello!";
+    close;
+}
+
+// Duplicates - โคลนไปหลายตำแหน่ง
+prontera,150,180,4	duplicate(MyNPC)	MyNPC#prt	100
+geffen,120,60,4	duplicate(MyNPC)	MyNPC#gef	100
+payon,180,100,4	duplicate(MyNPC)	MyNPC#pay	100
+```
+
+**รูปแบบ:**
+```
+map,x,y,dir	duplicate(OriginalNPC)	UniqueName	sprite_id
+```
+
+### การใช้ Menu และ Switch
+
+**วิธีที่ 1: switch + select (แนะนำ)**
+```c
+switch(select("ตัวเลือก 1:ตัวเลือก 2:ยกเลิก")) {
+    case 1:
+        mes "เลือกตัวเลือก 1";
+        break;
+    case 2:
+        mes "เลือกตัวเลือก 2";
+        break;
+    case 3:
+        mes "ยกเลิก";
+        break;
+}
+```
+
+**วิธีที่ 2: menu + goto**
+```c
+menu "ตัวเลือก 1",L_Option1,"ตัวเลือก 2",L_Option2,"ยกเลิก",L_Cancel;
+
+L_Option1:
+    mes "เลือกตัวเลือก 1";
+    close;
+
+L_Option2:
+    mes "เลือกตัวเลือก 2";
+    close;
+
+L_Cancel:
+    mes "ยกเลิก";
+    close;
+```
+
+**วิธีที่ 3: prompt (ไม่ยกเลิกได้)**
+```c
+// prompt คล้าย select แต่กด ESC จะ return 255
+.@choice = prompt("ตัวเลือก 1:ตัวเลือก 2");
+if (.@choice == 255) {
+    mes "ยกเลิก";
+    close;
+}
+```
+
+**เปรียบเทียบ:**
+| คำสั่ง | ESC/Cancel | Return Value |
+|--------|------------|--------------|
+| `select()` | ไม่ได้ | 1, 2, 3... |
+| `prompt()` | return 255 | 1, 2, 3... หรือ 255 |
+| `menu` | ไม่ได้ | goto label |
+
+### NPC Dialog Formatting
+
+#### การจัดตำแหน่ง Dialog
+
+**setdialogalign(<align>)** - กำหนดการจัดตำแหน่งข้อความใน NPC dialog
+
+| Horizontal Align | คำอธิบาย |
+|------------------|----------|
+| `DIALOG_ALIGN_LEFT` | ชิดซ้าย |
+| `DIALOG_ALIGN_CENTER` | กึ่งกลาง |
+| `DIALOG_ALIGN_RIGHT` | ชิดขวา |
+
+| Vertical Align | คำอธิบาย |
+|----------------|----------|
+| `DIALOG_ALIGN_TOP` | อยู่บน |
+| `DIALOG_ALIGN_MIDDLE` | ตรงกลาง |
+| `DIALOG_ALIGN_BOTTOM` | อยู่ล่าง |
+
+#### คำสั่งจัดการขนาดและตำแหน่ง Dialog
+
+| คำสั่ง | คำอธิบาย |
+|--------|----------|
+| `setdialogsize(<width>,<height>)` | กำหนดขนาดหน้าต่าง dialog |
+| `setdialogpos(<x>,<y>)` | กำหนดตำแหน่งหน้าต่าง dialog |
+
+#### HTML Formatting สำหรับ mes
+
+สามารถใช้ HTML tags ใน `mes` ได้:
+
+| Tag | ตัวอย่าง | ผลลัพธ์ |
+|-----|----------|---------|
+| `<B>` | `<B>ตัวหนา</B>` | **ตัวหนา** |
+| `<FONT SIZE=n>` | `<FONT SIZE=15>ใหญ่</FONT>` | ข้อความขนาด 15 |
+| `<FONT COLOR=#RRGGBB>` | `<FONT COLOR=#FF0000>แดง</FONT>` | ข้อความสีแดง |
+
+#### ตัวอย่างการใช้งาน
+
+```c
+prontera,100,100,3	script	ตัวอย่าง NPC	858,2,2,{
+    mes "<FONT SIZE=15><B>หัวข้อหลัก</B></FONT>";
+    mes "<FONT SIZE=12>รายละเอียด</FONT>";
+    mes " ";
+    mes "ข้อความปกติ";
+    setdialogalign(DIALOG_ALIGN_CENTER);
+    setdialogalign(DIALOG_ALIGN_MIDDLE);
+    setdialogsize(450,150);
+    setdialogpos(575,375);
+    close;
+}
+```
+
+**หมายเหตุ:**
+- `setdialogalign()` ต้องเรียกก่อน `close;` หรือ `next;`
+- เรียก horizontal และ vertical align แยกกัน
+- `mes " ";` ใช้สำหรับเว้นบรรทัดว่าง
+
+## การพัฒนา C++ Source Code
+
+### Build System
+
+- ใช้ **Visual Studio** บน Windows (rAthena.sln)
+- ใช้ **CMake** หรือ **Make** บน Linux
+
+### ไฟล์สำคัญ
+
+| Path | คำอธิบาย |
+|------|----------|
+| `src/map/script.cpp` | Script engine และ buildin functions |
+| `src/map/skill.cpp` | ระบบ skill |
+| `src/map/mob.cpp` | AI และ behavior ของ monster |
+| `src/map/pc.cpp` | Player character functions |
+| `src/map/npc.cpp` | NPC system |
+| `src/map/battle.cpp` | ระบบ battle calculation |
+| `src/map/atcommand.cpp` | @ commands |
+| `src/common/` | Shared utilities |
+
+### การเพิ่ม Script Command ใหม่
+
+1. เปิด `src/map/script.cpp`
+2. สร้างฟังก์ชัน `BUILDIN_FUNC(command_name)`
+3. ลงทะเบียนใน `script_def_buildin[]`
+4. Compile และ restart server
+
+```cpp
+// ตัวอย่าง buildin function
+BUILDIN_FUNC(mycommand)
+{
+    map_session_data* sd;
+    if (!script_rid2sd(sd))
+        return SCRIPT_CMD_FAILURE;
+    
+    int value = script_getnum(st, 2);
+    // ทำงานที่ต้องการ
+    
+    script_pushint(st, 1); // return value
+    return SCRIPT_CMD_SUCCESS;
+}
+```
+
+### Coding Standards
+
+- ใช้ tabs สำหรับ indentation (ห้ามลบ!)
+- ไม่แก้ไขข้อความเดิมโดยไม่ได้รับอนุญาต
+- ตั้งชื่อตัวแปรเป็น snake_case
+- **⚠️ NOTE: สำหรับการใช้ `int` ในทุกไฟล์ ต้องเป็น `int32` เสมอ**
+- **⚠️ NOTE: วางแผนและ task งานก่อนทำงานเสมอ ก่อนทำงานจริง **
+
+### map_session_data และ block_list
+
+**⚠️ สำคัญ:** `map_session_data` สืบทอด (inherit) มาจาก `block_list` โดยตรง ดังนั้น:
+
+| ❌ ผิด | ✅ ถูก |
+|--------|--------|
+| `sd->bl.m` | `sd->m` |
+| `sd->bl.x` | `sd->x` |
+| `sd->bl.y` | `sd->y` |
+| `sd->bl.id` | `sd->id` |
+| `&sd->bl` | `sd` (ใช้ pointer โดยตรง) |
+
+```cpp
+// ❌ ผิด - จะเกิด error: 'bl' is not a member of 'map_session_data'
+if (sd->bl.m == some_map)
+
+// ✅ ถูก - เข้าถึง member โดยตรง
+if (sd->m == some_map)
+
+// ❌ ผิด - ส่ง &sd->bl
+status_calc_bl(&sd->bl, { SCB_SPEED });
+
+// ✅ ถูก - ส่ง sd โดยตรง (จะถูก cast เป็น block_list* อัตโนมัติ)
+status_calc_bl(sd, { SCB_SPEED });
+```
+
+> 📖 **อ้างอิง:** `src/map/pc.hpp` - `class map_session_data : public block_list`
+
+## Custom Include Files (*.inc)
+**⚠️ NOTE:** ใช้งานโฟลเดอร์ `src/custom/` มีไฟล์ `.inc` สำหรับเพิ่ม custom code โดยไม่ต้องแก้ไข core source files: ก่อนเสมอ
+
+### Script Commands
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `script.inc` | **ตัวฟังก์ชัน** ของ custom script commands |
+| `script_def.inc` | **ลงทะเบียน** custom script commands |
+| `script_constants_custom.inc` | เพิ่ม constants สำหรับใช้ใน NPC scripts |
+
+```cpp
+// ตัวอย่าง: เพิ่ม custom script command
+
+// 1. script_def.inc - ลงทะเบียน
+BUILDIN_DEF(mycmd,"i"),
+
+// 2. script.inc - ตัวฟังก์ชัน
+BUILDIN_FUNC(mycmd)
+{
+	int val = script_getnum(st, 2);
+	script_pushint(st, val * 2);
+	return SCRIPT_CMD_SUCCESS;
+}
+```
+
+### @ Commands
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `atcommand_def.inc` | **ลงทะเบียน** custom @commands |
+| `atcommand.inc` | **ตัวฟังก์ชัน** ของ custom @commands |
+
+```cpp
+// ตัวอย่าง: เพิ่ม custom @command
+
+// 1. atcommand_def.inc - ลงทะเบียน
+ACMD_DEF(mycommand),
+
+// 2. atcommand.inc - ตัวฟังก์ชัน
+ACMD_FUNC(mycommand)
+{
+	clif_displaymessage(fd, "It works!");
+	return 0;
+}
+```
+
+### Battle Config (conf settings)
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `battle_config_struct.inc` | **ประกาศตัวแปร** ใน battle_config struct |
+| `battle_config_init.inc` | **กำหนดค่าเริ่มต้น** และ mapping กับ conf file |
+
+```cpp
+// ตัวอย่าง: เพิ่ม custom battle config
+
+// 1. battle_config_struct.inc - ประกาศ
+int my_custom_rate;
+
+// 2. battle_config_init.inc - init
+{ "my_custom_rate", &battle_config.my_custom_rate, 100, 0, 1000 },
+
+// 3. ใช้ใน conf/battle/*.conf
+my_custom_rate: 150
+```
+
+### Status & Effects
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `status_custom.inc` | เพิ่ม custom SC_* (status change) |
+| `efst_custom.inc` | เพิ่ม custom EFST_* (client-side icons) |
+
+```cpp
+// status_custom.inc - เพิ่ม status change
+SC_MY_BUFF,
+SC_MY_DEBUFF,
+
+// efst_custom.inc - เพิ่ม effect icon (ต้องตรงกับ client)
+EFST_MY_ICON = 2000,
+```
+
+### Map Flags
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `mapflag_custom.inc` | เพิ่ม custom MF_* (map flags) |
+
+```cpp
+// mapflag_custom.inc - เพิ่ม mapflag
+MF_MY_CUSTOM_FLAG,
+```
+
+### ⚠️ สำคัญ: Export Constants สำหรับ NPC Scripts
+
+เมื่อเพิ่ม custom constants ในไฟล์ *.inc ใดๆ และต้องการให้ใช้งานได้ใน NPC scripts **ต้อง export ด้วย `export_constant()`**
+
+**ไฟล์:** `src/custom/script_constants_custom.inc`
+
+```cpp
+// Export constants ให้ NPC scripts เรียกใช้ได้
+
+// ตัวอย่าง: เมื่อเพิ่ม SC_* ใน status_custom.inc
+export_constant(SC_MY_CUSTOM_STATUS);
+
+// ตัวอย่าง: เมื่อเพิ่ม EFST_* ใน efst_custom.inc
+export_constant(EFST_MY_CUSTOM_ICON);
+
+// ตัวอย่าง: เมื่อเพิ่ม MF_* ใน mapflag_custom.inc
+export_constant(MF_MY_CUSTOM_FLAG);
+
+// ตัวอย่าง: Custom values
+export_constant(MY_CUSTOM_CONSTANT);
+```
+
+**หมายเหตุ:**
+- ใช้ `export_constant()` เพื่อให้ NPC scripts อ้างถึงค่า constants ได้
+- ต้อง include ไฟล์ที่เกี่ยวข้องก่อน (เช่น status_custom.inc, efst_custom.inc)
+- หลังจากแก้ไขต้อง recompile server
+
+**ตัวอย่างการใช้ใน NPC Script:**
+```c
+// หลังจาก export_constant แล้ว สามารถใช้ใน NPC ได้เลย
+if (checkoption(SC_MY_CUSTOM_STATUS)) {
+    mes "คุณมี status effect นี้";
+}
+
+// หรือใช้กับ mapflag
+prontera mapflag MF_MY_CUSTOM_FLAG
+```
+
+### ข้อดีของการใช้ *.inc files
+
+1. **ไม่ต้องแก้ไข core files** - ง่ายต่อการ update rAthena
+2. **แยก custom code ชัดเจน** - ง่ายต่อการ backup และ migrate
+3. **ลด merge conflicts** - เมื่อ pull updates จาก upstream
+
+## Database Files (YAML)
+
+### ไฟล์สำคัญใน `db/`
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `item_db.yml` | ข้อมูลไอเทมทั้งหมด |
+| `mob_db.yml` | ข้อมูล monster |
+| `skill_db.yml` | ข้อมูล skill |
+| `quest_db.yml` | ข้อมูล quest |
+| `instance_db.yml` | ข้อมูล instance dungeons |
+
+### รูปแบบ YAML
+
+```yaml
+- Id: 501
+  AegisName: Red_Potion
+  Name: Red Potion
+  Type: Healing
+  Buy: 50
+  Weight: 70
+  Script: |
+    itemheal rand(45,65),0;
+```
+
+## Configuration Files
+
+### ไฟล์ใน `conf/`
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `login_athena.conf` | Login server config |
+| `char_athena.conf` | Character server config |
+| `map_athena.conf` | Map server config |
+| `inter_athena.conf` | Database connections |
+| `battle/*.conf` | Battle settings |
+| `groups.yml` | GM group permissions |
+
+## คำสั่งที่มีประโยชน์
+
+### Build Commands (Windows)
+
+# เปิด rAthena.sln ด้วย Visual Studio แล้ว Build
+
+# หรือใช้ CMake
+cmake -B build -G "Visual Studio 18 2026"
+cmake --build build --config Release
+
+```batch
+# Start all servers
+runserver.bat
+
+# Start individual
+logserv.bat
+charserv.bat
+mapserv.bat
+```
+
+### ในเกม (GM Commands)
+
+```
+@reloadscript     - โหลด NPC script ใหม่
+@reloaditemdb     - โหลด item database ใหม่
+@reloadmobdb      - โหลด mob database ใหม่
+@item <id> <amt>  - สร้างไอเทม
+@warp <map> <x> <y> - วาร์ป
+@go <city_number> - วาร์ปไปเมือง
+```
+
+## เอกสารใน doc/
+
+โฟลเดอร์ `doc/` มีเอกสารสำคัญมากมายที่ควรอ่านก่อนพัฒนา:
+
+### Script & Commands
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `script_commands.txt` | **สำคัญมาก!** คำสั่ง script ทั้งหมดพร้อมตัวอย่าง |
+| `atcommands.txt` | รายละเอียด @commands และ #commands |
+| `permissions.txt` | ระบบ permission สำหรับ GM groups |
+
+### Item System
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `item_db.txt` | โครงสร้าง item database |
+| `item_bonus.txt` | รายละเอียด item bonus ทั้งหมด (เช่น bStr, bAtk) |
+| `item_group.txt` | ระบบ item group |
+
+### Monster System
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `mob_db.txt` | โครงสร้าง mob database |
+| `mob_db_mode_list.txt` | รายการ mob mode flags (เช่น MD_BOSS, MD_DETECTOR) |
+| `mob_avail.txt` | ระบบ sprite replacement |
+| `mob_skill_db_powerskill.txt` | power skill ของ mob |
+| `mob_item_ratio.txt` | อัตรา drop rate adjustment |
+
+### Skill System
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `skill_db.txt` | โครงสร้าง skill database |
+
+### Status System
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `status.txt` | รายละเอียด status types |
+| `status_change.txt` | รายละเอียด status change effects (SC_*) |
+
+### Map System
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `mapflags.txt` | mapflag ทั้งหมด (เช่น pvp, gvg, noteleport) |
+| `map_cache.txt` | ระบบ map cache |
+
+### Quest System
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `quest_db.txt` | โครงสร้าง quest database |
+| `quest_variables.txt` | ตัวแปรของ quest |
+
+### Source Code Documentation
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `source_doc.txt` | เอกสารโครงสร้าง source code |
+| `packet_struct_notation.md` | รูปแบบ packet structure |
+| `packet_interserv.txt` | inter-server packets |
+
+### อื่นๆ
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `achievements.md` | ระบบ achievement |
+| `effect_list.md` | รายการ effects/visual |
+| `woe_time_explanation.txt` | ระบบเวลา WoE |
+| `ea_job_system.txt` | ระบบ job classes |
+
+### โฟลเดอร์ย่อย
+
+| โฟลเดอร์ | คำอธิบาย |
+|----------|----------|
+| `sample/` | ตัวอย่าง NPC scripts หลากหลายประเภท |
+| `yaml/` | เอกสารรูปแบบ YAML สำหรับ database files ทั้งหมด |
+| `model/` | โมเดลข้อมูล |
+
+## Tips สำหรับการพัฒนา
+
+1. **อ่าน `doc/script_commands.txt`** - เอกสารนี้มีคำสั่ง script ทั้งหมดพร้อมตัวอย่าง
+2. **ดูตัวอย่างใน `npc/custom/`** - มี NPC ตัวอย่างหลายตัว
+3. **ตรวจสอบ `doc/` ก่อนแก้ไข** - มีเอกสารสำหรับทุกระบบ
+4. **Backup ก่อนแก้ไข** - โดยเฉพาะไฟล์ใน `db/` และ `conf/`
+5. **ใช้ SQL upgrades** - ตรวจสอบไฟล์ใน `sql-files/upgrades/`
+6. **เพิ่ม SRC ใหม่** - ต้องดูใน `src/custom/` และ `conf/` ก่อนเพิ่ม
+
+## Utility Functions (C++)
+
+### format_number_comma - Format ตัวเลขด้วย comma
+
+**⚠️ สำคัญ:** เมื่อต้องแสดงข้อความที่มีจำนวนตัวเลขให้ผู้เล่นเห็น ให้ใช้ฟังก์ชัน `format_number_comma` เพื่อให้อ่านง่าย
+
+**ตำแหน่งไฟล์:**
+- Declaration: `src/map/unit.hpp`
+- Implementation: `src/map/unit.cpp`
+
+**Signature:**
+```cpp
+char* format_number_comma(int64 num, char* buf, size_t size);
+```
+
+**วิธีใช้งาน:**
+```cpp
+#include "unit.hpp"
+
+// ตัวอย่าง: แสดงข้อความแจ้งเตือนผู้เล่น
+char points_str[32], total_str[32];
+char message[256];
+
+format_number_comma(points, points_str, sizeof(points_str));
+format_number_comma(total, total_str, sizeof(total_str));
+
+snprintf(message, sizeof(message), "Received %s points (Total: %s points)", points_str, total_str);
+clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], message, false, SELF);
+```
+
+**ผลลัพธ์:**
+- `1234567` → `"1,234,567"`
+- `-500000` → `"-500,000"`
+- `999` → `"999"`
+
+**ใช้งานเมื่อ:**
+- แสดง Zeny, EXP, Points หรือจำนวนตัวเลขใดๆ ให้ผู้เล่นเห็น
+- สร้างข้อความ announce หรือ notification
+- แสดงข้อความใน NPC dialog (ผ่าน script command หรือ C++)
+
+---
+
+## การจัดการ Visual Studio Project Files สำหรับ Custom Code
+
+### ปัญหา
+เมื่อเพิ่ม custom source files เข้าไปใน project `map-server.vcxproj` โดยตรง จะทำให้:
+- เกิด conflict เมื่อ merge จาก upstream rAthena
+- ยากต่อการ maintain ว่าไฟล์ไหนเป็น custom ของเรา
+- ไฟล์ `.vcxproj.filters` จะรกและสับสน
+
+### วิธีแก้ไข (แบบ Property Sheet - แนะนำ)
+
+สร้าง **Property Sheet แยก** เก็บ custom files แล้ว import เข้า project หลัก:
+
+**1. สร้างไฟล์ `src/map/map-server-custom.props`:**
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <!-- Custom Header Files -->
+    <ClInclude Include="$(MSBuildThisFileDirectory)map_mf_tb.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)custom_feature.hpp" />
+    
+    <!-- Custom Source Files -->
+    <ClCompile Include="$(MSBuildThisFileDirectory)map_mf_tb.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)custom_feature.cpp" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- Filters สำหรับ Solution Explorer -->
+    <ClInclude Include="$(MSBuildThisFileDirectory)map_mf_tb.hpp">
+      <Filter>Custom Files\Headers</Filter>
+    </ClInclude>
+    <ClCompile Include="$(MSBuildThisFileDirectory)map_mf_tb.cpp">
+      <Filter>Custom Files\Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
+```
+
+**2. แก้ไข `map-server.vcxproj` เพิ่มบรรทัด import:**
+
+```xml
+<!-- ใส่ต่อท้ายไฟล์ ก่อน </Project> -->
+<Import Project="map-server-custom.props" />
+```
+
+**ข้อดี:**
+- Custom files แยกออกมาชัดเจน
+- ไม่ต้องแก้ไข `map-server.vcxproj` หลัก → ลด conflict ตอน merge
+- ง่ายต่อการ maintain (รู้ว่าอะไรเป็น custom ของเรา)
+- สามารถ version control แยกได้
+
+### วิธีแก้ไข (แบบ Project Reference)
+
+สร้าง **Project แยก** สำหรับ custom code แล้ว link เข้าไป:
+
+**1. สร้างไฟล์ `src/map/map-server-custom.vcxproj`:**
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <!-- ... config อื่นๆ ... -->
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ClInclude Include="map_mf_tb.hpp" />
+    <ClCompile Include="map_mf_tb.cpp" />
+  </ItemGroup>
+  
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- ... -->
+</Project>
+```
+
+**2. เพิ่ม Reference ใน `map-server.vcxproj`:**
+
+```xml
+<ItemGroup>
+  <ProjectReference Include="map-server-custom.vcxproj">
+    <Project>{GUID-OF-CUSTOM-PROJECT}</Project>
+  </ProjectReference>
+</ItemGroup>
+```
+
+**ข้อควรระวัง:**
+- แบบ Project Reference ซับซ้อนกว่า (ต้องจัดการ dependency)
+- แนะนำใช้ **แบบ Property Sheet** สำหรับ most use cases
+
+### TODO สำหรับ Branch Master
+- [ ] สร้าง `map-server-custom.props`
+- [ ] ย้าย custom files (เช่น `map_mf_tb.*`) ไปอยู่ใน props
+- [ ] อัปเดต `map-server.vcxproj` ให้ import props แทนการใส่ไฟล์ตรง
+- [ ] ทดสอบ build ทั้ง Debug และ Release
+- [ ] อัปเดตเอกสารนี้เมื่อเสร็จ
+
+---
+
+## การจัดการ Conflicted Files ใน Git
+
+เมื่อเกิด conflict ในไฟล์ สามารถใช้แนวทางต่อไปนี้:
+
+### แบบ Cowork Agent
+
+ใช้เมื่อต้องการให้ agent อื่นช่วยแก้ไข conflict โดยเฉพาะ:
+
+```
+ขอให้ @general ช่วย resolve conflict ในไฟล์ src/map/battle.cpp ตั้งแต่ line 500-600
+```
+
+**ขั้นตอน:**
+1. ระบุไฟล์และบริเวณที่ conflict
+2. ส่งต่อให้ agent อื่นวิเคราะห์
+3. ตรวจสอบคำแนะนำและนำมารวมกัน
+
+### แบบ Multi-Agent (Pseudo-Parallel)
+
+ใช้เมื่อต้องการให้หลาย agent ทำงานพร้อมกัน:
+
+```json
+{
+  "agents": [
+    {"name": "agent1", "task": "วิเคราะห์ conflict ในไฟล์ NPC"},
+    {"name": "agent2", "task": "วิเคราะห์ conflict ในไฟล์ C++"},
+    {"name": "agent3", "task": "วิเคราะห์ conflict ใน database"}
+  ]
+}
+```
+
+**ข้อดี:**
+- ประหยัดเวลาเมื่อมีหลาย conflict
+- แต่ละ agent เชี่ยวชาญในด้านต่างกัน
+- รวมผลลัพธ์แล้วค่อย merge
+
+### แบบ Sub-Agent
+
+ใช้เมื่อต้องการแบ่งงานเป็นขั้นตอน:
+
+```
+1. สร้าง sub-agent สำหรับวิเคราะห์ conflict
+2. ให้แต่ละ sub-agent รับผิดชอบส่วนต่างๆ
+3. รวมผลลัพธ์และแก้ไขด้วยตนเอง
+```
+
+**ตัวอย่าง Sub-Agent:**
+- **Script Agent**: ดูแล NPC scripts
+- **Cpp Agent**: ดูแล C++ source code
+- **DB Agent**: ดูแล database YAML files
+
+### เครื่องมือที่ใช้ในการแก้ไข Conflict
+
+| เครื่องมือ | คำอธิบาย |
+|-----------|----------|
+| `git diff` | ดูความแตกต่างระหว่างเวอร์ชัน |
+| `git status` | ดูไฟล์ที่มี conflict |
+| `git mergetool` | เปิดเครื่องมือ merge |
+| VS Code Merge Editor | แก้ไข conflict ผ่าน UI |
+
+### ขั้นตอนการ Resolve Conflict
+
+1. **ระบุไฟล์ที่ conflict:**
+   ```bash
+   git status
+   ```
+
+2. **เปิดดู conflict:**
+   ```bash
+   git diff --name-only --diff-filter=U
+   ```
+
+3. **แก้ไขแต่ละไฟล์:**
+   - เปิดไฟล์ใน editor
+   - ดู <<<<<<< ======= >>>>>>>
+   - เลือกหรือรวม code ที่ถูกต้อง
+
+4. **ทำเครื่องหมายว่าแก้ไขแล้ว:**
+   ```bash
+   git add <file>
+   ```
+
+5. **Commit merge:**
+   ```bash
+   git commit -m "Merge branch and resolve conflicts"
+   ```
+
+### Best Practices
+
+- **Commit บ่อยๆ** ลดโอกาสเกิด conflict
+- **Pull ก่อนทำงาน** ให้เป็นประจำ
+- **แก้ไขทีละไฟล์** อย่าแก้หลายไฟล์พร้อมกัน
+- **ทดสอบหลัง merge** ให้แน่ใจว่าโค้ดทำงานได้
