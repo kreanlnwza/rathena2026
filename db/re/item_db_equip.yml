@@ -96726,9 +96726,13 @@ Body:
     Defense: 2
     Locations:
       Head_Low: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
     ArmorLevel: 1
     EquipLevelMin: 1
-    Refineable: true
     View: 1488
     Script: |
       bonus bMdef,2;
