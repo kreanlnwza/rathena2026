@@ -1180,3 +1180,514 @@ clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], message, false, SELF);
 - **Pull ก่อนทำงาน** ให้เป็นประจำ
 - **แก้ไขทีละไฟล์** อย่าแก้หลายไฟล์พร้อมกัน
 - **ทดสอบหลัง merge** ให้แน่ใจว่าโค้ดทำงานได้
+
+---
+
+## ระบบ YAML Database
+
+### โครงสร้างไฟล์ YAML
+
+ทุกไฟล์ YAML database มี 3 ส่วนหลัก:
+
+```yaml
+Header:
+  Type: ITEM_DB      # ชนิด database (ต้องตรงกับ code)
+  Version: 3         # เวอร์ชัน schema
+
+Body:
+  - Id: 501
+    AegisName: Red_Potion
+    Name: Red Potion
+    Type: Healing
+    # ... fields อื่นๆ
+
+Footer:
+  Imports:
+  - Path: db/re/item_db_usable.yml
+  - Path: db/pre-re/item_db_usable.yml
+    Mode: Prerenewal
+```
+
+### ไดเรกทอรี Database
+
+| Path | คำอธิบาย |
+|------|----------|
+| `db/` | Database กลาง (shared) + Footer imports |
+| `db/re/` | Renewal mode (57 ไฟล์) |
+| `db/pre-re/` | Pre-renewal mode (40 ไฟล์) |
+| `db/import/` | Override สำหรับแต่ละ server |
+
+### Class Hierarchy (C++)
+
+```
+YamlDatabase (abstract base - src/common/database.hpp)
+├── TypesafeYamlDatabase<KeyType, DataType>
+│   └── TypesafeCachedYamlDatabase<KeyType, DataType>
+│       ├── ItemDatabase<t_itemid, item_data>
+│       ├── MobDatabase<uint16, mob_db>
+│       ├── SkillDatabase<uint32, s_skill_db>
+│       └── ... (database อื่นๆ)
+```
+
+### วิธีเพิ่ม/แก้ไข YAML Entry
+
+**ขั้นตอนสร้าง custom database entry:**
+1. เปิดไฟล์ `db/re/<type>_db.yml` หรือ `db/import/<type>_db.yml`
+2. เพิ่ม entry ใหม่ใน Body section
+3. ใช้ `@reloaditemdb` / `@reloadmobdb` / `@reloadskilldb` ในเกม
+
+### การ Parse YAML ใน C++ (RapidYAML)
+
+```cpp
+// ใน subclass ของ YamlDatabase ต้อง implement:
+uint64 parseBodyNode(const ryml::NodeRef& node) override {
+    t_itemid id;
+    if (!this->asUInt32(node, "Id", id))
+        return 0;
+
+    // ตรวจสอบว่ามีอยู่แล้วหรือไม่
+    auto item = this->find(id);
+    bool exists = item != nullptr;
+
+    if (!exists) {
+        item = std::make_shared<item_data>();
+        item->nameid = id;
+    }
+
+    // Parse fields
+    if (this->nodeExists(node, "Name")) {
+        std::string name;
+        this->asString(node, "Name", name);
+        // ...
+    }
+
+    this->put(id, item);
+    return 1;
+}
+```
+
+**Helper functions ที่สำคัญ:**
+
+| Function | คำอธิบาย |
+|----------|----------|
+| `nodeExists(node, "FieldName")` | ตรวจว่า field มีอยู่ |
+| `asInt32(node, "Name", &out)` | อ่านค่า int32 |
+| `asUInt32(node, "Name", &out)` | อ่านค่า uint32 |
+| `asString(node, "Name", out)` | อ่านค่า string |
+| `asBool(node, "Name", &out)` | อ่านค่า bool |
+| `invalidWarning(node, fmt, ...)` | แจ้ง warning พร้อมบรรทัด |
+
+---
+
+## ระบบ Packet / Clif (Client Interface)
+
+### ไฟล์สำคัญ
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `src/map/clif.cpp` | ส่ง/รับ packet ระหว่าง server กับ client |
+| `src/map/clif.hpp` | Header สำหรับ clif functions |
+| `src/map/packets.hpp` | Packet structure definitions |
+
+### การส่ง Packet
+
+**ขั้นตอนหลัก:**
+1. สร้าง buffer ด้วย `WFIFOHEAD(fd, size)`
+2. ใส่ packet ID: `WFIFOW(fd, 0) = 0xXXXX`
+3. ใส่ข้อมูล: `WFIFOW/WFIFOL/WFIFOB`
+4. ส่งผ่าน `clif_send(buf, len, bl, target)`
+
+**Send Target (enum send_target):**
+
+| Target | คำอธิบาย |
+|--------|----------|
+| `ALL_CLIENT` | ทุก client ที่เชื่อมต่อ |
+| `AREA` | ผู้เล่นในพื้นที่รอบๆ |
+| `AREA_WOS` | พื้นที่ ยกเว้นตัวเอง |
+| `PARTY` | สมาชิก party |
+| `GUILD` | สมาชิก guild |
+| `SELF` | ตัวเองเท่านั้น |
+
+### Macros สำหรับ Packet
+
+**Position Encoding (3 bytes):**
+```cpp
+WBUFPOS(buf, offset, x, y, direction)   // เขียนพิกัด
+RBUFPOS(buf, offset, &x, &y, &dir)      // อ่านพิกัด
+WBUFPOS2(buf, offset, x0, y0, x1, y1, sx, sy)  // Movement vector (6 bytes)
+```
+
+**Type Conversion:**
+
+| Macro/Function | คำอธิบาย |
+|----------------|----------|
+| `client_tick(tick)` | แปลง t_tick → uint32 |
+| `client_exp(exp)` | Cap experience ตาม PACKETVER |
+| `client_index(idx)` | inventory: server + 2 |
+| `server_index(idx)` | inventory: client - 2 |
+| `client_nameid(id)` | ใช้ viewid หรือ original id |
+| `disguised_bl_id(id)` | คืนค่า negative id สำหรับ disguise |
+
+### Area Broadcasting
+
+- ใช้ `AREA_SIZE` (ปกติ 14-20 cells) เป็นรัศมี
+- `map_foreachinallarea()` วนหา block_list ในพื้นที่
+- `clif_send_sub()` ตรวจสอบ session ของแต่ละ client
+
+---
+
+## ระบบ Status / Status Change
+
+### โครงสร้าง status_data
+
+```cpp
+struct status_data {
+    uint32 hp, sp, ap;
+    uint32 max_hp, max_sp, max_ap;
+    int16 str, agi, vit, int_, dex, luk;        // Base stats
+    int16 pow, sta, wis, spl, con, crt;          // 4th job stats
+    int32 batk;                                   // Base ATK
+    uint16 watk, matk_min, matk_max;
+    uint16 speed, amotion, adelay, dmotion;
+    int16 hit, flee, cri, flee2, def2, mdef2;
+    defType def, mdef;                            // RENEWAL dependent type
+    unsigned char def_ele, ele_lv, size, race, class_;
+    struct weapon_atk rhw, lhw;                   // อาวุธมือขวา/ซ้าย
+};
+```
+
+### Status API Functions
+
+```cpp
+// เริ่ม status change
+int32 status_change_start(src_bl, target_bl, type, rate, val1, val2, val3, val4, duration, flags, delay);
+
+// จบ status change
+int32 status_change_end(block_list *bl, enum sc_type type, int32 tid);
+
+// Shorthand wrappers
+sc_start(bl, type, rate, val1, tick, flag);        // 1 value
+sc_start2(bl, type, rate, val1, val2, tick, flag);  // 2 values
+sc_start4(bl, type, rate, v1, v2, v3, v4, tick, flag); // 4 values
+
+// Damage/Heal
+int32 status_damage(src, target, dhp, dsp, dap, walkdelay, flag, skill_id);
+int32 status_heal(bl, hhp, hsp, hap, flag);
+```
+
+**status_heal flag meanings:**
+
+| Flag | คำอธิบาย |
+|------|----------|
+| `& 1` | Forced healing (ข้ามข้อจำกัด Berserk) |
+| `& 2` | แสดง heal effect |
+| `& 4` | แสดง HP heal effect แม้ heal 0 |
+| `& 16` | Coma damage (HP/SP เหลือ 1) |
+
+### Status Access Functions
+
+```cpp
+status_get_status_data(bl)    // ค่า status ที่คำนวณแล้ว
+status_get_base_status(bl)    // ค่า base stats (ก่อน modify)
+status_get_hp(bl)             // HP ปัจจุบัน
+status_get_str/agi/vit/int/dex/luk(bl)  // แต่ละ stat
+```
+
+### ASPD Constants
+
+| Constant | ค่า | คำอธิบาย |
+|----------|-----|----------|
+| `MIN_ASPD` | 8000 | Delay สูงสุด (ป้องกัน ASPD ต่ำเกิน) |
+| `MAX_ASPD_NOPC` | 100 | Delay ต่ำสุดสำหรับ non-player |
+| `AMOTION_ZERO_ASPD` | 2000 | Base amotion = 0 ASPD |
+| `AMOTION_INTERVAL` | 10 | ทุก 1 ASPD ลด amotion 10ms |
+
+---
+
+## ระบบ Battle Calculation
+
+### โครงสร้าง Damage
+
+```cpp
+struct Damage {
+#ifdef RENEWAL
+    int64 statusAtk, statusAtk2;     // Status-based ATK
+    int64 weaponAtk, weaponAtk2;     // Weapon ATK
+    int64 equipAtk, equipAtk2;      // Equipment ATK
+    int64 masteryAtk, masteryAtk2;  // Mastery bonus
+    int64 percentAtk, percentAtk2;  // % bonuses
+#else
+    int64 basedamage;               // PRE-RE: Base damage
+#endif
+    int64 damage, damage2;          // มือขวา/ซ้าย final damage
+    enum e_damage_type type;        // DMG_NORMAL, DMG_SPLASH, etc.
+    int16 div_;                     // จำนวน hits
+    int32 amotion, dmotion;         // Animation delays
+    int32 blewcount;                // Knockback
+    int32 flag;                     // e_battle_flag bits
+    bool isspdamage;                // Blue damage numbers (SP damage)
+};
+```
+
+### Damage Calculation Pipeline
+
+```
+1. battle_calc_attack(attack_type, src, target, skill_id, skill_lv, flag)
+   ↓ dispatch ตาม attack_type
+2. battle_calc_weapon_attack() / battle_calc_magic_attack() / battle_calc_misc_attack()
+   ↓ คำนวณ damage ตาม formula
+3. battle_calc_defense_reduction()
+   ↓ ลด damage ตาม DEF/MDEF
+4. battle_calc_damage(src, bl, &wd, damage, skill_id, skill_lv)
+   ↓ ปรับ GVG/BG/PK reductions
+5. battle_damage() → status_damage()
+   ↓ apply damage จริง
+6. clif_damage() → broadcast ไปยังผู้เล่นในพื้นที่
+```
+
+### Damage ATK Macros
+
+```cpp
+// คูณ damage ด้วย rate (มือขวา + ซ้าย)
+ATK_RATE(damage, damage2, rate_percent)
+
+// คูณ damage แยก rate มือขวา/ซ้าย
+ATK_RATE2(damage, damage2, rate_right, rate_left)
+
+// เพิ่ม damage
+ATK_ADD(damage, damage2, value)
+ATK_ADD2(damage, damage2, value_right, value_left)
+```
+
+### Battle Check Target (BCT_*)
+
+| Flag | คำอธิบาย |
+|------|----------|
+| `BCT_SELF` | ตัวเอง |
+| `BCT_ENEMY` | ศัตรู |
+| `BCT_PARTY` | สมาชิก party |
+| `BCT_GUILD` | สมาชิก guild |
+| `BCT_ALLY` | พันธมิตร |
+| `BCT_WOS` | ไม่รวมตัวเอง |
+| `BCT_ALL` | ทุกเป้าหมาย |
+
+---
+
+## ระบบ Skill
+
+### โครงสร้าง s_skill_condition (Requirements)
+
+```cpp
+struct s_skill_condition {
+    int32 hp, hp_rate;                         // ค่า HP ที่ใช้
+    int32 sp, sp_rate;                         // ค่า SP ที่ใช้
+    int32 ap, ap_rate;                         // ค่า AP (4th job)
+    int32 zeny;                                // ค่า Zeny
+    int32 weapon;                              // Bitmask อาวุธที่ต้องใช้
+    int32 ammo, ammo_qty;                      // ชนิด/จำนวนกระสุน
+    int32 state;                               // สถานะที่ต้องการ
+    int32 spiritball;                          // จำนวน Spirit Sphere
+    t_itemid itemid[MAX_SKILL_ITEM_REQUIRE];   // ไอเทมที่ต้องใช้
+    int32 amount[MAX_SKILL_ITEM_REQUIRE];      // จำนวนไอเทม
+    std::vector<t_itemid> eqItem;              // อุปกรณ์ที่ต้องสวม
+    std::vector<sc_type> status;               // Status ที่ต้องมี
+};
+```
+
+### โครงสร้าง Skill Unit Group
+
+```cpp
+struct s_skill_unit_group {
+    int32 src_id;                   // ID ผู้ใช้ skill
+    int32 party_id, guild_id;      // สังกัด
+    int32 map;                     // แผนที่
+    int32 target_flag;             // BCT_* เป้าหมาย
+    t_tick tick, limit;            // เวลาเริ่ม/หมดอายุ
+    int32 interval;                // ช่วง timer
+    uint16 skill_id, skill_lv;    // skill ที่ใช้
+    int32 val1, val2, val3;       // ค่าปรับแต่ง
+    int32 unit_id;                // Client effect ID
+};
+
+struct skill_unit : public block_list {
+    std::shared_ptr<s_skill_unit_group> group;
+    t_tick limit;
+    int32 val1, val2;
+    int16 range;
+    bool alive, hidden;
+};
+```
+
+### Skill Unit Flags (e_skill_unit_flag)
+
+| Flag | คำอธิบาย |
+|------|----------|
+| `UF_NOENEMY` | ไม่มีผลกับศัตรู |
+| `UF_NOREITERATION` | ห้ามวางซ้อน |
+| `UF_NOFOOTSET` | ห้ามวางใต้ตัว |
+| `UF_PATHCHECK` | ตรวจสอบเส้นทาง |
+| `UF_DANCE` / `UF_SONG` / `UF_ENSEMBLE` | สกิลดนตรี |
+| `UF_NOKNOCKBACK` | ห้าม knockback |
+| `UF_HIDDENTRAP` | กับดักซ่อน |
+
+---
+
+## Core Types จาก map.hpp
+
+### block_list (โครงสร้างพื้นฐาน)
+
+```cpp
+struct block_list {
+    struct block_list *next, *prev;  // Linked list (map grid)
+    int32 id;                        // Unique ID
+    int16 m, x, y;                   // Map index, พิกัด X, Y
+    enum bl_type type;               // ชนิดของ entity
+};
+```
+
+### Block List Types (bl_type)
+
+| Type | คำอธิบาย |
+|------|----------|
+| `BL_PC` | Player character |
+| `BL_MOB` | Monster |
+| `BL_PET` | Pet |
+| `BL_HOM` | Homunculus |
+| `BL_MER` | Mercenary |
+| `BL_ELEM` | Elemental |
+| `BL_NPC` | NPC |
+| `BL_SKILL` | Skill unit (พื้นที่สกิล) |
+| `BL_ITEM` | ไอเทมบนพื้น |
+
+### Element Types (e_element)
+
+| Enum | คำอธิบาย |
+|------|----------|
+| `ELE_NEUTRAL` | ธาตุปกติ |
+| `ELE_WATER` | น้ำ |
+| `ELE_EARTH` | ดิน |
+| `ELE_FIRE` | ไฟ |
+| `ELE_WIND` | ลม |
+| `ELE_POISON` | พิษ |
+| `ELE_HOLY` | ศักดิ์สิทธิ์ |
+| `ELE_DARK` | มืด |
+| `ELE_GHOST` | วิญญาณ |
+| `ELE_UNDEAD` | อมตะ |
+
+### Job ID System (e_mapid) - Bitmask
+
+```cpp
+#define JOBL_2_1    0x100      // 2nd job tier 1
+#define JOBL_2_2    0x200      // 2nd job tier 2
+#define JOBL_THIRD  0x1000     // 3rd job
+#define JOBL_FOURTH 0x10000    // 4th job
+#define JOBL_UPPER  0x100000   // Transcendent
+#define JOBL_BABY   0x200000   // Baby class
+
+// Masks
+#define MAPID_FIRSTMASK   0xff      // 1st class
+#define MAPID_SECONDMASK  0xfff     // ถึง 2nd job
+#define MAPID_THIRDMASK   0xffff    // ถึง 3rd job
+#define MAPID_FOURTHMASK  0xfffff   // ถึง 4th job
+```
+
+### Damage Type (e_damage_type)
+
+| Type | คำอธิบาย |
+|------|----------|
+| `DMG_NORMAL` | Damage ปกติ |
+| `DMG_ENDURE` | Endure effect |
+| `DMG_SPLASH` | Area damage |
+| `DMG_MULTI_HIT` | หลาย hit |
+| `DMG_MULTI_HIT_ENDURE` | หลาย hit + endure |
+
+### Auto Trigger Flags (item bonus)
+
+| Flag | คำอธิบาย |
+|------|----------|
+| `ATF_SELF` | Trigger บนตัวเอง |
+| `ATF_TARGET` | Trigger บนเป้าหมาย |
+| `ATF_SHORT` | ระยะใกล้ |
+| `ATF_LONG` | ระยะไกล |
+| `ATF_WEAPON` | โจมตีกายภาพ |
+| `ATF_MAGIC` | โจมตีเวทย์ |
+| `ATF_MISC` | โจมตีอื่นๆ |
+
+### Refine Constants
+
+```cpp
+// RENEWAL
+#define MAX_REFINE 20
+
+// PRE-RENEWAL
+#define MAX_REFINE 10
+```
+
+| Refine Type | คำอธิบาย |
+|-------------|----------|
+| `REFINE_TYPE_ARMOR` | เกราะ |
+| `REFINE_TYPE_WEAPON` | อาวุธ |
+| `REFINE_TYPE_SHADOW_ARMOR` | Shadow เกราะ |
+| `REFINE_TYPE_SHADOW_WEAPON` | Shadow อาวุธ |
+
+---
+
+## ระบบ Custom Skill Override
+
+### ไฟล์สำหรับ Custom Skill
+
+| ไฟล์ | คำอธิบาย |
+|------|----------|
+| `src/map/skills/custom/skill_factory_custom.cpp` | Implementation ของ custom skills |
+| `src/map/skills/custom/skill_factory_custom.hpp` | Header สำหรับ custom skills |
+
+**ตัวอย่าง Override Skill:**
+```cpp
+// skill_factory_custom.cpp
+#include "skill_factory_custom.hpp"
+// Override SM_BASH ด้วย custom implementation
+```
+
+> **หมายเหตุ:** ปัจจุบันไฟล์เหล่านี้เป็น template ว่างเปล่า (code อยู่ใน `#if 0`)
+
+---
+
+## NPC Script เพิ่มเติม: ระบบ Custom NPC
+
+### โฟลเดอร์ npc/custom/ (68 ไฟล์)
+
+| โฟลเดอร์ | จำนวน | ตัวอย่าง |
+|----------|--------|----------|
+| `npc/custom/` (root) | 13 | warper, healer, jobmaster, card_seller |
+| `npc/custom/battleground/` | 2 | bg_emp, bg_pvp |
+| `npc/custom/etc/` | 15 | autopot, bank, mvp_arena, stock_market |
+| `npc/custom/events/` | 5+4 | devil_square, disguise, holiday events |
+| `npc/custom/quests/` | 15+5 | hunting_missions, quest_shop, THQ |
+
+### การเปิดใช้ Custom NPC
+
+1. แก้ไข `npc/scripts_custom.conf`
+2. Uncomment บรรทัดที่ต้องการ: `npc: npc/custom/warper.txt`
+3. ใช้ `@reloadscript` ในเกม
+
+> **หมายเหตุ:** ค่า default ทุก script จะ comment ไว้ (ปิดทั้งหมด)
+
+---
+
+## Configuration Import System
+
+### วิธีการ Override Config
+
+ใช้ไฟล์ใน `conf/import/` เพื่อ override ค่า default โดยไม่ต้องแก้ไขไฟล์หลัก:
+
+| ไฟล์ Import | Override สำหรับ |
+|-------------|-----------------|
+| `conf/import/battle_conf.txt` | Battle settings ทั้งหมด |
+| `conf/import/char_conf.txt` | Character server |
+| `conf/import/map_conf.txt` | Map server |
+| `conf/import/login_conf.txt` | Login server |
+| `conf/import/inter_conf.txt` | Inter-server communication |
+| `conf/import/packet_conf.txt` | Packet version |
+| `conf/import/groups.yml` | GM groups & permissions |
+
+**ข้อดี:** ไม่ต้องแก้ไขไฟล์ config หลัก → ลด conflict ตอน merge upstream
