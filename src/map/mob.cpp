@@ -3344,8 +3344,14 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 			drop_rate = mob_getdroprate(src, md->db, entry->rate, drop_modifier, md);
 
 			// attempt to drop the item
-			if (rnd() % 10000 >= drop_rate)
-				continue;
+			// Cards use extended precision: scale 100,000 (Rate 1 = 0.001%)
+			if (it->type == IT_CARD) {
+				if ((int64)(rnd() % 100000) >= (int64)drop_rate)
+					continue;
+			} else {
+				if (rnd() % 10000 >= drop_rate)
+					continue;
+			}
 
 			if (first_sd != nullptr && it->type == IT_PETEGG) {
 				pet_create_egg(first_sd, entry->nameid);
@@ -3509,8 +3515,14 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 				if (temp != 10000) {
 					if(temp <= 0 && !battle_config.drop_rate0item)
 						temp = 1;
-					if(rnd()%10000 >= temp) //if ==0, then it doesn't drop
-						continue;
+					// Cards use extended precision: scale 100,000 (Rate 1 = 0.001%)
+					if (i_data->type == IT_CARD) {
+						if ((int64)(rnd() % 100000) >= (int64)temp)
+							continue;
+					} else {
+						if(rnd()%10000 >= temp) //if ==0, then it doesn't drop
+							continue;
+					}
 				}
 
 				struct item item = {};
@@ -4939,6 +4951,13 @@ bool MobDatabase::parseDropNode( std::string nodeName, const ryml::NodeRef& node
 
 		if (!this->asUInt16Rate(dropit, "Rate", rate))
 			return false;
+
+		if (item->type == IT_CARD)
+			rate = 1;
+
+		// ปิดการดรอปไอเทมเหล่านี้
+		if (item->nameid == 984 || item->nameid == 985 || item->nameid == 6090 || item->nameid == 6223 || item->nameid == 6224)
+			rate = 0;
 
 		bool steal = false;
 
