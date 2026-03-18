@@ -2046,8 +2046,19 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 
 		if (md && md->damagetaken != 100)
 			damage = i64max(damage * md->damagetaken / 100, 1);
+
+		// Monster Rank: damage taken modifier
+		if (md && battle_config.mob_rank_system && md->rank > MOBRANK_F)
+			damage = i64max(damage * mob_rank_multipliers[md->rank].dmg_taken / 100, 1);
 	}
 	
+	// Monster Rank: damage dealt modifier (when mob is attacker)
+	if (src->type == BL_MOB && battle_config.mob_rank_system) {
+		mob_data *md_src = BL_CAST(BL_MOB, src);
+		if (md_src && md_src->rank > MOBRANK_F)
+			damage = i64max(damage * mob_rank_multipliers[md_src->rank].dmg_dealt / 100, 1);
+	}
+
 	if (tsc != nullptr && !tsc->empty()) {
 		if (!battle_status_block_damage(src, bl, tsc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
 			return 0;
@@ -2898,6 +2909,19 @@ bool is_infinite_defense(const block_list* target, int32 flag)
 	const status_change* tsc = status_get_sc(target);
 	if (tsc && tsc->getSCE(SC_INVINCIBLE))
 		return true;
+
+	// Monster Rank Deflect
+	if (target->type == BL_MOB && battle_config.mob_rank_system) {
+		const mob_data* md = BL_CAST(BL_MOB, target);
+		if (md && md->rank > MOBRANK_F) {
+			uint16 deflect = mob_rank_multipliers[md->rank].deflect;
+			if (deflect > 0 && rnd() % 100 < deflect) {
+				clif_specialeffect(target, EF_GUARD3, AREA);
+				clif_emotion(*md, ET_SEXY);
+				return true;
+			}
+		}
+	}
 
 	return false;
 }
@@ -8651,7 +8675,7 @@ static const struct _battle_data {
 	{ "max_exp_gain_rate",                  &battle_config.max_exp_gain_rate,               0,      0,      INT_MAX,        },
 	{ "backstab_bow_penalty",               &battle_config.backstab_bow_penalty,            0,      0,      1,              },
 	{ "night_at_start",                     &battle_config.night_at_start,                  0,      0,      1,              },
-	{ "show_mob_info",                      &battle_config.show_mob_info,                   0,      0,      1|2|4,          },
+	{ "show_mob_info",                      &battle_config.show_mob_info,                   0,      0,      1|2|4|8,        },
 	{ "ban_hack_trade",                     &battle_config.ban_hack_trade,                  0,      0,      INT_MAX,        },
 	{ "min_hair_style",                     &battle_config.min_hair_style,                  0,      0,      INT_MAX,        },
 	{ "max_hair_style",                     &battle_config.max_hair_style,                  23,     0,      INT_MAX,        },

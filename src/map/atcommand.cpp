@@ -4469,6 +4469,7 @@ ACMD_FUNC(reloadbattleconf){
 	||  prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max
 	||  prev_config.base_exp_rate          != battle_config.base_exp_rate
 	||  prev_config.job_exp_rate           != battle_config.job_exp_rate
+	||  prev_config.mob_rank_system        != battle_config.mob_rank_system
 	)
 	{	// Exp or Drop rates changed.
 		mob_reload(); //Needed as well so rate changes take effect.

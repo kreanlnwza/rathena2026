@@ -1169,6 +1169,7 @@ int32 mob_spawn (mob_data *md)
 	}
 
 	memset(&md->state, 0, sizeof(md->state));
+	mob_assign_rank(md);
 	status_calc_mob(md, SCO_FIRST);
 	md->attacked_id = 0;
 	md->norm_attacked_id = 0;
@@ -2827,6 +2828,12 @@ int32 mob_getdroprate(block_list *src, std::shared_ptr<s_mob_db> mob, int32 base
 			drop_rate *= 2;
 	}
 
+	// Monster Rank drop rate modifier
+	if (md && battle_config.mob_rank_system && md->rank > MOBRANK_F) {
+		drop_rate = drop_rate * mob_rank_multipliers[md->rank].drop / 100;
+		if (drop_rate < 1) drop_rate = 1;
+	}
+
 	if (src) {
 		if (battle_config.drops_by_luk) // Drops affected by luk as a fixed increase [Valaris]
 			drop_rate += (status_get_luk(src) * battle_config.drops_by_luk / 100) * factor;
@@ -3140,6 +3147,11 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 						per *= 2.;
 						break;
 				}
+			}
+
+			// change experience for monster rank
+			if (battle_config.mob_rank_system && md->rank > MOBRANK_F) {
+				per = per * mob_rank_multipliers[md->rank].exp / 100.;
 			}
 
 			if( entry.flag == MDLF_PET )
@@ -3675,7 +3687,7 @@ void mob_revive(mob_data *md, uint32 hp)
 	clif_spawn(md);
 	skill_unit_move(md,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
-	if (battle_config.show_mob_info&3)
+	if (battle_config.show_mob_info&(3|8))
 		clif_name_area(md);
 }
 

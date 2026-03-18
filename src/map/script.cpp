@@ -54,6 +54,7 @@
 #include "mapreg.hpp"
 #include "mercenary.hpp"
 #include "mob.hpp"
+#include "mob_rank.hpp"
 #include "npc.hpp"
 #include "party.hpp"
 #include "path.hpp"
@@ -19152,6 +19153,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_RES, md->status.res);
 			getunitdata_sub(UMOB_MRES, md->status.mres);
 			getunitdata_sub(UMOB_DAMAGETAKEN, md->damagetaken);
+			getunitdata_sub(UMOB_RANK, md->rank);
 			} break;
 
 		case BL_HOM: {
@@ -19528,6 +19530,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_RES: md->base_status->res = (int16)value; calc_status = true; break;
 			case UMOB_MRES: md->base_status->mres = (int16)value; calc_status = true; break;
 			case UMOB_DAMAGETAKEN: md->damagetaken = (uint16)value; break;
+			case UMOB_RANK: md->rank = (e_mob_rank)cap_value(value, MOBRANK_F, MOBRANK_EXPLUS); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;

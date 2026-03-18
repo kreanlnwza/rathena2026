@@ -2809,6 +2809,9 @@ int32 status_calc_mob_(mob_data* md, uint8 opt)
 	if (md->master_id && battle_config.slaves_inherit_mode)
 		flag |= 32;
 
+	if (battle_config.mob_rank_system && md->rank > MOBRANK_F)
+		flag |= 64;
+
 	if (!flag) { // No special status required.
 		if (md->base_status) {
 			aFree(md->base_status);
@@ -2888,6 +2891,36 @@ int32 status_calc_mob_(mob_data* md, uint8 opt)
 			status->dex *= 2;
 			status->luk *= 2;
 		}
+	}
+
+	// Monster Rank stat modifiers
+	if (flag&64) {
+		const s_mob_rank_multiplier& rm = mob_rank_multipliers[md->rank];
+		status->max_hp = max((uint32)(status->max_hp * rm.hp / 100), (uint32)1);
+		status->max_sp = max((uint32)(status->max_sp * rm.hp / 100), (uint32)1);
+		status->hp = status->max_hp;
+		status->sp = status->max_sp;
+		// Attack
+		status->rhw.atk  = (uint16)(status->rhw.atk  * rm.atk / 100);
+		status->rhw.atk2 = (uint16)(status->rhw.atk2 * rm.atk2 / 100);
+#ifdef RENEWAL
+		status->rhw.matk = (uint16)(status->rhw.matk * rm.atk2 / 100);
+#endif
+		// Defense
+		status->def  = (defType)(status->def  * rm.def / 100);
+		status->mdef = (defType)(status->mdef * rm.mdef / 100);
+		// Resistance
+		status->res  = (int16)(status->res  * rm.res / 100);
+		status->mres = (int16)(status->mres * rm.mres / 100);
+		// Critical
+		status->cri  = (int16)(status->cri * rm.cri / 100);
+		// Base stats
+		status->str  = max((uint16)(status->str  * rm.stat / 100), (uint16)1);
+		status->agi  = max((uint16)(status->agi  * rm.stat / 100), (uint16)1);
+		status->vit  = max((uint16)(status->vit  * rm.stat / 100), (uint16)1);
+		status->int_ = max((uint16)(status->int_ * rm.stat / 100), (uint16)1);
+		status->dex  = max((uint16)(status->dex  * rm.stat / 100), (uint16)1);
+		status->luk  = max((uint16)(status->luk  * rm.stat / 100), (uint16)1);
 	}
 
 	status_calc_misc(md, status, md->level);

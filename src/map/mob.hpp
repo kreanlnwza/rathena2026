@@ -11,6 +11,7 @@
 #include <common/mmo.hpp> // struct item
 #include <common/timer.hpp>
 
+#include "mob_rank.hpp"
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
 
@@ -397,6 +398,7 @@ struct mob_data : public block_list {
 	 **/
 	int32 tomb_nid;
 	uint16 damagetaken;
+	e_mob_rank rank; ///< Monster Rank (F~EX+)
 
 	e_mob_bosstype get_bosstype() const;
 	map_session_data* get_mvp_player(map_session_data* first_sd);

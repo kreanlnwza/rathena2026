@@ -10043,7 +10043,11 @@ void clif_name( const block_list* src, const block_list* bl, send_target target 
 				char mobhp[50], *str_p = mobhp;
 
 				if( battle_config.show_mob_info&4 ){
-					str_p += sprintf( str_p, "Lv. %d | ", md->level );
+					str_p += sprintf( str_p, "L. %d | ", md->level );
+				}
+
+				if( battle_config.show_mob_info&8 && md->rank > MOBRANK_F ){
+					str_p += sprintf( str_p, "R.: %s | ", mob_rank_prefix(md->rank) );
 				}
 
 				if( battle_config.show_mob_info&1 ){
