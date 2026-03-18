@@ -14,6 +14,7 @@
 #define MOB_RANK_HPP
 
 #include "common/cbasetypes.hpp"
+#include "common/timer.hpp"
 
 /// Monster Rank System
 /// Randomly assigns a rank (F~EX+) to monsters on spawn.
@@ -64,5 +65,6 @@ extern const s_mob_rank_multiplier mob_rank_multipliers[MOBRANK_MAX];
 
 const char* mob_rank_prefix(e_mob_rank rank);
 void mob_assign_rank(struct mob_data* md);
+TIMER_FUNC(mob_rank_reshuffle_timer);
 
 #endif /* MOB_RANK_HPP */

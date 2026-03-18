@@ -32,3 +32,4 @@
 { "mob_rank_weight_explus", &battle_config.mob_rank_weight_explus, 30,   0, 10000, },
 { "mob_rank_coin_drop",     &battle_config.mob_rank_coin_drop,     1,    0, 1,          },
 { "mob_rank_coin_itemid",   &battle_config.mob_rank_coin_itemid,   7539, 0, INT32_MAX,  },
+{ "mob_rank_reshuffle_interval", &battle_config.mob_rank_reshuffle_interval, 180, 0, 1440, },

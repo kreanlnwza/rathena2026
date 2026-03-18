@@ -13,9 +13,14 @@
 #include "mob_rank.hpp"
 
 #include "battle.hpp"
+#include "clif.hpp"
+#include "map.hpp"
 #include "mob.hpp"
+#include "status.hpp"
 
 #include "common/random.hpp"
+#include "common/showmsg.hpp"
+#include "common/timer.hpp"
 
 /// Multiplier table for each rank
 /// Values are percentages (100 = 1x, 200 = 2x, etc.)
@@ -139,4 +144,41 @@ void mob_assign_rank(struct mob_data* md) {
 
 	// Fallback (should not reach here)
 	md->rank = (e_mob_rank)start_rank;
+}
+
+/**
+ * Sub-function: re-roll rank for a single monster
+ */
+static int32 mob_rank_reshuffle_sub(mob_data* md, va_list ap) {
+	if (md == nullptr)
+		return 0;
+
+	// Skip dead monsters
+	if (md->status.hp <= 0)
+		return 0;
+
+	// Re-assign rank
+	e_mob_rank old_rank = md->rank;
+	mob_assign_rank(md);
+
+	// Recalculate stats if rank changed
+	if (md->rank != old_rank) {
+		status_calc_mob(md, SCO_NONE);
+		// Update name display for nearby players
+		clif_name_area(md);
+	}
+
+	return 1;
+}
+
+/**
+ * Timer callback: re-roll ranks for all alive monsters
+ */
+TIMER_FUNC(mob_rank_reshuffle_timer) {
+	if (!battle_config.mob_rank_system)
+		return 0;
+
+	map_foreachmob(mob_rank_reshuffle_sub);
+	ShowInfo("Monster Rank System: All monster ranks have been reshuffled.\n");
+	return 0;
 }

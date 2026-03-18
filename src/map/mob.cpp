@@ -7405,6 +7405,14 @@ void do_init_mob(void){
 	add_timer_func_list(mob_norm_attacked, "mob_norm_attacked");
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME,mob_ai_hard,0,0,MIN_MOBTHINKTIME);
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME*10,mob_ai_lazy,0,0,MIN_MOBTHINKTIME*10);
+
+	// Monster Rank Reshuffle Timer
+	if (battle_config.mob_rank_system && battle_config.mob_rank_reshuffle_interval > 0) {
+		t_tick interval = (t_tick)battle_config.mob_rank_reshuffle_interval * 60 * 1000; // minutes to ms
+		add_timer_func_list(mob_rank_reshuffle_timer, "mob_rank_reshuffle_timer");
+		add_timer_interval(gettick() + interval, mob_rank_reshuffle_timer, 0, 0, interval);
+		ShowStatus("Monster Rank Reshuffle: every %d minutes.\n", battle_config.mob_rank_reshuffle_interval);
+	}
 }
 
 /*==========================================
