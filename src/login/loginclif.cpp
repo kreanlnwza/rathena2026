@@ -21,6 +21,7 @@
 #include "login.hpp"
 #include "loginchrif.hpp"
 #include "loginlog.hpp"
+#include "serverformatter.hpp"
 
 /**
  * Transmit auth result to client.
@@ -136,8 +137,15 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 
 		char_server.ip = htonl( ( subnet_char_ip ) ? subnet_char_ip : ch_server[i].ip );
 		char_server.port = ntows( htons( ch_server[i].port ) ); // [!] LE byte order here [!]
-		safestrncpy( char_server.name, ch_server[i].name, sizeof( char_server.name ) );
-		char_server.users = login_get_usercount( ch_server[i].users );
+
+		// Format server name with user count (Custom RO_PK Feature)
+		char buffer[64];
+		int status = login_get_usercount( ch_server[i].users );
+
+		login_format_server_name( ch_server[i].name, ch_server[i].users, buffer, sizeof( buffer ) );
+		safestrncpy( char_server.name, buffer, sizeof( char_server.name ) );
+
+		char_server.users = status;
 		char_server.type = ch_server[i].type;
 		char_server.new_ = ch_server[i].new_;
 #if PACKETVER >= 20170315
