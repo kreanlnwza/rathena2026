@@ -15,5 +15,5 @@
  * @param buffer_size: size of the output buffer
  */
 void login_format_server_name( const char* server_name, int32 users, char* buffer, size_t buffer_size ) {
-	snprintf( buffer, buffer_size, "%s [%d]", server_name, U. );
+	snprintf( buffer, buffer_size, "%s (%d)", server_name, users );
 }
