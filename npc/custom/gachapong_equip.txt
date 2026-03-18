@@ -1,0 +1,248 @@
+//===== rAthena Script =======================================
+//= Gachapong Equip NPC - Random Item by Equipment Position
+//===== Description: =========================================
+//= NPC Gachapong random item from item_db by equip_pos
+//= Select equipment slot to get a random item for that slot
+//= Supports: Head, Weapon, Shield, Armor, Garment, Shoes,
+//=           Accessory, Shadow Gear, Costume, Ammo
+//=
+//= NOTE: Requires recompile with gachapong.cpp/hpp
+//===== Changelogs: ==========================================
+//= 1.0 First version V!be Coding [kreanlnwza] AI Assistant (Claude 4.6 Opus)
+//============================================================
+
+prontera,159,183,4	script	Gachapong Equip	4_F_KAFRA2,{
+
+	// ========================================
+	//  Header
+	// ========================================
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "Welcome to ^0055FFGachapong Equip^000000!";
+	mes "Spin to get random equipment by slot!";
+	mes " ";
+	mes "Cost: ^FF0000" + .token_cost + "x^000000 ^i[" + .token_id + "] " + getitemname(.token_id);
+	next;
+
+	// ========================================
+	//  Category Menu
+	// ========================================
+	switch(select("Headgear:Weapon & Shield:Body Equipment:Accessory:Shadow Gear:Costume:Ammo:Exit")) {
+		case 1: goto L_Headgear;
+		case 2: goto L_Weapon;
+		case 3: goto L_Body;
+		case 4: goto L_Accessory;
+		case 5: goto L_Shadow;
+		case 6: goto L_Costume;
+		case 7:
+			.@equip_pos = EQP_AMMO;
+			.@equip_name$ = "Ammo";
+			goto L_DoSpin;
+		case 8:
+			mes "[^0055FFGachapong Equip^000000]";
+			mes "See you next time!";
+			close;
+	}
+
+// ========================================
+//  Sub-Menu: Headgear
+// ========================================
+L_Headgear:
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "Select headgear position:";
+	next;
+	switch(select("Head Top:Head Mid:Head Low:Back")) {
+		case 1: .@equip_pos = EQP_HEAD_TOP; .@equip_name$ = "Head Top"; break;
+		case 2: .@equip_pos = EQP_HEAD_MID; .@equip_name$ = "Head Mid"; break;
+		case 3: .@equip_pos = EQP_HEAD_LOW; .@equip_name$ = "Head Low"; break;
+		case 4:
+			mes "[^0055FFGachapong Equip^000000]";
+			mes "Cancelled.";
+			close;
+	}
+	goto L_DoSpin;
+
+// ========================================
+//  Sub-Menu: Weapon & Shield
+// ========================================
+L_Weapon:
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "Select weapon/shield position:";
+	next;
+	switch(select("Right Hand (Weapon):Left Hand (Shield):Back")) {
+		case 1: .@equip_pos = EQP_HAND_R; .@equip_name$ = "Right Hand"; break;
+		case 2: .@equip_pos = EQP_HAND_L; .@equip_name$ = "Left Hand"; break;
+		case 3:
+			mes "[^0055FFGachapong Equip^000000]";
+			mes "Cancelled.";
+			close;
+	}
+	goto L_DoSpin;
+
+// ========================================
+//  Sub-Menu: Body Equipment
+// ========================================
+L_Body:
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "Select body equipment:";
+	next;
+	switch(select("Armor:Garment:Shoes:Back")) {
+		case 1: .@equip_pos = EQP_ARMOR; .@equip_name$ = "Armor"; break;
+		case 2: .@equip_pos = EQP_GARMENT; .@equip_name$ = "Garment"; break;
+		case 3: .@equip_pos = EQP_SHOES; .@equip_name$ = "Shoes"; break;
+		case 4:
+			mes "[^0055FFGachapong Equip^000000]";
+			mes "Cancelled.";
+			close;
+	}
+	goto L_DoSpin;
+
+// ========================================
+//  Sub-Menu: Accessory
+// ========================================
+L_Accessory:
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "Select accessory position:";
+	next;
+	switch(select("Accessory R:Accessory L:Back")) {
+		case 1: .@equip_pos = EQP_ACC_R; .@equip_name$ = "Accessory R"; break;
+		case 2: .@equip_pos = EQP_ACC_L; .@equip_name$ = "Accessory L"; break;
+		case 3:
+			mes "[^0055FFGachapong Equip^000000]";
+			mes "Cancelled.";
+			close;
+	}
+	goto L_DoSpin;
+
+// ========================================
+//  Sub-Menu: Shadow Gear
+// ========================================
+L_Shadow:
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "Select shadow gear:";
+	next;
+	switch(select("Shadow Armor:Shadow Weapon:Shadow Shield:Shadow Shoes:Shadow Acc R:Shadow Acc L:Back")) {
+		case 1: .@equip_pos = EQP_SHADOW_ARMOR; .@equip_name$ = "Shadow Armor"; break;
+		case 2: .@equip_pos = EQP_SHADOW_WEAPON; .@equip_name$ = "Shadow Weapon"; break;
+		case 3: .@equip_pos = EQP_SHADOW_SHIELD; .@equip_name$ = "Shadow Shield"; break;
+		case 4: .@equip_pos = EQP_SHADOW_SHOES; .@equip_name$ = "Shadow Shoes"; break;
+		case 5: .@equip_pos = EQP_SHADOW_ACC_R; .@equip_name$ = "Shadow Acc R"; break;
+		case 6: .@equip_pos = EQP_SHADOW_ACC_L; .@equip_name$ = "Shadow Acc L"; break;
+		case 7:
+			mes "[^0055FFGachapong Equip^000000]";
+			mes "Cancelled.";
+			close;
+	}
+	goto L_DoSpin;
+
+// ========================================
+//  Sub-Menu: Costume
+// ========================================
+L_Costume:
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "Select costume:";
+	next;
+	switch(select("Costume Head Top:Costume Head Mid:Costume Head Low:Costume Garment:Back")) {
+		case 1: .@equip_pos = EQP_COSTUME_HEAD_TOP; .@equip_name$ = "Costume Head Top"; break;
+		case 2: .@equip_pos = EQP_COSTUME_HEAD_MID; .@equip_name$ = "Costume Head Mid"; break;
+		case 3: .@equip_pos = EQP_COSTUME_HEAD_LOW; .@equip_name$ = "Costume Head Low"; break;
+		case 4: .@equip_pos = EQP_COSTUME_GARMENT; .@equip_name$ = "Costume Garment"; break;
+		case 5:
+			mes "[^0055FFGachapong Equip^000000]";
+			mes "Cancelled.";
+			close;
+	}
+	goto L_DoSpin;
+
+// ========================================
+//  Spin Logic
+// ========================================
+L_DoSpin:
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "How many spins for ^00BFFF" + .@equip_name$ + "^000000?";
+	next;
+
+	switch(select("Spin 1:Spin 5:Spin 10:Spin 20:Spin 30:Back")) {
+		case 1: .@spin_count = 1; break;
+		case 2: .@spin_count = 5; break;
+		case 3: .@spin_count = 10; break;
+		case 4: .@spin_count = 20; break;
+		case 5: .@spin_count = 30; break;
+		case 6:
+			mes "[^0055FFGachapong Equip^000000]";
+			mes "Cancelled.";
+			close;
+	}
+
+	.@total_cost = .token_cost * .@spin_count;
+
+	// Check inventory space & weight
+	if (checkweight(1201, .@spin_count) == 0) {
+		mes "[^0055FFGachapong Equip^000000]";
+		mes "^FF0000Inventory full or overweight!^000000";
+		mes " ";
+		mes "You need at least ^FF0000" + .@spin_count + "^000000 free inventory slots";
+		mes "and enough weight capacity.";
+		close;
+	}
+
+	// Check token
+	if (countitem(.token_id) < .@total_cost) {
+		mes "[^0055FFGachapong Equip^000000]";
+		mes "Not enough tokens!";
+		mes " ";
+		mes "Need: ^FF0000" + .@total_cost + "^000000 " + getitemname(.token_id);
+		mes "You have: ^0000FF" + countitem(.token_id) + "^000000 " + getitemname(.token_id);
+		close;
+	}
+
+	// Confirm
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "Confirm spin ^FF0000" + .@spin_count + "^000000 time(s) for ^00BFFF" + .@equip_name$ + "^000000?";
+	mes "Cost ^FF0000" + .@total_cost + "^000000 " + getitemname(.token_id);
+	next;
+
+	if (select("Confirm:Cancel") == 2) {
+		mes "[^0055FFGachapong Equip^000000]";
+		mes "Cancelled.";
+		close;
+	}
+
+	// Double check (anti-exploit)
+	if (countitem(.token_id) < .@total_cost) {
+		mes "[^0055FFGachapong Equip^000000]";
+		mes "^FF0000Not enough tokens!^000000";
+		close;
+	}
+
+	// Deduct token
+	delitem .token_id, .@total_cost;
+
+	mes "[^0055FFGachapong Equip^000000]";
+	mes "^00FF00Spinning " + .@equip_name$ + "...^000000";
+	mes "==========================";
+	mes " ";
+
+	// Spin
+	for (.@i = 0; .@i < .@spin_count; .@i++) {
+		.@got_id = gachapong_rand_equip(.@equip_pos);
+
+		if (.@got_id > 0) {
+			mes "^0055FF[" + (.@i + 1) + "]^000000 ^00BFFF[" + .@equip_name$ + "]^000000 ^i[" + .@got_id + "] ^0000FF" + getitemname(.@got_id) + "^000000";
+		} else {
+			mes "^0055FF[" + (.@i + 1) + "]^000000 ^FF0000No item found!^000000";
+		}
+	}
+
+	mes " ";
+	mes "==========================";
+	mes "^00FF00All rewards received!^000000";
+	close;
+
+// ========================================
+//  OnInit: Token Settings
+// ========================================
+OnInit:
+	.token_id = 7539;       // Poring Coin
+	.token_cost = 10;       // Token per spin (10x of normal gachapong)
+	end;
+}

@@ -125,6 +125,9 @@
     <ClInclude Include="atcommand.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gachapong.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="battle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -269,6 +272,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="atcommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gachapong.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle.cpp">

@@ -9,3 +9,11 @@
  **/
 
 //BUILDIN_DEF(example,""),
+
+// Gachapong System - Random item by type
+// Author: V!be Coding [kreanlnwza] AI Assistant (Claude)
+BUILDIN_DEF(gachapong_rand,"i?"),
+BUILDIN_DEF(gachapong_count,"i"),
+BUILDIN_DEF(gachapong_build,""),
+BUILDIN_DEF(gachapong_rand_equip,"i?"),
+BUILDIN_DEF(gachapong_count_equip,"i"),

@@ -1,0 +1,99 @@
+//===== rAthena Script =======================================
+//= Gachapong MVP Reward NPC - Dynamic Gacha on MVP Kill
+//===== Description: =========================================
+//= Template NPC for duplicate_dynamic()
+//= Creates per-player copy when MVP is killed
+//= Auto-despawn controlled by feature.dynamicnpc_timeout
+//= Grants 5-20 free weighted random items
+//=
+//= NOTE: Requires gachapong.txt to be loaded first
+//===== Changelogs: ==========================================
+//= 1.0 First version V!be Coding [kreanlnwza] AI Assistant (Claude 4.6 Opus)
+//============================================================
+
+prontera,0,0,4	script	Gacha MVP Reward	4_F_KAFRA1,{
+
+	// Random reward count: 5-20 items + 5-15 Poring Coins
+	.@reward_count = rand(5, 20);
+	.@coin_count = rand(5, 15);
+
+	// Check inventory (items + coins)
+	if (checkweight(1201, .@reward_count + .@coin_count) == 0) {
+		mes "[^FFD700Gachapong MVP^000000]";
+		mes "^FF0000Inventory full or overweight!^000000";
+		mes "Free up space and try again.";
+		close;
+	}
+
+	mes "[^FFD700Gachapong MVP^000000]";
+	mes "^00FF00Congratulations on defeating the MVP!^000000";
+	mes "You got ^FF0000" + .@reward_count + "^000000 free items and ^FFD700" + .@coin_count + "^000000 Poring Coins!";
+	next;
+
+	if (select("Claim Reward:Later") == 2) {
+		mes "[^FFD700Gachapong MVP^000000]";
+		mes "Come back before I disappear!";
+		close;
+	}
+
+	mes "[^FFD700Gachapong MVP^000000]";
+	mes "^00FF00Spinning MVP Reward (" + .@reward_count + " items)...^000000";
+	mes "==========================";
+	mes " ";
+
+	// Get weight table from main Gachapong NPC
+	.@type_count = getvariableofnpc(.type_count, "Gachapong");
+	.@total_weight = getvariableofnpc(.total_weight, "Gachapong");
+	for (.@w = 0; .@w < .@type_count; .@w++) {
+		.@gtype[.@w] = getvariableofnpc(.type[.@w], "Gachapong");
+		.@gweight[.@w] = getvariableofnpc(.weight[.@w], "Gachapong");
+	}
+
+	for (.@i = 0; .@i < .@reward_count; .@i++) {
+		.@roll = rand(.@total_weight);
+		.@cur_type = 0;
+		.@acc = 0;
+		for (.@w = 0; .@w < .@type_count; .@w++) {
+			.@acc += .@gweight[.@w];
+			if (.@roll < .@acc) {
+				.@cur_type = .@gtype[.@w];
+				break;
+			}
+		}
+
+		.@got_id = gachapong_rand(.@cur_type);
+
+		if (.@got_id > 0) {
+			.@tname$ = "^999999[?]^000000";
+			if (.@cur_type == IT_ETC) .@tname$ = "^777777[ETC]^000000";
+			else if (.@cur_type == IT_ARMOR) .@tname$ = "^00BFFF[Armor]^000000";
+			else if (.@cur_type == IT_WEAPON) .@tname$ = "^FF4500[Weapon]^000000";
+			else if (.@cur_type == IT_CARD) .@tname$ = "^FFD700[Card]^000000";
+			else if (.@cur_type == IT_PETARMOR) .@tname$ = "^FF69B4[Pet Armor]^000000";
+			else if (.@cur_type == IT_SHADOWGEAR) .@tname$ = "^8B00FF[Shadow]^000000";
+
+			mes "^00FF00[" + (.@i + 1) + "]^000000 " + .@tname$ + " ^i[" + .@got_id + "] ^0000FF" + getitemname(.@got_id) + "^000000";
+		} else {
+			mes "^00FF00[" + (.@i + 1) + "]^000000 ^FF0000No item found!^000000";
+		}
+	}
+
+	mes " ";
+	mes "==========================";
+
+	// Give random Poring Coins (5-15)
+	getitem 7539, .@coin_count;
+	mes "^FFD700+ " + .@coin_count + "x Poring Coin!^000000";
+
+	mes " ";
+	mes "==========================";
+	mes "^00FF00MVP Reward claimed! (" + .@reward_count + " items + " + .@coin_count + " coins)^000000";
+	close2;
+	// Disable NPC to prevent re-use, auto-despawn by feature.dynamicnpc_timeout
+	disablenpc strnpcinfo(3);
+	end;
+
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+}
