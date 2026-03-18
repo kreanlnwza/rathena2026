@@ -1,0 +1,486 @@
+//===== rAthena Script =======================================
+//= Gachapong NPC - Weighted Random Item by Type + Leaderboard
+//===== Description: =========================================
+//= NPC Gachapong random item from item_db by weighted type
+//= IT_ETC 80%, IT_WEAPON 15%, IT_PETARMOR 3%, IT_ARMOR 2%,
+//= IT_SHADOWGEAR 1%, IT_CARD 0.1%
+//= Weekly leaderboard with auto-reset every Monday 00:00
+//=
+//= NOTE: Requires recompile with gachapong.cpp/hpp
+//===== Changelogs: ==========================================
+//= 1.0 First version V!be Coding [kreanlnwza] AI Assistant (Claude 4.6 Opus)
+//= 2.0 Rewrite to use C++ buildin commands for random item by type
+//= 3.0 Weighted random type system (auto-select type by rate)
+//= 3.1 Removed rate display and stats menu
+//= 4.0 Added weekly leaderboard system with auto-reset
+//= 5.0 MVP Kill Reward: free 3 spins on MVP kill via OnNPCKillEvent
+//============================================================
+
+prontera,155,183,4	script	Gachapong	4_F_KAFRA1,{
+
+	// ========================================
+	//  Weekly Reset Check
+	// ========================================
+	callsub S_CheckWeekReset;
+
+	// ========================================
+	//  Header
+	// ========================================
+	mes "[^FF6600Gachapong^000000]";
+	mes "Welcome to ^FF6600Gachapong^000000!";
+	mes "Spin to get random items from the Server!";
+	mes " ";
+	mes "Cost: ^FF0000" + .token_cost + "x^000000 ^i[" + .token_id + "] " + getitemname(.token_id);
+	mes " ";
+	mes "^777777Your weekly spins: ^0000FF" + #GACHA_SPINS + "^000000";
+	if (#GACHA_RARES > 0)
+		mes "^FFD700Rare items this week: ^FF0000" + #GACHA_RARES + "^000000";
+	if (#GACHA_MVP_FREE > 0)
+		mes "^00FF00MVP Free Spins: ^FF0000" + #GACHA_MVP_FREE + "^000000";
+	next;
+
+	// ========================================
+	//  Main Menu (dynamic: show MVP Reward only when available)
+	// ========================================
+	if (#GACHA_MVP_FREE > 0) {
+		switch(select("Spin:MVP Reward (Free " + #GACHA_MVP_FREE + "):Leaderboard:Exit")) {
+			case 1:
+				goto L_SpinMenu;
+			case 2:
+				goto L_MVPReward;
+			case 3:
+				callsub S_Leaderboard;
+				close;
+			case 4:
+				mes "[^FF6600Gachapong^000000]";
+				mes "See you next time!";
+				close;
+		}
+	} else {
+		switch(select("Spin:Leaderboard:Exit")) {
+			case 1:
+				goto L_SpinMenu;
+			case 2:
+				callsub S_Leaderboard;
+				close;
+			case 3:
+				mes "[^FF6600Gachapong^000000]";
+				mes "See you next time!";
+				close;
+		}
+	}
+
+// ========================================
+//  MVP Reward: Free Spins
+// ========================================
+L_MVPReward:
+	.@free_count = #GACHA_MVP_FREE;
+	if (.@free_count > 30)
+		.@free_count = 30;
+
+	// Check inventory space & weight
+	if (checkweight(1201, .@free_count) == 0) {
+		mes "[^FF6600Gachapong^000000]";
+		mes "^FF0000Inventory full or overweight!^000000";
+		mes " ";
+		mes "You need at least ^FF0000" + .@free_count + "^000000 free inventory slots";
+		mes "and enough weight capacity.";
+		close;
+	}
+
+	mes "[^FF6600Gachapong^000000]";
+	mes "^00FF00MVP Reward!^000000 You have ^FF0000" + .@free_count + "^000000 free spin(s)!";
+	mes "^777777(No token required)^000000";
+	next;
+
+	if (select("Claim:Cancel") == 2) {
+		mes "[^FF6600Gachapong^000000]";
+		mes "Cancelled. Come back anytime!";
+		close;
+	}
+
+	// Re-check in case of exploit
+	if (#GACHA_MVP_FREE <= 0) {
+		mes "[^FF6600Gachapong^000000]";
+		mes "^FF0000No free spins available!^000000";
+		close;
+	}
+	.@free_count = #GACHA_MVP_FREE;
+	if (.@free_count > 30)
+		.@free_count = 30;
+
+	mes "[^FF6600Gachapong^000000]";
+	mes "^00FF00Spinning MVP Reward...^000000";
+	mes "==========================";
+	mes " ";
+
+	.@rare_count = 0;
+
+	for (.@i = 0; .@i < .@free_count; .@i++) {
+		.@roll = rand(.total_weight);
+
+		.@cur_type = 0;
+		.@acc = 0;
+		for (.@w = 0; .@w < .type_count; .@w++) {
+			.@acc += .weight[.@w];
+			if (.@roll < .@acc) {
+				.@cur_type = .type[.@w];
+				break;
+			}
+		}
+
+		.@got_id = gachapong_rand(.@cur_type);
+
+		if (.@got_id > 0) {
+			callsub S_GetTypeName, .@cur_type;
+
+			if (.@cur_type == IT_CARD || .@cur_type == IT_SHADOWGEAR || .@cur_type == IT_ARMOR)
+				.@rare_count++;
+
+			mes "^00FF00[" + (.@i + 1) + "]^000000 " + .@type_name$ + " ^i[" + .@got_id + "] ^0000FF" + getitemname(.@got_id) + "^000000";
+		} else {
+			mes "^00FF00[" + (.@i + 1) + "]^000000 ^FF0000No item found!^000000";
+		}
+	}
+
+	mes " ";
+	mes "==========================";
+	mes "^00FF00All MVP rewards received!^000000";
+
+	// Deduct free spins
+	#GACHA_MVP_FREE -= .@free_count;
+
+	// Update stats
+	#GACHA_SPINS += .@free_count;
+	#GACHA_RARES += .@rare_count;
+	callsub S_UpdateLeaderboard;
+
+	if (.@rare_count > 0)
+		mes "^FFD700+ " + .@rare_count + " rare item(s) recorded!^000000";
+
+	close;
+
+// ========================================
+//  Spin Sub-Menu
+// ========================================
+L_SpinMenu:
+	mes "[^FF6600Gachapong^000000]";
+	mes "How many spins?";
+	next;
+
+	switch(select("Spin 1:Spin 5:Spin 10:Spin 20:Spin 30:Back")) {
+		case 1: .@spin_count = 1; break;
+		case 2: .@spin_count = 5; break;
+		case 3: .@spin_count = 10; break;
+		case 4: .@spin_count = 20; break;
+		case 5: .@spin_count = 30; break;
+		case 6:
+			mes "[^FF6600Gachapong^000000]";
+			mes "Cancelled.";
+			close;
+	}
+
+	.@total_cost = .token_cost * .@spin_count;
+
+	// ========================================
+	//  Check Inventory Space & Weight
+	//  Use non-stackable item (Knife=1201) to verify
+	//  player has enough free slots for worst case
+	// ========================================
+	if (checkweight(1201, .@spin_count) == 0) {
+		mes "[^FF6600Gachapong^000000]";
+		mes "^FF0000Inventory full or overweight!^000000";
+		mes " ";
+		mes "You need at least ^FF0000" + .@spin_count + "^000000 free inventory slots";
+		mes "and enough weight capacity.";
+		close;
+	}
+
+	// ========================================
+	//  Check Token
+	// ========================================
+	if (countitem(.token_id) < .@total_cost) {
+		mes "[^FF6600Gachapong^000000]";
+		mes "Not enough tokens!";
+		mes " ";
+		mes "Need: ^FF0000" + .@total_cost + "^000000 " + getitemname(.token_id);
+		mes "You have: ^0000FF" + countitem(.token_id) + "^000000 " + getitemname(.token_id);
+		close;
+	}
+
+	// ========================================
+	//  Confirm
+	// ========================================
+	mes "[^FF6600Gachapong^000000]";
+	mes "Confirm spin ^FF0000" + .@spin_count + "^000000 time(s)?";
+	mes "Cost ^FF0000" + .@total_cost + "^000000 " + getitemname(.token_id);
+	next;
+
+	if (select("Confirm:Cancel") == 2) {
+		mes "[^FF6600Gachapong^000000]";
+		mes "Cancelled.";
+		close;
+	}
+
+	// Double check (anti-exploit)
+	if (countitem(.token_id) < .@total_cost) {
+		mes "[^FF6600Gachapong^000000]";
+		mes "^FF0000Not enough tokens!^000000";
+		close;
+	}
+
+	// Deduct Token
+	delitem .token_id, .@total_cost;
+
+	mes "[^FF6600Gachapong^000000]";
+	mes "^00FF00Spinning...^000000";
+	mes "==========================";
+	mes " ";
+
+	// ========================================
+	//  Weighted Random + Track Stats
+	// ========================================
+	.@rare_count = 0;
+
+	for (.@i = 0; .@i < .@spin_count; .@i++) {
+		.@roll = rand(.total_weight);
+
+		.@cur_type = 0;
+		.@acc = 0;
+		for (.@w = 0; .@w < .type_count; .@w++) {
+			.@acc += .weight[.@w];
+			if (.@roll < .@acc) {
+				.@cur_type = .type[.@w];
+				break;
+			}
+		}
+
+		.@got_id = gachapong_rand(.@cur_type);
+
+		if (.@got_id > 0) {
+			callsub S_GetTypeName, .@cur_type;
+
+			// Track rare items (Card, Shadow, Armor)
+			if (.@cur_type == IT_CARD || .@cur_type == IT_SHADOWGEAR || .@cur_type == IT_ARMOR)
+				.@rare_count++;
+
+			mes "^FF6600[" + (.@i + 1) + "]^000000 " + .@type_name$ + " ^i[" + .@got_id + "] ^0000FF" + getitemname(.@got_id) + "^000000";
+		} else {
+			mes "^FF6600[" + (.@i + 1) + "]^000000 ^FF0000No item found!^000000";
+		}
+	}
+
+	mes " ";
+	mes "==========================";
+	mes "^00FF00All rewards received!^000000";
+
+	// ========================================
+	//  Update Player Stats
+	// ========================================
+	#GACHA_SPINS += .@spin_count;
+	#GACHA_RARES += .@rare_count;
+
+	// Update leaderboard
+	callsub S_UpdateLeaderboard;
+
+	if (.@rare_count > 0)
+		mes "^FFD700+ " + .@rare_count + " rare item(s) recorded!^000000";
+
+	close;
+
+// ========================================
+//  Subroutine: Get Type Name
+// ========================================
+S_GetTypeName:
+	switch(getarg(0)) {
+		case IT_ETC:        .@type_name$ = "^777777[ETC]^000000"; return;
+		case IT_ARMOR:      .@type_name$ = "^00BFFF[Armor]^000000"; return;
+		case IT_WEAPON:     .@type_name$ = "^FF4500[Weapon]^000000"; return;
+		case IT_CARD:       .@type_name$ = "^FFD700[Card]^000000"; return;
+		case IT_PETARMOR:   .@type_name$ = "^FF69B4[Pet Armor]^000000"; return;
+		case IT_SHADOWGEAR: .@type_name$ = "^8B00FF[Shadow]^000000"; return;
+		default:            .@type_name$ = "^999999[Unknown]^000000"; return;
+	}
+
+// ========================================
+//  Subroutine: Check Weekly Reset
+//  Week ID = unix_timestamp / 604800
+// ========================================
+S_CheckWeekReset:
+	.@cur_week = gettimetick(2) / 604800;
+
+	// Player's data is from a previous week -> reset
+	if (#GACHA_WEEK != .@cur_week) {
+		#GACHA_SPINS = 0;
+		#GACHA_RARES = 0;
+		#GACHA_WEEK = .@cur_week;
+	}
+	return;
+
+// ========================================
+//  Subroutine: Show Leaderboard
+// ========================================
+S_Leaderboard:
+	mes "[^FF6600Gachapong^000000]";
+	mes "^FFD700===== Weekly Leaderboard =====^000000";
+	mes " ";
+
+	.@has_entry = 0;
+	for (.@i = 0; .@i < 10; .@i++) {
+		if ($GACHA_LB_SPINS[.@i] <= 0)
+			break;
+
+		.@has_entry = 1;
+		.@medal$ = "";
+		if (.@i == 0) .@medal$ = "^FFD700[1st]^000000 ";
+		else if (.@i == 1) .@medal$ = "^C0C0C0[2nd]^000000 ";
+		else if (.@i == 2) .@medal$ = "^CD7F32[3rd]^000000 ";
+		else .@medal$ = "^777777[" + (.@i + 1) + "th]^000000 ";
+
+		mes .@medal$ + "^0000FF" + $GACHA_LB_NAME$[.@i] + "^000000";
+		mes "   Spins: ^FF0000" + $GACHA_LB_SPINS[.@i] + "^000000 | Rares: ^FFD700" + $GACHA_LB_RARES[.@i] + "^000000";
+	}
+
+	if (.@has_entry == 0)
+		mes "^777777No data yet this week.^000000";
+
+	mes " ";
+	mes "^777777Resets every Monday 00:00^000000";
+	mes " ";
+	mes "^777777--- Your Stats ---^000000";
+	mes "Spins: ^0000FF" + #GACHA_SPINS + "^000000 | Rares: ^FFD700" + #GACHA_RARES + "^000000";
+	return;
+
+// ========================================
+//  Subroutine: Update Leaderboard
+//  Sorted top 10 by spins (descending)
+// ========================================
+S_UpdateLeaderboard:
+	.@my_name$ = strcharinfo(0);
+	.@my_spins = #GACHA_SPINS;
+	.@my_rares = #GACHA_RARES;
+
+	// Check if player already exists in leaderboard
+	.@found = -1;
+	for (.@i = 0; .@i < 10; .@i++) {
+		if ($GACHA_LB_NAME$[.@i] == .@my_name$) {
+			.@found = .@i;
+			break;
+		}
+	}
+
+	// Update existing entry
+	if (.@found >= 0) {
+		$GACHA_LB_SPINS[.@found] = .@my_spins;
+		$GACHA_LB_RARES[.@found] = .@my_rares;
+	} else {
+		// Find slot: replace lowest or add to empty
+		.@slot = -1;
+
+		// Find empty slot
+		for (.@i = 0; .@i < 10; .@i++) {
+			if ($GACHA_LB_SPINS[.@i] <= 0) {
+				.@slot = .@i;
+				break;
+			}
+		}
+
+		// No empty slot -> check if we beat the last place
+		if (.@slot == -1 && .@my_spins > $GACHA_LB_SPINS[9])
+			.@slot = 9;
+
+		// Insert if slot found
+		if (.@slot >= 0) {
+			$GACHA_LB_NAME$[.@slot] = .@my_name$;
+			$GACHA_LB_SPINS[.@slot] = .@my_spins;
+			$GACHA_LB_RARES[.@slot] = .@my_rares;
+		} else {
+			return; // Not in top 10
+		}
+	}
+
+	// Bubble sort descending by spins
+	for (.@i = 0; .@i < 9; .@i++) {
+		for (.@j = 0; .@j < 9 - .@i; .@j++) {
+			if ($GACHA_LB_SPINS[.@j] < $GACHA_LB_SPINS[.@j + 1]) {
+				// Swap
+				.@tmp_name$ = $GACHA_LB_NAME$[.@j];
+				.@tmp_spins = $GACHA_LB_SPINS[.@j];
+				.@tmp_rares = $GACHA_LB_RARES[.@j];
+
+				$GACHA_LB_NAME$[.@j] = $GACHA_LB_NAME$[.@j + 1];
+				$GACHA_LB_SPINS[.@j] = $GACHA_LB_SPINS[.@j + 1];
+				$GACHA_LB_RARES[.@j] = $GACHA_LB_RARES[.@j + 1];
+
+				$GACHA_LB_NAME$[.@j + 1] = .@tmp_name$;
+				$GACHA_LB_SPINS[.@j + 1] = .@tmp_spins;
+				$GACHA_LB_RARES[.@j + 1] = .@tmp_rares;
+			}
+		}
+	}
+	return;
+
+// ========================================
+//  OnInit: Token & Weight Table
+// ========================================
+OnInit:
+	.token_id = 7539;       // Poring Coin
+	.token_cost = 1;        // Token per spin
+
+	// Weighted Type Table (x10 for 0.1% support)
+	setarray .type[0],   IT_ETC, IT_WEAPON, IT_PETARMOR, IT_ARMOR, IT_SHADOWGEAR, IT_CARD;
+	setarray .weight[0],    800,       150,          30,       20,            10,       1;
+
+	// Auto-calculate total weight
+	.type_count = getarraysize(.type);
+	.total_weight = 0;
+	for (.@i = 0; .@i < .type_count; .@i++) {
+		.total_weight += .weight[.@i];
+	}
+
+	//debugmes "[Gachapong] Loaded. Token: " + getitemname(.token_id) + " (ID:" + .token_id + ") | Total Weight: " + .total_weight;
+	end;
+
+// ========================================
+//  Weekly Reset: Monday 00:00
+// ========================================
+OnClock0000:
+	// Only reset on Monday (DT_DAYOFWEEK: 0=Sun, 1=Mon)
+	if (gettime(DT_DAYOFWEEK) != 1)
+		end;
+
+	// Clear leaderboard
+	for (.@i = 0; .@i < 10; .@i++) {
+		$GACHA_LB_NAME$[.@i] = "";
+		$GACHA_LB_SPINS[.@i] = 0;
+		$GACHA_LB_RARES[.@i] = 0;
+	}
+
+	announce "[Gachapong] Weekly leaderboard has been reset!", bc_all, 0xFFD700;
+	debugmes "[Gachapong] Weekly leaderboard reset.";
+	end;
+
+// ========================================
+//  MVP Kill Reward: Spawn Dynamic NPC
+//  Uses rAthena's built-in duplicate_dynamic()
+//  NPC visible only to the killing player
+//  Auto-despawn by feature.dynamicnpc_timeout
+// ========================================
+OnNPCKillEvent:
+	if (getmonsterinfo(killedrid, MOB_MVPEXP) <= 0)
+		end;
+
+	// Spawn dynamic NPC near the player (uses "Gacha MVP Reward" template)
+	.@dyn_name$ = duplicate_dynamic("Gacha MVP Reward");
+
+	if (.@dyn_name$ == "") {
+		// Fallback if dynamic NPC fails
+		#GACHA_MVP_FREE += 5;
+		dispbottom "[Gachapong] +5 free spins saved at Gachapong NPC!", 0x00FF00;
+		end;
+	}
+
+	dispbottom "[Gachapong] MVP Reward NPC appeared nearby! Click to claim free items! (5-20 random)", 0x00FF00;
+	announce strcharinfo(0) + " defeated MVP " + getmonsterinfo(killedrid, MOB_NAME) + "!", bc_all, 0xFFD700;
+	end;
+}

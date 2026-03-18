@@ -2,6 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "itemdb.hpp"
+#include "gachapong.hpp"
 
 #include <chrono>
 #include <cmath>
@@ -4983,6 +4984,7 @@ void itemdb_reload(void) {
 
 	// read new data
 	itemdb_read();
+	do_init_gachapong();
 	cashshop_reloaddb();
 
 	mob_reload_itemmob_data();
@@ -5014,6 +5016,7 @@ void do_final_itemdb(void) {
 	item_reform_db.clear();
 	item_enchant_db.clear();
 	item_package_db.clear();
+	gachapong_db.clear();
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 }
@@ -5023,4 +5026,5 @@ void do_final_itemdb(void) {
 */
 void do_init_itemdb(void) {
 	itemdb_read();
+	do_init_gachapong();
 }
