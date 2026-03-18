@@ -1959,11 +1959,15 @@ uint8 pc_isequip( const map_session_data* sd, int32 n )
 	}
 
 	//Not equipable by class. [Skotlex]
-	if (!pc_job_can_use_item(sd,item))
-		return ITEM_EQUIP_ACK_FAIL;
+	// Skip job/class check for non-weapon equipment (armor, headgear, accessory, costume, shadow gear)
+	// Only weapons (IT_WEAPON) still require job validation
+	if (item->type == IT_WEAPON) {
+		if (!pc_job_can_use_item(sd,item))
+			return ITEM_EQUIP_ACK_FAIL;
 
-	if (!pc_isItemClass(sd, item))
-		return ITEM_EQUIP_ACK_FAIL;
+		if (!pc_isItemClass(sd, item))
+			return ITEM_EQUIP_ACK_FAIL;
+	}
 
 	return ITEM_EQUIP_ACK_OK;
 }
