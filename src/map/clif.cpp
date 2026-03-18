@@ -890,6 +890,12 @@ void clif_dropflooritem( const flooritem_data* fitem, bool canShowEffect ){
 		if( dropEffect > 0 ){
 			p.showdropeffect = 1;
 			p.dropeffectmode = dropEffect - 1;
+		}else if ( itemtype( fitem->item.nameid ) == IT_CARD ) {
+			p.showdropeffect = 1;
+			p.dropeffectmode = DROPEFFECT_RED_PILLAR - 1;
+		}else if ( fitem->item.nameid == 7539 || fitem->item.nameid == 756 || fitem->item.nameid == 757 || fitem->item.nameid == 714 ) {
+			p.showdropeffect = 1;
+			p.dropeffectmode = DROPEFFECT_GREEN_PILLAR - 1;
 		}else if (battle_config.rndopt_drop_pillar != 0){
 			uint8 optionCount = 0;
 
