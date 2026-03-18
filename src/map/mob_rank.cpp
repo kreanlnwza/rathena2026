@@ -180,5 +180,10 @@ TIMER_FUNC(mob_rank_reshuffle_timer) {
 
 	map_foreachmob(mob_rank_reshuffle_sub);
 	ShowInfo("Monster Rank System: All monster ranks have been reshuffled.\n");
+
+	// Broadcast announcement to all players
+	char msg[256];
+	snprintf(msg, sizeof(msg), "[Monster Rank] All monster ranks have been reshuffled!");
+	clif_broadcast(nullptr, msg, strlen(msg) + 1, BC_DEFAULT, ALL_CLIENT);
 	return 0;
 }
