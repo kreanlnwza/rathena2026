@@ -3557,6 +3557,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 
 		if (battle_config.mob_rank_system && battle_config.mob_rank_coin_drop
 			&& md->rank > MOBRANK_F && coin_sd != nullptr
+			&& !map_getmapflag(md->m, MF_NODROP)
 			&& abs(static_cast<int32>(coin_sd->status.base_level) - static_cast<int32>(md->level)) <= 15) {
 			uint16 coin_rate = mob_rank_multipliers[md->rank].coin_rate;
 
@@ -7390,6 +7391,10 @@ void mob_clear_spawninfo()
 /*==========================================
  * Circumference initialization of mob
  *------------------------------------------*/
+/**
+ * Initialize monster data
+ * @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+ */
 void do_init_mob(void){
 	mob_db_load(false);
 
@@ -7403,14 +7408,14 @@ void do_init_mob(void){
 	add_timer_func_list(mvptomb_delayspawn,"mvptomb_delayspawn");
 	add_timer_func_list(mob_attacked, "mob_attacked");
 	add_timer_func_list(mob_norm_attacked, "mob_norm_attacked");
-	add_timer_interval(gettick()+MIN_MOBTHINKTIME,mob_ai_hard,0,0,MIN_MOBTHINKTIME);
-	add_timer_interval(gettick()+MIN_MOBTHINKTIME*10,mob_ai_lazy,0,0,MIN_MOBTHINKTIME*10);
+	add_timer_interval(gettick()+MIN_MOBTHINKTIME,mob_ai_hard,0,0,(int32)MIN_MOBTHINKTIME);
+	add_timer_interval(gettick()+MIN_MOBTHINKTIME*10,mob_ai_lazy,0,0,(int32)(MIN_MOBTHINKTIME*10));
 
 	// Monster Rank Reshuffle Timer
 	if (battle_config.mob_rank_system && battle_config.mob_rank_reshuffle_interval > 0) {
 		t_tick interval = (t_tick)battle_config.mob_rank_reshuffle_interval * 60 * 1000; // minutes to ms
 		add_timer_func_list(mob_rank_reshuffle_timer, "mob_rank_reshuffle_timer");
-		add_timer_interval(gettick() + interval, mob_rank_reshuffle_timer, 0, 0, interval);
+		add_timer_interval(gettick() + interval, mob_rank_reshuffle_timer, 0, 0, (int32)interval);
 		ShowStatus("Monster Rank Reshuffle: every %d minutes.\n", battle_config.mob_rank_reshuffle_interval);
 	}
 }

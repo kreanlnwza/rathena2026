@@ -1,0 +1,14 @@
+//===== rAthena Script =======================================
+//= Mapflag: No Drop
+//===== Description: =========================================
+//= Prevents players from dropping items and prevents
+//= mob rank coin drops on these maps.
+//============================================================
+
+//============================================================
+// Training Ground outside Prontera
+//============================================================
+tra_fild	mapflag	nodrop
+tra_fild01	mapflag	nodrop
+tra_fild02	mapflag	nodrop
+tra_fild03	mapflag	nodrop
