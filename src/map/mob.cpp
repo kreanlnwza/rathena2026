@@ -3549,6 +3549,37 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		log_mvpdrop(mvp_sd, md->mob_id, log_mvp_nameid, log_mvp_exp);
 	}
 
+	// Mob Rank Coin Drop System
+	// Gives 1 bonus coin to the killer when killing a ranked monster (rank > F)
+	// Player level must be within ±15 of monster level
+	{
+		map_session_data* coin_sd = (mvp_sd != nullptr) ? mvp_sd : first_sd;
+
+		if (battle_config.mob_rank_system && battle_config.mob_rank_coin_drop
+			&& md->rank > MOBRANK_F && coin_sd != nullptr
+			&& abs(static_cast<int32>(coin_sd->status.base_level) - static_cast<int32>(md->level)) <= 15) {
+			uint16 coin_rate = mob_rank_multipliers[md->rank].coin_rate;
+
+			if (coin_rate > 0 && (coin_rate >= 10000 || rnd() % 10000 < coin_rate)) {
+				struct item coin_item = {};
+				coin_item.nameid = battle_config.mob_rank_coin_itemid;
+				coin_item.identify = 1;
+
+				int16 drop_x = md->x + (rnd() % 11) - 5;
+				int16 drop_y = md->y + (rnd() % 11) - 5;
+				map_addflooritem(&coin_item, 1, md->m, drop_x, drop_y,
+					coin_sd->status.char_id, 0, 0, 4, 0, true, DIR_CENTER);
+
+				char msg[CHAT_SIZE_MAX];
+				const char* rank_name = mob_rank_prefix(md->rank);
+				std::shared_ptr<item_data> i_data = item_db.find(battle_config.mob_rank_coin_itemid);
+				const char* item_name = (i_data != nullptr) ? i_data->ename.c_str() : "Coin";
+				snprintf(msg, sizeof(msg), "[Rank %s] You received 1x %s!", rank_name, item_name);
+				clif_messagecolor(coin_sd, color_table[COLOR_LIGHT_GREEN], msg, false, SELF);
+			}
+		}
+	}
+
 	if (type&2 && !sd && md->mob_id == MOBID_EMPERIUM)
 		// Emperium destroyed by script. Discard top damage dealer.
 		first_sd = nullptr;

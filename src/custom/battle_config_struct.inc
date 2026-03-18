@@ -31,3 +31,5 @@ int32 mob_rank_weight_ssplus;
 int32 mob_rank_weight_sss;
 int32 mob_rank_weight_ex;
 int32 mob_rank_weight_explus;
+int32 mob_rank_coin_drop;        ///< Mob Rank Coin Drop: 0=off, 1=on
+int32 mob_rank_coin_itemid;      ///< Item ID for rank coin (default: 7539)

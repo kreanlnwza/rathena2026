@@ -54,6 +54,7 @@ struct s_mob_rank_multiplier {
 	uint16 deflect;   ///< % chance to block all damage (0-100)
 	uint16 dmg_taken; ///< % of damage received (100 = normal, lower = tankier)
 	uint16 dmg_dealt; ///< % of damage dealt (100 = normal, higher = stronger)
+	uint16 coin_rate; ///< coin drop rate (0-10000, per 10000 = 100%)
 };
 
 // Forward declaration

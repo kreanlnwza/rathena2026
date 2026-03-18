@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/muram/OneDrive/Documents/rathena2026 -name mob_rank* -o -name *mob_rank*)",
+      "Bash(grep -r \"mob_rank_system\\\\|mob_rank_weight\\\\|mob_rank_mvp\\\\|mob_rank_boss\" /c/Users/muram/OneDrive/Documents/rathena2026/src/map/*.hpp)",
+      "Bash(cmake --build . --target map-server)"
+    ]
+  }
+}
