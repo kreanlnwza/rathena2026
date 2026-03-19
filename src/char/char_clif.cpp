@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>
 #include <common/mapindex.hpp>
 #include <common/mmo.hpp>
@@ -23,6 +24,7 @@
 #include <common/utils.hpp>
 
 #include "char.hpp"
+#include "char_ip_limit.hpp"
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
 #include "inter.hpp"
@@ -952,8 +954,18 @@ bool chclif_parse_select_accessible_map( int32 fd, struct char_session_data& sd 
 		return 1;
 	}
 
-	/* set char as online prior to loading its data so 3rd party applications will realise the sql data is not reliable */
-	char_set_char_online( -2, char_id, sd.account_id );
+	// Per-IP connection limit check
+	if (!char_check_ip_connection_limit(session[fd]->client_addr, sd.group_id)) {
+		chclif_reject( fd, 0 ); // rejected from server (per-IP limit)
+		return 1;
+	}
+
+	// GM accounts that bypass the per-IP limit should not be counted
+	{
+		uint32 ip_for_limit = (sd.group_id >= charserv_config.max_connect_user_per_ip_gm_allow_group) ? 0 : session[fd]->client_addr;
+		/* set char as online prior to loading its data so 3rd party applications will realise the sql data is not reliable */
+		char_set_char_online( -2, char_id, sd.account_id, ip_for_limit );
+	}
 
 	struct mmo_charstatus char_dat;
 
@@ -1112,8 +1124,18 @@ bool chclif_parse_charselect( int32 fd, struct char_session_data& sd ){
 		return 1;
 	}
 
-	/* set char as online prior to loading its data so 3rd party applications will realise the sql data is not reliable */
-	char_set_char_online(-2,char_id,sd.account_id);
+	// Per-IP connection limit check
+	if (!char_check_ip_connection_limit(session[fd]->client_addr, sd.group_id)) {
+		chclif_reject(fd, 0); // rejected from server (per-IP limit)
+		return 1;
+	}
+
+	// GM accounts that bypass the per-IP limit should not be counted
+	{
+		uint32 ip_for_limit = (sd.group_id >= charserv_config.max_connect_user_per_ip_gm_allow_group) ? 0 : session[fd]->client_addr;
+		/* set char as online prior to loading its data so 3rd party applications will realise the sql data is not reliable */
+		char_set_char_online(-2,char_id,sd.account_id, ip_for_limit);
+	}
 
 	struct mmo_charstatus char_dat;
 	if( !char_mmo_char_fromsql(char_id, &char_dat, true) ) { /* failed? set it back offline */

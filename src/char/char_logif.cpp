@@ -17,6 +17,7 @@
 
 #include "char.hpp"
 #include "char_clif.hpp"
+#include "char_ip_limit.hpp"
 #include "char_mapif.hpp"
 #include "inter.hpp"
 #include "int_guild.hpp"
@@ -357,6 +358,9 @@ int32 chlogif_parse_reqaccdata(int32 fd){
 			(charserv_config.max_connect_user > 0 && char_count_users() >= charserv_config.max_connect_user)) &&
 			sd->group_id < charserv_config.gm_allow_group) {
 			// refuse connection (over populated)
+			chclif_reject(u_fd,0);
+		} else if (!char_check_ip_connection_limit(session[u_fd]->client_addr, sd->group_id)) {
+			// refuse connection (per-IP limit)
 			chclif_reject(u_fd,0);
 		} else {
 			// send characters to player
