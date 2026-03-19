@@ -30,6 +30,7 @@
 
 #include "char_clif.hpp"
 #include "char_cnslif.hpp"
+#include "char_ip_limit.hpp"
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
 #include "inter.hpp"
@@ -92,6 +93,7 @@ online_char_data::online_char_data( uint32 account_id ){
 	this->fd = -1;
 	this->waiting_disconnect = INVALID_TIMER;
 	this->pincode_success = false;
+	this->ip = 0;
 }
 
 void char_set_charselect(uint32 account_id) {
@@ -118,7 +120,7 @@ void char_set_charselect(uint32 account_id) {
 
 }
 
-void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id) {
+void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id, uint32 ip) {
 	//Update DB
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='1', `last_login`=NOW() WHERE `char_id`='%d' LIMIT 1", schema_config.char_db, char_id) )
 		Sql_ShowDebug(sql_handle);
@@ -144,6 +146,18 @@ void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id) {
 	}
 
 	//Update state data
+	// Track IP for per-IP connection limit
+	if (ip != 0 && character->ip != ip) {
+		if (character->ip != 0)
+			char_ip_connection_decrement(character->ip);
+		character->ip = ip;
+		char_ip_connection_increment(ip);
+	} else if (ip != 0 && character->ip == ip) {
+		// Same IP, no change needed
+	} else if (ip == 0 && character->ip == 0) {
+		// No IP info available
+	}
+
 	character->char_id = char_id;
 	character->server = map_id;
 
@@ -192,6 +206,11 @@ void char_set_char_offline(uint32 char_id, uint32 account_id){
 
 		if(character->char_id == char_id)
 		{
+			// Decrement IP connection counter
+			if (character->ip != 0) {
+				char_ip_connection_decrement(character->ip);
+				character->ip = 0;
+			}
 			character->char_id = -1;
 			character->server = -1;
 			// needed if player disconnects completely since Skotlex did not want to free the session
@@ -209,6 +228,10 @@ void char_set_char_offline(uint32 char_id, uint32 account_id){
 
 void char_db_setoffline( std::shared_ptr<struct online_char_data> character, int32 server ){
 	if (server == -1) {
+		if (character->ip != 0) {
+			char_ip_connection_decrement(character->ip);
+			character->ip = 0;
+		}
 		character->char_id = -1;
 		character->server = -1;
 		if(character->waiting_disconnect != INVALID_TIMER){
@@ -239,6 +262,9 @@ void char_set_all_offline(int32 id){
 	for( const auto& pair : char_get_onlinedb() ){
 		char_db_kickoffline( pair.second, id );
 	}
+
+	if (id < 0)
+		char_ip_connection_clear();
 
 	if (id >= 0 || !chlogif_isconnected())
 		return;
@@ -1965,6 +1991,17 @@ void char_set_session_flag_(int32 account_id, int32 val, bool set) {
 void char_auth_ok(int32 fd, struct char_session_data *sd) {
 	std::shared_ptr<struct online_char_data> character = util::umap_find( char_get_onlinedb(), sd->account_id );
 
+	// Prevent Change IP: check if account is online from a different IP
+	if( character != nullptr && character->server > -1 ){
+		int32 result = char_check_prevent_change_ip(sd->account_id, session[fd]->client_addr, sd->group_id);
+		if (result == 1) {
+			// Mode 1: block new connection, protect current player
+			chclif_send_auth_result(fd, 8);
+			return;
+		}
+		// Mode 2: allow new connection, kick old (fall through to existing kick logic below)
+	}
+
 	// Check if character is not online already. [Skotlex]
 	if( character != nullptr ){
 		if (character->server > -1)
@@ -2768,6 +2805,10 @@ void char_set_defaults(){
 	charserv_config.log_inter = 1;	// loggin inter or not [devil]
 	charserv_config.char_check_db =1;
 
+	charserv_config.max_connect_user_per_ip = -1;
+	charserv_config.max_connect_user_per_ip_gm_allow_group = 99;
+	charserv_config.prevent_change_ip = 0;
+
 	// See const.hpp to change the default values
 	safestrncpy( charserv_config.start_point[0].map, MAP_DEFAULT_NAME, sizeof( charserv_config.start_point[0].map ) ); 
 	charserv_config.start_point[0].x = MAP_DEFAULT_X;
@@ -2987,6 +3028,8 @@ bool char_config_read(const char* cfgName, bool normal){
 				charserv_config.max_connect_user = -1;
 		} else if(strcmpi(w1, "gm_allow_group") == 0) {
 			charserv_config.gm_allow_group = atoi(w2);
+		} else if (char_ip_limit_config_read(w1, w2)) {
+			// handled by char_ip_limit
 		} else if (strcmpi(w1, "autosave_time") == 0) {
 			charserv_config.autosave_interval = atoi(w2)*1000;
 			if (charserv_config.autosave_interval <= 0)
@@ -3151,6 +3194,8 @@ void CharacterServer::finalize(){
 	do_final_chmapif();
 	do_final_chlogif();
 
+	char_ip_limit_final();
+
 	char_get_chardb().clear();
 	char_get_onlinedb().clear();
 	char_get_authdb().clear();
@@ -3181,6 +3226,7 @@ bool CharacterServer::initialize( int32 argc, char *argv[] ){
 
 	cli_get_options(argc,argv);
 
+	char_ip_limit_init();
 	char_set_defaults();
 	char_config_read(CHAR_CONF_NAME, true);
 	char_config_adjust();

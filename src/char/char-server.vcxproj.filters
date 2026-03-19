@@ -20,6 +20,9 @@
     <ClInclude Include="char_cnslif.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="char_ip_limit.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="char_logif.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -74,6 +77,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="char_cnslif.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="char_ip_limit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="char_logif.cpp">
