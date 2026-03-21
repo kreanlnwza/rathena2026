@@ -34,3 +34,12 @@ int32 mob_rank_weight_explus;
 int32 mob_rank_coin_drop;        ///< Mob Rank Coin Drop: 0=off, 1=on
 int32 mob_rank_coin_itemid;      ///< Item ID for rank coin (default: 7539)
 int32 mob_rank_reshuffle_interval; ///< Re-roll rank interval in minutes (0=off, default: 180 = 3h)
+
+// Trade tax configuration
+int32 trade_zeny_fee;
+int32 tradeitem_fee;
+int32 trade_refine_fee;
+int32 trade_enchantgrade_fee;
+
+// Sell tax configuration
+int32 sell_zeny_fee;

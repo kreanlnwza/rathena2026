@@ -243,6 +243,7 @@
     <ClInclude Include="status.hpp" />
     <ClInclude Include="storage.hpp" />
     <ClInclude Include="trade.hpp" />
+    <ClInclude Include="trade_tax.hpp" />
     <ClInclude Include="unit.hpp" />
     <ClInclude Include="vending.hpp" />
   </ItemGroup>
@@ -1537,6 +1538,7 @@
     <ClCompile Include="status.cpp" />
     <ClCompile Include="storage.cpp" />
     <ClCompile Include="trade.cpp" />
+    <ClCompile Include="trade_tax.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="vending.cpp" />
   </ItemGroup>

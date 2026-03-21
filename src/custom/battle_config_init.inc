@@ -33,3 +33,12 @@
 { "mob_rank_coin_drop",     &battle_config.mob_rank_coin_drop,     1,    0, 1,          },
 { "mob_rank_coin_itemid",   &battle_config.mob_rank_coin_itemid,   7539, 0, INT32_MAX,  },
 { "mob_rank_reshuffle_interval", &battle_config.mob_rank_reshuffle_interval, 180, 0, 1440, },
+
+// Trade tax configuration
+{ "trade_zeny_fee", &battle_config.trade_zeny_fee, 20, 0, INT_MAX },
+{ "tradeitem_fee", &battle_config.tradeitem_fee, 2500, 0, INT_MAX },
+{ "trade_refine_fee", &battle_config.trade_refine_fee, 2500, 0, INT_MAX },
+{ "trade_enchantgrade_fee", &battle_config.trade_enchantgrade_fee, 2500, 0, INT_MAX },
+
+// Sell tax configuration
+{ "sell_zeny_fee", &battle_config.sell_zeny_fee, 30, 0, 100 },

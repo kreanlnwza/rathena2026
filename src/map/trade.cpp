@@ -16,10 +16,12 @@
 #include "intif.hpp"
 #include "itemdb.hpp"
 #include "log.hpp"
+#include "map.hpp"
 #include "path.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "storage.hpp"
+#include "trade_tax.hpp"
 
 #define TRADE_DISTANCE 2 ///Max distance from traders to enable a trade to take place.
 
@@ -622,6 +624,27 @@ void trade_tradecommit(map_session_data *sd)
 		return;
 	}
 
+	// Calculate trade tax for both players
+	TradeTaxInfo sd_tax = calculate_trade_tax(sd);
+	TradeTaxInfo tsd_tax = calculate_trade_tax(tsd);
+
+	// Check if players can afford the tax
+	if (!can_afford_tax(sd, sd_tax)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, MSG_TAX_NOT_ENOUGH));
+		trade_tradecancel(sd);
+		return;
+	}
+
+	if (!can_afford_tax(tsd, tsd_tax)) {
+		clif_displaymessage(tsd->fd, msg_txt(tsd, MSG_TAX_NOT_ENOUGH));
+		trade_tradecancel(sd);
+		return;
+	}
+
+	// Display tax information to both players
+	display_trade_tax_info(sd, sd_tax);
+	display_trade_tax_info(tsd, tsd_tax);
+
 	// trade is accepted and correct.
 	for( trade_i = 0; trade_i < 10; trade_i++ ) {
 		int32 n;
@@ -653,6 +676,14 @@ void trade_tradecommit(map_session_data *sd)
 	}
 
 	if( sd->deal.zeny ) {
+		// Deduct trade tax from both players before zeny transfer
+		if (sd_tax.total_tax > 0) {
+			deduct_trade_tax(sd, sd_tax, tsd->status.char_id);
+		}
+		if (tsd_tax.total_tax > 0) {
+			deduct_trade_tax(tsd, tsd_tax, sd->status.char_id);
+		}
+
 		pc_payzeny(sd ,sd->deal.zeny, LOG_TYPE_TRADE, tsd->status.char_id);
 		pc_getzeny(tsd,sd->deal.zeny,LOG_TYPE_TRADE, sd->status.char_id);
 		sd->deal.zeny = 0;
@@ -660,6 +691,14 @@ void trade_tradecommit(map_session_data *sd)
 	}
 
 	if ( tsd->deal.zeny) {
+		// Deduct trade tax from both players before zeny transfer
+		if (sd_tax.total_tax > 0) {
+			deduct_trade_tax(sd, sd_tax, tsd->status.char_id);
+		}
+		if (tsd_tax.total_tax > 0) {
+			deduct_trade_tax(tsd, tsd_tax, sd->status.char_id);
+		}
+
 		pc_payzeny(tsd,tsd->deal.zeny,LOG_TYPE_TRADE, sd->status.char_id);
 		pc_getzeny(sd ,tsd->deal.zeny,LOG_TYPE_TRADE, tsd->status.char_id);
 		tsd->deal.zeny = 0;

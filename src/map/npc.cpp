@@ -34,6 +34,7 @@
 #include "pc.hpp"
 #include "pet.hpp"
 #include "script.hpp" // script_config
+#include "trade_tax.hpp" // For format_commas_u64
 
 using namespace rathena;
 
@@ -3115,6 +3116,26 @@ uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_S
 
 	if( z > MAX_ZENY )
 		z = MAX_ZENY;
+
+	// Apply sell tax
+	if (battle_config.sell_zeny_fee > 0 && z > 0) {
+		double tax = z * (double)battle_config.sell_zeny_fee / 100.0;
+		int32 tax_amount = (int32)tax;
+		int32 original_zeny = (int32)z;
+		z -= tax;
+		if (z < 0) z = 0;
+
+		// Display sell tax info to player
+		char msg[256];
+		char orig_str[64], tax_str[64], net_str[64];
+		format_commas_u64((uint64)original_zeny, orig_str, sizeof(orig_str));
+		format_commas_u64((uint64)tax_amount, tax_str, sizeof(tax_str));
+		format_commas_u64((uint64)(int32)z, net_str, sizeof(net_str));
+		snprintf(msg, sizeof(msg),
+			msg_txt(sd, MSG_TAX_SELL_FEE),
+			orig_str, battle_config.sell_zeny_fee, tax_str, net_str);
+		clif_displaymessage(sd->fd, msg);
+	}
 
 	pc_getzeny(sd, (int32)z, LOG_TYPE_NPC);
 
