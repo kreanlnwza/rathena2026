@@ -44,6 +44,7 @@
 #include "log.hpp"
 #include "mail.hpp"
 #include "map.hpp"
+#include "craft.hpp"
 #include "mercenary.hpp"
 #include "mob.hpp"
 #include "npc.hpp"
@@ -23199,6 +23200,8 @@ void clif_barter_open( map_session_data& sd, npc_data& nd ){
 
 	sd.state.barter_open = true;
 
+	craft_barter_open(&sd, barter);
+
 	PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO* p = reinterpret_cast<PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_NPC_BARTER_MARKET_ITEMINFO;
@@ -23295,6 +23298,10 @@ void clif_parse_barter_buy( int32 fd, map_session_data* sd ){
 		return;
 	}
 
+	if (!craft_barter_check_buy(sd, barter, entries)) {
+		return;
+	}
+
 	std::vector<s_barter_purchase> purchases;
 
 	purchases.reserve( entries );
@@ -23352,6 +23359,8 @@ void clif_barter_extended_open( map_session_data& sd, npc_data& nd ){
 	}
 
 	sd.state.barter_extended_open = true;
+
+	craft_barter_open(&sd, barter);
 
 	PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO* p = reinterpret_cast<PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO*>( packet_buffer );
 
@@ -23462,6 +23471,10 @@ void clif_parse_barter_extended_buy( int32 fd, map_session_data* sd ){
 
 	// Empty purchase list
 	if( entries == 0 ){
+		return;
+	}
+
+	if (!craft_barter_check_buy(sd, barter, entries)) {
 		return;
 	}
 

@@ -161,6 +161,9 @@
     <ClInclude Include="clif_shuffle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="craft.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="date.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -293,6 +296,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="clif.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="craft.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="date.cpp">
