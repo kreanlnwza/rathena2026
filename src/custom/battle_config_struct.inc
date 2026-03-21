@@ -12,3 +12,12 @@
  *	 <datatype> name;
  **/
 
+// Trade tax configuration
+int32 trade_zeny_fee;
+int32 tradeitem_fee;
+int32 trade_refine_fee;
+int32 trade_enchantgrade_fee;
+
+// Sell tax configuration
+int32 sell_zeny_fee;
+

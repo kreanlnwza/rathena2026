@@ -11,3 +11,12 @@
  *	 { "name", &battle_config.<variable name>, <default value>, <minimum value>, <maximum value> },
  **/
 
+// Trade tax configuration
+{ "trade_zeny_fee", &battle_config.trade_zeny_fee, 20, 0, INT_MAX },
+{ "tradeitem_fee", &battle_config.tradeitem_fee, 2500, 0, INT_MAX },
+{ "trade_refine_fee", &battle_config.trade_refine_fee, 2500, 0, INT_MAX },
+{ "trade_enchantgrade_fee", &battle_config.trade_enchantgrade_fee, 2500, 0, INT_MAX },
+
+// Sell tax configuration
+{ "sell_zeny_fee", &battle_config.sell_zeny_fee, 30, 0, 100 },
+
