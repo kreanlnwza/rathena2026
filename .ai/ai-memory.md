@@ -1691,3 +1691,39 @@ struct block_list {
 | `conf/import/groups.yml` | GM groups & permissions |
 
 **ข้อดี:** ไม่ต้องแก้ไขไฟล์ config หลัก → ลด conflict ตอน merge upstream
+
+---
+
+## Custom Message Configuration (ข้อความ Custom)
+
+### ⚠️ สำคัญ: ห้ามแก้ไข `map_msg.conf` โดยตรง!
+
+เมื่อต้องการเพิ่มข้อความ (message) ใหม่สำหรับ custom features ให้เพิ่มใน **`conf/msg_conf/Custom_msg.conf`** เท่านั้น
+
+**ห้ามเพิ่มใน `conf/msg_conf/map_msg.conf`** เพราะจะเกิด conflict เมื่อ merge จาก upstream rAthena
+
+### หมายเลขข้อความ (Message ID)
+
+- **เริ่มต้นจากหมายเลข 3000** เป็นต้นไป
+- หมายเลข 0‑2999 สงวนไว้สำหรับ rAthena core
+
+### รูปแบบการเพิ่มข้อความ
+
+```conf
+// conf/msg_conf/Custom_msg.conf
+3000: ข้อความ custom แรก
+3001: ข้อความ custom ที่สอง
+3002: Your custom message here
+```
+
+### วิธีใช้ใน C++ Source Code
+
+```cpp
+// อ่านข้อความจาก message ID
+clif_displaymessage(fd, msg_txt(sd, 3000));  // แสดง "ข้อความ custom แรก"
+```
+
+### ข้อดี
+- ไม่ต้องแก้ไข `map_msg.conf` หลัก → ลด conflict ตอน merge
+- แยก custom messages ออกมาชัดเจน
+- ง่ายต่อการ backup และ migrate
