@@ -160,7 +160,7 @@ bool unit_can_reach_bl( const block_list* bl, const block_list* tbl, int32 range
 // Unit attack functions
 int32 unit_stopattack(block_list *bl, va_list ap);
 void unit_stop_attack(block_list *bl);
-int32 unit_attack(block_list *src,int32 target_id,int32 continuous);
+int32 unit_attack(block_list *src,int32 target_id, int32 continuous);
 int32 unit_cancel_combo(block_list *bl);
 bool unit_can_attack( const block_list* bl, int32 target_id );
 
@@ -198,6 +198,9 @@ void unit_changetarget_sub(unit_data& ud, block_list& target);
 
 // Shadow Scar
 void unit_addshadowscar(unit_data &ud, int32 interval);
+
+// Number formatting
+char* format_number_comma(int64 num, char* buf, size_t size);
 
 void do_init_unit(void);
 void do_final_unit(void);

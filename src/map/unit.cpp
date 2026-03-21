@@ -2899,7 +2899,7 @@ int32 unit_unattackable(block_list *bl)
  *		0x2 - Whether function was called from unit_step_timer or not
  * @return How the unit should stop; see e_unit_stop_walking
  */
-int32 unit_attack(block_list *src,int32 target_id,int32 continuous)
+int32 unit_attack(block_list *src,int32 target_id, int32 continuous)
 {
 	block_list *target;
 	int32 range;
@@ -4274,6 +4274,51 @@ void unit_addshadowscar(unit_data &ud, int32 interval) {
 
 		clif_enchantingshadow_spirit(ud);
 	}
+}
+
+/**
+ * Format a number with comma separators for display
+ * @param num: Number to format
+ * @param buf: Output buffer
+ * @param size: Size of output buffer
+ * @return Pointer to buf
+ */
+char* format_number_comma(int64 num, char* buf, size_t size){
+	if( size == 0 )
+		return buf;
+
+	char tmp[32];
+	bool negative = (num < 0);
+
+	if( negative )
+		num = -num;
+
+	int32 len = 0;
+
+	if( num == 0 ){
+		tmp[len++] = '0';
+	} else {
+		int32 count = 0;
+
+		while( num > 0 && len < (int32)sizeof(tmp) - 1 ){
+			if( count > 0 && count % 3 == 0 )
+				tmp[len++] = ',';
+			tmp[len++] = '0' + (char)(num % 10);
+			num /= 10;
+			count++;
+		}
+	}
+
+	size_t pos = 0;
+
+	if( negative && pos < size - 1 )
+		buf[pos++] = '-';
+
+	for( int32 i = len - 1; i >= 0 && pos < size - 1; i-- )
+		buf[pos++] = tmp[i];
+
+	buf[pos] = '\0';
+	return buf;
 }
 
 /**
