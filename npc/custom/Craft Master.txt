@@ -1,0 +1,41 @@
+//===== rAthena Script =======================================
+//= Craft Master NPC
+//===== Description: =========================================
+//= Menu NPC for selecting crafting service shops.
+//= Opens different Craft Barter shops via callshop.
+//===== Changelogs: ==========================================
+//= 1.0 First version
+//= 1.1 Maintained by V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+//============================================================
+prontera,152,187,6	script	Craft System Test	4_F_EDEN_MASTER,{
+	mes "[Craft Master]";
+	mes "Welcome to the Crafting System!";
+	mes "Which crafting service would you like to access?";
+
+	next;
+	switch(select("Basic Refining Materials:Advanced Materials:Enchant Grade Exchange:Cancel")) {
+	case 1:
+		mes "[Craft Master]";
+		mes "I'll direct you to Dietrich for basic refining materials.";
+		close2;
+		callshop "Dietrich#1";
+		end;
+	case 2:
+		mes "[Craft Master]";
+		mes "I'll direct you to Xenophon for advanced materials.";
+		close2;
+		callshop "Xenophon#1";
+		end;
+	case 3:
+		mes "[Craft Master]";
+		mes "I'll direct you to the Enchant Grade Exchange NPC.";
+		close2;
+		callshop "EnchantGradeExchange#1";
+		end;
+	case 4:
+		mes "[Craft Master]";
+		mes "Maybe next time!";
+		close;
+		end;
+	}
+}

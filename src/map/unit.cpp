@@ -4292,6 +4292,36 @@ void do_init_unit(void){
 }
 
 /**
+ * Format number with comma separators (e.g. 1234567 -> "1,234,567")
+ * @param num number to format
+ * @param buf output buffer
+ * @param size buffer size
+ * @return pointer to buf
+ * @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+ */
+char* format_number_comma(int64 num, char* buf, size_t size) {
+	char tmp[32];
+	safesnprintf(tmp, sizeof(tmp), "%" PRId64, num);
+	int32 len = (int32)strlen(tmp);
+	int32 commas = (len - (num < 0 ? 2 : 1)) / 3;
+	int32 new_len = len + commas;
+	if ((size_t)new_len >= size)
+		new_len = (int32)size - 1;
+	buf[new_len] = '\0';
+	int32 j = new_len - 1;
+	int32 count = 0;
+	for (int32 i = len - 1; i >= 0; i--) {
+		if (count == 3 && tmp[i] != '-') {
+			buf[j--] = ',';
+			count = 0;
+		}
+		buf[j--] = tmp[i];
+		count++;
+	}
+	return buf;
+}
+
+/**
  * Unit module destructor, (thing to do before closing the module)
  * called in map::do_final
  * @return 0

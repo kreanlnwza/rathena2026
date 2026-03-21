@@ -199,6 +199,9 @@ void unit_changetarget_sub(unit_data& ud, block_list& target);
 // Shadow Scar
 void unit_addshadowscar(unit_data &ud, int32 interval);
 
+// Utility
+char* format_number_comma(int64 num, char* buf, size_t size);
+
 void do_init_unit(void);
 void do_final_unit(void);
 
