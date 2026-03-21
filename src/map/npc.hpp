@@ -94,6 +94,10 @@ struct s_npc_barter_item{
 	uint32 stock;
 	uint32 price;
 	int8 refine;
+	uint16 craft_rate; //[Craft System]
+	bool announcesuccess;
+	bool announcefail;
+	std::string inherit_str;
 	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
 };
 
@@ -106,6 +110,8 @@ struct s_npc_barter{
 	int16 sprite;
 	std::map<uint16, std::shared_ptr<s_npc_barter_item>> items;
 	int32 npcid;
+	bool is_craft;
+	std::string waitingroom;
 
 	~s_npc_barter();
 };

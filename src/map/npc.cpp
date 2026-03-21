@@ -29,6 +29,7 @@
 #include "log.hpp"
 #include "log.hpp"
 #include "map.hpp"
+#include "craft.hpp"
 #include "mob.hpp"
 #include "navi.hpp"
 #include "pc.hpp"
@@ -410,7 +411,10 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		barter = std::make_shared<s_npc_barter>();
 		barter->name = npcname;
 		barter->npcid = 0;
+		barter->is_craft = false;
 	}
+
+	craft_parse_barter_node(node, barter);
 
 	if( this->nodeExists( node, "Map" ) ){
 		std::string map;
@@ -558,6 +562,9 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 				item = std::make_shared<s_npc_barter_item>();
 				item->index = index;
+				item->craft_rate = 10000;
+				item->announcesuccess = false;
+				item->announcefail = false;
 			}
 
 			if( this->nodeExists( itemNode, "Item" ) ){
@@ -576,6 +583,8 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 				item->nameid = id->nameid;
 			}
+
+			craft_parse_barter_item_node(itemNode, item);
 
 			if( this->nodeExists( itemNode, "Stock" ) ){
 				uint32 stock;
@@ -837,6 +846,10 @@ void BarterDatabase::loadingFinished(){
 					clif_spawn( nd );
 				}
 			}
+
+			if(barter->waitingroom.length())
+				chat_createnpcchat(nd, barter->waitingroom.c_str(), 0, 1, 0, "", 0, 1, MAX_LEVEL);
+
 		}else{
 			map_addiddb( nd );
 		}
@@ -3360,6 +3373,10 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 
 	if( pc_inventoryblank( &sd ) < requiredSlots ){
 		return e_purchase_result::PURCHASE_FAIL_COUNT;
+	}
+
+	if (barter->is_craft) {
+		return craft_barter_purchase( &sd, barter, purchases, requiredZeny, requiredItems );
 	}
 
 	for( int32 i = 0; i < MAX_INVENTORY; i++ ){
