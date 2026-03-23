@@ -11,3 +11,6 @@
  *	 { "name", &battle_config.<variable name>, <default value>, <minimum value>, <maximum value> },
  **/
 
+	{ "refine_delay_time",                  &battle_config.refine_delay_time,                  1800,   0,      30000,        },
+	{ "refine_ui_lock_time",                &battle_config.refine_ui_lock_time,                3000,   0,      10000,        },
+

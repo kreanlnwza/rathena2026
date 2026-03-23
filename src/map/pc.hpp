@@ -459,6 +459,9 @@ public:
 		bool roulette_open;
 		t_itemid item_reform;
 		uint64 item_enchant_index;
+		t_tick last_refine_tick;	// Last refine attempt tick delay time [@krit.k #3614]
+		bool refineui_locked;		// Is the refine UI locked [@krit.k #3614]
+		t_tick refineui_lock_tick;	// Tick when the refine UI was locked [@krit.k #3614]
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
