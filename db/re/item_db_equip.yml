@@ -187418,7 +187418,7 @@ Body:
     Script: |
       bonus2 bHPDrainRate,30,5;
   - Id: 420248
-    AegisName: aegis_420248
+    AegisName: ThirdEyeGod_ROC
     Name: Third Eye God
     Type: Armor
     Weight: 100
@@ -187432,12 +187432,9 @@ Body:
       bonus bAllStats,1;
       bonus bFixedCast,-100;
       bonus2 bDropAddRace,RC_All,5;
-      bonus2 bAddMonsterDropItem,519,100;
-      bonus2 bAddMonsterDropItem,518,100;
-      bonus2 bAddMonsterDropItem,11530,100;
-      bonus2 bAddMonsterDropItem,11531,100;
+      bonus2 bAddMonsterDropItemGroup,IG_THIRDEYEGOD_ROC,100;
   - Id: 420249
-    AegisName: aegis_420249
+    AegisName: Comp_ThirdEyeGod_ROC
     Name: "[Not For Sale] Third Eye God"
     Type: Armor
     Weight: 100
@@ -187458,10 +187455,7 @@ Body:
       bonus bAllStats,1;
       bonus bFixedCast,-100;
       bonus2 bDropAddRace,RC_All,5;
-      bonus2 bAddMonsterDropItem,519,100;
-      bonus2 bAddMonsterDropItem,518,100;
-      bonus2 bAddMonsterDropItem,11530,100;
-      bonus2 bAddMonsterDropItem,11531,100;
+      bonus2 bAddMonsterDropItemGroup,IG_THIRDEYEGOD_ROC,100;
   - Id: 420250
     AegisName: Comp_Panda_Balloon
     Name: "[NFS] Panda Bear Balloon"
@@ -188915,7 +188909,16 @@ Body:
     Type: Armor
     Locations:
       Costume_Head_Low: true
+    Trade:
+      NoDrop: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     ArmorLevel: 1
+    Script: |
+      hateffect HAT_EF_GUIDE_OF_DEAD_TEXT,true;
+    UnEquipScript: |
+      hateffect HAT_EF_GUIDE_OF_DEAD_TEXT,false;
   - Id: 420430
     AegisName: C_Medjed_Text
     Name: Costume Guardian's Letter
