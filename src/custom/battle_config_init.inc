@@ -1,4 +1,4 @@
-// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+/ Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 /**
@@ -42,3 +42,7 @@
 
 // Sell tax configuration
 { "sell_zeny_fee", &battle_config.sell_zeny_fee, 30, 0, 100 },
+
+// Refine UI Protection
+{ "refine_delay_time",                  &battle_config.refine_delay_time,                  1800,   0,      30000,        },
+{ "refine_ui_lock_time",                &battle_config.refine_ui_lock_time,                3000,   0,      10000,        },

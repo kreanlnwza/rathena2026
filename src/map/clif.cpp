@@ -52,6 +52,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "refine_ui_protection.hpp"
 #include "quest.hpp"
 #include "script.hpp"
 #include "skill.hpp"
@@ -22638,6 +22639,11 @@ void clif_parse_refineui_add( int32 fd, map_session_data* sd ){
 		return;
 	}
 
+	// Refine UI delay time [@krit.k #3614]
+	if (!RefineUIProtection::check_ui_lock(sd)) {
+		return;
+	}
+
 	// Send out the requirements for the refine process
 	clif_refineui_info( sd, index );
 #endif
@@ -22655,10 +22661,26 @@ void clif_parse_refineui_refine( int32 fd, map_session_data* sd ){
 	t_itemid material = p->itemId;
 	int16 j;
 
+	// Refine UI delay time [@krit.k #3614]
+	t_tick current_tick = gettick();
+	if (!RefineUIProtection::can_refine(sd, current_tick)) {
+		clif_messagecolor(sd, color_table[COLOR_RED], msg_txt(sd, MSG_REFINE_DELAY), false, SELF);
+		return;
+	}
+
+	if (!RefineUIProtection::check_ui_lock(sd)) {
+		return;
+	}
+
+	RefineUIProtection::set_refine_attempt(sd);
+
 	// Check if the refine UI is open
 	if( !sd->state.refineui_open ){
 		return;
 	}
+
+	// Update last refine tick
+	sd->state.last_refine_tick = gettick();
 
 	// Check if the index is valid
 	if( index >= MAX_INVENTORY ){
@@ -22776,6 +22798,9 @@ void clif_parse_refineui_refine( int32 fd, map_session_data* sd ){
 			achievement_update_objective( sd, AG_ENCHANT_SUCCESS, 2, id->weapon_level, item->refine );
 		}
 		clif_refineui_info( sd, index );
+
+		// Lock the refine UI after successful refine
+		RefineUIProtection::lock_ui(sd);
 	}else{
 		// Failure
 
@@ -22803,6 +22828,9 @@ void clif_parse_refineui_refine( int32 fd, map_session_data* sd ){
 
 		clif_misceffect( *sd, NOTIFYEFFECT_REFINE_FAILURE );
 		achievement_update_objective( sd, AG_ENCHANT_FAIL, 1, 1 );
+
+		// Refine UI delay time [@krit.k #3614]
+		RefineUIProtection::lock_ui(sd);
 	}
 #endif
 }
