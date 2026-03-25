@@ -2610,6 +2610,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -2646,6 +2648,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -2681,6 +2685,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -2717,6 +2723,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -2753,6 +2761,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -2788,6 +2798,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -2824,6 +2836,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -2860,6 +2874,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -2895,6 +2911,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -2931,6 +2949,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -2967,6 +2987,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -3002,6 +3024,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -3038,6 +3062,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -3074,6 +3100,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -3109,6 +3137,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -3145,6 +3175,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -3181,6 +3213,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -3216,6 +3250,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -4133,6 +4169,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -4170,6 +4208,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -4207,6 +4247,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -5417,6 +5459,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -5442,6 +5486,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -5466,6 +5512,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -5490,6 +5538,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -5511,6 +5561,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -5560,6 +5612,8 @@ Body:
       Merchant: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -5605,6 +5659,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -5625,6 +5681,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -5710,6 +5768,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -5747,6 +5807,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -5888,6 +5950,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -6646,6 +6710,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 1
@@ -6668,6 +6734,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 1
@@ -6689,6 +6757,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 1
@@ -6711,6 +6781,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 2
@@ -6733,6 +6805,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 2
@@ -6754,6 +6828,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 2
@@ -6776,6 +6852,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -6798,6 +6876,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -6819,6 +6899,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -6841,6 +6923,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -6863,6 +6947,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -6884,6 +6970,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -6905,6 +6993,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -6929,6 +7019,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -6953,6 +7045,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -6978,6 +7072,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7003,6 +7099,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7030,6 +7128,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7054,6 +7154,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7082,6 +7184,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7112,6 +7216,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7140,6 +7246,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7178,6 +7286,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7209,6 +7319,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7330,6 +7442,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7362,6 +7476,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -7397,6 +7513,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -7431,6 +7549,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 1
@@ -7450,6 +7570,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7582,6 +7704,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7648,6 +7772,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -7723,6 +7849,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -7814,6 +7942,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -7842,6 +7972,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7867,6 +7999,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -7926,6 +8060,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -7959,6 +8095,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -10425,6 +10563,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -10452,6 +10592,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -10478,6 +10620,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -10505,6 +10649,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -10532,6 +10678,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -10558,6 +10706,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -10585,6 +10735,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -10612,6 +10764,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -10639,6 +10793,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -10664,6 +10820,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -10689,6 +10847,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -10714,6 +10874,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -10739,6 +10901,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -10764,6 +10928,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -10789,6 +10955,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -10813,6 +10981,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -10838,6 +11008,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -10863,6 +11035,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -10888,6 +11062,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -10913,6 +11089,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -10938,6 +11116,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -11128,6 +11308,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -11257,6 +11439,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -11286,6 +11470,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -11445,6 +11631,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -11486,6 +11674,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -11557,6 +11747,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -11581,6 +11773,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -24689,6 +24883,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -27171,6 +27367,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -27190,6 +27388,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -30709,6 +30909,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -31056,6 +31258,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -35544,6 +35748,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -41160,6 +41366,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -43195,6 +43403,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Head_Mid: true
       Head_Top: true
@@ -43578,6 +43788,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -59189,6 +59401,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -59226,6 +59440,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -59264,6 +59480,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -60102,6 +60320,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -60275,6 +60495,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -60327,6 +60549,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -60445,6 +60669,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -60478,6 +60704,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -60511,6 +60739,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -60777,6 +61007,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -60836,6 +61068,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -60877,6 +61111,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -60918,6 +61154,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -61287,6 +61525,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -61480,6 +61720,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -61523,6 +61765,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -61686,6 +61930,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -61855,6 +62101,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -62116,6 +62364,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -62156,6 +62406,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -62235,6 +62487,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -62323,6 +62577,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -69915,6 +70171,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -79741,6 +79999,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -79770,6 +80030,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -79802,6 +80064,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -79832,6 +80096,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -79983,6 +80249,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -80017,6 +80285,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -80042,6 +80312,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -80137,6 +80409,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -80171,6 +80445,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -80206,6 +80482,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -80266,6 +80544,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -80327,6 +80607,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -80366,6 +80648,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -80405,6 +80689,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -80730,6 +81016,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -80760,6 +81048,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -80790,6 +81080,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -80853,6 +81145,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -81075,6 +81369,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -81292,6 +81588,8 @@ Body:
       Priest: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -88350,6 +88648,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -89012,6 +89312,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -111285,6 +111587,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -119928,6 +120232,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -119952,6 +120257,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -119977,6 +120283,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -120001,6 +120308,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -120024,6 +120332,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -120050,6 +120359,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -120076,6 +120386,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -120101,6 +120412,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -120127,6 +120439,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -120152,6 +120465,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -120176,6 +120490,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -120203,6 +120518,7 @@ Body:
       Rebellion: true
       # Star_Emperor: true
       # Soul_Reaper: true
+      Karnos: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -141899,6 +142215,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -142031,6 +142349,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -142060,6 +142380,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -142086,6 +142408,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -142111,6 +142435,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -142141,6 +142467,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -142807,6 +143135,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 5
@@ -149163,6 +149493,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -149206,6 +149538,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -149247,6 +149581,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -149413,6 +149749,8 @@ Body:
       SuperNovice: true
       Ninja: true
       KagerouOboro: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -149633,6 +149971,8 @@ Body:
       SuperNovice: true
       Ninja: true
       KagerouOboro: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -194244,6 +194584,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -232923,6 +233265,8 @@ Body:
       SuperNovice: true
       Ninja: true
       KagerouOboro: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -234450,6 +234794,8 @@ Body:
       SuperNovice: true
       Ninja: true
       KagerouOboro: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -234484,6 +234830,8 @@ Body:
       SuperNovice: true
       Ninja: true
       KagerouOboro: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -234518,6 +234866,8 @@ Body:
       SuperNovice: true
       Ninja: true
       KagerouOboro: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -234552,6 +234902,8 @@ Body:
       SuperNovice: true
       Ninja: true
       KagerouOboro: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -234586,6 +234938,8 @@ Body:
       SuperNovice: true
       Ninja: true
       KagerouOboro: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -235080,6 +235434,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -235926,6 +236282,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -235950,6 +236308,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -236000,6 +236360,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -236023,6 +236385,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -236046,6 +236410,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -236069,6 +236435,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -236092,6 +236460,8 @@ Body:
       Novice: true
       SuperNovice: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -253313,6 +253683,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -253484,6 +253856,8 @@ Body:
       SuperNovice: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -253510,6 +253884,8 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -253696,6 +254072,8 @@ Body:
       SuperNovice: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -253721,6 +254099,8 @@ Body:
       SuperNovice: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -253746,6 +254126,8 @@ Body:
       SuperNovice: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -253771,6 +254153,8 @@ Body:
       SuperNovice: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -253796,6 +254180,8 @@ Body:
       SuperNovice: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -254131,6 +254517,8 @@ Body:
       SuperNovice: true
       Priest: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -258180,6 +258568,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 1
@@ -258200,6 +258590,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 2
@@ -258220,6 +258612,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -258240,6 +258634,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -258310,6 +258706,8 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
+      Druid: true
+      Karnos: true
     Locations:
       Both_Hand: true
     WeaponLevel: 5
