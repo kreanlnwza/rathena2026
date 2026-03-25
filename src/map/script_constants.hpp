@@ -536,6 +536,7 @@
 	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOMACROCHECKER);
 	export_constant(MF_INVINCIBLE_TIME);
+#include <custom/script_constants_custom.inc>
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
