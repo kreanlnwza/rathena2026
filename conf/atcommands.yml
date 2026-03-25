@@ -503,6 +503,18 @@ Body:
     Help: |
       Params: <guild name|ID>
       Warps all online characters of a guild to you.
+  - Command: guildallskill
+    Aliases:
+      - gallsk
+      - gallskill
+    Help: |
+      Maxes out all guild skills.
+  - Command: guildskillpoint
+    Aliases:
+      - gskpoint
+    Help: |
+      Params: <number of points>
+      Adds or reduces guild skill points by <number of points>.
   - Command: guildspy
     Help: |
       Params: <guild name|id>

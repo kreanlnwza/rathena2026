@@ -1676,6 +1676,26 @@ Changes guild level by the specified amount.
 
 ---------------------------------------
 
+@guildskillpoint <+/- amount>
+@gskpoint <+/- amount>
+
+Adds or reduces guild skill points by the specified amount.
+The player must be in a guild. Skill points cannot go below 0.
+
+Example:
+@guildskillpoint 5
+-> adds 5 guild skill points.
+
+---------------------------------------
+
+@guildallskill
+@gallsk
+@gallskill
+
+Maxes out all guild skills for the player's guild.
+
+---------------------------------------
+
 @disguiseguild <monster/npc name/ID> <guild name/ID>
 @undisguiseguild
 
