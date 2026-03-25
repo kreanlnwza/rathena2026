@@ -1926,3 +1926,131 @@ At least one member of that clan must be online.
 NOTE: map server needs to be configured to enable spying to use this command (enable_spy: yes)
 
 ---------------------------------------
+
+
+===========================
+| 12. Uncategorized Commands |
+===========================
+
+@addfame
+@famepoint
+@famepoints
+
+Params: <amount>.
+Adds or reduces the player's fame points by <amount>.
+
+---------------------------------------
+
+@con
+
+Params: <amount>
+Raises CON by given amount.
+
+---------------------------------------
+
+@crt
+
+Params: <amount>
+Raises CRT by given amount.
+
+---------------------------------------
+
+@displayskillcast
+
+Params: <skill ID> {<skill level> <ground target flag> <cast time>}
+Displays the cast animation of a skill without really casting the skill.
+
+---------------------------------------
+
+@displayskillunit
+
+Params: <skill unit ID> {<skill level> <range>}
+Displays the skill unit animation of a skill unit without really using the skill.
+
+---------------------------------------
+
+@healap
+
+Params: [<AP>]
+Heals the desired amount of AP. No value specified will do a full AP heal.
+
+---------------------------------------
+
+@macrochecker
+
+Params: <mapname>
+Trigger a macro detection on all players of the given map.
+
+---------------------------------------
+
+@pow
+
+Params: <amount>
+Raises POW by given amount.
+
+---------------------------------------
+
+@reloadcashdb
+@reloadcashshop
+
+Reload cash shop database.
+
+---------------------------------------
+
+@reloadlogconf
+
+Reload the log settings.
+
+---------------------------------------
+
+@resurrect
+
+Resurrects a player, if the necessary conditions (items in inventory or status changes) are fulfilled.
+
+---------------------------------------
+
+@roulette
+
+Opens the roulette UI.
+
+---------------------------------------
+
+@spl
+
+Params: <amount>
+Raises SPL by given amount.
+
+---------------------------------------
+
+@sta
+
+Params: <amount>
+Raises STA by given amount.
+
+---------------------------------------
+
+@trait_all
+@alltrait
+@alltraits
+@traitall
+@traitsall
+
+Params: <value>
+Adds value in all traits (maximum if no value).
+
+---------------------------------------
+
+@traitpoint
+@trpoint
+
+Params: <number of points> - Gives you the desired number of trait stat points.
+
+---------------------------------------
+
+@wis
+
+Params: <amount>
+Raises WIS by given amount.
+
+---------------------------------------
+
