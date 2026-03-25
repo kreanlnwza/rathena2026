@@ -1494,6 +1494,28 @@ int32 mapif_parse_GuildBasicInfoChange(int32 fd,int32 guild_id,int32 type,const 
 			mapif_guild_info(-1, g->guild);
 			g->save_flag |= GS_LEVEL;
 			return 0;
+		case GBI_SKILLPOINT:
+		{
+			int32 new_skill_point = *((int32 *)data);
+			if (new_skill_point < 0)
+				new_skill_point = 0;
+			g->guild.skill_point = new_skill_point;
+			mapif_guild_info(-1, g->guild);
+			g->save_flag |= GS_LEVEL;
+			return 0;
+		}
+		case GBI_ALLSKILL:
+		{
+			uint16 *max_levels = (len >= (int32)sizeof(uint16) * MAX_GUILDSKILL) ? (uint16 *)data : nullptr;
+			for (int i = 0; i < MAX_GUILDSKILL; i++) {
+				g->guild.skill[i].id = GD_SKILLBASE + i;
+				g->guild.skill[i].lv = (max_levels != nullptr) ? max_levels[i] : 10;
+			}
+			g->guild.skill_point = 0;
+			mapif_guild_info(-1, g->guild);
+			g->save_flag |= GS_LEVEL | GS_SKILL;
+			return 0;
+		}
 		default:
 			ShowError("int_guild: GuildBasicInfoChange: Unknown type %d\n",type);
 			break;

@@ -847,6 +847,7 @@ enum e_guild_info { //Change Guild Infos
 	GBI_GUILDLV,		// Guild level
 	GBI_SKILLPOINT,		// Guild skillpoints
 	GBI_SKILLLV,		// Guild skill_lv ?? seem unused
+	GBI_ALLSKILL,		// Max all guild skills
 };
 
 enum e_guild_member_info { //Change Member Infos
