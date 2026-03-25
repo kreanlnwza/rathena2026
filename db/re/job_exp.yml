@@ -1069,7 +1069,7 @@ Body:
       Sky_Emperor2: true
       Baby_Karnos: true
       Alitea: true
-    MaxBaseLevel: 275
+    MaxBaseLevel: 285
     BaseExp:
       - Level: 1
         Exp: 658
@@ -1620,6 +1620,26 @@ Body:
       - Level: 274
         Exp: 430803653341
       - Level: 275
+        Exp: 439003653341
+      - Level: 276
+        Exp: 447203653341
+      - Level: 277
+        Exp: 455403653341
+      - Level: 278
+        Exp: 463603653341
+      - Level: 279
+        Exp: 471803653341
+      - Level: 280
+        Exp: 480003653341
+      - Level: 281
+        Exp: 488203653341
+      - Level: 282
+        Exp: 496403653341
+      - Level: 283
+        Exp: 504603653341
+      - Level: 284
+        Exp: 512803653341
+      - Level: 285
         Exp: 999999999999
   - Jobs:
       Summoner: true
@@ -2818,7 +2838,7 @@ Body:
       Spirit_Handler: true
       Sky_Emperor2: true
       Alitea: true
-    MaxJobLevel: 60
+    MaxJobLevel: 70
     JobExp:
       - Level: 1
         Exp: 4700000
@@ -2939,6 +2959,26 @@ Body:
       - Level: 59
         Exp: 13194183036
       - Level: 60
+        Exp: 319836691
+      - Level: 61
+        Exp: 368301747
+      - Level: 62
+        Exp: 422990876
+      - Level: 63
+        Exp: 486559840
+      - Level: 64
+        Exp: 559695898
+      - Level: 65
+        Exp: 632831956
+      - Level: 66
+        Exp: 705968014
+      - Level: 67
+        Exp: 779104072
+      - Level: 68
+        Exp: 852240130
+      - Level: 69
+        Exp: 925376188
+      - Level: 70
         Exp: 99999999999
   - Jobs:
       Gunslinger: true
