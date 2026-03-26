@@ -122,26 +122,107 @@ V!be Coding [kreanlnwza] AI Assistant (ชื่อ Ai แต่ละ model)
 - Code snippets สำหรับ NPC scripts
 - ติดตั้ง: ค้นหา "rAthena" ใน VS Code Extensions
 
-### รูปแบบ NPC Script
+### รูปแบบพื้นฐาน NPC Script
 
+#### 1. NPC ทั่วไป (Map NPC)
 ```c
-// NPC definition
-// map,x,y,direction	script	NPC_Name	sprite_id,{
+// รูปแบบ: map,x,y,direction	script	NPC_Name	sprite_id,trigger_x,trigger_y,{
 prontera,155,180,4	script	Sample NPC	100,{
     mes "[Sample NPC]";
     mes "Hello!";
     next;
     switch(select("Option 1:Option 2")) {
         case 1:
-            // code
+            mes "เลือก 1";
             break;
         case 2:
-            // code
+            mes "เลือก 2";
             break;
     }
     close;
 }
 ```
+
+**พารามิเตอร์:**
+| พารามิเตอร์ | คำอธิบาย |
+|-------------|----------|
+| `map` | ชื่อแมพ เช่น `prontera`, `geffen` |
+| `x,y` | พิกัดบนแมพ |
+| `direction` | ทิศหัน: 0=เหนือ, 2=ตะวันตก, 4=ใต้, 6=ตะวันออก |
+| `script` | ประเภท (script, warp, shop, cashshop, duplicate) |
+| `NPC_Name` | ชื่อ NPC (ใช้ `#suffix` สำหรับ unique name) |
+| `sprite_id` | รหัสรูปร่าง NPC (-1 = ไม่มีตัว/floating) |
+| `trigger_x,y` | ขนาดพื้นที่ trigger (ไม่บังคับ) |
+
+#### 2. Floating NPC (ไม่มีตำแหน่งบนแมพ)
+```c
+-	script	MyFloatingNPC	-1,{
+    // ใช้สำหรับ event handler, background process
+    end;
+OnInit:
+    // โค้ดที่รันตอน server start
+    end;
+}
+```
+
+#### 3. Warp NPC
+```c
+// รูปแบบ: map,x,y,0	warp	WarpName	trigger_x,trigger_y,dest_map,dest_x,dest_y
+prontera,155,22,0	warp	prt_exit	2,2,prt_fild08,170,375
+```
+
+#### 4. Shop NPC
+```c
+// รูปแบบ: map,x,y,dir	shop	ShopName	sprite_id,item_id:price,...
+prontera,150,180,4	shop	ร้านค้า	100,501:100,502:200,503:500
+```
+
+#### 5. Cash Shop NPC
+```c
+// รูปแบบ: map,x,y,dir	cashshop	ShopName	sprite_id,item_id:price,...
+prontera,150,180,4	cashshop	ร้าน Cash	100,12103:500,12104:300
+```
+
+#### 6. NPC พร้อม OnTouch (trigger area)
+```c
+// trigger_x,trigger_y ระบุพื้นที่กระตุ้น
+prontera,155,180,4	script	Area NPC	100,5,5,{
+    mes "คุณเข้ามาในพื้นที่!";
+    close;
+OnTouch:
+    // เมื่อผู้เล่นเดินเข้าพื้นที่ 5x5
+    mes "ยินดีต้อนรับ!";
+    close;
+}
+```
+
+#### 7. NPC Trader (ร้านค้าแบบกำหนดเอง)
+```c
+-	trader	MyTrader	-1,{
+OnInit:
+    tradertype(NST_ZENY);
+    sellitem 501, 100;   // Red Potion ราคา 100
+    sellitem 502, 200;   // Orange Potion ราคา 200
+    end;
+OnCountFunds:
+    traderreadfunds;
+    end;
+OnPayFunds:
+    traderpayresult(1);
+    end;
+}
+
+// Duplicate ไปวางบนแมพ
+prontera,150,180,4	duplicate(MyTrader)	ร้านค้า#prt	100
+```
+
+#### การจบ Script
+| คำสั่ง | คำอธิบาย |
+|--------|----------|
+| `close;` | ปิด dialog (ต้องมี player attached) |
+| `close2;` | ปิด dialog แล้วรัน script ต่อ |
+| `end;` | จบ script ทันที (ไม่ต้องมี player) |
+| `next;` | แสดงปุ่ม Next ให้ผู้เล่นกด |
 
 ### คำสั่ง Script ที่ใช้บ่อย
 
@@ -532,8 +613,9 @@ if (.@choice == 255) {
 
 | คำสั่ง | คำอธิบาย |
 |--------|----------|
-| `setdialogsize(<width>,<height>)` | กำหนดขนาดหน้าต่าง dialog |
-| `setdialogpos(<x>,<y>)` | กำหนดตำแหน่งหน้าต่าง dialog |
+| `setdialogsize(<width>,<height>)` | กำหนดขนาดหน้าต่าง dialog (pixel) |
+| `setdialogpos(<x>,<y>)` | กำหนดตำแหน่งหน้าต่าง dialog (pixel) |
+| `setdialogpospercent(<x>,<y>)` | กำหนดตำแหน่งหน้าต่าง dialog (% ของหน้าจอ, 0-100) |
 
 #### HTML Formatting สำหรับ mes
 
@@ -561,10 +643,23 @@ prontera,100,100,3	script	ตัวอย่าง NPC	858,2,2,{
 }
 ```
 
+**ตัวอย่างการใช้ setdialogpospercent (กึ่งกลางหน้าจอ):**
+```c
+prontera,100,100,3	script	Center Dialog	858,{
+    mes "ข้อความกึ่งกลางหน้าจอ";
+    setdialogalign(DIALOG_ALIGN_CENTER);
+    setdialogalign(DIALOG_ALIGN_MIDDLE);
+    setdialogsize(400,120);
+    setdialogpospercent(50,50);  // กึ่งกลางหน้าจอ (50%, 50%)
+    close;
+}
+```
+
 **หมายเหตุ:**
 - `setdialogalign()` ต้องเรียกก่อน `close;` หรือ `next;`
 - เรียก horizontal และ vertical align แยกกัน
 - `mes " ";` ใช้สำหรับเว้นบรรทัดว่าง
+- `setdialogpospercent` ใช้ค่า 0-100 (เปอร์เซ็นต์ของหน้าจอ) ต่างจาก `setdialogpos` ที่ใช้ pixel
 
 ## การพัฒนา C++ Source Code
 
