@@ -6274,8 +6274,12 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 		return false; // You cannot use this item while storage is open.
 	}
 
-	if (item->flag.dead_branch && (mapdata->getMapFlag(MF_NOBRANCH) || mapdata_flag_gvg2(mapdata)))
+	if (item->flag.dead_branch &&
+	    (!mapdata->getMapFlag(MF_SUMMONER) || mapdata->getMapFlag(MF_NOBRANCH) ||
+	     mapdata_flag_gvg2(mapdata))) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 3030)); // You cannot use this item on this map.
 		return false;
+	}
 
 	if( itemdb_group.item_exists( IG_MF_NOTELEPORT, nameid ) ){
 		if( ( mapdata->getMapFlag(MF_NOTELEPORT) || mapdata_flag_gvg2( mapdata ) ) ){
