@@ -14,6 +14,7 @@
 //= 3.1 Removed rate display and stats menu
 //= 4.0 Added weekly leaderboard system with auto-reset
 //= 5.0 MVP Kill Reward: free 3 spins on MVP kill via OnNPCKillEvent
+//= 5.1 UI dialog styling with setdialog commands (align, size, pos)
 //============================================================
 
 prontera,155,183,4	script	Gachapong	4_F_KAFRA1,{
@@ -37,6 +38,10 @@ prontera,155,183,4	script	Gachapong	4_F_KAFRA1,{
 		mes "^FFD700Rare items this week: ^FF0000" + #GACHA_RARES + "^000000";
 	if (#GACHA_MVP_FREE > 0)
 		mes "^00FF00MVP Free Spins: ^FF0000" + #GACHA_MVP_FREE + "^000000";
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(350, 200);
+	setdialogpospercent(50, 50);
 	next;
 
 	// ========================================
@@ -91,6 +96,10 @@ L_MVPReward:
 	mes "[^FF6600Gachapong^000000]";
 	mes "^00FF00MVP Reward!^000000 You have ^FF0000" + .@free_count + "^000000 free spin(s)!";
 	mes "^777777(No token required)^000000";
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(350, 160);
+	setdialogpospercent(50, 50);
 	next;
 
 	if (select("Claim:Cancel") == 2) {
@@ -158,6 +167,10 @@ L_MVPReward:
 	if (.@rare_count > 0)
 		mes "^FFD700+ " + .@rare_count + " rare item(s) recorded!^000000";
 
+	setdialogalign(DIALOG_ALIGN_LEFT);
+	setdialogalign(DIALOG_ALIGN_TOP);
+	setdialogsize(480, 350);
+	setdialogpospercent(50, 45);
 	close;
 
 // ========================================
@@ -166,6 +179,10 @@ L_MVPReward:
 L_SpinMenu:
 	mes "[^FF6600Gachapong^000000]";
 	mes "How many spins?";
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(300, 120);
+	setdialogpospercent(50, 50);
 	next;
 
 	switch(select("Spin 1:Spin 5:Spin 10:Spin 20:Spin 30:Back")) {
@@ -214,6 +231,10 @@ L_SpinMenu:
 	mes "[^FF6600Gachapong^000000]";
 	mes "Confirm spin ^FF0000" + .@spin_count + "^000000 time(s)?";
 	mes "Cost ^FF0000" + .@total_cost + "^000000 " + getitemname(.token_id);
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(350, 140);
+	setdialogpospercent(50, 50);
 	next;
 
 	if (select("Confirm:Cancel") == 2) {
@@ -286,6 +307,10 @@ L_SpinMenu:
 	if (.@rare_count > 0)
 		mes "^FFD700+ " + .@rare_count + " rare item(s) recorded!^000000";
 
+	setdialogalign(DIALOG_ALIGN_LEFT);
+	setdialogalign(DIALOG_ALIGN_TOP);
+	setdialogsize(480, 350);
+	setdialogpospercent(50, 45);
 	close;
 
 // ========================================
@@ -349,6 +374,10 @@ S_Leaderboard:
 	mes " ";
 	mes "^777777--- Your Stats ---^000000";
 	mes "Spins: ^0000FF" + #GACHA_SPINS + "^000000 | Rares: ^FFD700" + #GACHA_RARES + "^000000";
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_TOP);
+	setdialogsize(420, 380);
+	setdialogpospercent(50, 45);
 	return;
 
 // ========================================

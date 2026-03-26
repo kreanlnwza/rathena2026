@@ -6,12 +6,16 @@
 //===== Changelogs: ==========================================
 //= 1.0 First version
 //= 1.1 Maintained by V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+//= 1.2 UI dialog styling with setdialog commands
 //============================================================
 prontera,152,187,6	script	Craft System Test	4_F_EDEN_MASTER,{
 	mes "[Craft Master]";
 	mes "Welcome to the Crafting System!";
 	mes "Which crafting service would you like to access?";
-
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(350, 150);
+	setdialogpospercent(50, 50);
 	next;
 	switch(select("Basic Refining Materials:Advanced Materials:Enchant Grade Exchange:Cancel")) {
 	case 1:

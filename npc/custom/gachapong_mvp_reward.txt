@@ -9,6 +9,7 @@
 //= NOTE: Requires gachapong.txt to be loaded first
 //===== Changelogs: ==========================================
 //= 1.0 First version V!be Coding [kreanlnwza] AI Assistant (Claude 4.6 Opus)
+//= 1.1 UI dialog styling with setdialog commands
 //============================================================
 
 prontera,0,0,4	script	Gacha MVP Reward	4_F_KAFRA1,{
@@ -28,6 +29,10 @@ prontera,0,0,4	script	Gacha MVP Reward	4_F_KAFRA1,{
 	mes "[^FFD700Gachapong MVP^000000]";
 	mes "^00FF00Congratulations on defeating the MVP!^000000";
 	mes "You got ^FF0000" + .@reward_count + "^000000 free items and ^FFD700" + .@coin_count + "^000000 Poring Coins!";
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(380, 160);
+	setdialogpospercent(50, 50);
 	next;
 
 	if (select("Claim Reward:Later") == 2) {
@@ -88,6 +93,10 @@ prontera,0,0,4	script	Gacha MVP Reward	4_F_KAFRA1,{
 	mes " ";
 	mes "==========================";
 	mes "^00FF00MVP Reward claimed! (" + .@reward_count + " items + " + .@coin_count + " coins)^000000";
+	setdialogalign(DIALOG_ALIGN_LEFT);
+	setdialogalign(DIALOG_ALIGN_TOP);
+	setdialogsize(480, 380);
+	setdialogpospercent(50, 45);
 	close2;
 	// Disable NPC to prevent re-use, auto-despawn by feature.dynamicnpc_timeout
 	disablenpc strnpcinfo(3);
