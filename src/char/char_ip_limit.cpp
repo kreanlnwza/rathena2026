@@ -13,6 +13,8 @@
 
 #include "char.hpp"
 
+using namespace rathena;
+
 static std::unordered_map<uint32, int32> ip_connection_count;
 static std::vector<struct s_ip_whitelist> ip_whitelist;
 
