@@ -4732,6 +4732,11 @@ ACMD_FUNC(mapinfo) {
 	else
 		clif_displaymessage(fd, msg_txt(sd,1044)); // Autotrade Disabled
 
+	if (int32 map_droprate = map_getmapflag(m_id, MF_DROPRATE)) {
+		sprintf(atcmd_output, msg_txt(sd, 3031), map_droprate); // Droprate: %d%%
+		clif_displaymessage(fd, atcmd_output);
+	}
+
 	if (map_getmapflag(m_id, MF_BATTLEGROUND)){
 		sprintf(atcmd_output, msg_txt(sd,1045),map_getmapflag(m_id, MF_BATTLEGROUND)); // Battlegrounds ON (type %d)
 		clif_displaymessage(fd, atcmd_output);
@@ -9107,6 +9112,7 @@ ACMD_FUNC(mapflag) {
 												MF_NOCOMMAND,
 												MF_BEXP,
 												MF_JEXP,
+												MF_DROPRATE,
 												MF_BATTLEGROUND,
 												MF_SKILL_DAMAGE,
 												MF_SKILL_DURATION };

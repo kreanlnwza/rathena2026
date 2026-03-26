@@ -2882,6 +2882,17 @@ int32 mob_getdroprate(block_list *src, std::shared_ptr<s_mob_db> mob, int32 base
 	drop_rate = apply_rate( drop_rate, drop_modifier );
 #endif
 
+	int16 m = -1;
+	if (md)
+		m = md->m;
+	else if (src)
+		m = src->m;
+
+	if (m >= 0) {
+		int32 map_droprate = map_getmapflag(m, MF_DROPRATE);
+		drop_rate = apply_rate(drop_rate, map_droprate);
+	}
+
 	// Cap it to 100%
 	drop_rate = min( drop_rate, 10000 * factor );
 

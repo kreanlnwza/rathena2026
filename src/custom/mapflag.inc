@@ -15,4 +15,5 @@
  **/
 
 //MF_EXAMPLE,
-MF_SUMMONER,
+MF_SUMMONER,    //Summoner map Flags
+MF_DROPRATE,    //Droprate map Flags
