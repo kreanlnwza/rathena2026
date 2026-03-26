@@ -4861,6 +4861,8 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " NoBranch |");
 	if (map_getmapflag(m_id, MF_NOTRADE))
 		strcat(atcmd_output, " NoTrade |");
+	if (map_getmapflag(m_id, MF_SUMMONER))
+		strcat(atcmd_output, " Summoner |");
 	if (map_getmapflag(m_id, MF_NOVENDING))
 		strcat(atcmd_output, " NoVending |");
 	if (map_getmapflag(m_id, MF_NOBUYINGSTORE))

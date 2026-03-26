@@ -1698,7 +1698,7 @@ struct block_list {
 
 ### ⚠️ สำคัญ: ห้ามแก้ไข `map_msg.conf` โดยตรง!
 
-เมื่อต้องการเพิ่มข้อความ (message) ใหม่สำหรับ custom features ให้เพิ่มใน **`conf/msg_conf/Custom_msg.conf`** เท่านั้น
+เมื่อต้องการเพิ่มข้อความ (message) ใหม่สำหรับ custom features ให้เพิ่มใน **`conf/msg_conf/import/Custom_msg.conf`** เท่านั้น
 
 **ห้ามเพิ่มใน `conf/msg_conf/map_msg.conf`** เพราะจะเกิด conflict เมื่อ merge จาก upstream rAthena
 
