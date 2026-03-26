@@ -11080,6 +11080,14 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 			clif_broadcast(sd, output, strlen(output) + 1, BC_BLUE, SELF);
 		}
 
+		int32 drop_rate = mapdata->getMapFlag(MF_DROPRATE);
+		if( drop_rate != 100 )
+		{
+			char output[128];
+			sprintf(output, msg_txt(sd,3032), drop_rate);
+			clif_broadcast(sd, output, strlen(output) + 1, BC_BLUE, SELF);
+		}
+
 		if( pc_has_permission(sd,PC_PERM_VIEW_HPMETER) ) {
 			mapdata->hpmeter_visible++;
 			sd->state.hpmeter_visible = 1;

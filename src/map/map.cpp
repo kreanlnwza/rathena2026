@@ -3777,6 +3777,7 @@ void map_flags_init(void){
 		mapdata->setMapFlag(MF_NOCOMMAND, false); // nocommand mapflag level
 		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
 		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
+		map_setmapflag_sub(i, MF_DROPRATE, true, &args); // per map drop rate multiplicator
 
 		// Clear adjustment data, will be reset after loading NPC
 		mapdata->damage_adjust = {};
@@ -4906,6 +4907,18 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				if (mapflag == MF_BEXP && mapdata->getMapFlag(MF_NOBASEEXP)) {
 					mapdata->setMapFlag(MF_NOBASEEXP, false);
 					ShowWarning("map_setmapflag: Unable to set No Base EXP and BEXP flags for the same map! Removing No Base EXP flag from %s.\n", mapdata->name);
+				}
+				mapdata->setMapFlag(mapflag, args->flag_val);
+			} else
+				mapdata->setMapFlag(mapflag, false);
+			break;
+		case MF_DROPRATE:
+			if (status) {
+				nullpo_retr(false, args);
+
+				if (mapdata->getMapFlag(MF_NOMOBLOOT)) {
+					mapdata->setMapFlag(MF_NOMOBLOOT, false);
+					ShowWarning("map_setmapflag: Unable to set No Mob Loot and Droprate flags for the same map! Removing No Mob Loot flag from %s.\n", mapdata->name);
 				}
 				mapdata->setMapFlag(mapflag, args->flag_val);
 			} else

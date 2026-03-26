@@ -14,6 +14,7 @@
 
 /* Custom Map Flags */
 //export_constant(MF_EXAMPLE);
+export_constant(MF_DROPRATE);
 
 /* Custom Status Changes */
 //export_constant(SC_EXAMPLE);

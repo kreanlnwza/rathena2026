@@ -15,3 +15,4 @@
  **/
 
 //MF_EXAMPLE,
+MF_DROPRATE,
