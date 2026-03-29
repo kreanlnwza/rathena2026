@@ -94,6 +94,7 @@ struct s_npc_barter_item{
 	uint32 stock;
 	uint32 price;
 	int8 refine;
+	uint16 successRate; // craft success rate in basis points (0-10000, 10000 = 100.00%). Used when barter->craft is true.
 	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
 };
 
@@ -104,6 +105,7 @@ struct s_npc_barter{
 	uint16 y;
 	uint8 dir;
 	int16 sprite;
+	bool craft; // if true, use crafting mechanics: items/zeny are always consumed but item is only given on successful rate roll.
 	std::map<uint16, std::shared_ptr<s_npc_barter_item>> items;
 	int32 npcid;
 

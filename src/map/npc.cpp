@@ -539,6 +539,20 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		}
 	}
 
+	if( this->nodeExists( node, "Craft" ) ){
+		bool craft;
+
+		if( !this->asBool( node, "Craft", craft ) ){
+			return 0;
+		}
+
+		barter->craft = craft;
+	}else{
+		if( !exists ){
+			barter->craft = false;
+		}
+	}
+
 	if( this->nodeExists( node, "Items" ) ){
 		for( const ryml::NodeRef& itemNode : node["Items"] ){
 			uint16 index;
@@ -634,6 +648,25 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			}else{
 				if( !item_exists ){
 					item->refine = 0;
+				}
+			}
+
+			if( this->nodeExists( itemNode, "SuccessRate" ) ){
+				uint16 successRate;
+
+				if( !this->asUInt16( itemNode, "SuccessRate", successRate ) ){
+					return 0;
+				}
+
+				if( successRate > 10000 ){
+					this->invalidWarning( itemNode["SuccessRate"], "barter_parseBodyNode: SuccessRate %hu is above 10000 (100%%), capping...\n", successRate );
+					successRate = 10000;
+				}
+
+				item->successRate = successRate;
+			}else{
+				if( !item_exists ){
+					item->successRate = 10000;
 				}
 			}
 
@@ -3363,32 +3396,71 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 			}
 		}
 
-		if( itemdb_isstackable2( purchase.data ) ){
-			struct item it = {};
-
-			it.nameid = purchase.item->nameid;
-			it.identify = true;
-
-			if( pc_additem( &sd, &it, purchase.amount, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
-				return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
-			}
-		}else{
-			if( purchase.data->type == IT_PETEGG ){
-				for( int32 i = 0; i < purchase.amount; i++ ){
-					if( !pet_create_egg( &sd, purchase.item->nameid ) ){
-						return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
-					}
+		if( barter->craft ){
+			// Craft mode: roll success rate individually for each attempted craft.
+			// Materials and zeny are always consumed regardless of outcome.
+			for( int32 i = 0; i < purchase.amount; i++ ){
+				if( rnd() % 10000 >= purchase.item->successRate ){
+					// Craft failed - materials consumed, no item given
+					continue;
 				}
-			}else{
-				for( int32 i = 0; i < purchase.amount; i++ ){
+
+				// Craft succeeded - give one item
+				if( itemdb_isstackable2( purchase.data ) ){
 					struct item it = {};
 
 					it.nameid = purchase.item->nameid;
 					it.identify = true;
-					it.refine = purchase.item->refine;
 
 					if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
 						return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+					}
+				}else{
+					if( purchase.data->type == IT_PETEGG ){
+						if( !pet_create_egg( &sd, purchase.item->nameid ) ){
+							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+						}
+					}else{
+						struct item it = {};
+
+						it.nameid = purchase.item->nameid;
+						it.identify = true;
+						it.refine = purchase.item->refine;
+
+						if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
+							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+						}
+					}
+				}
+			}
+		}else{
+			if( itemdb_isstackable2( purchase.data ) ){
+				struct item it = {};
+
+				it.nameid = purchase.item->nameid;
+				it.identify = true;
+
+				if( pc_additem( &sd, &it, purchase.amount, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
+					return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+				}
+			}else{
+				if( purchase.data->type == IT_PETEGG ){
+					for( int32 i = 0; i < purchase.amount; i++ ){
+						if( !pet_create_egg( &sd, purchase.item->nameid ) ){
+							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+						}
+					}
+				}else{
+					for( int32 i = 0; i < purchase.amount; i++ ){
+						struct item it = {};
+
+						it.nameid = purchase.item->nameid;
+						it.identify = true;
+						it.refine = purchase.item->refine;
+
+						if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
+							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+						}
 					}
 				}
 			}
