@@ -23199,6 +23199,53 @@ void clif_barter_open( map_session_data& sd, npc_data& nd ){
 
 	sd.state.barter_open = true;
 
+	// Display craft info (recipe list with success rates) when opening a craft barter shop
+	if( barter->craft ){
+		char msg[CHAT_SIZE_MAX];
+
+		clif_messagecolor( &sd, color_table[COLOR_CYAN], "=== Craft Shop ===", false, SELF );
+
+		for( const auto& itemPair : barter->items ){
+			std::shared_ptr<item_data> id = item_db.find( itemPair.second->nameid );
+
+			if( id == nullptr ){
+				continue;
+			}
+
+			const char* displayName = id->ename.empty() ? id->name.c_str() : id->ename.c_str();
+			double successPct = itemPair.second->successRate / 100.0;
+
+			snprintf( msg, sizeof(msg), "[%s] Success Rate: %.2f%%", displayName, successPct );
+			clif_messagecolor( &sd, color_table[COLOR_YELLOW], msg, false, SELF );
+
+			if( !itemPair.second->requirements.empty() ){
+				int reqLen = snprintf( msg, sizeof(msg), "  Required:" );
+				bool firstReq = true;
+
+				for( const auto& reqPair : itemPair.second->requirements ){
+					std::shared_ptr<item_data> reqId = item_db.find( reqPair.second->nameid );
+
+					if( reqId == nullptr ){
+						continue;
+					}
+
+					const char* reqName = reqId->ename.empty() ? reqId->name.c_str() : reqId->ename.c_str();
+					int written = snprintf( msg + reqLen, sizeof(msg) - reqLen, "%s %s x%u",
+						firstReq ? "" : ",", reqName, reqPair.second->amount );
+
+					if( written < 0 || reqLen + written >= (int)sizeof(msg) - 1 ){
+						break;
+					}
+
+					reqLen += written;
+					firstReq = false;
+				}
+
+				clif_messagecolor( &sd, color_table[COLOR_WHITE], msg, false, SELF );
+			}
+		}
+	}
+
 	PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO* p = reinterpret_cast<PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_NPC_BARTER_MARKET_ITEMINFO;
