@@ -3397,38 +3397,44 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 		}
 
 		if( barter->craft ){
-			// Craft mode: roll success rate individually for each attempted craft.
-			// Materials and zeny are always consumed regardless of outcome.
-			for( int32 i = 0; i < purchase.amount; i++ ){
-				if( rnd() % 10000 >= purchase.item->successRate ){
-					// Craft failed - materials consumed, no item given
-					continue;
-				}
+			// Craft mode: roll each attempt independently, then give all successful results at once.
+			// Materials and zeny are always consumed regardless of how many succeed.
+			uint32 successCount = 0;
 
-				// Craft succeeded - give one item
+			for( uint32 i = 0; i < purchase.amount; i++ ){
+				if( rnd() % 10000 < purchase.item->successRate ){
+					successCount++;
+				}
+			}
+
+			if( successCount > 0 ){
 				if( itemdb_isstackable2( purchase.data ) ){
 					struct item it = {};
 
 					it.nameid = purchase.item->nameid;
 					it.identify = true;
 
-					if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
+					if( pc_additem( &sd, &it, successCount, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
 						return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
 					}
 				}else{
 					if( purchase.data->type == IT_PETEGG ){
-						if( !pet_create_egg( &sd, purchase.item->nameid ) ){
-							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+						for( uint32 i = 0; i < successCount; i++ ){
+							if( !pet_create_egg( &sd, purchase.item->nameid ) ){
+								return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+							}
 						}
 					}else{
-						struct item it = {};
+						for( uint32 i = 0; i < successCount; i++ ){
+							struct item it = {};
 
-						it.nameid = purchase.item->nameid;
-						it.identify = true;
-						it.refine = purchase.item->refine;
+							it.nameid = purchase.item->nameid;
+							it.identify = true;
+							it.refine = purchase.item->refine;
 
-						if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
-							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+							if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
+								return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+							}
 						}
 					}
 				}
