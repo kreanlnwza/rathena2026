@@ -1131,7 +1131,7 @@ ACMD_FUNC(hide)
 		// increment the number of pvp players on the map
 		map_getmapdata(sd->m)->users_pvp++;
 
-		if( !battle_config.pk_mode && map_getmapflag(sd->m, MF_PVP) && !map_getmapflag(sd->m, MF_PVP_NOCALCRANK) )
+		if( !battle_config.pk_mode && !map_getmapflag(sd->m, MF_PK) && map_getmapflag(sd->m, MF_PVP) && !map_getmapflag(sd->m, MF_PVP_NOCALCRANK) )
 		{// register the player for ranking calculations
 			sd->pvp_timer = add_timer( gettick() + 200, pc_calc_pvprank_timer, sd->id, 0 );
 		}

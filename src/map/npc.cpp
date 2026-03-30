@@ -31,6 +31,7 @@
 #include "map.hpp"
 #include "craft.hpp"
 #include "mob.hpp"
+#include "mvp_pk.hpp"
 #include "navi.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
@@ -5240,6 +5241,10 @@ void npc_parse_mob2(struct spawn_data* mob)
 	for( i = mob->active; i < mob->num; ++i )
 	{
 		mob_data* md = mob_spawn_dataset(mob);
+
+		if (mvp_pk_check_respawn(md, mob))
+			continue;
+
 		md->spawn = mob;
 		// Determine center cell for each mob in the spawn line
 		if (battle_config.randomize_center_cell) {

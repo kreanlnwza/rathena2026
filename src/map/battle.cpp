@@ -28,6 +28,7 @@
 #include "map.hpp"
 #include "mercenary.hpp"
 #include "mob.hpp"
+#include "npc.hpp"
 #include "party.hpp"
 #include "path.hpp"
 #include "pc.hpp"
@@ -8306,7 +8307,7 @@ int32 battle_check_target( const block_list* src, const block_list* target, int3
 		return (flag&state)?1:-1;
 	}
 
-	if( mapdata_flag_vs(mapdata) )
+	if( mapdata_flag_vs(mapdata) || mapdata->getMapFlag(MF_PK) )
 	{ //Check rivalry settings.
 		int32 sbg_id = 0, tbg_id = 0;
 		if(mapdata->getMapFlag(MF_BATTLEGROUND) )
@@ -8334,7 +8335,7 @@ int32 battle_check_target( const block_list* src, const block_list* target, int3
 		if( state&BCT_ENEMY && mapdata->getMapFlag(MF_BATTLEGROUND) && sbg_id && sbg_id == tbg_id )
 			state &= ~BCT_ENEMY;
 
-		if( state&BCT_ENEMY && battle_config.pk_mode && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
+		if( state&BCT_ENEMY && (battle_config.pk_mode || mapdata->getMapFlag(MF_PK)) && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
 		{ // Prevent novice engagement on pk_mode (feature by Valaris)
 			const map_session_data* sd = static_cast<const map_session_data*>(s_bl);
 			const map_session_data* sd2 = static_cast<const map_session_data*>(t_bl);
@@ -8370,6 +8371,14 @@ int32 battle_check_target( const block_list* src, const block_list* target, int3
 	//Alliance state takes precedence over enemy one.
 	else if( state&BCT_ENEMY && strip_enemy && state&(BCT_SELF|BCT_PARTY|BCT_GUILD) )
 		state&=~BCT_ENEMY;
+
+	//Safe distance in front of the warp
+	if (s_bl->type == BL_PC && t_bl->type == BL_PC) {
+		if (npc_isnear(const_cast<block_list*>(t_bl)) || npc_isnear(const_cast<block_list*>(s_bl))) {
+			state &= ~BCT_ENEMY;
+			return -1;
+		}
+	}
 
 	return (flag&state)?1:-1;
 }

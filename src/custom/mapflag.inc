@@ -11,9 +11,11 @@
  * Remember to also add the corresponding export_constant()
  * in custom/script_constants_custom.inc
  *
- * Author: V!be Coding [kreanlnwza] AI Assistant (Claude)
+ * Author: V!be Coding [kreanlnwza] AI Assistant (Claude Opus 4.6)
  **/
 
 //MF_EXAMPLE,
 MF_SUMMONER,    //Summoner map Flags
 MF_DROPRATE,    //Droprate map Flags
+MF_MAPMVP,
+MF_PK,
