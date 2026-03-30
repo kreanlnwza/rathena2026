@@ -17,7 +17,7 @@ void SkillStasis::castendNoDamageId(block_list *src, block_list *target, uint16 
 	else {
 		struct map_data *mapdata = map_getmapdata(src->m);
 
-		map_foreachinallrange(skill_area_sub,src,skill_get_splash(getSkillId(), skill_lv),BL_CHAR,src,getSkillId(),skill_lv,tick,(mapdata_flag_vs(mapdata)?BCT_ALL:BCT_ENEMY|BCT_SELF)|flag|1,skill_castend_nodamage_id);
+		map_foreachinallrange(skill_area_sub,src,skill_get_splash(getSkillId(), skill_lv),BL_CHAR,src,getSkillId(),skill_lv,tick,((mapdata_flag_vs(mapdata) || mapdata->getMapFlag(MF_PK))?BCT_ALL:BCT_ENEMY|BCT_SELF)|flag|1,skill_castend_nodamage_id);
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	}
 }

@@ -969,7 +969,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case WM_LULLABY_DEEPSLEEP:
 		case WM_GLOOMYDAY:
 		case WM_SATURDAY_NIGHT_FEVER:
-			if( !mapdata_flag_vs(mapdata) ) {
+			if( !mapdata_flag_vs(mapdata) && !mapdata->getMapFlag(MF_PK) ) {
 				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_USE_SKILL );	// This skill cannot be used in this area
 				return true;
 			}
@@ -6414,7 +6414,7 @@ static int32 skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick)
 				const struct TimerData* td;
 				struct map_data *mapdata = map_getmapdata(bl->m);
 
-				if (mapdata_flag_vs(mapdata))
+				if (mapdata_flag_vs(mapdata) || mapdata->getMapFlag(MF_PK))
 					sec /= 2;
 				if (sc->getSCE(type)) {
 					if (sc->getSCE(type)->val2 && sc->getSCE(type)->val3 && sc->getSCE(type)->val4) {
@@ -6423,9 +6423,9 @@ static int32 skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick)
 						break;
 					}
 					//Don't increase val1 here, we need a higher val in status_change_start so it overwrites the old one
-					if (mapdata_flag_vs(mapdata) && sc->getSCE(type)->val1 < 3)
+					if ((mapdata_flag_vs(mapdata) || mapdata->getMapFlag(MF_PK)) && sc->getSCE(type)->val1 < 3)
 						sec *= (sc->getSCE(type)->val1 + 1);
-					else if(!mapdata_flag_vs(mapdata) && sc->getSCE(type)->val1 < 2)
+					else if((!mapdata_flag_vs(mapdata) && !mapdata->getMapFlag(MF_PK)) && sc->getSCE(type)->val1 < 2)
 						sec *= (sc->getSCE(type)->val1 + 1);
 					//Add group id to status change
 					if (sc->getSCE(type)->val2 == 0)

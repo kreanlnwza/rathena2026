@@ -6889,7 +6889,7 @@ void clif_map_property( const block_list* bl, enum map_property property, enum s
 		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((mapdata->getMapFlag(MF_FORCEMINEFFECT) || mapdata_flag_gvg2(mapdata))<<3)| // USE_SIMPLE_EFFECT - Forces simpler skill effects, like /mineffect command
-		((mapdata->getMapFlag(MF_NOLOCKON) || mapdata_flag_vs(mapdata) || (sd && sd->duel_group > 0))<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
+		((mapdata->getMapFlag(MF_NOLOCKON) || mapdata_flag_vs(mapdata) || mapdata->getMapFlag(MF_PK) || (sd && sd->duel_group > 0))<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
 		((mapdata->getMapFlag(MF_PVP))<<5)| // COUNT_PK - Show the PvP counter
 		((mapdata->getMapFlag(MF_PARTYLOCK))<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
 		((mapdata->getMapFlag(MF_BATTLEGROUND))<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
@@ -10581,8 +10581,8 @@ static bool clif_process_message(map_session_data* sd, bool whisperFormat, char*
  */
 inline void clif_pk_mode_message(map_session_data * sd)
 {
-	if (battle_config.pk_mode && battle_config.pk_mode_mes &&
-		sd && map_getmapflag(sd->m, MF_PVP)) {
+	if (battle_config.pk_mode_mes &&
+		sd && (battle_config.pk_mode || map_getmapflag(sd->m, MF_PK)) && !map_getmapflag(sd->m, MF_PVP)) {
 		if( (int32)sd->status.base_level < battle_config.pk_min_level ) {
 			char output[CHAT_SIZE_MAX];
 			// 1504: You've entered a PK Zone (safe until level %d).

@@ -33,6 +33,7 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "map.hpp"
+#include "mvp_pk.hpp"
 #include "mercenary.hpp"
 #include "npc.hpp"
 #include "party.hpp"
@@ -1055,6 +1056,7 @@ TIMER_FUNC(mob_delayspawn){
 		md->spawn_timer = INVALID_TIMER;
 		mob_spawn(md);
 	}
+	mvp_pk_on_delayspawn(md);
 	return 0;
 }
 
@@ -1135,6 +1137,9 @@ int32 mob_spawn (mob_data *md)
 		md->m = md->spawn->m;
 		md->x = md->centerX;
 		md->y = md->centerY;
+
+
+		mvp_pk_on_spawn(md);
 
 		// Search can be skipped for boss monster spawns if spawn location is fixed
 		// We can't skip normal monsters as they should pick a random location if the cell is blocked (e.g. Icewall)
@@ -1220,6 +1225,9 @@ int32 mob_spawn (mob_data *md)
 		clif_spawn(md);
 	skill_unit_move(md,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
+
+	mvp_pk_save_spawn_state(md);
+
 	return 0;
 }
 
@@ -3647,6 +3655,8 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	// MvP tomb [GreenBox]
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->m, MF_NOTOMB) != 1)
 		mvptomb_create(md, mvp_sd != nullptr ? mvp_sd->status.name : (first_sd != nullptr ? first_sd->status.name : nullptr), time(nullptr));
+
+	mvp_pk_on_death(md, mvp_sd, sd);
 
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.

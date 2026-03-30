@@ -9,11 +9,12 @@
  *	export_constant(SC_YOURSTATUS);
  *	export_constant(EFST_YOUREFFECT);
  *
- * Author: V!be Coding [kreanlnwza] AI Assistant (Claude)
+ * Author: V!be Coding [kreanlnwza] AI Assistant (Claude Opus 4.6)
  **/
 
 /* Custom Map Flags */
-//export_constant(MF_EXAMPLE);
+export_constant(MF_MAPMVP);
+export_constant(MF_PK);
 
 /* Custom Status Changes */
 //export_constant(SC_EXAMPLE);
