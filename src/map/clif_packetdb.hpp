@@ -2046,4 +2046,8 @@
 	parseable_packet( HEADER_CZ_MOVE_ITEM_TO_PERSONAL, sizeof( PACKET_CZ_MOVE_ITEM_TO_PERSONAL ), clif_parse_MoveFromKafraFav, 0 );
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20230906
+	parseable_packet( 0x0be2, 137, clif_parse_dull, 0 );
+#endif
+
 #endif /* CLIF_PACKETDB_HPP */
