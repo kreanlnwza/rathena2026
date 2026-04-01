@@ -35,6 +35,7 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 #include "script.hpp"
+#include "weight_speed.hpp"
 
 using namespace rathena;
 
@@ -3690,11 +3691,34 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 	}
 
 	// Update the client if the new weight calculations don't match
-	if (b_weight != sd->weight)
+	if (b_weight != sd->weight) {
 		clif_updatestatus(*sd, SP_WEIGHT);
+		// Recalculate speed due to weight-based speed penalty
+		status_calc_bl(sd, { SCB_SPEED });
+	}
 	if (b_max_weight != sd->max_weight) {
 		clif_updatestatus(*sd, SP_MAXWEIGHT);
 		pc_updateweightstatus(*sd);
+	}
+
+	// Update SC_WEIGHT_SPEED_PENALTY based on current weight
+	int32 weight_penalty = weight_speed::get_speed_penalty(*sd);
+	bool has_sc = (sc && sc->getSCE(SC_WEIGHT_SPEED_PENALTY));
+
+	if (weight_penalty > 0) {
+		if (!has_sc || sc->getSCE(SC_WEIGHT_SPEED_PENALTY)->val1 != weight_penalty) {
+			char msg[128];
+			snprintf(msg, sizeof(msg), "[Weight] %d%% weight -> Speed penalty: -%d%%", pc_getpercentweight(*sd), weight_penalty);
+			clif_messagecolor(sd, color_table[COLOR_YELLOW], msg, false, SELF);
+		}
+		sc_start(sd, sd, SC_WEIGHT_SPEED_PENALTY, 100, weight_penalty, INFINITE_TICK);
+	} else {
+		if (has_sc) {
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], "[Weight] Normal weight -> Removing speed penalty", false, SELF);
+			status_change_end(sd, SC_WEIGHT_SPEED_PENALTY);
+			// Force recalculate speed after removing penalty
+			status_calc_bl(sd, { SCB_SPEED });
+		}
 	}
 
 	return true;
@@ -8219,6 +8243,11 @@ static uint16 status_calc_speed(block_list *bl, status_change *sc, int32 speed)
 		speed = max(speed, 200);
 	if( sc->getSCE(SC_WALKSPEED) && sc->getSCE(SC_WALKSPEED)->val1 > 0 ) // ChangeSpeed
 		speed = speed * 100 / sc->getSCE(SC_WALKSPEED)->val1;
+
+	// Apply weight-based speed penalty (SC_WEIGHT_SPEED_PENALTY)
+	if( sc && sc->getSCE(SC_WEIGHT_SPEED_PENALTY) && sc->getSCE(SC_WEIGHT_SPEED_PENALTY)->val1 > 0 ) {
+		speed = speed + (speed * sc->getSCE(SC_WEIGHT_SPEED_PENALTY)->val1 / 100);
+	}
 
 	return (uint16)cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
 }

@@ -6031,6 +6031,11 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 am
 
 	sd->weight += w;
 	clif_updatestatus(*sd,SP_WEIGHT);
+
+	// Recalculate weight-based speed penalty after weight change
+	status_calc_weight(sd, CALCWT_ITEM);
+	status_calc_bl(sd, { SCB_SPEED });
+
 	//Auto-equip
 	if(id->flag.autoequip)
 		pc_equipitem(sd, i, id->equip);
@@ -6084,6 +6089,10 @@ char pc_delitem(map_session_data *sd,int32 n,int32 amount,int32 type, int16 reas
 		clif_delitem( *sd, n, amount, reason );
 	if(!(type&2))
 		clif_updatestatus(*sd,SP_WEIGHT);
+
+	// Recalculate weight-based speed penalty after weight change
+	status_calc_weight(sd, CALCWT_ITEM);
+	status_calc_bl(sd, { SCB_SPEED });
 
 	pc_show_questinfo(sd);
 

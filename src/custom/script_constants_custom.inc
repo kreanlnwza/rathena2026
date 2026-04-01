@@ -20,3 +20,6 @@
 
 /* Custom Effect Statuses */
 //export_constant(EFST_EXAMPLE);
+
+export_constant(SC_WEIGHT_SPEED_PENALTY);
+export_constant(EFST_WEIGHT_SPEED_PENALTY);

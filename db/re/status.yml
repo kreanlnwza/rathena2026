@@ -9958,3 +9958,11 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Weight_Speed_Penalty
+    Icon: EFST_DEC_AGI
+    CalcFlags:
+      Speed: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
