@@ -3,6 +3,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "clif.hpp"
+#include "emotion_ui_packet.hpp"
 
 #include <cstdarg>
 #include <cstdio>
@@ -9408,6 +9409,7 @@ void clif_guild_position_selected( const map_session_data& sd )
 /// type:
 ///     enum emotion_type
 void clif_emotion( const block_list& bl, emotion_type type ){
+#if (PACKETVER_MAIN_NUM < 20230925)
 	PACKET_ZC_EMOTION p{};
 
 	p.packetType = HEADER_ZC_EMOTION;
@@ -9415,6 +9417,9 @@ void clif_emotion( const block_list& bl, emotion_type type ){
 	p.type = static_cast<decltype(p.type)>( type );
 
 	clif_send( &p, sizeof(p), &bl, AREA );
+#else
+	clif_emotion2(const_cast<block_list*>(&bl), 0, static_cast<uint16_t>(type));
+#endif
 }
 
 
@@ -10933,6 +10938,8 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 				|| sd->m == sd->feel_map[2].m)
 				sc_start(sd,sd, SC_KNOWLEDGE, 100, lv, skill_get_time(SG_KNOWLEDGE, lv));
 		}
+
+		pc_load_emotion_expantion_list(sd);
 
 		if(sd->pd && sd->pd->pet.intimate > 900)
 			clif_pet_emotion( *sd->pd, (sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd) );
