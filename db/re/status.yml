@@ -10255,3 +10255,11 @@ Body:
     Icon: EFST_PRIMAL_CLAW
   - Status: Feral_Claw
     Icon: EFST_FERAL_CLAW
+  - Status: Weight_Speed_Penalty
+    Icon: EFST_DEC_AGI
+    CalcFlags:
+      Speed: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

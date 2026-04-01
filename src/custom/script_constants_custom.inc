@@ -46,3 +46,6 @@ export_constant(ET_CUSTOM_12);
 export_constant(ET_CUSTOM_13);
 export_constant(ET_CUSTOM_14);
 export_constant(ET_CUSTOM_15);
+
+export_constant(SC_WEIGHT_SPEED_PENALTY);
+export_constant(EFST_WEIGHT_SPEED_PENALTY);

@@ -250,6 +250,7 @@
     <ClInclude Include="trade_tax.hpp" />
     <ClInclude Include="unit.hpp" />
     <ClInclude Include="vending.hpp" />
+    <ClInclude Include="weight_speed.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="skills/acolyte/absorbspiritsphere.hpp" />
@@ -1601,6 +1602,7 @@
     <ClCompile Include="trade_tax.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="vending.cpp" />
+    <ClCompile Include="weight_speed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="skills/acolyte/absorbspiritsphere.cpp">
