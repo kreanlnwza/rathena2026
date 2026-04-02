@@ -1,0 +1,71 @@
+//===== rAthena Script =======================================
+//= Premium Item Storage NPC
+//===== Description: =========================================
+//= Opens type-specific premium storages for different item types.
+//= Each storage only accepts items of the matching type.
+//= Service fee: 2,500 Zeny per access.
+//=
+//= NOTE: Requires premium storage IDs 9-19 configured in
+//=       inter_server.yml and corresponding SQL tables.
+//===== Changelogs: ==========================================
+//= 1.0 First version - Costume Storage only
+//= 2.0 Added item-type based storages (ID 10-19)
+//= 2.0 Maintained by V!be Coding [kreanlnwza] AI Assistant (Claude)
+//============================================================
+
+prontera,150,180,4	script	Costume Keeper	100,{
+	.@cost = 25000;
+
+	mes "[Manager Keeper]";
+	mes "Welcome! I manage specialized item storages.";
+	mes "Each storage only accepts specific item types.";
+	mes " ";
+	mes "Service fee: ^FF0000" + callfunc("F_InsertComma", .@cost) + " Zeny^000000 per access.";
+	next;
+
+	// Storage selection menu (disabled options are hidden)
+	.@menu$ = "Costume Items:Etc Items:Armor:Weapon:Card:Shadow Gear:Cancel";
+
+	switch(select(.@menu$)) {
+		case 1:  .@stor_id = 9;  .@stor_name$ = "Costume";      break;
+		case 2:  .@stor_id = 12; .@stor_name$ = "Etc";           break;
+		case 3:  .@stor_id = 13; .@stor_name$ = "Armor";         break;
+		case 4:  .@stor_id = 14; .@stor_name$ = "Weapon";        break;
+		case 5:  .@stor_id = 15; .@stor_name$ = "Card";          break;
+		case 6:  .@stor_id = 19; .@stor_name$ = "Shadow Gear";   break;
+		case 7:
+			mes "[Manager Keeper]";
+			mes "Come back anytime!";
+			close;
+	}
+
+	mes "[Manager Keeper]";
+	mes "You selected: ^0000FF" + .@stor_name$ + " Storage^000000";
+	mes "Only ^FF0000" + .@stor_name$ + "^000000 items can be stored here.";
+	mes " ";
+	mes "Fee: ^FF0000" + callfunc("F_InsertComma", .@cost) + " Zeny^000000";
+	next;
+
+	// Check Zeny
+	if (Zeny < .@cost) {
+		mes "[Manager Keeper]";
+		mes "Sorry, you don't have enough Zeny.";
+		mes "You need ^FF0000" + callfunc("F_InsertComma", .@cost) + " Zeny^000000.";
+		mes "Your current Zeny: ^666666" + callfunc("F_InsertComma", Zeny) + " Zeny^000000.";
+		close;
+	}
+
+	// Confirm
+	switch(select("Pay and open storage:Cancel")) {
+		case 1:
+			Zeny -= .@cost;
+			dispbottom "Paid " + callfunc("F_InsertComma", .@cost) + " Zeny for " + .@stor_name$ + " Storage service.";
+			close2;
+			openstorage2 .@stor_id,STOR_MODE_ALL;
+			end;
+		case 2:
+			mes "[Manager Keeper]";
+			mes "Come back anytime!";
+			close;
+	}
+}

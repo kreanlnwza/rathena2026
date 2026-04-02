@@ -40,6 +40,55 @@ Body:
   - ID: 0
     Name: "Storage"
     Table: storage
+    Max: 600
+#   - ID: 1
+#     Name: "VIP Storage"
+#     Table: storage_vip
+#     Max: 300
+  - ID: 9
+    Name: "Costume Storage"
+    Table: storage_costume
+    Max: 600
+  - ID: 10
+    Name: "Healing Storage"
+    Table: storage_healing
+    Max: 600
+  - ID: 11
+    Name: "Usable Storage"
+    Table: storage_usable
+    Max: 600
+  - ID: 12
+    Name: "Etc Storage"
+    Table: storage_etc
+    Max: 600
+  - ID: 13
+    Name: "Armor Storage"
+    Table: storage_armor
+    Max: 600
+  - ID: 14
+    Name: "Weapon Storage"
+    Table: storage_weapon
+    Max: 600
+  - ID: 15
+    Name: "Card Storage"
+    Table: storage_card
+    Max: 600
+  - ID: 16
+    Name: "Pet Egg Storage"
+    Table: storage_petegg
+    Max: 600
+  - ID: 17
+    Name: "Pet Armor Storage"
+    Table: storage_petarmor
+    Max: 600
+  - ID: 18
+    Name: "Ammo Storage"
+    Table: storage_ammo
+    Max: 600
+  - ID: 19
+    Name: "Shadow Gear Storage"
+    Table: storage_shadowgear
+    Max: 600
 
 Footer:
   Imports:
