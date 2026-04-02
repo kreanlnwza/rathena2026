@@ -23,6 +23,7 @@
 #include "packets.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
+#include "storage_type_item.hpp"
 
 using namespace rathena;
 
@@ -247,6 +248,14 @@ static int32 storage_additem(map_session_data* sd, struct s_storage *stor, struc
 		return 1;
 
 	data = itemdb_search(it->nameid);
+
+	// Type-restricted premium storage: only allow items matching the storage type
+	if (!costume_storage_canstore(stor->stor_id, data)) {
+		char msg[64];
+		snprintf(msg, sizeof(msg), STORAGE_TYPE_DENY_MSG_FMT, storage_type_item_get_type_name(stor->stor_id));
+		clif_displaymessage(sd->fd, msg);
+		return 1;
+	}
 
 	if( data->stack.storage && amount > data->stack.amount ) // item stack limitation
 		return 2;
