@@ -90067,8 +90067,17 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     ArmorLevel: 1
-    Refineable: true
+#   Bugfixes: can be refined according to aegis data
+#   Refineable: true
     View: 925
     Script: |
       bonus bAgi,1;
@@ -190030,6 +190039,29 @@ Body:
       hateffect HAT_EF_C_CLB_GAT_DOC,true;
     UnEquipScript: |
       hateffect HAT_EF_C_CLB_GAT_DOC,false;
+  - Id: 420743
+    AegisName: C_Spirit_Cat_TH
+    Name: Costume Spirit Cat
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2811
+  - Id: 420747
+    AegisName: Wishing_Sky_Lantern_TH
+    Name: Costume Wishing Sky Lantern
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 947
   - Id: 420750
     AegisName: C_Seyren_Hair
     Name: Costume Seyren Hair    # !todo check english name
@@ -213028,6 +213060,18 @@ Body:
          bonus bDelayrate,-12;
       if (.@r>=13)
          bonus2 bIgnoreMdefClassRate,Class_Boss,10;
+  - Id: 480155
+    AegisName: C_Vietnam_flag_hood
+    Name: Costume National Flag
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoAuction: true
+    ArmorLevel: 1
+    View: 122
   - Id: 480156
     AegisName: Aegis_System
     Name: Aegis System
@@ -215309,6 +215353,18 @@ Body:
       hateffect(HAT_EF_rabbit_aura,true);
     UnEquipScript: |
       hateffect(HAT_EF_rabbit_aura,false);
+  - Id: 480305
+    AegisName: C_Pope_Doll
+    Name: Costume Pope Doll
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 171
   - Id: 480306
     AegisName: Dual_SW_Cape
     Name: Dual Shadow World Cloak
@@ -216977,6 +217033,18 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 195
+  - Id: 480377
+    AegisName: C_Cat_Doll_WH
+    Name: Costume White Cat Doll
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoAuction: true
+    ArmorLevel: 1
+    View: 196
   - Id: 480388
     AegisName: Gray_W_Muffler_JP
     Name: "[Not For Sale] Gray Wolf Muffler"
