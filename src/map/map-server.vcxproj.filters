@@ -17,9 +17,6 @@
     <Filter Include="Source Files\Skills\Custom">
       <UniqueIdentifier>{607a6bff-94f6-4e8c-bc7a-2189dfd4c1ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Skills\Druid">
-      <UniqueIdentifier>{61a390a6-043b-463e-bb05-f726ec665afb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Skills\Elemental">
       <UniqueIdentifier>{dc6cc832-cad7-43e8-a3d4-e4d24e264a30}</UniqueIdentifier>
     </Filter>
@@ -78,9 +75,6 @@
     <Filter Include="Header Files\Skills\Custom">
       <UniqueIdentifier>{38c2586b-7a8c-4f30-92aa-f53fc17ee519}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Skills\Druid">
-      <UniqueIdentifier>{30c239b7-2297-4cc5-9210-1078457a7ed2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Skills\Elemental">
       <UniqueIdentifier>{facd6257-a493-4f54-a017-abc2b45fd776}</UniqueIdentifier>
     </Filter>
@@ -131,9 +125,6 @@
     <ClInclude Include="atcommand.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gachapong.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="battle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -170,16 +161,10 @@
     <ClInclude Include="clif_shuffle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="craft.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="date.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="duel.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="emotion_ui_packet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="elemental.hpp">
@@ -218,12 +203,6 @@
     <ClInclude Include="mob.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mob_rank.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mvp_pk.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="navi.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -254,9 +233,6 @@
     <ClInclude Include="quest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="refine_ui_protection.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="script.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -275,7 +251,7 @@
     <ClInclude Include="storage.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="storage_type_item.hpp">
+    <ClInclude Include="storage_guild.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="trade.hpp">
@@ -287,18 +263,12 @@
     <ClInclude Include="vending.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="weight_speed.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="atcommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gachapong.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle.cpp">
@@ -328,16 +298,10 @@
     <ClCompile Include="clif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="craft.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="date.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="duel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="emotion_ui_packet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="elemental.cpp">
@@ -376,12 +340,6 @@
     <ClCompile Include="mob.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mob_rank.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mvp_pk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="navi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -409,9 +367,6 @@
     <ClCompile Include="quest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="refine_ui_protection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="script.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -427,7 +382,7 @@
     <ClCompile Include="storage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="storage_type_item.cpp">
+    <ClCompile Include="storage_guild.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="trade.cpp">
@@ -437,9 +392,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="vending.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="weight_speed.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1133,162 +1085,6 @@
     </ClInclude>
     <ClInclude Include="skills/custom/skill_factory_custom.hpp">
       <Filter>Header Files\Skills\Custom</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/aerosync.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/alphaclaw.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/aroundflower.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/chillingblast.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/chopchop.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/clawwave.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/cruelbite.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/cuttingwind.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/doubleslash.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/earthdrill.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/earthflower.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/earthstamp.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/feathersprinkle.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/feralclaw.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/flickingtornado.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/frenzyfang.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/furiousstorm.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/glacialmonolith.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/glacialnova.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/glacialshard.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/glacialstomp.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/gravityhole.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/groundbloom.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/hunger.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/icecloud.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/icepillar.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/icesplash.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/icetotem.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/lowflight.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/nastyslash.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/natureprotection.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/nomercyclaw.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/pinionshot.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/primalclaw.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/quillspear.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/roaringcharge.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/roaringpiercer.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/savagelunge.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/sharpengust.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/sharpenhail.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/shootingfeather.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/skill_factory_druid.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/solidstomp.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/tempestflap.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/terraharvest.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/terrawave.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/thunderingcall.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/thunderingfocus.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/thunderingorb.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/typhoonwing.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/windbomb.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/zephyrlink.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
     <ClInclude Include="skills/elemental/ageofice.hpp">
       <Filter>Header Files\Skills\Elemental</Filter>
@@ -5023,162 +4819,6 @@
     </ClCompile>
     <ClCompile Include="skills/custom/skill_factory_custom.cpp">
       <Filter>Source Files\Skills\Custom</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/aerosync.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/alphaclaw.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/aroundflower.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/chillingblast.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/chopchop.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/clawwave.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/cruelbite.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/cuttingwind.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/doubleslash.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/earthdrill.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/earthflower.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/earthstamp.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/feathersprinkle.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/feralclaw.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/flickingtornado.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/frenzyfang.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/furiousstorm.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/glacialmonolith.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/glacialnova.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/glacialshard.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/glacialstomp.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/gravityhole.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/groundbloom.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/hunger.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/icecloud.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/icepillar.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/icesplash.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/icetotem.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/lowflight.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/nastyslash.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/natureprotection.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/nomercyclaw.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/pinionshot.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/primalclaw.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/quillspear.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/roaringcharge.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/roaringpiercer.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/savagelunge.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/sharpengust.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/sharpenhail.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/shootingfeather.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/skill_factory_druid.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/solidstomp.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/tempestflap.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/terraharvest.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/terrawave.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/thunderingcall.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/thunderingfocus.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/thunderingorb.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/typhoonwing.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/windbomb.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/zephyrlink.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/elemental/ageofice.cpp">
       <Filter>Source Files\Skills\Elemental</Filter>

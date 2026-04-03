@@ -32,6 +32,7 @@
 #include "quest.hpp"
 #include "status.hpp"
 #include "storage.hpp"
+#include "storage_guild.hpp"
 
 /// Received packet Lengths from inter-server
 static const int32 packet_len_table[] = {

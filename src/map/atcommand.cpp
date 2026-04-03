@@ -52,6 +52,7 @@
 #include "quest.hpp"
 #include "script.hpp"
 #include "storage.hpp"
+#include "storage_guild.hpp"
 #include "trade.hpp"
 #include "vending.hpp"
 

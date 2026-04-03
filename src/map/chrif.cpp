@@ -32,6 +32,7 @@
 #include "pet.hpp"
 #include "script.hpp" // script_config
 #include "storage.hpp"
+#include "storage_guild.hpp"
 
 static TIMER_FUNC(check_connect_char_server);
 
@@ -551,6 +552,7 @@ void chrif_on_ready(void) {
 
 	//Re-save any storages that were modified in the disconnection time. [Skotlex]
 	do_reconnect_storage();
+	do_reconnect_guild_storage();
 
 	//Re-save any guild castles that were modified in the disconnection time.
 	guild_castle_reconnect(-1, CD_NONE, 0);

@@ -59,6 +59,7 @@
 #include "skill.hpp"
 #include "status.hpp"
 #include "storage.hpp"
+#include "storage_guild.hpp"
 #include "unit.hpp"
 #include "vending.hpp"
 
