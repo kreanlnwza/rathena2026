@@ -36,6 +36,7 @@
 #include "pc.hpp"
 #include "pet.hpp"
 #include "storage.hpp"
+#include "storage_guild.hpp"
 #include "trade.hpp"
 
 using namespace rathena;

@@ -12,6 +12,7 @@
 #include <common/mmo.hpp>
 #include <common/timer.hpp> // t_tick
 
+#include "storage_guild.hpp"
 #include "packets.hpp"
 #include "script.hpp"
 #include "skill.hpp"
@@ -42,8 +43,6 @@ struct party_booking_ad_info;
 struct sale_item_data;
 struct mail_message;
 struct achievement;
-struct guild_log_entry;
-enum e_guild_storage_log : uint16;
 enum e_bg_queue_apply_ack : uint16;
 enum e_instance_notify : uint8;
 struct s_laphine_synthesis;

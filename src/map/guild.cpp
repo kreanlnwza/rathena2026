@@ -30,6 +30,7 @@
 #include "npc.hpp"
 #include "pc.hpp"
 #include "storage.hpp"
+#include "storage_guild.hpp"
 #include "trade.hpp"
 
 using namespace rathena;

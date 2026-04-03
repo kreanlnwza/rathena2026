@@ -62,6 +62,7 @@
 #include "pet.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
+#include "guild_storage.hpp"
 
 using namespace rathena;
 
