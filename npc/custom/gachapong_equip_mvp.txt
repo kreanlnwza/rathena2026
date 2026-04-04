@@ -1,0 +1,267 @@
+//===== rAthena Script =======================================
+//= Gacha Equip MVP - Dynamic Equip Gacha on MVP Kill
+//===== Description: =========================================
+//= Template NPC for duplicate_dynamic()
+//= Creates per-player copy when MVP is killed (40% chance)
+//= Auto-despawn controlled by feature.dynamicnpc_timeout
+//= Grants free equipment spins using Gold_Coin_US (3 per spin)
+//=
+//= NOTE: Requires gachapong.cpp/hpp
+//===== Changelogs: ==========================================
+//= 1.0 First version V!be Coding [kreanlnwza] AI Assistant (Claude Sonnet 4.6)
+//============================================================
+
+prontera,0,0,4	script	Gacha Equip MVP	4_F_KAFRA2,{
+
+	// ========================================
+	//  Header
+	// ========================================
+	mes "[^FF8C00Gacha Equip MVP^000000]";
+	mes "^FF8C00Bonus reward from defeating MVP!^000000";
+	mes "Spin to get random equipment by slot!";
+	mes " ";
+	mes "Cost: ^FF0000" + .token_cost + "x^000000 ^i[" + .token_id + "] " + getitemname(.token_id);
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(350, 180);
+	setdialogpospercent(50, 50);
+	next;
+
+	// ========================================
+	//  Category Menu
+	// ========================================
+	switch(select("Headgear:Weapon & Shield:Body Equipment:Accessory:Shadow Gear:Costume:Card:Exit")) {
+		case 1:
+			setarray .@pool[0], EQP_HEAD_TOP, EQP_HEAD_MID, EQP_HEAD_LOW;
+			.@equip_name$ = "Headgear";
+			goto L_PickRand;
+		case 2:
+			setarray .@pool[0], EQP_HAND_R, EQP_HAND_L;
+			.@equip_name$ = "Weapon & Shield";
+			goto L_PickRand;
+		case 3:
+			setarray .@pool[0], EQP_ARMOR, EQP_GARMENT, EQP_SHOES;
+			.@equip_name$ = "Body Equipment";
+			goto L_PickRand;
+		case 4:
+			setarray .@pool[0], EQP_ACC_R, EQP_ACC_L;
+			.@equip_name$ = "Accessory";
+			goto L_PickRand;
+		case 5:
+			setarray .@pool[0], EQP_SHADOW_ARMOR, EQP_SHADOW_WEAPON, EQP_SHADOW_SHIELD, EQP_SHADOW_SHOES, EQP_SHADOW_ACC_R, EQP_SHADOW_ACC_L;
+			.@equip_name$ = "Shadow Gear";
+			goto L_PickRand;
+		case 6:
+			setarray .@pool[0], EQP_COSTUME_HEAD_TOP, EQP_COSTUME_HEAD_MID, EQP_COSTUME_HEAD_LOW, EQP_COSTUME_GARMENT;
+			.@equip_name$ = "Costume";
+			goto L_PickRand;
+		case 7: goto L_CardEnchant;
+		case 8:
+			mes "[^FF8C00Gacha Equip MVP^000000]";
+			mes "See you next time!";
+			close;
+	}
+
+L_PickRand:
+	.@equip_pos = .@pool[rand(getarraysize(.@pool))];
+	goto L_DoSpin;
+
+// ========================================
+//  Sub-Menu: Card (fixed 5x Gold Coin per spin)
+// ========================================
+L_CardEnchant:
+	mes "[^FF8C00Gacha Equip MVP^000000]";
+	mes "Spin for ^FFD700Card^000000 items!";
+	mes " ";
+	mes "Cost: ^FF0000 5x^000000 ^i[7720] " + getitemname(7720) + " per spin";
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(350, 160);
+	setdialogpospercent(50, 50);
+	next;
+
+	switch(select("Spin 1:Spin 5:Spin 10:Spin 20:Spin 30:Back")) {
+		case 1: .@spin_count = 1; break;
+		case 2: .@spin_count = 5; break;
+		case 3: .@spin_count = 10; break;
+		case 4: .@spin_count = 20; break;
+		case 5: .@spin_count = 30; break;
+		case 6:
+			mes "[^FF8C00Gacha Equip MVP^000000]";
+			mes "Cancelled.";
+			close;
+	}
+
+	.@ce_cost = 5 * .@spin_count;
+
+	if (checkweight(1201, .@spin_count) == 0) {
+		mes "[^FF8C00Gacha Equip MVP^000000]";
+		mes "^FF0000Inventory full or overweight!^000000";
+		close;
+	}
+
+	if (countitem(7720) < .@ce_cost) {
+		mes "[^FF8C00Gacha Equip MVP^000000]";
+		mes "Not enough tokens!";
+		mes "Need: ^FF0000" + .@ce_cost + "^000000 " + getitemname(7720);
+		mes "You have: ^0000FF" + countitem(7720) + "^000000 " + getitemname(7720);
+		close;
+	}
+
+	mes "[^FF8C00Gacha Equip MVP^000000]";
+	mes "Confirm spin ^FF0000" + .@spin_count + "^000000 time(s)?";
+	mes "Cost ^FF0000" + .@ce_cost + "^000000 " + getitemname(7720);
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(350, 140);
+	setdialogpospercent(50, 50);
+	next;
+
+	if (select("Confirm:Cancel") == 2) {
+		mes "[^FF8C00Gacha Equip MVP^000000]";
+		mes "Cancelled.";
+		close;
+	}
+
+	if (countitem(7720) < .@ce_cost) {
+		mes "[^FF8C00Gacha Equip MVP^000000]";
+		mes "^FF0000Not enough tokens!^000000";
+		close;
+	}
+
+	delitem 7720, .@ce_cost;
+
+	mes "[^FF8C00Gacha Equip MVP^000000]";
+	mes "^00FF00Spinning Card...^000000";
+	mes "==========================";
+	mes " ";
+
+	for (.@i = 0; .@i < .@spin_count; .@i++) {
+		.@got_id = gachapong_rand(IT_CARD);
+		if (.@got_id > 0) {
+			mes "^FF8C00[" + (.@i + 1) + "]^000000 ^FFD700[Card]^000000 ^i[" + .@got_id + "] ^0000FF" + getitemname(.@got_id) + "^000000";
+		} else {
+			mes "^FF8C00[" + (.@i + 1) + "]^000000 ^FF0000No card found!^000000";
+		}
+	}
+
+	mes " ";
+	mes "==========================";
+	mes "^00FF00All rewards received!^000000";
+	setdialogalign(DIALOG_ALIGN_LEFT);
+	setdialogalign(DIALOG_ALIGN_TOP);
+	setdialogsize(480, 350);
+	setdialogpospercent(50, 45);
+	close2;
+	disablenpc strnpcinfo(3);
+	end;
+
+// ========================================
+//  Spin Logic
+// ========================================
+L_DoSpin:
+	mes "[^FF8C00Gacha Equip MVP^000000]";
+	mes "How many spins for ^00BFFF" + .@equip_name$ + "^000000?";
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(300, 120);
+	setdialogpospercent(50, 50);
+	next;
+
+	switch(select("Spin 1:Spin 5:Spin 10:Spin 20:Spin 30:Back")) {
+		case 1: .@spin_count = 1; break;
+		case 2: .@spin_count = 5; break;
+		case 3: .@spin_count = 10; break;
+		case 4: .@spin_count = 20; break;
+		case 5: .@spin_count = 30; break;
+		case 6:
+			mes "[^FF8C00Gacha Equip MVP^000000]";
+			mes "Cancelled.";
+			close;
+	}
+
+	.@total_cost = .token_cost * .@spin_count;
+
+	// Check inventory space & weight
+	if (checkweight(1201, .@spin_count) == 0) {
+		mes "[^FF8C00Gacha Equip MVP^000000]";
+		mes "^FF0000Inventory full or overweight!^000000";
+		mes " ";
+		mes "You need at least ^FF0000" + .@spin_count + "^000000 free inventory slots";
+		mes "and enough weight capacity.";
+		close;
+	}
+
+	// Check token
+	if (countitem(.token_id) < .@total_cost) {
+		mes "[^FF8C00Gacha Equip MVP^000000]";
+		mes "Not enough tokens!";
+		mes " ";
+		mes "Need: ^FF0000" + .@total_cost + "^000000 " + getitemname(.token_id);
+		mes "You have: ^0000FF" + countitem(.token_id) + "^000000 " + getitemname(.token_id);
+		close;
+	}
+
+	// Confirm
+	mes "[^FF8C00Gacha Equip MVP^000000]";
+	mes "Confirm spin ^FF0000" + .@spin_count + "^000000 time(s) for ^00BFFF" + .@equip_name$ + "^000000?";
+	mes "Cost ^FF0000" + .@total_cost + "^000000 " + getitemname(.token_id);
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(350, 140);
+	setdialogpospercent(50, 50);
+	next;
+
+	if (select("Confirm:Cancel") == 2) {
+		mes "[^FF8C00Gacha Equip MVP^000000]";
+		mes "Cancelled.";
+		close;
+	}
+
+	// Double check (anti-exploit)
+	if (countitem(.token_id) < .@total_cost) {
+		mes "[^FF8C00Gacha Equip MVP^000000]";
+		mes "^FF0000Not enough tokens!^000000";
+		close;
+	}
+
+	// Deduct token
+	delitem .token_id, .@total_cost;
+
+	mes "[^FF8C00Gacha Equip MVP^000000]";
+	mes "^00FF00Spinning " + .@equip_name$ + "...^000000";
+	mes "==========================";
+	mes " ";
+
+	// Spin
+	for (.@i = 0; .@i < .@spin_count; .@i++) {
+		.@got_id = gachapong_rand_equip(.@equip_pos);
+
+		if (.@got_id > 0) {
+			mes "^FF8C00[" + (.@i + 1) + "]^000000 ^00BFFF[" + .@equip_name$ + "]^000000 ^i[" + .@got_id + "] ^0000FF" + getitemname(.@got_id) + "^000000";
+		} else {
+			mes "^FF8C00[" + (.@i + 1) + "]^000000 ^FF0000No item found!^000000";
+		}
+	}
+
+	mes " ";
+	mes "==========================";
+	mes "^00FF00All rewards received!^000000";
+	setdialogalign(DIALOG_ALIGN_LEFT);
+	setdialogalign(DIALOG_ALIGN_TOP);
+	setdialogsize(480, 350);
+	setdialogpospercent(50, 45);
+	close2;
+	// Disable NPC to prevent re-use, auto-despawn by feature.dynamicnpc_timeout
+	disablenpc strnpcinfo(3);
+	end;
+
+// ========================================
+//  OnInit: Token Settings
+// ========================================
+OnInit:
+	.token_id = 7720;       // Gold_Coin_US
+	.token_cost = 3;        // Token per spin
+	disablenpc strnpcinfo(0);
+	end;
+}

@@ -90,6 +90,10 @@ prontera,0,0,4	script	Gacha MVP Reward	4_F_KAFRA1,{
 	getitem 7539, .@coin_count;
 	mes "^FFD700+ " + .@coin_count + "x Poring Coin!^000000";
 
+	// Bonus Gold Coin
+	getitem 7720, 1;
+	mes "^FFD700+ 1x Gold Coin (US)!^000000";
+
 	mes " ";
 	mes "==========================";
 	mes "^00FF00MVP Reward claimed! (" + .@reward_count + " items + " + .@coin_count + " coins)^000000";

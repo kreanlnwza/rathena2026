@@ -511,5 +511,12 @@ OnNPCKillEvent:
 
 	dispbottom "[Gachapong] MVP Reward NPC appeared nearby! Click to claim free items! (5-20 random)", 0x00FF00;
 	announce strcharinfo(0) + " defeated MVP " + getmonsterinfo(killedrid, MOB_NAME) + "!", bc_all, 0xFFD700;
+
+	// 40% chance to spawn Gacha Equip MVP bonus NPC
+	if (rand(100) < 100) {
+		.@equip_name$ = duplicate_dynamic("Gacha Equip MVP");
+		if (.@equip_name$ != "")
+			dispbottom "[Gachapong] Bonus! Gacha Equip MVP NPC appeared! (3x Gold Coin per spin)", 0x00BFFF;
+	}
 	end;
 }
