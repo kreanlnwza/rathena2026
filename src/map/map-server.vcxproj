@@ -246,8 +246,8 @@
     <ClInclude Include="skill.hpp" />
     <ClInclude Include="status.hpp" />
     <ClInclude Include="storage.hpp" />
-    <ClInclude Include="storage_type_item.hpp" />
     <ClInclude Include="storage_guild.hpp" />
+    <ClInclude Include="storage_type_item.hpp" />
     <ClInclude Include="trade.hpp" />
     <ClInclude Include="trade_tax.hpp" />
     <ClInclude Include="unit.hpp" />
@@ -1600,8 +1600,8 @@
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="status.cpp" />
     <ClCompile Include="storage.cpp" />
-    <ClCompile Include="storage_type_item.cpp" />
     <ClCompile Include="storage_guild.cpp" />
+    <ClCompile Include="storage_type_item.cpp" />
     <ClCompile Include="trade.cpp" />
     <ClCompile Include="trade_tax.cpp" />
     <ClCompile Include="unit.cpp" />

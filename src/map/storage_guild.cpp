@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <map>
+#include <unordered_map>
 
 #include <common/cbasetypes.hpp>
 #include <common/nullpo.hpp>
@@ -26,31 +27,37 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "storage.hpp"
+#include "storage_type_item.hpp"
 
 using namespace rathena;
 
-///Databases of guild_storage : int32 guild_id -> struct guild_storage
-std::map<int32, struct s_storage> guild_storage_db;
+///Databases of guild_storage : int32 guild_id -> (uint8 stor_id -> struct guild_storage)
+std::map<int32, std::map<uint8, struct s_storage>> guild_storage_db;
+
+///Guild storage table database: uint8 stor_id -> shared_ptr<s_guild_storage_table>
+std::unordered_map<uint8, std::shared_ptr<struct s_guild_storage_table>> guild_storage_table_db;
 
 /**
  * Retrieve the guild_storage of a guild
  * will create a new storage if none found for the guild
  * @param guild_id : id of the guild
+ * @param stor_id : storage type id (default: 0)
  * @return s_storage
  */
-struct s_storage *guild2storage(int32 guild_id)
+struct s_storage *guild2storage(int32 guild_id, uint8 stor_id)
 {
 	struct s_storage *gs;
 
 	if (guild_search(guild_id) == nullptr)
 		return nullptr;
 
-	gs = guild2storage2(guild_id);
+	gs = guild2storage2(guild_id, stor_id);
 
 	if( gs == nullptr ){
-		gs = &guild_storage_db[guild_id];
+		gs = &guild_storage_db[guild_id][stor_id];
 		gs->id = guild_id;
 		gs->type = TABLE_GUILD_STORAGE;
+		gs->stor_id = stor_id;
 	}
 
 	return gs;
@@ -60,10 +67,19 @@ struct s_storage *guild2storage(int32 guild_id)
  * See if the guild_storage exist in db and fetch it if it's the case
  * @author : [Skotlex]
  * @param guild_id : guild_id to search the storage
+ * @param stor_id : storage type id (default: 0)
  * @return s_storage or nullptr
  */
-struct s_storage *guild2storage2(int32 guild_id){
-	return util::map_find( guild_storage_db, guild_id );
+struct s_storage *guild2storage2(int32 guild_id, uint8 stor_id){
+	auto guild_itr = guild_storage_db.find( guild_id );
+	if( guild_itr == guild_storage_db.end() )
+		return nullptr;
+
+	auto stor_itr = guild_itr->second.find( stor_id );
+	if( stor_itr == guild_itr->second.end() )
+		return nullptr;
+
+	return &stor_itr->second;
 }
 
 /**
@@ -78,9 +94,10 @@ void storage_guild_delete(int32 guild_id)
 /**
  * Attempt to open guild storage for player
  * @param sd : player
+ * @param stor_id : storage type id (default: 0)
  * @return 0 : success, 1 : fail, 2 : no guild found
  */
-char storage_guild_storageopen(map_session_data* sd)
+char storage_guild_storageopen(map_session_data* sd, uint8 stor_id)
 {
 	struct s_storage *gstor;
 
@@ -103,24 +120,19 @@ char storage_guild_storageopen(map_session_data* sd)
 	else if (sd->state.storage_flag)
 		return GSTORAGE_STORAGE_ALREADY_OPEN; // Can't open both storages at a time.
 
-#if PACKETVER >= 20140205
-	int32 pos;
-
-	if ((pos = guild_getposition(*sd)) < 0 || !(sd->guild->guild.position[pos].mode&GUILD_PERM_STORAGE))
-		return GSTORAGE_NO_PERMISSION; // Guild member doesn't have permission
-#endif
+	// GUILD_PERM_STORAGE check removed — all guild members can access guild storage via NPC
 
 	if( !pc_can_give_items(sd) ) { //check is this GM level can open guild storage and store items [Lupus]
 		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
 		return GSTORAGE_ALREADY_OPEN;
 	}
 
-	if((gstor = guild2storage2(sd->status.guild_id)) == nullptr
+	if((gstor = guild2storage2(sd->status.guild_id, stor_id)) == nullptr
 #ifdef OFFICIAL_GUILD_STORAGE
 		|| (gstor->max_amount != max)
 #endif
 	) {
-		intif_request_guild_storage(sd->status.account_id,sd->status.guild_id);
+		intif_request_guild_storage(sd->status.account_id,sd->status.guild_id,stor_id);
 		return GSTORAGE_OPEN;
 	}
 
@@ -132,8 +144,17 @@ char storage_guild_storageopen(map_session_data* sd)
 
 	gstor->status = true;
 	sd->state.storage_flag = 2;
+	sd->state.guild_stor_id = stor_id;
 	storage_sortitem(gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild));
-	clif_storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild), "Guild Storage");
+
+	// Get storage name from guild_storage_table_db or use default
+	const char *storage_name = "Guild Storage";
+	auto it = guild_storage_table_db.find( stor_id );
+	if( it != guild_storage_table_db.end() ){
+		storage_name = it->second->name;
+	}
+
+	clif_storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild), storage_name);
 	clif_updatestorageamount(*sd, gstor->amount, gstor->max_amount);
 
 	return GSTORAGE_OPEN;
@@ -264,6 +285,14 @@ bool storage_guild_additem(map_session_data* sd, struct s_storage* stor, struct 
 		return false;
 
 	id = itemdb_search(item_data->nameid);
+
+	// Type-restricted guild storage: only allow items matching the storage type
+	if (!costume_storage_canstore(stor->stor_id, id)) {
+		char msg[64];
+		snprintf(msg, sizeof(msg), STORAGE_TYPE_DENY_MSG_FMT, storage_type_item_get_type_name(stor->stor_id));
+		clif_displaymessage(sd->fd, msg);
+		return false;
+	}
 
 	if( id->stack.guild_storage && amount > id->stack.amount ) // item stack limitation
 		return false;
@@ -401,7 +430,7 @@ void storage_guild_storageadd(map_session_data* sd, int32 index, int32 amount)
 	struct s_storage *stor;
 
 	nullpo_retv(sd);
-	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
+	nullpo_retv(stor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id));
 
 	if( !stor->status || stor->amount > stor->max_amount )
 		return;
@@ -444,7 +473,7 @@ void storage_guild_storageget(map_session_data* sd, int32 index, int32 amount, b
 	unsigned char flag = 0;
 
 	nullpo_retv(sd);
-	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
+	nullpo_retv(stor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id));
 
 	if(!stor->status)
 		return;
@@ -482,7 +511,7 @@ void storage_guild_storageaddfromcart(map_session_data* sd, int32 index, int32 a
 	struct s_storage *stor;
 
 	nullpo_retv(sd);
-	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
+	nullpo_retv(stor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id));
 
 	if( !stor->status || stor->amount > stor->max_amount )
 		return;
@@ -517,7 +546,7 @@ void storage_guild_storagegettocart(map_session_data* sd, int32 index, int32 amo
 	struct s_storage *stor;
 
 	nullpo_retv(sd);
-	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
+	nullpo_retv(stor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id));
 
 	if(!stor->status)
 		return;
@@ -549,9 +578,9 @@ void storage_guild_storagegettocart(map_session_data* sd, int32 index, int32 amo
  * @param flag : 1=char quitting, close the storage
  * @return False : fail (no storage), True : success (requested)
  */
-bool storage_guild_storagesave(uint32 account_id, int32 guild_id, int32 flag)
+bool storage_guild_storagesave(uint32 account_id, int32 guild_id, int32 flag, uint8 stor_id)
 {
-	struct s_storage *stor = guild2storage2(guild_id);
+	struct s_storage *stor = guild2storage2(guild_id, stor_id);
 
 	if (stor) {
 		if (flag&CSAVE_QUIT) //Char quitting, close it.
@@ -572,11 +601,14 @@ bool storage_guild_storagesave(uint32 account_id, int32 guild_id, int32 flag)
  */
 void storage_guild_storagesaved(int32 guild_id)
 {
-	struct s_storage *stor;
+	auto guild_itr = guild_storage_db.find( guild_id );
+	if( guild_itr == guild_storage_db.end() )
+		return;
 
-	if ((stor = guild2storage2(guild_id)) != nullptr) {
-		if (stor->dirty && !stor->status) // Storage has been correctly saved.
-			stor->dirty = false;
+	for( auto& stor_entry : guild_itr->second ){
+		struct s_storage& stor = stor_entry.second;
+		if( stor.dirty && !stor.status ) // Storage has been correctly saved.
+			stor.dirty = false;
 	}
 }
 
@@ -589,19 +621,20 @@ void storage_guild_storageclose(map_session_data* sd)
 	struct s_storage *stor;
 
 	nullpo_retv(sd);
-	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
+	nullpo_retv(stor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id));
 
 	clif_storageclose( *sd );
 	if (stor->status) {
 		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART); //This one also saves the storage. [Skotlex]
 		else
-			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id,0);
+			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, 0, sd->state.guild_stor_id);
 
 		stor->status = false;
 	}
 
 	sd->state.storage_flag = 0;
+	sd->state.guild_stor_id = 0;
 }
 
 /**
@@ -614,7 +647,7 @@ void storage_guild_storage_quit(map_session_data* sd, int32 flag)
 	struct s_storage *stor;
 
 	nullpo_retv(sd);
-	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
+	nullpo_retv(stor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id));
 
 	if (flag) {	//Only during a guild break flag is 1 (don't save storage)
 		clif_storageclose( *sd );
@@ -623,6 +656,7 @@ void storage_guild_storage_quit(map_session_data* sd, int32 flag)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 
 		sd->state.storage_flag = 0;
+		sd->state.guild_stor_id = 0;
 		stor->status = false;
 		return;
 	}
@@ -631,7 +665,7 @@ void storage_guild_storage_quit(map_session_data* sd, int32 flag)
 		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		else
-			storage_guild_storagesave(sd->status.account_id,sd->status.guild_id,1);
+			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, 1, sd->state.guild_stor_id);
 	}
 
 	sd->state.storage_flag = 0;
@@ -649,12 +683,14 @@ void do_final_guild_storage(void)
 
 void do_reconnect_guild_storage(void)
 {
-	for( const auto& entry : guild_storage_db ){
-		struct s_storage stor = entry.second;
+	for( const auto& guild_entry : guild_storage_db ){
+		for( const auto& stor_entry : guild_entry.second ){
+			const struct s_storage& stor = stor_entry.second;
 
-		// Save closed storages.
-		if( stor.dirty && stor.status == 0 ){
-			storage_guild_storagesave(0, stor.id, 0);
+			// Save closed storages.
+			if( stor.dirty && stor.status == 0 ){
+				storage_guild_storagesave(0, stor.id, 0, stor.stor_id);
+			}
 		}
 	}
 }

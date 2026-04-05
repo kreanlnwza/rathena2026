@@ -1,0 +1,55 @@
+Header:
+  Type: GUILD_STORAGE_DB
+  Version: 1
+
+Body:
+  - ID: 0
+    Name: "Guild Storage"
+    Table: guild_storage
+  - ID: 1
+    Name: "Test Storage"
+    Table: guild_storage_001
+  - ID: 9
+    Name: "Guild Costume Storage"
+    Table: guild_storage_costume
+    Max: 600
+  - ID: 10
+    Name: "Guild Healing Storage"
+    Table: guild_storage_healing
+    Max: 600
+  - ID: 11
+    Name: "Guild Usable Storage"
+    Table: guild_storage_usable
+    Max: 600
+  - ID: 12
+    Name: "Guild Etc Storage"
+    Table: guild_storage_etc
+    Max: 600
+  - ID: 13
+    Name: "Guild Armor Storage"
+    Table: guild_storage_armor
+    Max: 600
+  - ID: 14
+    Name: "Guild Weapon Storage"
+    Table: guild_storage_weapon
+    Max: 600
+  - ID: 15
+    Name: "Guild Card Storage"
+    Table: guild_storage_card
+    Max: 600
+  - ID: 16
+    Name: "Guild Pet Egg Storage"
+    Table: guild_storage_petegg
+    Max: 600
+  - ID: 17
+    Name: "Guild Pet Armor Storage"
+    Table: guild_storage_petarmor
+    Max: 600
+  - ID: 18
+    Name: "Guild Ammo Storage"
+    Table: guild_storage_ammo
+    Max: 600
+  - ID: 19
+    Name: "Guild Shadow Gear Storage"
+    Table: guild_storage_shadowgear
+    Max: 600

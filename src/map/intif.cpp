@@ -44,7 +44,7 @@ static const int32 packet_len_table[] = {
 	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
 	-1, 7,-1, 7, 14, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish] / Achievements [Aleos]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
-	12,-1, 7, 3,  0, 0, 0, 0,  0, 0,-1, 9, -1, 0,  0, 0, //0x3880  Pet System,  Storages
+	12,-1, 7, 3,  0, 0, 0, 0,  0, 0,-1, 9, -1,-1,  0, 0, //0x3880  Pet System,  Storages
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
 	-1,-1, 8, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x38A0  Clans
 };
@@ -545,17 +545,19 @@ int32 intif_request_registry(map_session_data *sd, int32 flag)
  * Request to load guild storage from char-serv
  * @param account_id: Player account identification
  * @param guild_id: Guild of player
+ * @param stor_id: Storage type id (default: 0)
  * @return false - error, true - message sent
  */
-bool intif_request_guild_storage(uint32 account_id, int32 guild_id)
+bool intif_request_guild_storage(uint32 account_id, int32 guild_id, uint8 stor_id)
 {
 	if (CheckForCharServer())
 		return false;
-	WFIFOHEAD(inter_fd,10);
+	WFIFOHEAD(inter_fd,11);
 	WFIFOW(inter_fd,0) = 0x3018;
 	WFIFOL(inter_fd,2) = account_id;
 	WFIFOL(inter_fd,6) = guild_id;
-	WFIFOSET(inter_fd,10);
+	WFIFOB(inter_fd,10) = stor_id;
+	WFIFOSET(inter_fd,11);
 	return true;
 }
 
@@ -1495,7 +1497,7 @@ int32 intif_parse_LoadGuildStorage(int32 fd)
 	int32 guild_id, flag;
 
 	guild_id = RFIFOL(fd,8);
-	flag = RFIFOL(fd,12);
+	flag = RFIFOB(fd,12);
 	if (guild_id <= 0)
 		return 0;
 
@@ -1506,7 +1508,13 @@ int32 intif_parse_LoadGuildStorage(int32 fd)
 			return 0;
 		}
 	}
-	gstor = guild2storage(guild_id);
+	if (RFIFOW(fd,2)-13 != sizeof(struct s_storage)) {
+		ShowError("intif_parse_LoadGuildStorage: data size error %d %" PRIuPTR "\n",RFIFOW(fd,2)-13 , sizeof(struct s_storage));
+		return 0;
+	}
+
+	uint8 stor_id = ((struct s_storage*)RFIFOP(fd,13))->stor_id;
+	gstor = guild2storage(guild_id, stor_id);
 	if (!gstor) {
 		ShowWarning("intif_parse_LoadGuildStorage: error guild_id %d not exist\n",guild_id);
 		return 0;
@@ -1519,15 +1527,10 @@ int32 intif_parse_LoadGuildStorage(int32 fd)
 		ShowWarning("intif_parse_LoadGuildStorage: received storage for an already modified non-saved storage! (User %d:%d)\n", flag?sd->status.account_id:1, flag?sd->status.char_id:1);
 		return 0;
 	}
-	if (RFIFOW(fd,2)-13 != sizeof(struct s_storage)) {
-		ShowError("intif_parse_LoadGuildStorage: data size error %d %" PRIuPTR "\n",RFIFOW(fd,2)-13 , sizeof(struct s_storage));
-		gstor->status = false;
-		return 0;
-	}
 
 	memcpy(gstor,RFIFOP(fd,13),sizeof(struct s_storage));
 	if( flag )
-		storage_guild_storageopen(sd);
+		storage_guild_storageopen(sd, stor_id);
 
 	return 1;
 }
@@ -3619,6 +3622,31 @@ void intif_parse_StorageInfo_recv(int32 fd) {
 }
 
 /**
+ * IZ 0x388d <len>.W { <guild_storage_table>.? }*?
+ * Receive guild storage information
+ **/
+void intif_parse_GuildStorageInfo_recv(int32 fd) {
+	int32 size = sizeof(struct s_guild_storage_table), count = (RFIFOW(fd, 2) - 4) / size;
+
+	guild_storage_table_db.clear();
+
+	for( int32 i = 0; i < count; i++ ){
+		struct s_guild_storage_table* ptr = (struct s_guild_storage_table*)RFIFOP( fd, 4 + size * i );
+		std::shared_ptr<struct s_guild_storage_table> storage = std::make_shared<struct s_guild_storage_table>();
+
+		safestrncpy( storage->name, ptr->name, sizeof( storage->name ) );
+		safestrncpy( storage->table, ptr->table, sizeof( storage->table ) );
+		storage->max_num = ptr->max_num;
+		storage->id = ptr->id;
+
+		guild_storage_table_db[storage->id] = storage;
+	}
+
+	if (battle_config.etc_log)
+		ShowInfo("Received '" CL_WHITE PRIdPTR CL_RESET "' guild storage info from inter-server.\n", guild_storage_table_db.size());
+}
+
+/**
  * Request inventory/cart/storage data for a player
  * ZI 0x308a <type>.B <account_id>.L <char_id>.L <storage_id>.B
  * @param sd: Player data
@@ -3877,6 +3905,9 @@ int32 intif_parse(int32 fd)
 	case 0x388a:	intif_parse_StorageReceived(fd); break;
 	case 0x388b:	intif_parse_StorageSaved(fd); break;
 	case 0x388c:	intif_parse_StorageInfo_recv(fd); break;
+
+	// Guild Storage Info
+	case 0x388d:	intif_parse_GuildStorageInfo_recv(fd); break;
 
 	// Homunculus System
 	case 0x3890:	intif_parse_CreateHomunculus(fd); break;

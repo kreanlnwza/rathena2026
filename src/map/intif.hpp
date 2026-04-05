@@ -35,7 +35,7 @@ int32 intif_wis_message_to_gm(char *Wisp_name, int32 permission, char *mes);
 int32 intif_saveregistry(map_session_data *sd);
 int32 intif_request_registry(map_session_data *sd, int32 flag);
 
-bool intif_request_guild_storage(uint32 account_id, int32 guild_id);
+bool intif_request_guild_storage(uint32 account_id, int32 guild_id, uint8 stor_id = 0);
 bool intif_send_guild_storage(uint32 account_id, struct s_storage *gstor);
 
 int32 intif_create_party(struct party_member *member,char *name,int32 item,int32 item2);

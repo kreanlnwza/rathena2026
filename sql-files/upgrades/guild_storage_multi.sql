@@ -1,0 +1,95 @@
+--
+-- Guild Storage Multi-Type Support
+-- Run this script to add additional guild storage tables.
+-- The default guild_storage table (ID: 0) already exists in main.sql
+--
+-- For each new guild storage type added in conf/guild_storage.yml,
+-- add a CREATE TABLE statement below.
+--
+-- IMPORTANT: Each table must be created with an explicit schema (copied from
+-- main.sql). Do NOT use "LIKE guild_storage" — that approach depends on the
+-- runtime state of guild_storage, which may have diverged from the original
+-- schema due to prior migrations (ALTER TABLE, etc.), leading to silent drift.
+--
+-- These tables are created EMPTY. No data is migrated from guild_storage (ID: 0).
+-- Each storage type starts with its own independent dataset.
+--
+-- Example conf/guild_storage.yml entry:
+--   - ID: 1
+--     Name: "Guild Vault"
+--     Table: guild_vault
+
+-- Guild Storage ID 1 (guild_storage_001 / Test Storage)
+-- CREATE TABLE IF NOT EXISTS `guild_storage_001` (
+--   `id` int(10) unsigned NOT NULL auto_increment,
+--   `guild_id` int(11) unsigned NOT NULL default '0',
+--   `nameid` int(10) unsigned NOT NULL default '0',
+--   `amount` int(11) unsigned NOT NULL default '0',
+--   `equip` int(11) unsigned NOT NULL default '0',
+--   `identify` smallint(6) unsigned NOT NULL default '0',
+--   `refine` tinyint(3) unsigned NOT NULL default '0',
+--   `attribute` tinyint(4) unsigned NOT NULL default '0',
+--   `card0` int(10) unsigned NOT NULL default '0',
+--   `card1` int(10) unsigned NOT NULL default '0',
+--   `card2` int(10) unsigned NOT NULL default '0',
+--   `card3` int(10) unsigned NOT NULL default '0',
+--   `option_id0` smallint(5) NOT NULL default '0',
+--   `option_val0` smallint(5) NOT NULL default '0',
+--   `option_parm0` tinyint(3) NOT NULL default '0',
+--   `option_id1` smallint(5) NOT NULL default '0',
+--   `option_val1` smallint(5) NOT NULL default '0',
+--   `option_parm1` tinyint(3) NOT NULL default '0',
+--   `option_id2` smallint(5) NOT NULL default '0',
+--   `option_val2` smallint(5) NOT NULL default '0',
+--   `option_parm2` tinyint(3) NOT NULL default '0',
+--   `option_id3` smallint(5) NOT NULL default '0',
+--   `option_val3` smallint(5) NOT NULL default '0',
+--   `option_parm3` tinyint(3) NOT NULL default '0',
+--   `option_id4` smallint(5) NOT NULL default '0',
+--   `option_val4` smallint(5) NOT NULL default '0',
+--   `option_parm4` tinyint(3) NOT NULL default '0',
+--   `expire_time` int(11) unsigned NOT NULL default '0',
+--   `bound` tinyint(3) unsigned NOT NULL default '0',
+--   `unique_id` bigint(20) unsigned NOT NULL default '0',
+--   `enchantgrade` tinyint unsigned NOT NULL default '0',
+--   PRIMARY KEY  (`id`),
+--   KEY `guild_id` (`guild_id`)
+-- ) ENGINE=MyISAM;
+--- Guild Storage ID 1 (Test Storage)
+CREATE TABLE IF NOT EXISTS `guild_storage_001` LIKE `guild_storage`;
+
+-- Guild Type-Restricted Storages (ID: 9-19)
+-- Each storage only accepts items of the matching type.
+
+-- Guild Costume Storage (ID: 9)
+CREATE TABLE IF NOT EXISTS `guild_storage_costume` LIKE `guild_storage`;
+
+-- Guild Healing Storage (ID: 10)
+CREATE TABLE IF NOT EXISTS `guild_storage_healing` LIKE `guild_storage`;
+
+-- Guild Usable Storage (ID: 11)
+CREATE TABLE IF NOT EXISTS `guild_storage_usable` LIKE `guild_storage`;
+
+-- Guild Etc Storage (ID: 12)
+CREATE TABLE IF NOT EXISTS `guild_storage_etc` LIKE `guild_storage`;
+
+-- Guild Armor Storage (ID: 13)
+CREATE TABLE IF NOT EXISTS `guild_storage_armor` LIKE `guild_storage`;
+
+-- Guild Weapon Storage (ID: 14)
+CREATE TABLE IF NOT EXISTS `guild_storage_weapon` LIKE `guild_storage`;
+
+-- Guild Card Storage (ID: 15)
+CREATE TABLE IF NOT EXISTS `guild_storage_card` LIKE `guild_storage`;
+
+-- Guild Pet Egg Storage (ID: 16)
+CREATE TABLE IF NOT EXISTS `guild_storage_petegg` LIKE `guild_storage`;
+
+-- Guild Pet Armor Storage (ID: 17)
+CREATE TABLE IF NOT EXISTS `guild_storage_petarmor` LIKE `guild_storage`;
+
+-- Guild Ammo Storage (ID: 18)
+CREATE TABLE IF NOT EXISTS `guild_storage_ammo` LIKE `guild_storage`;
+
+-- Guild Shadow Gear Storage (ID: 19)
+CREATE TABLE IF NOT EXISTS `guild_storage_shadowgear` LIKE `guild_storage`;

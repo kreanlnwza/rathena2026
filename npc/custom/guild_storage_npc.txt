@@ -1,0 +1,413 @@
+//===== rAthena Script =======================================
+//= Guild Storage Keeper
+//===== Description: =========================================
+//= Manages access to multiple guild storage types (ID: 0, 1, etc.)
+//= Charges 1000 Zeny per access and logs warehouse usage history
+//= Requires guild skill and warehouse permission to use
+//===== Changelogs: ==========================================
+//= 1.0 Initial implementation [rAthena]
+//= 2.0 Multi-storage support [rAthena Refactor]
+//= 2.1 Maintained by V!be Coding [kreanlnwza] AI Assistant (Haiku)
+//============================================================
+
+-	script	GuildStorageKeeper	-1,{
+	.@fee = 1000;					// Storage access fee in Zeny
+	.@type_fee = 5000;				// Type-specific storage access fee in Zeny
+	.@type_unlock_price = 3500000;	// Type-specific storage unlock price (3.5M Zeny per type)
+	.@vault_price = 10000000;		// Guild Vault upgrade price (10M Zeny)
+	.@pin_change_fee = 200000;		// PIN change fee (200K Zeny, first time free)
+
+	mes "[Guild Storage Keeper]";
+	mes "How are you? We are specialized in guild warehouses. This is our ^0000cdstory^000000:";
+	mes "Why can't guild members share a storage? We started off with that simple question.";
+	next;
+	mes "[Guild Storage Keeper]";
+	mes "You can open the warehouse for " + callfunc("F_InsertComma", .@fee) + " Zeny or look up the usage history of the guild.";
+	mes "How can I help you?";
+	next;
+
+	.@guildid = getcharid( 2 );
+	.@is_leader = (.@guildid > 0 && getguildmaster(.@guildid) == strcharinfo(0));
+	.@vault_unlocked = ($guild_vault_unlocked[.@guildid] > 0);
+
+	// Force PIN setup if guild has no PIN
+	if( .@guildid > 0 && !$guild_storage_pin[.@guildid] ){
+		if( !.@is_leader ){
+			mes "[Guild Storage Keeper]";
+			mes "Your guild has not set a storage PIN yet.";
+			mes "Please ask your guild leader to set one first.";
+			close;
+		}
+		mes "[Guild Storage Keeper]";
+		mes "Your guild does not have a storage PIN yet.";
+		mes "For security, you must set a 4-digit PIN before using the warehouse.";
+		next;
+		callsub( S_SetPIN, .@guildid, 0 );
+	}
+
+	// Build dynamic menu and track option positions
+	.@n = 0;
+	.@menu$ = "Open Guild Storage:";			.@opt_storage = ++.@n;
+	if( .@vault_unlocked ){
+		.@menu$ += "Open Guild Vault:";		.@opt_vault = ++.@n;
+	}
+	if( .@is_leader && !.@vault_unlocked ){
+		.@menu$ += "Upgrade to Guild Vault:";	.@opt_upgrade = ++.@n;
+	}
+	.@menu$ += "Type-Specific Storage:";		.@opt_type = ++.@n;
+	if( .@is_leader ){
+		.@menu$ += "PIN Management:";			.@opt_pin = ++.@n;
+	}
+	.@menu$ += "View warehouse usage history:";	.@opt_log = ++.@n;
+
+	.@choice = select( .@menu$ );
+
+	if( .@choice == .@opt_storage || .@choice == .@opt_vault ){
+		.@stor_id = (.@choice == .@opt_vault) ? 1 : 0;
+
+		if( .@guildid == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "The guild storage is only available for guild members.";
+			close;
+		}
+
+		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "Your guild has not yet learned the guild storage skill.";
+			mes "Please come back after learning the skill.";
+			close;
+		}
+
+		if( Zeny < .@fee ){
+			mes "[Guild Storage Keeper]";
+			mes "I am afraid you do not have enough money to settle the fee.";
+			mes "The fee is " + callfunc("F_InsertComma", .@fee) + " Zeny.";
+			close;
+		}
+
+		mes "[Guild Storage Keeper]";
+		mes "I will open the guild storage for you then. Have a memorable time!";
+
+		// PIN check
+		if( !$guild_pin_off[.@guildid] && $guild_storage_pin[.@guildid] ){
+			next;
+			callsub( S_CheckPIN, .@guildid );
+		}
+
+		close2;
+
+		.@result = openguildstorage2( .@stor_id );
+		if( .@result == GSTORAGE_OPEN ){
+			Zeny -= .@fee;
+			end;
+		}
+
+		// Storage open failed — show specific error
+		mes "[Guild Storage Keeper]";
+		switch( .@result ){
+			case GSTORAGE_ALREADY_OPEN:
+				mes "I am afraid someone else is using the warehouse right now.";
+				mes "Please try again after a while.";
+				break;
+			case GSTORAGE_STORAGE_ALREADY_OPEN:
+				mes "You already have another storage open.";
+				mes "Please close it first before opening a guild warehouse.";
+				break;
+			case GSTORAGE_NO_PERMISSION:
+				mes "You do not have the permission to access the guild warehouse.";
+				mes "Please ask your guild leader to grant you access.";
+				break;
+			default:
+				mes "An unknown error occurred while opening the warehouse.";
+				mes "Error code: " + .@result;
+				break;
+		}
+		close;
+	}
+
+	if( .@choice == .@opt_upgrade ){
+		mes "[Guild Storage Keeper]";
+		mes "The Guild Vault upgrade costs " + callfunc("F_InsertComma", .@vault_price) + " Zeny.";
+		mes "This is a one-time investment for your guild.";
+		next;
+
+		if( Zeny < .@vault_price ){
+			mes "[Guild Storage Keeper]";
+			mes "The guild does not have enough Zeny for this upgrade.";
+			mes "Required: " + callfunc("F_InsertComma", .@vault_price) + " Zeny";
+			mes "Current: " + callfunc("F_InsertComma", Zeny) + " Zeny";
+			close;
+		}
+
+		if( select( "Confirm upgrade:Cancel" ) == 2 ){
+			mes "[Guild Storage Keeper]";
+			mes "Upgrade cancelled.";
+			close;
+		}
+
+		mes "[Guild Storage Keeper]";
+		mes "Congratulations! Your guild has unlocked the Guild Vault!";
+		close2;
+
+		Zeny -= .@vault_price;
+		$guild_vault_unlocked[.@guildid] = 1;
+		end;
+	}
+
+	if( .@choice == .@opt_type ){
+		if( .@guildid == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "The guild storage is only available for guild members.";
+			close;
+		}
+
+		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "Your guild has not yet learned the guild storage skill.";
+			mes "Please come back after learning the skill.";
+			close;
+		}
+
+		mes "[Guild Storage Keeper]";
+		mes "Select the type of storage you want to open or unlock.";
+		mes "Each storage only accepts items of the matching type.";
+		next;
+
+		switch( select( "Costume:Etc:Armor:Weapon:Card:Shadow Gear:Cancel" ) ){
+			case 1:  .@stor_id = 9;  .@stor_name$ = "Costume";      break;
+			case 2:  .@stor_id = 12; .@stor_name$ = "Etc";           break;
+			case 3:  .@stor_id = 13; .@stor_name$ = "Armor";         break;
+			case 4:  .@stor_id = 14; .@stor_name$ = "Weapon";        break;
+			case 5:  .@stor_id = 15; .@stor_name$ = "Card";          break;
+			case 6:  .@stor_id = 19; .@stor_name$ = "Shadow Gear";   break;
+			case 7:
+				mes "[Guild Storage Keeper]";
+				mes "Come back anytime!";
+				close;
+		}
+
+		// Check if this type storage is unlocked (bitmask: 1 << (stor_id - 9))
+		.@bit = (1 << (.@stor_id - 9));
+		.@is_unlocked = ($guild_type_storage[.@guildid] & .@bit);
+
+		if( !.@is_unlocked ){
+			if( !.@is_leader ){
+				mes "[Guild Storage Keeper]";
+				mes "The ^0000FF" + .@stor_name$ + " Storage^000000 has not been unlocked yet.";
+				mes "Only the guild leader can unlock new storages.";
+				close;
+			}
+
+			// Need to unlock first (leader only)
+			mes "[Guild Storage Keeper]";
+			mes "The ^0000FF" + .@stor_name$ + " Storage^000000 has not been unlocked yet.";
+			mes "Unlock price: ^FF0000" + callfunc("F_InsertComma", .@type_unlock_price) + " Zeny^000000";
+			mes "This is a one-time investment for your guild.";
+			next;
+
+			if( Zeny < .@type_unlock_price ){
+				mes "[Guild Storage Keeper]";
+				mes "The guild does not have enough Zeny for this unlock.";
+				mes "Required: ^FF0000" + callfunc("F_InsertComma", .@type_unlock_price) + " Zeny^000000";
+				mes "Current: ^666666" + callfunc("F_InsertComma", Zeny) + " Zeny^000000";
+				close;
+			}
+
+			if( select( "Confirm unlock:Cancel" ) == 2 ){
+				mes "[Guild Storage Keeper]";
+				mes "Unlock cancelled.";
+				close;
+			}
+
+			mes "[Guild Storage Keeper]";
+			mes "Congratulations! Your guild has unlocked the ^0000FF" + .@stor_name$ + " Storage^000000!";
+			close2;
+
+			Zeny -= .@type_unlock_price;
+			$guild_type_storage[.@guildid] = $guild_type_storage[.@guildid] | .@bit;
+			end;
+		}
+
+		// Storage already unlocked - open it with access fee
+		if( Zeny < .@type_fee ){
+			mes "[Guild Storage Keeper]";
+			mes "I am afraid you do not have enough money to settle the fee.";
+			mes "The fee is " + callfunc("F_InsertComma", .@type_fee) + " Zeny.";
+			close;
+		}
+
+		mes "[Guild Storage Keeper]";
+		mes "Opening ^0000FF" + .@stor_name$ + " Storage^000000 for your guild.";
+		mes "Only ^FF0000" + .@stor_name$ + "^000000 items can be stored here.";
+
+		// PIN check
+		if( !$guild_pin_off[.@guildid] && $guild_storage_pin[.@guildid] ){
+			next;
+			callsub( S_CheckPIN, .@guildid );
+		}
+
+		close2;
+
+		.@result = openguildstorage2( .@stor_id );
+		if( .@result == GSTORAGE_OPEN ){
+			Zeny -= .@type_fee;
+			end;
+		}
+
+		mes "[Guild Storage Keeper]";
+		switch( .@result ){
+			case GSTORAGE_ALREADY_OPEN:
+				mes "I am afraid someone else is using the warehouse right now.";
+				mes "Please try again after a while.";
+				break;
+			case GSTORAGE_STORAGE_ALREADY_OPEN:
+				mes "You already have another storage open.";
+				mes "Please close it first before opening a guild warehouse.";
+				break;
+			case GSTORAGE_NO_PERMISSION:
+				mes "You do not have the permission to access the guild warehouse.";
+				mes "Please ask your guild leader to grant you access.";
+				break;
+			default:
+				mes "An unknown error occurred while opening the warehouse.";
+				mes "Error code: " + .@result;
+				break;
+		}
+		close;
+	}
+
+	if( .@choice == .@opt_pin ){
+		// PIN Management (leader only)
+		.@has_pin = ($guild_storage_pin[.@guildid] != 0);
+		.@pin_on = (!$guild_pin_off[.@guildid]);
+
+		mes "[Guild Storage Keeper]";
+		mes "Guild Storage PIN Management";
+		mes "Status: " + (.@pin_on ? "^00FF00ON^000000" : "^FF0000OFF^000000");
+		if( .@has_pin )
+			mes "PIN: ^0000FFSet^000000";
+		else
+			mes "PIN: ^999999Not set^000000";
+		next;
+
+		if( !.@has_pin ){
+			// No PIN set yet (free)
+			switch( select( "Set new PIN:Cancel" ) ){
+				case 1:
+					callsub( S_SetPIN, .@guildid, 0 );
+					break;
+				case 2:
+					mes "[Guild Storage Keeper]";
+					mes "Come back anytime!";
+					close;
+			}
+		} else {
+			// PIN already set
+			switch( select( "Toggle " + (.@pin_on ? "OFF" : "ON") + ":Change PIN:Cancel" ) ){
+				case 1:
+					$guild_pin_off[.@guildid] = .@pin_on ? 1 : 0;
+					mes "[Guild Storage Keeper]";
+					mes "PIN lock has been turned ^" + (.@pin_on ? "FF0000OFF" : "00FF00ON") + "^000000.";
+					close;
+				case 2:
+					mes "[Guild Storage Keeper]";
+					mes "Changing PIN costs ^FF0000" + callfunc("F_InsertComma", .@pin_change_fee) + " Zeny^000000.";
+					mes "Please enter your ^0000FFcurrent PIN^000000 first.";
+					input .@old_pin;
+					if( .@old_pin != $guild_storage_pin[.@guildid] ){
+						mes "Wrong PIN. Cannot change.";
+						close;
+					}
+					if( Zeny < .@pin_change_fee ){
+						mes "You do not have enough Zeny to change PIN.";
+						close;
+					}
+					next;
+					callsub( S_SetPIN, .@guildid, .@pin_change_fee );
+					break;
+				case 3:
+					mes "[Guild Storage Keeper]";
+					mes "Come back anytime!";
+					close;
+			}
+		}
+		close;
+	}
+
+	if( .@choice == .@opt_log ){
+		if( .@guildid == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "The guild storage is only available for guild members.";
+			close;
+		}
+
+		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "Your guild has not yet learned the guild storage skill.";
+			mes "Please come back after learning the skill.";
+			close;
+		}
+
+		mes "[Guild Storage Keeper]";
+		mes "I will show you the usage history of the warehouse. Usage history will be retained for up to 3 months.";
+		mes "Have a memorable time!";
+		close2;
+		guildopenstorage_log();
+		end;
+	}
+
+// --- Subroutines ---
+
+S_CheckPIN:
+	mes "[Guild Storage Keeper]";
+	mes "Please enter the 4-digit guild storage PIN:";
+	input .@pin_input;
+	if( .@pin_input != $guild_storage_pin[getarg(0)] ){
+		mes "Wrong PIN. Access denied.";
+		close;
+	}
+	return;
+
+S_SetPIN:
+	// getarg(0) = guild_id, getarg(1) = fee (0 = free/first time)
+	mes "[Guild Storage Keeper]";
+	mes "Enter a new 4-digit PIN (1000 ~ 9999):";
+	input .@new_pin;
+	if( .@new_pin < 1000 || .@new_pin > 9999 ){
+		mes "Invalid PIN. Must be 4 digits (1000 ~ 9999).";
+		close;
+	}
+	// Extract digits
+	.@d1 = .@new_pin / 1000;
+	.@d2 = (.@new_pin / 100) % 10;
+	.@d3 = (.@new_pin / 10) % 10;
+	.@d4 = .@new_pin % 10;
+	// Block repeating digits (0000, 1111, ..., 9999)
+	if( .@d1 == .@d2 && .@d2 == .@d3 && .@d3 == .@d4 ){
+		mes "PIN with all same digits is not allowed.";
+		close;
+	}
+	// Block ascending sequential (1234, 2345, ...)
+	if( .@d2 == .@d1 + 1 && .@d3 == .@d2 + 1 && .@d4 == .@d3 + 1 ){
+		mes "Sequential PIN is not allowed.";
+		close;
+	}
+	// Block descending sequential (9876, 8765, ...)
+	if( .@d2 == .@d1 - 1 && .@d3 == .@d2 - 1 && .@d4 == .@d3 - 1 ){
+		mes "Sequential PIN is not allowed.";
+		close;
+	}
+	// Charge fee if applicable
+	.@cost = getarg(1, 0);
+	if( .@cost > 0 ){
+		Zeny -= .@cost;
+	}
+	$guild_storage_pin[getarg(0)] = .@new_pin;
+	$guild_pin_off[getarg(0)] = 0;
+	mes "[Guild Storage Keeper]";
+	mes "New PIN has been set successfully.";
+	mes "PIN lock is now ^00FF00ON^000000.";
+	close;
+}
+
+prontera,155,185,5	duplicate(GuildStorageKeeper)	Guild Storage Keeper	896

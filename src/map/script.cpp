@@ -54,7 +54,6 @@
 #include "mapreg.hpp"
 #include "mercenary.hpp"
 #include "mob.hpp"
-#include "mob_rank.hpp"
 #include "npc.hpp"
 #include "party.hpp"
 #include "path.hpp"
@@ -63,6 +62,7 @@
 #include "pet.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
+#include "storage_guild.hpp"
 
 using namespace rathena;
 
@@ -8362,7 +8362,7 @@ static void buildin_delitem_delete(map_session_data* sd, int32 idx, int32* amoun
 			break;
 		case TABLE_GUILD_STORAGE:
 		{
-			gstor = guild2storage2(sd->status.guild_id);
+			gstor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id);
 
 			itm = &gstor->u.items_guild[idx];
 		}
@@ -8442,7 +8442,7 @@ static bool buildin_delitem_search(map_session_data* sd, struct item* it, uint8 
 			break;
 		case TABLE_GUILD_STORAGE:
 		{
-			struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+			struct s_storage *gstor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id);
 
 			size = MAX_GUILD_STORAGE;
 			items = gstor->u.items_guild;
@@ -8604,7 +8604,7 @@ BUILDIN_FUNC(delitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (loc == TABLE_GUILD_STORAGE) {
-		struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+		struct s_storage *gstor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id);
 
 		if (gstor == nullptr || sd->state.storage_flag) {
 			script_pushint(st, -1);
@@ -8698,7 +8698,7 @@ BUILDIN_FUNC(delitem2)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (loc == TABLE_GUILD_STORAGE) {
-		struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+		struct s_storage *gstor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id);
 
 		if (gstor == nullptr || sd->state.storage_flag) {
 			script_pushint(st, -1);
@@ -10978,6 +10978,26 @@ BUILDIN_FUNC(guildopenstorage)
 
 	ret = storage_guild_storageopen(sd);
 	script_pushint(st,ret);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*
+ * openguildstorage2 <storage_id>{,<account_id>}
+ * Opens guild storage with specified storage type
+ **/
+BUILDIN_FUNC(openguildstorage2)
+{
+	map_session_data *sd = nullptr;
+
+	if (!script_accid2sd(3, sd)) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 stor_id = script_getnum(st, 2);
+
+	char ret = storage_guild_storageopen(sd, (uint8)stor_id);
+	script_pushint(st, ret);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19153,7 +19173,6 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_RES, md->status.res);
 			getunitdata_sub(UMOB_MRES, md->status.mres);
 			getunitdata_sub(UMOB_DAMAGETAKEN, md->damagetaken);
-			getunitdata_sub(UMOB_RANK, md->rank);
 			} break;
 
 		case BL_HOM: {
@@ -19530,7 +19549,6 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_RES: md->base_status->res = (int16)value; calc_status = true; break;
 			case UMOB_MRES: md->base_status->mres = (int16)value; calc_status = true; break;
 			case UMOB_DAMAGETAKEN: md->damagetaken = (uint16)value; break;
-			case UMOB_RANK: md->rank = (e_mob_rank)cap_value(value, MOBRANK_F, MOBRANK_EXPLUS); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -22886,8 +22904,6 @@ BUILDIN_FUNC(setmounting) {
 	} else if (sd->sc.getSCE(SC_CLOAKING) || sd->sc.getSCE(SC_CHASEWALK) || sd->sc.getSCE(SC_CLOAKINGEXCEED) || sd->sc.getSCE(SC_CAMOUFLAGE) || sd->sc.getSCE(SC_STEALTHFIELD) || sd->sc.getSCE(SC__FEINTBOMB)) {
 		// SC_HIDING, SC__INVISIBILITY, SC__SHADOWFORM, SC_SUHIDE already disable item usage
 		script_pushint(st, 0); // Silent failure
-	} else if (sd->sc.getSCE(SC_WEREWOLF) || sd->sc.getSCE(SC_WERERAPTOR)) {
-		script_pushint(st, 0);
 	} else {
 		if( sd->sc.getSCE(SC_ALL_RIDING) )
 			status_change_end(sd, SC_ALL_RIDING); //release mount
@@ -28075,6 +28091,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(gettimestr,"si?"),
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,""),
+	BUILDIN_DEF(openguildstorage2,"i?"),
 	BUILDIN_DEF(guildopenstorage_log,"?"),
 	BUILDIN_DEF(guild_has_permission,"i?"),
 	BUILDIN_DEF(itemskill,"vi?"),
