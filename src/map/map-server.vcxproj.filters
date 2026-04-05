@@ -254,6 +254,9 @@
     <ClInclude Include="storage_guild.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="storage_type_item.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="trade.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -383,6 +386,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="storage_guild.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="storage_type_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="trade.cpp">

@@ -27,6 +27,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "storage.hpp"
+#include "storage_type_item.hpp"
 
 using namespace rathena;
 
@@ -284,6 +285,14 @@ bool storage_guild_additem(map_session_data* sd, struct s_storage* stor, struct 
 		return false;
 
 	id = itemdb_search(item_data->nameid);
+
+	// Type-restricted guild storage: only allow items matching the storage type
+	if (!costume_storage_canstore(stor->stor_id, id)) {
+		char msg[64];
+		snprintf(msg, sizeof(msg), STORAGE_TYPE_DENY_MSG_FMT, storage_type_item_get_type_name(stor->stor_id));
+		clif_displaymessage(sd->fd, msg);
+		return false;
+	}
 
 	if( id->stack.guild_storage && amount > id->stack.amount ) // item stack limitation
 		return false;

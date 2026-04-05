@@ -57,3 +57,39 @@
 -- ) ENGINE=MyISAM;
 --- Guild Storage ID 1 (Test Storage)
 CREATE TABLE IF NOT EXISTS `guild_storage_001` LIKE `guild_storage`;
+
+-- Guild Type-Restricted Storages (ID: 9-19)
+-- Each storage only accepts items of the matching type.
+
+-- Guild Costume Storage (ID: 9)
+CREATE TABLE IF NOT EXISTS `guild_storage_costume` LIKE `guild_storage`;
+
+-- Guild Healing Storage (ID: 10)
+CREATE TABLE IF NOT EXISTS `guild_storage_healing` LIKE `guild_storage`;
+
+-- Guild Usable Storage (ID: 11)
+CREATE TABLE IF NOT EXISTS `guild_storage_usable` LIKE `guild_storage`;
+
+-- Guild Etc Storage (ID: 12)
+CREATE TABLE IF NOT EXISTS `guild_storage_etc` LIKE `guild_storage`;
+
+-- Guild Armor Storage (ID: 13)
+CREATE TABLE IF NOT EXISTS `guild_storage_armor` LIKE `guild_storage`;
+
+-- Guild Weapon Storage (ID: 14)
+CREATE TABLE IF NOT EXISTS `guild_storage_weapon` LIKE `guild_storage`;
+
+-- Guild Card Storage (ID: 15)
+CREATE TABLE IF NOT EXISTS `guild_storage_card` LIKE `guild_storage`;
+
+-- Guild Pet Egg Storage (ID: 16)
+CREATE TABLE IF NOT EXISTS `guild_storage_petegg` LIKE `guild_storage`;
+
+-- Guild Pet Armor Storage (ID: 17)
+CREATE TABLE IF NOT EXISTS `guild_storage_petarmor` LIKE `guild_storage`;
+
+-- Guild Ammo Storage (ID: 18)
+CREATE TABLE IF NOT EXISTS `guild_storage_ammo` LIKE `guild_storage`;
+
+-- Guild Shadow Gear Storage (ID: 19)
+CREATE TABLE IF NOT EXISTS `guild_storage_shadowgear` LIKE `guild_storage`;
