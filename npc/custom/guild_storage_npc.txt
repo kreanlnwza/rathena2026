@@ -1,0 +1,151 @@
+//===== rAthena Script =======================================
+//= Guild Storage Keeper
+//===== Description: =========================================
+//= Manages access to multiple guild storage types (ID: 0, 1, etc.)
+//= Charges 1000 Zeny per access and logs warehouse usage history
+//= Requires guild skill and warehouse permission to use
+//===== Changelogs: ==========================================
+//= 1.0 Initial implementation [rAthena]
+//= 2.0 Multi-storage support [rAthena Refactor]
+//= 2.1 Maintained by V!be Coding [kreanlnwza] AI Assistant (Haiku)
+//============================================================
+
+-	script	GuildStorageKeeper	-1,{
+	.@fee = 1000;					// Storage access fee in Zeny
+	.@vault_price = 10000000;		// Guild Vault upgrade price (10M Zeny)
+
+	mes "[Guild Storage Keeper]";
+	mes "How are you? We are specialized in guild warehouses. This is our ^0000cdstory^000000:";
+	mes "Why can't guild members share a storage? We started off with that simple question.";
+	next;
+	mes "[Guild Storage Keeper]";
+	mes "You can open the warehouse for " + callfunc("F_InsertComma", .@fee) + " Zeny or look up the usage history of the guild.";
+	mes "How can I help you?";
+	next;
+
+	.@guildid = getcharid( 2 );
+	.@is_leader = (.@guildid > 0 && getguildmaster(.@guildid) == strcharinfo(0));
+	.@vault_unlocked = ($guild_vault_unlocked[.@guildid] > 0);
+
+	// Build dynamic menu and track option positions
+	.@n = 0;
+	.@menu$ = "Open Guild Storage:";			.@opt_storage = ++.@n;
+	if( .@vault_unlocked ){
+		.@menu$ += "Open Guild Vault:";		.@opt_vault = ++.@n;
+	}
+	if( .@is_leader && !.@vault_unlocked ){
+		.@menu$ += "Upgrade to Guild Vault:";	.@opt_upgrade = ++.@n;
+	}
+	.@menu$ += "View warehouse usage history:";	.@opt_log = ++.@n;
+
+	.@choice = select( .@menu$ );
+
+	if( .@choice == .@opt_storage || .@choice == .@opt_vault ){
+		.@stor_id = (.@choice == .@opt_vault) ? 1 : 0;
+
+		if( .@guildid == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "The guild storage is only available for guild members.";
+			close;
+		}
+
+		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "Your guild has not yet learned the guild storage skill.";
+			mes "Please come back after learning the skill.";
+			close;
+		}
+
+		if( Zeny < .@fee ){
+			mes "[Guild Storage Keeper]";
+			mes "I am afraid you do not have enough money to settle the fee.";
+			mes "The fee is " + callfunc("F_InsertComma", .@fee) + " Zeny.";
+			close;
+		}
+
+		mes "[Guild Storage Keeper]";
+		mes "I will open the guild storage for you then. Have a memorable time!";
+		close2;
+
+		.@result = openguildstorage2( .@stor_id );
+		if( .@result == GSTORAGE_OPEN ){
+			Zeny -= .@fee;
+			end;
+		}
+
+		// Storage open failed — show specific error
+		mes "[Guild Storage Keeper]";
+		switch( .@result ){
+			case GSTORAGE_ALREADY_OPEN:
+				mes "I am afraid someone else is using the warehouse right now.";
+				mes "Please try again after a while.";
+				break;
+			case GSTORAGE_STORAGE_ALREADY_OPEN:
+				mes "You already have another storage open.";
+				mes "Please close it first before opening a guild warehouse.";
+				break;
+			case GSTORAGE_NO_PERMISSION:
+				mes "You do not have the permission to access the guild warehouse.";
+				mes "Please ask your guild leader to grant you access.";
+				break;
+			default:
+				mes "An unknown error occurred while opening the warehouse.";
+				mes "Error code: " + .@result;
+				break;
+		}
+		close;
+	}
+
+	if( .@choice == .@opt_upgrade ){
+		mes "[Guild Storage Keeper]";
+		mes "The Guild Vault upgrade costs " + callfunc("F_InsertComma", .@vault_price) + " Zeny.";
+		mes "This is a one-time investment for your guild.";
+		next;
+
+		if( Zeny < .@vault_price ){
+			mes "[Guild Storage Keeper]";
+			mes "The guild does not have enough Zeny for this upgrade.";
+			mes "Required: " + callfunc("F_InsertComma", .@vault_price) + " Zeny";
+			mes "Current: " + callfunc("F_InsertComma", Zeny) + " Zeny";
+			close;
+		}
+
+		if( select( "Confirm upgrade:Cancel" ) == 2 ){
+			mes "[Guild Storage Keeper]";
+			mes "Upgrade cancelled.";
+			close;
+		}
+
+		mes "[Guild Storage Keeper]";
+		mes "Congratulations! Your guild has unlocked the Guild Vault!";
+		close2;
+
+		Zeny -= .@vault_price;
+		$guild_vault_unlocked[.@guildid] = 1;
+		end;
+	}
+
+	if( .@choice == .@opt_log ){
+		if( .@guildid == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "The guild storage is only available for guild members.";
+			close;
+		}
+
+		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 ){
+			mes "[Guild Storage Keeper]";
+			mes "Your guild has not yet learned the guild storage skill.";
+			mes "Please come back after learning the skill.";
+			close;
+		}
+
+		mes "[Guild Storage Keeper]";
+		mes "I will show you the usage history of the warehouse. Usage history will be retained for up to 3 months.";
+		mes "Have a memorable time!";
+		close2;
+		guildopenstorage_log();
+		end;
+	}
+}
+
+prontera,155,185,5	duplicate(GuildStorageKeeper)	Guild Storage Keeper	896

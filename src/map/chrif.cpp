@@ -304,7 +304,7 @@ int32 chrif_save(map_session_data *sd, int32 flag) {
 
 	//For data sync
 	if (sd->state.storage_flag == 2)
-		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
+		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag, sd->state.guild_stor_id);
 	if (sd->premiumStorage.dirty)
 		storage_premiumStorage_save(sd);
 

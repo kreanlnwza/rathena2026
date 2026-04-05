@@ -1,0 +1,11 @@
+Header:
+  Type: GUILD_STORAGE_DB
+  Version: 1
+
+Body:
+  - ID: 0
+    Name: "Guild Storage"
+    Table: guild_storage
+  - ID: 1
+    Name: "Test Storage"
+    Table: guild_storage_001

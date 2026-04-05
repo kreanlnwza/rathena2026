@@ -398,6 +398,7 @@ public:
 		uint32 gangsterparadise : 1;
 		uint32 rest : 1;
 		uint32 storage_flag : 3; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex], 3: Premium Storage
+		uint8 guild_stor_id; // Currently opened guild storage ID
 		uint32 snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
 		uint32 abra_flag : 2; // Abracadabra bugfix by Aru
 		uint32 autocast : 1; // Autospell flag [Inkfish]

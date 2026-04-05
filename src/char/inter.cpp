@@ -41,6 +41,7 @@ using namespace rathena;
 
 std::string cfgFile = "inter_athena.yml"; ///< Inter-Config file
 InterServerDatabase interServerDb;
+GuildStorageDatabase guildStorageDb;
 
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
 
@@ -57,7 +58,7 @@ uint32 party_share_level = 10;
 /// Received packet Lengths from map-server
 int32 inter_recv_packet_length[] = {
 	-1,-1, 7,-1, -1,13,36, (2+4+4+4+NAME_LENGTH),  0,-1, 0, 0,  0, 0,  0, 0,	// 3000-
-	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,	// 3010-
+	 6,-1, 0, 0,  0, 0, 0, 0, 11,-1, 0, 0,  0, 0,  0, 0,	// 3010-
 	-1,10,-1,14, 15+NAME_LENGTH,17+MAP_NAME_LENGTH_EXT, 6,-1, 14,14, 6, 0,  0, 0,  0, 0,	// 3020- Party
 	-1, 6,-1,-1, 55,19, 6,-1, 14,-1,-1,-1, 18,19,186,-1,	// 3030-
 	-1, 9,10, 0,  0, 0, 0, 0,  8, 6,11,10, 10,-1,6+NAME_LENGTH, 0,	// 3040-
@@ -892,6 +893,10 @@ const std::string InterServerDatabase::getDefaultLocation(){
 	return std::string(conf_path) + "/" + cfgFile;
 }
 
+const std::string GuildStorageDatabase::getDefaultLocation(){
+	return std::string(conf_path) + "/guild_storage.yml";
+}
+
 /**
  * Reads and parses an entry from the inter_server.
  * @param node: YAML node containing the entry.
@@ -958,6 +963,72 @@ uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	return 1;
 }
 
+/**
+ * Reads and parses an entry from the guild_storage database.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 GuildStorageDatabase::parseBodyNode( const ryml::NodeRef& node ){
+	uint32 id;
+
+	if( !this->asUInt32( node, "ID", id ) ){
+		return 0;
+	}
+
+	auto guild_storage_table = this->find( id );
+	bool existing = guild_storage_table != nullptr;
+
+	if( !existing ){
+		if( !this->nodesExist( node, { "Name", "Table" } ) ){
+			return 0;
+		}
+
+		guild_storage_table = std::make_shared<s_guild_storage_table>();
+
+		guild_storage_table->id = (uint8)id;
+	}
+
+	if( this->nodeExists( node, "Name" ) ){
+		std::string name;
+
+		if( !this->asString( node, "Name", name ) ){
+			return 0;
+		}
+
+		safestrncpy( guild_storage_table->name, name.c_str(), NAME_LENGTH );
+	}
+
+	if( this->nodeExists( node, "Table" ) ){
+		std::string table;
+
+		if( !this->asString( node, "Table", table ) ){
+			return 0;
+		}
+
+		safestrncpy( guild_storage_table->table, table.c_str(), DB_NAME_LEN );
+	}
+
+	if( this->nodeExists( node, "Max" ) ){
+		uint16 max;
+
+		if( !this->asUInt16( node, "Max", max ) ){
+			return 0;
+		}
+
+		guild_storage_table->max_num = max;
+	}else{
+		if( !existing ){
+			guild_storage_table->max_num = MAX_GUILD_STORAGE;
+		}
+	}
+
+	if( !existing ){
+		this->put( guild_storage_table->id, guild_storage_table );
+	}
+
+	return 1;
+}
+
 // initialize
 int32 inter_init_sql(const char *file)
 {
@@ -981,6 +1052,7 @@ int32 inter_init_sql(const char *file)
 	}
 
 	interServerDb.load();
+	guildStorageDb.load();
 	inter_guild_sql_init();
 	inter_storage_sql_init();
 	inter_party_sql_init();
@@ -1039,9 +1111,32 @@ void inter_Storage_sendInfo(int32 fd) {
 	WFIFOSET(fd, len);
 }
 
+/**
+ * IZ 0x388d <len>.W { <guild_storage_table>.? }*?
+ * Sends guild storage information to map-server
+ * @param fd
+ **/
+void inter_GuildStorage_sendInfo(int32 fd) {
+	size_t offset = 4;
+	size_t size = sizeof( struct s_guild_storage_table );
+	size_t len = offset + guildStorageDb.size() * size;
+
+	// Send guild storage table information
+	WFIFOHEAD(fd, len);
+	WFIFOW(fd, 0) = 0x388d;
+	WFIFOW( fd, 2 ) = static_cast<int16>( len );
+	offset = 4;
+	for( auto storage : guildStorageDb ){
+		memcpy(WFIFOP(fd, offset), storage.second.get(), size);
+		offset += size;
+	}
+	WFIFOSET(fd, len);
+}
+
 int32 inter_mapif_init(int32 fd)
 {
 	inter_Storage_sendInfo(fd);
+	inter_GuildStorage_sendInfo(fd);
 	return 0;
 }
 

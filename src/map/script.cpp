@@ -62,7 +62,7 @@
 #include "pet.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
-#include "guild_storage.hpp"
+#include "storage_guild.hpp"
 
 using namespace rathena;
 
@@ -8362,7 +8362,7 @@ static void buildin_delitem_delete(map_session_data* sd, int32 idx, int32* amoun
 			break;
 		case TABLE_GUILD_STORAGE:
 		{
-			gstor = guild2storage2(sd->status.guild_id);
+			gstor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id);
 
 			itm = &gstor->u.items_guild[idx];
 		}
@@ -8442,7 +8442,7 @@ static bool buildin_delitem_search(map_session_data* sd, struct item* it, uint8 
 			break;
 		case TABLE_GUILD_STORAGE:
 		{
-			struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+			struct s_storage *gstor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id);
 
 			size = MAX_GUILD_STORAGE;
 			items = gstor->u.items_guild;
@@ -8604,7 +8604,7 @@ BUILDIN_FUNC(delitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (loc == TABLE_GUILD_STORAGE) {
-		struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+		struct s_storage *gstor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id);
 
 		if (gstor == nullptr || sd->state.storage_flag) {
 			script_pushint(st, -1);
@@ -8698,7 +8698,7 @@ BUILDIN_FUNC(delitem2)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (loc == TABLE_GUILD_STORAGE) {
-		struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+		struct s_storage *gstor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id);
 
 		if (gstor == nullptr || sd->state.storage_flag) {
 			script_pushint(st, -1);
@@ -10978,6 +10978,26 @@ BUILDIN_FUNC(guildopenstorage)
 
 	ret = storage_guild_storageopen(sd);
 	script_pushint(st,ret);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*
+ * openguildstorage2 <storage_id>{,<account_id>}
+ * Opens guild storage with specified storage type
+ **/
+BUILDIN_FUNC(openguildstorage2)
+{
+	map_session_data *sd = nullptr;
+
+	if (!script_accid2sd(3, sd)) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 stor_id = script_getnum(st, 2);
+
+	char ret = storage_guild_storageopen(sd, (uint8)stor_id);
+	script_pushint(st, ret);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -28071,6 +28091,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(gettimestr,"si?"),
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,""),
+	BUILDIN_DEF(openguildstorage2,"i?"),
 	BUILDIN_DEF(guildopenstorage_log,"?"),
 	BUILDIN_DEF(guild_has_permission,"i?"),
 	BUILDIN_DEF(itemskill,"vi?"),

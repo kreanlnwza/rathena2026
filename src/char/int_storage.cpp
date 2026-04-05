@@ -121,6 +121,19 @@ void inter_storage_checkDB(void) {
 			Sql_FreeResult(sql_handle);
 		}
 	}
+
+	// Checking guild storage tables
+	for( auto& guild_storage_table : guildStorageDb ){
+		if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`guild_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
+			"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,"
+			"`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,"
+			"`expire_time`,`bound`,`unique_id`,`enchantgrade`"
+			" FROM `%s` LIMIT 1;", guild_storage_table.second->table)) {
+			Sql_ShowDebug(sql_handle);
+		}else{
+			Sql_FreeResult(sql_handle);
+		}
+	}
 }
 
 //---------------------------------------------------------
@@ -146,9 +159,10 @@ void inter_storage_sql_final(void)
  * @param account_id: Account ID requesting
  * @param guild_id: Guild ID requesting
  * @param flag: Additional parameters
+ * @param stor_id: Storage type id (default: 0)
  * @return True on success or false on failure
  */
-bool mapif_load_guild_storage(int32 fd,uint32 account_id,int32 guild_id, char flag)
+bool mapif_load_guild_storage(int32 fd,uint32 account_id,int32 guild_id, char flag, uint8 stor_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_db, guild_id) )
 		Sql_ShowDebug(sql_handle);
@@ -160,7 +174,9 @@ bool mapif_load_guild_storage(int32 fd,uint32 account_id,int32 guild_id, char fl
 		WFIFOL(fd,4) = account_id;
 		WFIFOL(fd,8) = guild_id;
 		WFIFOB(fd,12) = flag; //1 open storage, 0 don't open
-		guild_storage_fromsql(guild_id, (struct s_storage*)WFIFOP(fd,13));
+		struct s_storage* gstor = (struct s_storage*)WFIFOP(fd,13);
+		gstor->stor_id = stor_id;
+		guild_storage_fromsql(guild_id, gstor);
 		WFIFOSET(fd, WFIFOW(fd,2));
 		return true;
 	}
@@ -190,7 +206,8 @@ void mapif_save_guild_storage_ack(int32 fd,uint32 account_id,int32 guild_id,int3
 
 void mapif_parse_LoadGuildStorage(int32 fd)
 {
-	mapif_load_guild_storage(fd,RFIFOL(fd,2),RFIFOL(fd,6),1);
+	uint8 stor_id = RFIFOB(fd,10);
+	mapif_load_guild_storage(fd,RFIFOL(fd,2),RFIFOL(fd,6),1,stor_id);
 }
 
 /**

@@ -9817,13 +9817,17 @@ void clif_refresh_storagewindow(map_session_data *sd) {
 	// Notify the client that the gstorage is open otherwise it will
 	// remain locked forever and nobody will be able to access it
 	if( sd->state.storage_flag == 2 ) {
-		struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+		struct s_storage *gstor = guild2storage2(sd->status.guild_id, sd->state.guild_stor_id);
 
 		if( !gstor ) // Shouldn't happen. The information should already be at the map-server
-			intif_request_guild_storage(sd->status.account_id, sd->status.guild_id);
+			intif_request_guild_storage(sd->status.account_id, sd->status.guild_id, sd->state.guild_stor_id);
 		else {
 			storage_sortitem(gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild));
-			clif_storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild), "Guild Storage");
+			const char *storage_name = "Guild Storage";
+			auto it = guild_storage_table_db.find( sd->state.guild_stor_id );
+			if( it != guild_storage_table_db.end() )
+				storage_name = it->second->name;
+			clif_storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild), storage_name);
 			clif_updatestorageamount(*sd, gstor->amount, gstor->max_amount);
 		}
 	}

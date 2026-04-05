@@ -475,6 +475,13 @@ struct s_storage_table {
 	uint8 id;
 };
 
+struct s_guild_storage_table {
+	char name[NAME_LENGTH];
+	char table[DB_NAME_LEN];
+	uint16 max_num;
+	uint8 id;
+};
+
 struct s_pet {
 	uint32 account_id;
 	uint32 char_id;
