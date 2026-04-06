@@ -6,7 +6,7 @@
 
 #include <common/mmo.hpp>
 
-// Mail system message IDs (Custom_msg.conf)
+// Mail system message IDs (Custom_msg.conf) @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 #define MSG_MAIL_DISABLED     3022
 #define MSG_MAIL_GM_ONLY      3023
 

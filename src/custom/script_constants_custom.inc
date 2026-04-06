@@ -21,6 +21,7 @@ export_constant(MF_PK);
 
 /* Custom Status Changes */
 //export_constant(SC_EXAMPLE);
+export_constant(SC_LOCKON_LASER); // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 
 /* Custom Effect Statuses */
 //export_constant(EFST_EXAMPLE);

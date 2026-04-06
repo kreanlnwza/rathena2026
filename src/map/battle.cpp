@@ -1594,7 +1594,11 @@ bool battle_status_block_damage(block_list *src, block_list *target, status_chan
 		return false;
 	}
 
-	if (sc->getSCE(SC_DODGE) && (flag&BF_LONG || sc->getSCE(SC_SPURT)) && (skill_id != NPC_EARTHQUAKE || (skill_id == NPC_EARTHQUAKE && flag & NPC_EARTHQUAKE_FLAG)) && rnd() % 100 < 20) {
+	// @author V!be Coding [kreanlnwza] AI Assistant (Antigravity) - Added NPC_EARTHQUAKE_K support
+	if (sc->getSCE(SC_DODGE) && (flag & BF_LONG || sc->getSCE(SC_SPURT)) &&
+		(skill_id != NPC_EARTHQUAKE || skill_id != NPC_EARTHQUAKE_K ||
+		(skill_id == NPC_EARTHQUAKE || skill_id == NPC_EARTHQUAKE_K &&
+		flag & NPC_EARTHQUAKE_FLAG)) && rnd() % 100 < 20) {
 		map_session_data *sd = map_id2sd(target->id);
 
 		if (sd && pc_issit(sd))
@@ -1604,7 +1608,11 @@ bool battle_status_block_damage(block_list *src, block_list *target, status_chan
 		return false;
 	}
 
-	if ((sce = sc->getSCE(SC_KAUPE)) && (skill_id != NPC_EARTHQUAKE || (skill_id == NPC_EARTHQUAKE && flag & NPC_EARTHQUAKE_FLAG)) && rnd() % 100 < sce->val2) { //Kaupe blocks damage (skill or otherwise) from players, mobs, homuns, mercenaries.
+	// @author V!be Coding [kreanlnwza] AI Assistant (Antigravity) - Added NPC_EARTHQUAKE_K support
+	if ((sce = sc->getSCE(SC_KAUPE)) &&
+		(skill_id != NPC_EARTHQUAKE && skill_id != NPC_EARTHQUAKE_K ||
+		(skill_id == NPC_EARTHQUAKE || skill_id == NPC_EARTHQUAKE_K && flag & NPC_EARTHQUAKE_FLAG)) &&
+		rnd() % 100 < sce->val2) {  //Kaupe blocks damage (skill or otherwise) from players, mobs, homuns, mercenaries.
 		clif_specialeffect(target, EF_STORMKICK4, AREA);
 		//Shouldn't end until Breaker's non-weapon part connects.
 #ifndef RENEWAL
@@ -3621,6 +3629,10 @@ int32 battle_get_magic_element(const block_list* src, const block_list* target, 
 	switch(skill_id) {
 		case NPC_EARTHQUAKE:
 			element = ELE_NEUTRAL;
+			break;
+		// @author V!be Coding [kreanlnwza] AI Assistant (Antigravity) - Added NPC_EARTHQUAKE_K element support
+		case NPC_EARTHQUAKE_K:
+			element = ELE_RANDOM;
 			break;
 		case WL_HELLINFERNO:
 			if (mflag & 2) { // ELE_DARK
@@ -6574,6 +6586,7 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 			md.damage = 3;
 			break;
 		case NPC_EVILLAND:
+		case NPC_EVILLAND2: // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity) - Added NPC_EVILLAND2 support
 			md.damage = skill_calc_heal(src,target,skill_id,skill_lv,false);
 			break;
 #ifndef RENEWAL

@@ -1146,6 +1146,9 @@ extern JobDatabase job_db;
 #define EQP_SHADOW_ACC (EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L)
 #define EQP_SHADOW_ARMS (EQP_SHADOW_WEAPON|EQP_SHADOW_SHIELD)
 
+/// Equip for random breaks @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+#define EQP_ALL_ARMOR (EQP_ARMOR | EQP_SHOES | EQP_GARMENT)
+
 /// Equip positions that use a visible sprite
 #if PACKETVER < 20110111
 	#define EQP_VISIBLE EQP_HELM

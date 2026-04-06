@@ -1416,6 +1416,8 @@ enum sc_type : int16 {
 	SC_SKY_ENCHANT,
 	SC_WILD_WALK,
 
+	SC_LOCKON_LASER, // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+
 	// Shinkiro/Shiranui
 	SC_SHADOW_CLOCK,
 	SC_SHINKIROU_CALL,

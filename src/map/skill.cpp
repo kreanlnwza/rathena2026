@@ -579,6 +579,9 @@ int32 skill_calc_heal(block_list *src, block_list *target, uint16 skill_id, uint
 		case NPC_EVILLAND:
 			hp = (skill_lv > 6) ? 666 : skill_lv * 100;
 			break;
+		case NPC_EVILLAND2: // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+			hp = (skill_lv > 6) ? 6666 : skill_lv * 100;
+			break;
 		case AB_HIGHNESSHEAL:
 #ifdef RENEWAL
 			hp = ((status_get_int(src) + status_get_lv(src)) / 5) * 30;
@@ -641,7 +644,8 @@ int32 skill_calc_heal(block_list *src, block_list *target, uint16 skill_id, uint
 			break;
 	}
 
-	if( (!heal || (target && target->type == BL_MER)) && skill_id != NPC_EVILLAND )
+	// Added NPC_EVILLAND2 check @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+	if( (!heal || (target && target->type == BL_MER)) && skill_id != NPC_EVILLAND && skill_id != NPC_EVILLAND2 )
 		hp /= 2;
 
 	if (sd) {
@@ -704,7 +708,8 @@ int32 skill_calc_heal(block_list *src, block_list *target, uint16 skill_id, uint
 	}
 
 	if (tsc != nullptr && !tsc->empty()) {
-		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
+		// Added NPC_EVILLAND2 check @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+		if (skill_id != NPC_EVILLAND && skill_id != NPC_EVILLAND2 && skill_id != BA_APPLEIDUN) {
 			if (tsc->getSCE(SC_INCHEALRATE))
 #ifdef RENEWAL
 				hp_bonus += tsc->getSCE(SC_INCHEALRATE)->val1; //Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
@@ -769,7 +774,8 @@ int32 skill_calc_heal(block_list *src, block_list *target, uint16 skill_id, uint
 
 	// Global multipliers are applied after the MATK is applied
 	if (tsc != nullptr && !tsc->empty()) {
-		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
+		// Added NPC_EVILLAND2 check @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+		if (skill_id != NPC_EVILLAND && skill_id != NPC_EVILLAND2 && skill_id != BA_APPLEIDUN) {
 			if (tsc->getSCE(SC_WATER_INSIGNIA) && tsc->getSCE(SC_WATER_INSIGNIA)->val1 == 2)
 				global_bonus *= 1.1f;
 		}
@@ -2161,6 +2167,7 @@ bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uin
 			rate = 12 + 2 * skill_lv;
 			break;
 		case ABC_STRIP_SHADOW:
+		case NPC_STRIP_SHADOW: // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 			rate = 50 * (skill_lv + 3) + 2 * (sstatus->dex - tstatus->dex);
 			mod = 1000;
 			break;
@@ -2184,6 +2191,7 @@ bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uin
 		case GC_WEAPONCRUSH:
 		case ST_FULLSTRIP:
 		case ABC_STRIP_SHADOW:
+		case NPC_STRIP_SHADOW: // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 			if (skill_id == WL_EARTHSTRAIN)
 				time = skill_get_time2(skill_id, skill_lv);
 			else
@@ -2220,6 +2228,7 @@ bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uin
 			location = EQP_ACC;
 			break;
 		case ABC_STRIP_SHADOW:
+		case NPC_STRIP_SHADOW: // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 			location = EQP_SHADOW_GEAR;
 			break;
 	}
@@ -2818,7 +2827,8 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		}
 	}
 
-	if( dmg.flag&BF_MAGIC && ( skill_id != NPC_EARTHQUAKE || (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1) ) )
+	// Added NPC_EARTHQUAKE_K support @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+	if( dmg.flag&BF_MAGIC && ( skill_id != NPC_EARTHQUAKE && skill_id != NPC_EARTHQUAKE_K || (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1) ) )
 	{ // Earthquake on multiple targets is not counted as a target skill. [Inkfish]
 		if( (dmg.damage || dmg.damage2) && (type = skill_magic_reflect(src, bl, src==dsrc)) )
 		{	//Magic reflection, switch caster/target
@@ -3069,6 +3079,7 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 			clif_skill_damage( *dsrc, *bl, tick, status_get_amotion(src), dmg.dmotion, damage, dmg.div_, skill_id, -1, DMG_SINGLE );
 			break;
 		case NPC_EARTHQUAKE:
+		case NPC_EARTHQUAKE_K: // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 			clif_skill_damage( *src, *bl, tick, status_get_amotion(src), dmg.dmotion, damage, dmg.div_, skill_id, -1, DMG_SPLASH );
 			break;
 		case NPC_DARKPIERCING:
@@ -3209,11 +3220,12 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 	// Instant damage
 	if( !dmg.amotion ) {
 		//Deal damage before knockback to allow stuff like firewall+storm gust combo.
+		// Added NPC_EVILLAND2 @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 		if( (!tsc || (!tsc->getSCE(SC_DEVOTION) && skill_id != CR_REFLECTSHIELD && !tsc->getSCE(SC_WATER_SCREEN_OPTION))
 #ifndef RENEWAL
 			|| skill_id == HW_GRAVITATION
 #endif
-			|| skill_id == NPC_EVILLAND) && !shadow_flag )
+			|| skill_id == NPC_EVILLAND || skill_id == NPC_EVILLAND2) && !shadow_flag )
 			battle_damage(src, bl, damage, dmg.div_, skill_lv, skill_id, dmg.dmg_lv, dmg.flag, false, tick, false);
 		if( !status_isdead(*bl) && additional_effects )
 			skill_additional_effect(src,bl,skill_id,skill_lv,dmg.flag,dmg.dmg_lv,tick);
@@ -3236,7 +3248,8 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 			battle_delay_damage(tick, dmg.amotion, src, bl, dmg.flag, skill_id, skill_lv, damage, dmg.dmg_lv, dmg.div_, additional_effects, false);
 	}
 
-	if (tsc  && skill_id != NPC_EVILLAND && skill_id != SP_SOULEXPLOSION && skill_id != SJ_NOVAEXPLOSING
+	// Added NPC_EVILLAND2 @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+	if (tsc  && skill_id != NPC_EVILLAND && skill_id != NPC_EVILLAND2 && skill_id != SP_SOULEXPLOSION && skill_id != SJ_NOVAEXPLOSING
 #ifndef RENEWAL
 		&& skill_id != PA_PRESSURE && skill_id != HW_GRAVITATION
 #endif
@@ -5926,6 +5939,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list *src, uint16 sk
 
 	case PR_SANCTUARY:
 	case NPC_EVILLAND:
+	case NPC_EVILLAND2: // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 		val1=skill_lv+3;
 		break;
 	case WZ_METEOR:
@@ -11129,6 +11143,7 @@ int32 skill_attack_area(block_list *bl, va_list ap)
 				return 0;
 			[[fallthrough]];
 		case NPC_ACIDBREATH:
+		case NPC_ACIDBREATH2: // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 		case NPC_DARKNESSBREATH:
 		case NPC_FIREBREATH:
 		case NPC_ICEBREATH:
@@ -14354,7 +14369,8 @@ void skill_init_unit_layout (void) {
 					// these will be handled later
 					break;
 				case PR_SANCTUARY:
-				case NPC_EVILLAND: {
+				case NPC_EVILLAND:
+				case NPC_EVILLAND2: { // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 						static const int32 dx[] = {
 							-1, 0, 1,-2,-1, 0, 1, 2,-2,-1,
 							 0, 1, 2,-2,-1, 0, 1, 2,-1, 0, 1};

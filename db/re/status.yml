@@ -10263,3 +10263,78 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Lockon_Laser
+    Icon: EFST_LOCKON_LASER
+    DurationLookup: NPC_LOCKON_LASER
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      RemoveOnMapWarp: true
+      NoClearbuff: true
+  - Status: Fear
+    DurationLookup: RK_DRAGONHOWLING
+    States:
+      NoMove: true
+      NoMoveCond: true
+    CalcFlags:
+      Flee: true
+      Hit: true
+    Flags:
+      BossResist: true
+      StopWalking: true
+      Debuff: true
+    Fail:
+      Inspiration: true
+    EndOnStart:
+      Blind: true
+  - Status: Fear
+    DurationLookup: SR_HOWLINGOFLION
+    States:
+      NoMove: true
+      NoMoveCond: true
+    CalcFlags:
+      Flee: true
+      Hit: true
+    Flags:
+      BossResist: true
+      StopWalking: true
+      Debuff: true
+    Fail:
+      Inspiration: true
+    EndOnStart:
+      Blind: true
+  - Status: Fear
+    DurationLookup: SU_POWEROFFLOCK
+    States:
+      NoMove: true
+      NoMoveCond: true
+    CalcFlags:
+      Flee: true
+      Hit: true
+    Flags:
+      BossResist: true
+      StopWalking: true
+      Debuff: true
+    Fail:
+      Inspiration: true
+    EndOnStart:
+      Blind: true
+  - Status: Fear
+    DurationLookup: MH_MIDNIGHT_FRENZY
+    States:
+      NoMove: true
+      NoMoveCond: true
+    CalcFlags:
+      Flee: true
+      Hit: true
+    Flags:
+      BossResist: true
+      StopWalking: true
+      Debuff: true
+    Fail:
+      Inspiration: true
+    EndOnStart:
+      Blind: true

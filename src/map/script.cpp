@@ -11331,6 +11331,7 @@ BUILDIN_FUNC(monster)
 				md->next_walktime = INVALID_TIMER;
 
 			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
+			script_pushint(st, mobid); // @author V!be Coding [kreanlnwza] AI Assistant (Antigravity)
 		}
 	}
 

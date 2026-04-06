@@ -15639,6 +15639,15 @@ Body:
       - Level: 5
         Time: 350000
     FixedCastTime: 1000
+  - Id: 578
+    Name: DE_BERSERKAIZER
+    Description: Berserkaizer
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    HitCount: 1
+    Duration1: -1
   - Id: 653
     Name: NPC_EARTHQUAKE
     Description: Earthquake
@@ -16605,6 +16614,20 @@ Body:
     Flags:
       IsNpc: true
     AfterCastActDelay: 12000
+  - Id: 696
+    Name: NPC_CHANGEUNDEAD2
+    Description: Undead Attribute Change
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: -2
+    Hit: Single
+    HitCount: 1
+    Element: Undead
+    Duration2: 60000
+    Status: ChangeUndead
   - Id: 697
     Name: ALL_REVERSEORCISH
     Description: Reverse Orcish
@@ -16634,6 +16657,162 @@ Body:
     AfterCastActDelay: 20000
     Requires:
       SpCost: 1
+  - Id: 700
+    Name: NPC_WIDEHEALTHFEAR
+    Description: Wide Area Fear
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 4500
+    Status: Fear
+  - Id: 701
+    Name: NPC_WIDEBODYBURNNING
+    Description: Wide Area Burnning
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 4500
+    Status: Burning
+  - Id: 702
+    Name: NPC_WIDEFROSTMISTY
+    Description: Wide Area Frost Misty
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 4500
+    Status: Freezing
+  - Id: 703
+    Name: NPC_WIDECOLD
+    Description: Wide Area Feeze
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 4500
+    Status: Crystalize
+  - Id: 704
+    Name: NPC_WIDE_DEEP_SLEEP
+    Description: Wide Area Deep Sleep
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 4500
+    Status: DeepSleep
+  - Id: 705
+    Name: NPC_WIDESIREN
+    Description: Wide Area Fascination
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 14
+    Duration2: 4500
+    Status: VoiceOfSiren
   - Id: 706
     Name: NPC_VENOMFOG
     Description: Venom Fog
@@ -17644,6 +17823,73 @@ Body:
         Area: 2
     Element: Weapon
     Duration2: 30000
+  - Id: 750
+    Name: NPC_EARTHQUAKE_K
+    Description: Earthquake K
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+      SplashSplit: true
+      IgnoreDefense: true
+    Flags:
+      IsNpc: true
+      TargetTrap: true
+      IgnoreLandProtector: true
+      ShowScale: true
+    Hit: Multi_Hit
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 5
+      - Level: 2
+        Area: 7
+      - Level: 3
+        Area: 9
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 13
+      - Level: 6
+        Area: 5
+      - Level: 7
+        Area: 7
+      - Level: 8
+        Area: 9
+      - Level: 9
+        Area: 11
+      - Level: 10
+        Area: 13
+    Duration1: 910
+    FixedCastTime: -1
+    Unit:
+      Id: Earthquake
+      Range:
+        - Level: 1
+          Size: 5
+        - Level: 2
+          Size: 7
+        - Level: 3
+          Size: 9
+        - Level: 4
+          Size: 11
+        - Level: 5
+          Size: 13
+        - Level: 6
+          Size: 5
+        - Level: 7
+          Size: 7
+        - Level: 8
+          Size: 9
+        - Level: 9
+          Size: 11
+        - Level: 10
+          Size: 13
+      Interval: 300
+      Target: Enemy
+      Flag:
+        PathCheck: true
   - Id: 751
     Name: NPC_ALL_STAT_DOWN
     Description: Decrease All Stats
@@ -17939,6 +18185,90 @@ Body:
     ActiveInstance: 14
     Duration2: 27000
     Status: Freeze
+  - Id: 766
+    Name: NPC_ACIDBREATH2
+    Description: Acid Breath
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: 6
+    Hit: Single
+    HitCount: 1
+    Element: Poison
+    SplashArea: 3
+    ActiveInstance: 14
+    Duration2: 18000
+    Status: Poison
+  - Id: 767
+    Name: NPC_EVILLAND2
+    Description: Evil Land
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Ground
+    DamageFlags:
+      NoDamage: true
+      IgnoreElement: true
+      IgnoreFlee: true
+      IgnoreDefCard: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 7
+    Hit: Single
+    HitCount: 1
+    Element: Dark
+    Duration1:
+      - Level: 1
+        Time: 3900
+      - Level: 2
+        Time: 4900
+      - Level: 3
+        Time: 5900
+      - Level: 4
+        Time: 6900
+      - Level: 5
+        Time: 7900
+      - Level: 6
+        Time: 8900
+      - Level: 7
+        Time: 9900
+      - Level: 8
+        Time: 10900
+      - Level: 9
+        Time: 11900
+      - Level: 10
+        Time: 12900
+    Duration2: 18000
+    Unit:
+      Id: Evilland
+      Layout: 1
+      Range:
+        - Level: 1
+          Size: 5
+        - Level: 2
+          Size: 5
+        - Level: 3
+          Size: 5
+        - Level: 4
+          Size: 5
+        - Level: 5
+          Size: 5
+        - Level: 6
+          Size: 5
+        - Level: 7
+          Size: 5
+        - Level: 8
+          Size: 5
+        - Level: 9
+          Size: 5
+        - Level: 10
+          Size: 13
+      Interval: 1000
+      Flag:
+        NoOverlap: true
+    Status: Blind
   - Id: 768
     Name: NPC_HELLJUDGEMENT2
     Description: Hell's Judgement
@@ -18072,6 +18402,52 @@ Body:
     HitCount: 1
     Duration1: 60000
     Status: Relieve_off
+  - Id: 773
+    Name: NPC_LOCKON_LASER
+    Description: Lock on Laser
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: 20000
+    Status: Lockon_Laser
+  - Id: 774
+    Name: NPC_LOCKON_LASER_ATK
+    Description: Lock on Laser Attack
+    MaxLevel: 3
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+      IgnoreAtkCard: true
+      IgnoreElement: true
+      IgnoreDefense: true
+      IgnoreFlee: true
+      IgnoreDefCard: true
+    Flags:
+      IgnoreLandProtector: true
+    Range: 13
+    Hit: Multi_Hit
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 1
+      - Level: 3
+        Count: 4
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+    CastCancel: true
   - Id: 776
     Name: NPC_DEADLYCURSE
     Description: Deadly Curse
@@ -18085,6 +18461,56 @@ Body:
     Range: 1
     Duration1: 15000
     Status: Deadly_Defeasance
+  - Id: 777
+    Name: NPC_RANDOMBREAK
+    Description: Break Random
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: -2
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    Status: BrokenArmor
+  - Id: 778
+    Name: NPC_STRIP_SHADOW
+    Description: Strip Shadow
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 1000
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 70000
+      - Level: 3
+        Time: 80000
+      - Level: 4
+        Time: 90000
+      - Level: 5
+        Time: 100000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 29
+        - Level: 2
+          Amount: 33
+        - Level: 3
+          Amount: 37
+        - Level: 4
+          Amount: 41
+        - Level: 5
+          Amount: 45
+    Status: Shadow_Strip
   - Id: 779
     Name: NPC_DEADLYCURSE2
     Description: Deadly Curse 2
