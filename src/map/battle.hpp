@@ -627,6 +627,7 @@ struct Battle_Config
 	int32 taekwon_ranker_min_lv;
 	int32 revive_onwarp;
 	int32 mail_delay;
+	int32 mail_enable;
 	int32 autotrade_monsterignore;
 	int32 idletime_option;
 	int32 spawn_direction;

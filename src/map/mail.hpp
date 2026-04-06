@@ -6,6 +6,10 @@
 
 #include <common/mmo.hpp>
 
+// Mail system message IDs (Custom_msg.conf)
+#define MSG_MAIL_DISABLED     3022
+#define MSG_MAIL_GM_ONLY      3023
+
 enum mail_attach_result {
 	MAIL_ATTACH_SUCCESS = 0,
 #if PACKETVER >= 20150513

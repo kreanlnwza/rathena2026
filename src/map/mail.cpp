@@ -435,6 +435,12 @@ void mail_deliveryfail(map_session_data *sd, struct mail_message *msg){
 // This function only check if the mail operations are valid
 bool mail_invalid_operation( const map_session_data* sd )
 {
+	// Check if mail system is disabled server-wide
+	if (battle_config.mail_enable == 0) {
+		clif_displaymessage(sd->fd, msg_txt(sd, MSG_MAIL_DISABLED)); // The mail system is currently disabled.
+		return true;
+	}
+
 #if PACKETVER < 20150513
 	if( !map_getmapflag(sd->m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
 	{
@@ -466,6 +472,15 @@ void mail_send(map_session_data *sd, const char *dest_name, const char *title, c
 
 	if( sd->state.trading )
 		return;
+
+	// Check if mail system is GM only (players can receive but not send)
+	if (battle_config.mail_enable == 2) {
+		if (!pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) && pc_get_group_level(sd) < 99) {
+			clif_displaymessage(sd->fd, msg_txt(sd, MSG_MAIL_GM_ONLY)); // The mail system is available for GMs only.
+			clif_Mail_send(sd, WRITE_MAIL_FAILED);
+			return;
+		}
+	}
 
 	if( DIFF_TICK(sd->cansendmail_tick, gettick()) > 0 ) {
 		clif_displaymessage(sd->fd,msg_txt(sd,675)); //"Cannot send mails too fast!!."
