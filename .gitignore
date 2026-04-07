@@ -127,6 +127,7 @@ Thumbs.db
 /.idea/vcs.xml
 /.idea/workspace.xml
 /build/
+/build2/
 /cbuild/
 
 # bat tools
