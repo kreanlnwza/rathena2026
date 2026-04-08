@@ -4,10 +4,15 @@
 #include "npc.hpp"
 
 #include <cerrno>
+#include <condition_variable>
 #include <cstdlib>
 #include <deque>
+#include <functional>
 #include <future>
 #include <map>
+#include <mutex>
+#include <queue>
+#include <thread>
 #include <vector>
 
 #include <common/cbasetypes.hpp>
@@ -3646,24 +3651,73 @@ void npc_delsrcfile(const char* name)
 /**
  * Load all npc files using parallel pre-reading.
  *
- * Up to NPC_READ_AHEAD files are read from disk concurrently in background
- * threads while the main thread parses and registers the previously-read
- * file.  This overlaps I/O with CPU work and reduces total startup time,
- * especially on multi-core systems with spinning disks or slow storage.
- * All NPC registration (parse + global-state changes) still runs on the
- * single main thread, so no synchronisation is required there.
+ * A fixed-size thread pool of NPC_IO_THREADS worker threads is created once
+ * and reused for every file read, avoiding the per-file thread-creation
+ * overhead that would occur with raw std::async.  The main thread maintains
+ * a sliding window of at most NPC_IO_THREADS in-flight reads and processes
+ * each result (parse + NPC registration) single-threadedly, so no
+ * synchronisation is needed for the rAthena global state.
  */
 void npc_loadsrcfiles() {
 	ShowStatus("Loading NPCs...\n");
 
-	// Number of files to pre-read ahead of the file being processed.
-	static constexpr size_t NPC_READ_AHEAD = 4;
+	// Number of persistent I/O worker threads and the maximum number of
+	// files pre-read ahead of the file currently being processed.
+	static constexpr size_t NPC_IO_THREADS = 4;
 
-	// Result of one async file read: (null-terminated content, success flag).
+	// Result of one file read: (null-terminated content, success flag).
 	using ReadResult = std::pair<std::vector<char>, bool>;
 
-	// Read a single NPC script file into a std::vector<char>.
-	// Called from background threads — uses only thread-safe POSIX APIs.
+	// Minimal fixed-size thread pool.  All threads are created once in the
+	// constructor and joined in the destructor — no per-task thread creation.
+	struct IOPool {
+		std::vector<std::thread>                         workers;
+		std::queue<std::packaged_task<ReadResult()>>     tasks;
+		std::mutex                                       mtx;
+		std::condition_variable                          cv;
+		bool                                             stop{ false };
+
+		explicit IOPool(size_t n) {
+			workers.reserve(n);
+			for (size_t i = 0; i < n; ++i) {
+				workers.emplace_back([this] {
+					for (;;) {
+						std::packaged_task<ReadResult()> task;
+						{
+							std::unique_lock<std::mutex> lk(mtx);
+							cv.wait(lk, [this] { return stop || !tasks.empty(); });
+							if (stop && tasks.empty())
+								return;
+							task = std::move(tasks.front());
+							tasks.pop();
+						}
+						task();
+					}
+				});
+			}
+		}
+
+		std::future<ReadResult> submit(std::function<ReadResult()> fn) {
+			std::packaged_task<ReadResult()> pt(std::move(fn));
+			auto fut = pt.get_future();
+			{
+				std::lock_guard<std::mutex> lk(mtx);
+				tasks.push(std::move(pt));
+			}
+			cv.notify_one();
+			return fut;
+		}
+
+		~IOPool() {
+			{ std::lock_guard<std::mutex> lk(mtx); stop = true; }
+			cv.notify_all();
+			for (auto& w : workers)
+				w.join();
+		}
+	};
+
+	// Read a single NPC script file into a heap buffer.
+	// Runs on worker threads — uses only thread-safe POSIX/C APIs.
 	auto preread = [](std::string path) -> ReadResult {
 		if (check_filepath(path.c_str()) != 2)
 			return {{}, false};
@@ -3689,25 +3743,27 @@ void npc_loadsrcfiles() {
 		return {std::move(buf), true};
 	};
 
-	// Queue of (filepath, future<ReadResult>) pairs.
+	IOPool pool(NPC_IO_THREADS);
+
+	// Sliding window: (filepath, future) pairs for in-flight reads.
 	std::deque<std::pair<std::string, std::future<ReadResult>>> queue;
 
 	auto it = npc_src_files.cbegin();
 
-	// Prime the queue: start up to NPC_READ_AHEAD background reads.
-	for (size_t i = 0; i < NPC_READ_AHEAD && it != npc_src_files.cend(); ++i, ++it)
-		queue.emplace_back(*it, std::async(std::launch::async, preread, *it));
+	// Prime: fill the window with the first NPC_IO_THREADS reads.
+	for (size_t i = 0; i < NPC_IO_THREADS && it != npc_src_files.cend(); ++i, ++it)
+		queue.emplace_back(*it, pool.submit([preread, path = *it] { return preread(path); }));
 
 	while (!queue.empty()) {
-		// Retrieve the next pre-read buffer (blocks until the read finishes).
+		// Block until the oldest in-flight read finishes.
 		auto& [filepath, fut] = queue.front();
 		auto [buf, ok] = fut.get();
 		std::string fp_copy = std::move(filepath);
 		queue.pop_front();
 
-		// While the main thread processes this file, kick off the next read.
+		// Immediately submit the next file so I/O stays ahead of parsing.
 		if (it != npc_src_files.cend()) {
-			queue.emplace_back(*it, std::async(std::launch::async, preread, *it));
+			queue.emplace_back(*it, pool.submit([preread, path = *it] { return preread(path); }));
 			++it;
 		}
 
@@ -3721,6 +3777,7 @@ void npc_loadsrcfiles() {
 			ShowError("npc_loadsrcfiles: Could not read '%s'.\n", fp_copy.c_str());
 		}
 	}
+	// pool destructor joins all worker threads here.
 
 	int32 npc_total = npc_warp + npc_shop + npc_script;
 

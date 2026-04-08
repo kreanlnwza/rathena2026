@@ -6,7 +6,7 @@
 #include <iostream>
 #include <sstream>
 
-#if defined(_POSIX_VERSION)
+#ifndef _WIN32
 #	include <fcntl.h>
 #	include <sys/mman.h>
 #	include <sys/stat.h>
@@ -105,7 +105,7 @@ bool YamlDatabase::load(const std::string& path) {
 	const char* buf = nullptr;
 	size_t real_size = 0;
 	bool use_mmap = false;
-#if defined(_POSIX_VERSION)
+#ifndef _WIN32
 	size_t mmap_size = 0;
 	{
 		int fd = open(path.c_str(), O_RDONLY);
@@ -144,7 +144,7 @@ bool YamlDatabase::load(const std::string& path) {
 		rw_buf[real_size] = '\0';
 		fclose(f);
 		buf = rw_buf;
-#if defined(_POSIX_VERSION)
+#ifndef _WIN32
 	}
 #endif
 
@@ -152,7 +152,7 @@ bool YamlDatabase::load(const std::string& path) {
 	ryml::Tree tree;
 
 	try {
-#if defined(_POSIX_VERSION)
+#ifndef _WIN32
 		if (use_mmap) {
 			// parse_in_arena copies the file content into its own arena,
 			// so we can safely munmap immediately after this call.
@@ -166,7 +166,7 @@ bool YamlDatabase::load(const std::string& path) {
 		ShowError("Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
 		ShowError("There is likely a syntax error in the file.\n");
 		ShowError("Error message: %s\n", e.what());
-#if defined(_POSIX_VERSION)
+#ifndef _WIN32
 		if (use_mmap) munmap(const_cast<char*>(buf), mmap_size);
 		else
 #endif
@@ -176,7 +176,7 @@ bool YamlDatabase::load(const std::string& path) {
 
 	// Release the read buffer: parse_in_arena copied the content into ryml's
 	// internal arena, so the source buffer is no longer needed.
-#if defined(_POSIX_VERSION)
+#ifndef _WIN32
 	if (use_mmap) {
 		munmap(const_cast<char*>(buf), mmap_size);
 	} else
