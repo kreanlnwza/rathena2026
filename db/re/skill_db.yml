@@ -37113,8 +37113,6 @@ Body:
         - Level: 5
           Amount: 60
       State: Shield
-      Status:
-        Attack_Stance: true
     Status: Shield_Power
   - Id: 5266
     Name: IG_OVERSLASH
@@ -38044,8 +38042,6 @@ Body:
           Amount: 55
         - Level: 5
           Amount: 60
-      Weapon:
-        Dagger: true
   - Id: 5292
     Name: SHC_IMPACT_CRATER
     Description: Impact Crater
@@ -38056,7 +38052,7 @@ Body:
       Splash: true
       Critical: true
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: 5
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -38094,10 +38090,6 @@ Body:
           Amount: 70
         - Level: 5
           Amount: 78
-      Weapon:
-        Katar: true
-      Status:
-        Rollingcutter: true
     Status: WeaponBlock_On
   - Id: 5293
     Name: SHC_ENCHANTING_SHADOW
