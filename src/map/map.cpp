@@ -5,6 +5,8 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <chrono>
+#include <future>
 
 #include <config/core.hpp>
 
@@ -5352,6 +5354,9 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 #ifdef MAP_GENERATOR
 	mapgenerator_get_options(argc, argv);
 #endif
+
+	auto start_time = std::chrono::high_resolution_clock::now();
+
 	cli_get_options(argc,argv);
 
 	map_config_read(MAP_CONF_NAME);
@@ -5469,6 +5474,14 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 		add_timer_func_list(parse_console_timer, "parse_console_timer");
 		add_timer_interval(gettick()+1000, parse_console_timer, 0, 0, 1000); //start in 1s each 1sec
 	}
+
+	ShowEmuInfo("Server Running Took: %d miliseconds\n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time).count());
+	
+#ifdef RENEWAL
+	ShowEmuInfo("Server Mode : Renewal\n");
+#else
+	ShowEmuInfo("Server Mode : Pre-renewal\n");
+#endif
 
 	return true;
 }

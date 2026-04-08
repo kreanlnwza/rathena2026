@@ -751,6 +751,9 @@ int32 _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		case MSG_FATALERROR: //Bright Red (Fatal errors, abort(); if possible)
 			strcat(prefix,CL_RED "[Fatal Error]" CL_RESET ":" CL_CLL);
 			break;
+		case MSG_EMU_INFO:
+			strcat(prefix,CL_BT_MAGENTA "[Emu]" CL_RESET ":" CL_CLL);
+			break;
 		default:
 			ShowError("In function _vShowMessage() -> Invalid flag passed.\n");
 			return 1;
@@ -874,5 +877,12 @@ void ShowFatalError(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_FATALERROR, string, ap);
+	va_end(ap);
+}
+
+void ShowEmuInfo(const char *string, ...) {
+	va_list ap;
+	va_start(ap, string);
+	_vShowMessage(MSG_EMU_INFO, string, ap);
 	va_end(ap);
 }
