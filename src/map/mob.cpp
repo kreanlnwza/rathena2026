@@ -3377,6 +3377,13 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 				continue;
 			}
 
+			// Card Drop Global Announce (Red Color)
+			if (first_sd != nullptr && it->type == IT_CARD) {
+				char message[256];
+				sprintf(message, msg_txt(nullptr, MSG_CARD_DROP_ANNOUNCE), first_sd->status.name, it->ename.c_str(), md->name);
+				intif_broadcast2(message, strlen(message) + 1, 0xFF0000, 0, 0, 0, 0);
+			}
+
 			std::shared_ptr<s_item_drop> ditem = mob_setdropitem(entry, 1, md->mob_id);
 
 			//A Rare Drop Global Announce by Lupus
