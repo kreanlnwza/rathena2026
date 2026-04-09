@@ -1978,8 +1978,10 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 					damage += damage * 120 / 100; 
 					break;
 				case HN_MEGA_SONIC_BLOW:
-				case HN_SPIRAL_PIERCE_MAX:
 					damage *= 2;
+					break;
+				case HN_SPIRAL_PIERCE_MAX:
+					damage += damage * 130 / 100;
 					break;
 			}
 		}
@@ -2060,7 +2062,13 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 		if (md && battle_config.mob_rank_system && md->rank > MOBRANK_F)
 			damage = i64max(damage * mob_rank_multipliers[md->rank].dmg_taken / 100, 1);
 	}
-	
+	else if (bl->type == BL_ELEM) {
+		s_elemental_data* ed = BL_CAST(BL_ELEM, bl);
+
+		if (ed != nullptr && ed->db->damagetaken != 100)
+			damage = i64max(damage * ed->db->damagetaken / 100, 1);
+	}
+
 	// Monster Rank: damage dealt modifier (when mob is attacker)
 	if (src->type == BL_MOB && battle_config.mob_rank_system) {
 		mob_data *md_src = BL_CAST(BL_MOB, src);
