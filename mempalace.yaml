@@ -1,0 +1,22 @@
+wing: rathena2026
+rooms:
+- name: conf
+  description: Files from conf/
+- name: backend
+  description: Files from db/
+- name: documentation
+  description: Files from doc/
+- name: npc
+  description: Files from npc/
+- name: sql_files
+  description: Files from sql-files/
+- name: src
+  description: Files from src/
+- name: scripts
+  description: Files from tools/
+- name: testing
+  description: Files from test/
+- name: configuration
+  description: Files from config/
+- name: general
+  description: Files that don't fit other rooms

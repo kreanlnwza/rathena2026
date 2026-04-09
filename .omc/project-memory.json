@@ -1,0 +1,157 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1775749683937,
+  "projectRoot": "C:\\Users\\muram\\OneDrive\\Documents\\rathena2026",
+  "techStack": {
+    "languages": [
+      {
+        "name": "C/C++",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "CMakeLists.txt"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "src"
+    ],
+    "gitBranches": {
+      "defaultBranch": "master",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "3rdparty": {
+      "path": "3rdparty",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1775749683919,
+      "keyFiles": [
+        "CMakeLists.txt",
+        "README.txt"
+      ]
+    },
+    "conf": {
+      "path": "conf",
+      "purpose": null,
+      "fileCount": 22,
+      "lastAccessed": 1775749683921,
+      "keyFiles": [
+        "atcommands.yml",
+        "battle_athena.conf",
+        "channels.conf",
+        "charhelp.txt",
+        "char_athena.conf"
+      ]
+    },
+    "db": {
+      "path": "db",
+      "purpose": null,
+      "fileCount": 57,
+      "lastAccessed": 1775749683921,
+      "keyFiles": [
+        "abra_db.yml",
+        "achievement_db.yml",
+        "achievement_level_db.yml",
+        "attendance.yml",
+        "attr_fix.yml"
+      ]
+    },
+    "doc": {
+      "path": "doc",
+      "purpose": null,
+      "fileCount": 31,
+      "lastAccessed": 1775749683922,
+      "keyFiles": [
+        "achievements.md",
+        "atcommands.txt",
+        "captcha_db.txt",
+        "ea_job_system.txt",
+        "effect_list.md"
+      ]
+    },
+    "npc": {
+      "path": "npc",
+      "purpose": null,
+      "fileCount": 9,
+      "lastAccessed": 1775749683922,
+      "keyFiles": [
+        "barters.yml",
+        "scripts_athena.conf",
+        "scripts_custom.conf",
+        "scripts_guild.conf",
+        "scripts_jobs.conf"
+      ]
+    },
+    "sql-files": {
+      "path": "sql-files",
+      "purpose": null,
+      "fileCount": 23,
+      "lastAccessed": 1775749683922,
+      "keyFiles": [
+        "item_db.sql",
+        "item_db2.sql",
+        "item_db2_re.sql",
+        "item_db_equip.sql",
+        "item_db_etc.sql"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 1,
+      "lastAccessed": 1775749683923,
+      "keyFiles": [
+        "CMakeLists.txt"
+      ]
+    },
+    "tools": {
+      "path": "tools",
+      "purpose": null,
+      "fileCount": 22,
+      "lastAccessed": 1775749683923,
+      "keyFiles": [
+        "charserv.bat",
+        "check-doc.pl",
+        "config.pl",
+        "convert_emotions.py",
+        "convert_monstermode.pl"
+      ]
+    },
+    "src\\config": {
+      "path": "src\\config",
+      "purpose": "Configuration files",
+      "fileCount": 5,
+      "lastAccessed": 1775749683926,
+      "keyFiles": [
+        "const.hpp",
+        "core.hpp",
+        "packets.hpp"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}
