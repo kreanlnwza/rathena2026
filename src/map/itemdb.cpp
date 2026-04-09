@@ -26,6 +26,7 @@
 #include "mob.hpp"
 #include "pc.hpp"
 #include "status.hpp"
+#include "item_override.hpp"
 
 using namespace rathena;
 
@@ -3289,7 +3290,8 @@ bool itemdb_canpartnertrade_sub( const item_data* item, int32 gmlv, int32 gmlv2 
 }
 
 bool itemdb_cansell_sub( const item_data* item, int32 gmlv, int32 unused ) {
-	return (item && (!(item->flag.trade_restriction.sell) || gmlv >= item->gm_lv_trade_override));
+	// Universal sell override: all items can be sold regardless of NoSell flag (item_override.cpp)
+	return item_override_cansell(item);
 }
 
 bool itemdb_cancartstore_sub( const item_data* item, int32 gmlv, int32 unused ) {

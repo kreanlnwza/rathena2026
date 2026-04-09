@@ -62,6 +62,7 @@
 #include "status.hpp" // OPTION_*, struct weapon_atk
 #include "storage.hpp"
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
+#include "item_override.hpp"
 #include "vending.hpp" // struct s_vending
 
 using namespace rathena;
@@ -1959,10 +1960,8 @@ uint8 pc_isequip( const map_session_data* sd, int32 n )
 	}
 
 	//Not equipable by class. [Skotlex]
-	if (!pc_job_can_use_item(sd,item))
-		return ITEM_EQUIP_ACK_FAIL;
-
-	if (!pc_isItemClass(sd, item))
+	// Cross-job override: all jobs can equip all items (item_override.cpp)
+	if (!item_override_alljob_equip(sd, item))
 		return ITEM_EQUIP_ACK_FAIL;
 
 	return ITEM_EQUIP_ACK_OK;
