@@ -32,3 +32,12 @@ bool item_override_cansell(const item_data* item) {
 	// Always allow selling if item pointer is valid.
 	return item != nullptr;
 }
+
+/**
+ * Universal buying store override.
+ * Bypasses flag.buyingstore — all items can be listed in a buying store.
+ */
+bool item_override_canbuyingstore(const item_data* item) {
+	// Always allow if item pointer is valid.
+	return item != nullptr;
+}

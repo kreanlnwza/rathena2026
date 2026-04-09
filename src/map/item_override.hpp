@@ -45,4 +45,13 @@ bool item_override_alljob_equip(const map_session_data* sd, const item_data* ite
  */
 bool item_override_cansell(const item_data* item);
 
+/**
+ * Universal buying store override.
+ * Called in place of the flag.buyingstore check in buyingstore.cpp.
+ *
+ * @param item Item data to check
+ * @return true always (any item can be listed in buying store), false only if item is null
+ */
+bool item_override_canbuyingstore(const item_data* item);
+
 #endif // ITEM_OVERRIDE_HPP
