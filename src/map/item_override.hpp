@@ -9,11 +9,11 @@
  *
  * Server-side override system providing two permanent features:
  *
- * 1. CROSS-JOB EQUIPMENT: Non-weapon/non-ammo equipment can be worn by any job class.
- *    Job and class restrictions in item_db.yml are bypassed for IT_ARMOR, IT_CARD,
- *    IT_PETARMOR, IT_SHADOWGEAR, IT_CASH, etc.
- *    IT_WEAPON and IT_AMMO still enforce original job/class restrictions from item_db.yml.
- *    This is enforced in pc_isequip() via item_override_alljob_equip().
+ * 1. CROSS-JOB EQUIPMENT: Items equipping outside weapon/ammo slots can be worn by any job.
+ *    Slots using EQP_ARMS (EQP_HAND_R|EQP_HAND_L) and EQP_AMMO still enforce the
+ *    original job/class restrictions from item_db.yml.
+ *    All other equip slots (armor, headgear, accessory, garment, shoes, shadowgear, etc.)
+ *    bypass job/class restrictions via item_override_alljob_equip().
  *
  * 2. UNIVERSAL SELL: All items can be sold to NPC shops regardless of the
  *    NoSell trade restriction in item_db.yml.
