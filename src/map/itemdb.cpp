@@ -580,7 +580,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		item->flag.no_refine = !refine;
 	} else {
 		if (!exists)
-			item->flag.no_refine = true;
+			item->flag.no_refine = (item->equip == 0); // wearable items are refinable by default
 	}
 
 	if (this->nodeExists(node, "Gradable")) {
@@ -592,7 +592,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		item->flag.gradable = gradable;
 	} else {
 		if (!exists)
-			item->flag.gradable = false;
+			item->flag.gradable = (item->equip != 0); // wearable items are gradable by default
 	}
 
 	if (this->nodeExists(node, "View")) {

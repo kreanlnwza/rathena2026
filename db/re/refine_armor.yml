@@ -1,0 +1,623 @@
+# Refine Database - Armor
+# Part of db/re/refine.yml split by equipment type.
+# Loaded via Footer imports from refine.yml.
+
+Header:
+  Type: REFINE_DB
+  Version: 2
+
+Body:
+  - Group: Armor
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 1
+            Bonus: 100
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 2000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Elunium
+          - Level: 2
+            Bonus: 200
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 2000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Elunium
+          - Level: 3
+            Bonus: 300
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 2000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Elunium
+          - Level: 4
+            Bonus: 400
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 2000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Elunium
+          - Level: 5
+            Bonus: 600
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 6000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 9000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 6
+            Bonus: 800
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 7
+            Bonus: 1000
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 8
+            Bonus: 1200
+            BlacksmithBlessingAmount: 1
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 9
+            Bonus: 1500
+            BlacksmithBlessingAmount: 2
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 10
+            Bonus: 1800
+            BlacksmithBlessingAmount: 4
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 900
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 2000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 11
+            Bonus: 2100
+            BlacksmithBlessingAmount: 7
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 12
+            Bonus: 2400
+            BlacksmithBlessingAmount: 11
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 13
+            Bonus: 2800
+            BlacksmithBlessingAmount: 16
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 14
+            Bonus: 3200
+            BlacksmithBlessingAmount: 22
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 15
+            Bonus: 3600
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 16
+            Bonus: 4000
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 17
+            Bonus: 4500
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 18
+            Bonus: 5000
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 19
+            Bonus: 5500
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 500
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 20
+            Bonus: 6000
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 500
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+      - Level: 2
+        RefineLevels:
+          - Level: 1
+            Bonus: 120
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 2
+            Bonus: 240
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 3
+            Bonus: 360
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 4
+            Bonus: 480
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 9000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 5
+            Bonus: 720
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 7000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 6
+            Bonus: 960
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 7
+            Bonus: 1200
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 8
+            Bonus: 1440
+            BlacksmithBlessingAmount: 1
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 9
+            Bonus: 1800
+            BlacksmithBlessingAmount: 2
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 10
+            Bonus: 2160
+            BlacksmithBlessingAmount: 4
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 2000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 11
+            Bonus: 2520
+            BlacksmithBlessingAmount: 7
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 12
+            Bonus: 2880
+            BlacksmithBlessingAmount: 11
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 13
+            Bonus: 3360
+            BlacksmithBlessingAmount: 16
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 14
+            Bonus: 3840
+            BlacksmithBlessingAmount: 22
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 15
+            Bonus: 4320
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 16
+            Bonus: 4800
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 17
+            Bonus: 5400
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 18
+            Bonus: 6000
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 19
+            Bonus: 6600
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 20
+            Bonus: 7200
+            BroadcastSuccess: true
+            BroadcastFailure: true
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
