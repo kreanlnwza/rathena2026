@@ -1,0 +1,29 @@
+//===== rAthena Script =======================================
+//= Example Craft NPC (Barter Craft Mode)
+//===== Description: =========================================
+//= Demonstrates the Craft: true barter system.
+//= Recipe definitions are in npc/custom/barters.yml
+//= under Name: barter_Craft_Example
+//===== Changelogs: ==========================================
+//= 1.0 First Version.
+//============================================================
+
+prontera,155,183,4	script	Craft Master	4_M_ALCHE01,{
+	mes "[Craft Master]";
+	mes "Welcome! I can craft ores for you.";
+	mes "The outcome depends on your luck.";
+	next;
+	switch( select( "View recipes & craft", "Never mind" ) ) {
+		case 1:
+			mes "[Craft Master]";
+			mes "Select an item to craft and the quantity.";
+			mes "^FF0000Materials will be consumed regardless of success.^000000";
+			close2;
+			callshop "barter_Craft_Example";
+			end;
+		case 2:
+			mes "[Craft Master]";
+			mes "Come back when you are ready.";
+			close;
+	}
+}

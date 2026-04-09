@@ -45,3 +45,46 @@
 Header:
   Type: BARTER_DB
   Version: 2
+
+Body:
+###########################################################################
+##= Example Craft Shop
+##= NPC script: npc/custom/craft_npc.txt
+##= callshop "barter_Craft_Example"
+###########################################################################
+  - Name: barter_Craft_Example
+    Craft: true
+    Items:
+      # --- Recipe 1: Elunium (50% chance, requires 10 Iron_Ore + 5 Steel) ---
+      - Index: 0
+        Item: Elunium
+        SuccessRate: 5000
+        RequiredItems:
+          - Index: 0
+            Item: Iron_Ore
+            Amount: 10
+          - Index: 1
+            Item: Steel
+            Amount: 5
+
+      # --- Recipe 2: Oridecon (30% chance, requires 20 Iron_Ore + 3 Rough_Oridecon) ---
+      - Index: 1
+        Item: Oridecon
+        SuccessRate: 3000
+        RequiredItems:
+          - Index: 0
+            Item: Iron_Ore
+            Amount: 20
+          - Index: 1
+            Item: Rough_Oridecon
+            Amount: 3
+
+      # --- Recipe 3: Rough_Elunium (80% chance, requires 5 Iron_Ore, stock limited 100) ---
+      - Index: 2
+        Item: Rough_Elunium
+        SuccessRate: 8000
+        Stock: 100
+        RequiredItems:
+          - Index: 0
+            Item: Iron_Ore
+            Amount: 5
