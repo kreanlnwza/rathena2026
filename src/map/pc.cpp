@@ -1960,9 +1960,17 @@ uint8 pc_isequip( const map_session_data* sd, int32 n )
 	}
 
 	//Not equipable by class. [Skotlex]
-	// Cross-job override: all jobs can equip all items (item_override.cpp)
-	if (!item_override_alljob_equip(sd, item))
-		return ITEM_EQUIP_ACK_FAIL;
+	// IT_WEAPON and IT_AMMO retain original job/class restrictions from item_db.yml.
+	// All other equipment types (armor, card, shadowgear, etc.) allow any job via item_override.cpp.
+	if (item->type == IT_WEAPON || item->type == IT_AMMO) {
+		if (!pc_job_can_use_item(sd, item))
+			return ITEM_EQUIP_ACK_FAIL;
+		if (!pc_isItemClass(sd, item))
+			return ITEM_EQUIP_ACK_FAIL;
+	} else {
+		if (!item_override_alljob_equip(sd, item))
+			return ITEM_EQUIP_ACK_FAIL;
+	}
 
 	return ITEM_EQUIP_ACK_OK;
 }

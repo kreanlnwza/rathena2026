@@ -9,8 +9,10 @@
  *
  * Server-side override system providing two permanent features:
  *
- * 1. CROSS-JOB EQUIPMENT: All equippable items can be worn by any job class.
- *    Job and class restrictions defined in item_db.yml are bypassed entirely.
+ * 1. CROSS-JOB EQUIPMENT: Non-weapon/non-ammo equipment can be worn by any job class.
+ *    Job and class restrictions in item_db.yml are bypassed for IT_ARMOR, IT_CARD,
+ *    IT_PETARMOR, IT_SHADOWGEAR, IT_CASH, etc.
+ *    IT_WEAPON and IT_AMMO still enforce original job/class restrictions from item_db.yml.
  *    This is enforced in pc_isequip() via item_override_alljob_equip().
  *
  * 2. UNIVERSAL SELL: All items can be sold to NPC shops regardless of the
