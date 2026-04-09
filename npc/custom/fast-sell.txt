@@ -1,0 +1,260 @@
+//==========================================
+//= Fast-Sell NPC for rAthena
+//= Author: V!be Coding [kreanlnwza] AI Assistant
+//= Version: 1.0
+//= Last Update: 2024-06-07
+//= Description:
+//=   Quick-sell all non-equipped, non-favorite items
+//=   in one click.  Supports exclude-list (max 10),
+//=   protected-item array, and Overcharge bonus.
+//= Language: Thai (client-facing) / English (comments)
+//= File: npc/custom/fast-sell.txt
+//==========================================
+
+prontera,150,180,5	script	Fast Sell	853,{
+	mes "^FF0000[ระบบขายของด่วน]^000000";
+	mes "สวัสดี! ฉันช่วยคุณขายของที";
+	mes "ไม่ต้องการได้อย่างรวดเร็ว";
+	mes "ฉันจะขายของที่ไม่ใช่ไอเท็มต่อไปนี้:";
+	mes "- ไอเท็มที่ไม่ใช่ไอเท็มโปรด (FAV)";
+	mes "- ไอเท็มที่ไม่ได้สวมใส่อยู่";
+	mes "- ไอเท็มที่ไม่ได้อยู่ในรายการยกเว้น";
+	next;
+	set .@sel, select("^FF0000ยกเลิก^000000", "^0000FFขายของด่วน^000000", "^00AAFFจัดการรายการยกเว้น^000000");
+	if (.@sel == 1) {
+		mes "ยกเลิกการทำรายการ!";
+		close;
+	} else if (.@sel == 3) {
+		goto L_ManageExclude;
+	}
+	goto L_SellFlow;
+	// เริ่มขายของ
+
+L_ManageExclude:
+	mes "^FF0000[ระบบขายของด่วน]^000000";
+	mes "จัดการรายการไอเท็มที่ต้องการยกเว้น (สูงสุด 10 รายการ)";
+	next;
+	switch(select("^00FF00เพิ่มไอเท็มยกเว้น^000000", "^0000FFดูรายการไอเท็มยกเว้น^000000", "^FF8800ลบรายการไอเท็มยกเว้นทั้งหมด^000000", "^777777กลับสู่หน้าหลัก^000000")) {
+		case 1:
+			set .@slot, 0;
+			if (#FastSellExclude1 == 0) set .@slot, 1;
+			else if (#FastSellExclude2 == 0) set .@slot, 2;
+			else if (#FastSellExclude3 == 0) set .@slot, 3;
+			else if (#FastSellExclude4 == 0) set .@slot, 4;
+			else if (#FastSellExclude5 == 0) set .@slot, 5;
+			else if (#FastSellExclude6 == 0) set .@slot, 6;
+			else if (#FastSellExclude7 == 0) set .@slot, 7;
+			else if (#FastSellExclude8 == 0) set .@slot, 8;
+			else if (#FastSellExclude9 == 0) set .@slot, 9;
+			else if (#FastSellExclude10 == 0) set .@slot, 10;
+			if (.@slot == 0) {
+				mes "รายการยกเว้นเต็มแล้ว (10 รายการ).";
+				next;
+				goto L_ManageExclude;
+			}
+			mes "กรุณากรอก Item ID ที่ต้องการยกเว้น (0 เพื่อยกเลิก)";
+			input .@newid;
+			if (.@newid <= 0) {
+				mes "ยกเลิกการทำรายการ.";
+				next;
+				goto L_ManageExclude;
+			}
+			if (.@newid == #FastSellExclude1 || .@newid == #FastSellExclude2 || .@newid == #FastSellExclude3 || .@newid == #FastSellExclude4 || .@newid == #FastSellExclude5 || .@newid == #FastSellExclude6 || .@newid == #FastSellExclude7 || .@newid == #FastSellExclude8 || .@newid == #FastSellExclude9 || .@newid == #FastSellExclude10) {
+				mes "ไอเท็มนี้อยู่ในรายการยกเว้นอยู่แล้ว.";
+				next;
+				goto L_ManageExclude;
+			}
+			set .@newname$, getitemname(.@newid);
+			mes "ไอเท็มที่ต้องการเพิ่ม:";
+			mes "^i["+.@newid+"] " + .@newname$ + " (ID: " + .@newid + ")";
+			next;
+			if (select("^00FF00ยืนยันการเพิ่ม^000000","^FF0000ยกเลิก^000000") == 2) {
+				mes "ยกเลิกการทำรายการ.";
+				next;
+				goto L_ManageExclude;
+			}
+			if (.@slot == 1) set #FastSellExclude1, .@newid;
+			else if (.@slot == 2) set #FastSellExclude2, .@newid;
+			else if (.@slot == 3) set #FastSellExclude3, .@newid;
+			else if (.@slot == 4) set #FastSellExclude4, .@newid;
+			else if (.@slot == 5) set #FastSellExclude5, .@newid;
+			else if (.@slot == 6) set #FastSellExclude6, .@newid;
+			else if (.@slot == 7) set #FastSellExclude7, .@newid;
+			else if (.@slot == 8) set #FastSellExclude8, .@newid;
+			else if (.@slot == 9) set #FastSellExclude9, .@newid;
+			else if (.@slot == 10) set #FastSellExclude10, .@newid;
+			mes "เพิ่มไอเท็มยกเว้นเรียบร้อยแล้ว.";
+			next;
+			goto L_ManageExclude;
+		case 2:
+			mes "^FF0000[รายการไอเท็มยกเว้น]^000000";
+			if (#FastSellExclude1) mes "1) ^i["+#FastSellExclude1+"] " + getitemname(#FastSellExclude1); else mes "1) - ว่าง";
+			if (#FastSellExclude2) mes "2) ^i["+#FastSellExclude2+"] " + getitemname(#FastSellExclude2); else mes "2) - ว่าง";
+			if (#FastSellExclude3) mes "3) ^i["+#FastSellExclude3+"] " + getitemname(#FastSellExclude3); else mes "3) - ว่าง";
+			if (#FastSellExclude4) mes "4) ^i["+#FastSellExclude4+"] " + getitemname(#FastSellExclude4); else mes "4) - ว่าง";
+			if (#FastSellExclude5) mes "5) ^i["+#FastSellExclude5+"] " + getitemname(#FastSellExclude5); else mes "5) - ว่าง";
+			if (#FastSellExclude6) mes "6) ^i["+#FastSellExclude6+"] " + getitemname(#FastSellExclude6); else mes "6) - ว่าง";
+			if (#FastSellExclude7) mes "7) ^i["+#FastSellExclude7+"] " + getitemname(#FastSellExclude7); else mes "7) - ว่าง";
+			if (#FastSellExclude8) mes "8) ^i["+#FastSellExclude8+"] " + getitemname(#FastSellExclude8); else mes "8) - ว่าง";
+			if (#FastSellExclude9) mes "9) ^i["+#FastSellExclude9+"] " + getitemname(#FastSellExclude9); else mes "9) - ว่าง";
+			if (#FastSellExclude10) mes "10) ^i["+#FastSellExclude10+"] " + getitemname(#FastSellExclude10); else mes "10) - ว่าง";
+			next;
+			goto L_ManageExclude;
+		case 3:
+			if (select("^FF8800ยืนยันการลบรายการทั้งหมด^000000","^777777ยกเลิก^000000") == 2) {
+				goto L_ManageExclude;
+			}
+			set #FastSellExclude1, 0;
+			set #FastSellExclude2, 0;
+			set #FastSellExclude3, 0;
+			set #FastSellExclude4, 0;
+			set #FastSellExclude5, 0;
+			set #FastSellExclude6, 0;
+			set #FastSellExclude7, 0;
+			set #FastSellExclude8, 0;
+			set #FastSellExclude9, 0;
+			set #FastSellExclude10, 0;
+			mes "ลบรายการไอเท็มยกเว้นทั้งหมดเรียบร้อยแล้ว.";
+			next;
+			goto L_ManageExclude;
+		default:
+			goto L_SellFlow;
+	}
+
+L_SellFlow:
+	set .@total_sold, 0;
+	set .@total_zeny, 0;
+	set .@skipped_count, 0;
+	
+	getinventorylist;
+	// ไอเท็มที่ถูกป้องกันไม่ให้ขาย (ห้ามขาย/ของสวมใส่)
+	setarray .@protected_ids[0], 500, 909, 607, 608;
+	
+	// แสดงรายการไอเท็มที่จะขายเพื่อให้ผู้เล่นตรวจสอบ
+	for(set .@i, 0; .@i < @inventorylist_count; set .@i, .@i + 1) {
+		set .@itemid, @inventorylist_id[.@i];
+		set .@amount, @inventorylist_amount[.@i];
+		set .@equip, @inventorylist_equip[.@i];
+		
+		if(.@itemid == 0) continue;
+		if(.@equip != 0) {
+			set .@skipped_count, .@skipped_count + 1;
+			continue;
+		}
+		// Skip favorite (FAV) items
+		if (@inventorylist_favorite[.@i] != 0) {
+			set .@skipped_count, .@skipped_count + 1;
+			continue;
+		}
+		
+		// ไอเท็มที่ถูกป้องกันไม่ให้ขาย ใช้ inarray
+		if (inarray(.@protected_ids[0], .@itemid) != -1) {
+			set .@skipped_count, .@skipped_count + 1;
+			continue;
+		}
+
+		// ไอเท็มที่อยู่ในรายการยกเว้น (สูงสุด 10 รายการ)
+		if (.@itemid == #FastSellExclude1 || .@itemid == #FastSellExclude2 || .@itemid == #FastSellExclude3 || .@itemid == #FastSellExclude4 || .@itemid == #FastSellExclude5 || .@itemid == #FastSellExclude6 || .@itemid == #FastSellExclude7 || .@itemid == #FastSellExclude8 || .@itemid == #FastSellExclude9 || .@itemid == #FastSellExclude10) {
+			set .@skipped_count, .@skipped_count + 1;
+			continue;
+		}
+		
+		// แสดงรายการไอเท็มที่จะขาย
+	set .@name$, getitemname(.@itemid);
+	// แสดงชื่อไอเท็มและจำนวนให้ผู้เล่นทราบก่อนขาย
+	mes "^FF0000[ขาย]^000000 ^i["+.@itemid+"] " + .@name$ + " x" + .@amount;
+	}
+	
+	mes "^FF0000[ระบบขายของด่วน]^000000";
+	mes "^FF0000[สรุป - รายการขาย]^000000";
+	mes "รายการไอเท็มที่จะถูกขายทั้งหมด";
+	mes "โปรดตรวจสอบรายการให้เรียบร้อย";
+	mes "คุณต้องการดำเนินการขายต่อไปหรือไม่?";
+	next;
+	if(select("^FF0000ยกเลิก^000000", "^00FF00ยืนยัน^000000") == 1) {
+		mes "ยกเลิกการขายของ กลับสู่หน้าหลัก";
+		close;
+	}
+	
+	// Reset counters for actual selling
+	set .@total_sold, 0;
+	set .@total_zeny, 0;
+	set .@skipped_count, 0;
+	
+	getinventorylist;
+	
+	for(set .@i, 0; .@i < @inventorylist_count; set .@i, .@i + 1) {
+		set .@itemid, @inventorylist_id[.@i];
+		set .@amount, @inventorylist_amount[.@i];
+		set .@equip, @inventorylist_equip[.@i];
+		
+		if(.@itemid == 0) continue;
+		if(.@equip != 0) {
+			set .@skipped_count, .@skipped_count + 1;
+			continue;
+		}
+		// Skip favorite (FAV) items
+		if (@inventorylist_favorite[.@i] != 0) {
+			set .@skipped_count, .@skipped_count + 1;
+			continue;
+		}
+		
+		// ไอเท็มที่ถูกป้องกันไม่ให้ขาย
+		if (inarray(.@protected_ids[0], .@itemid) != -1) {
+			set .@skipped_count, .@skipped_count + 1;
+			continue;
+		}
+
+		// ไอเท็มที่อยู่ในรายการยกเว้น (สูงสุด 10 รายการ)
+		if (.@itemid == #FastSellExclude1 || .@itemid == #FastSellExclude2 || .@itemid == #FastSellExclude3 || .@itemid == #FastSellExclude4 || .@itemid == #FastSellExclude5 || .@itemid == #FastSellExclude6 || .@itemid == #FastSellExclude7 || .@itemid == #FastSellExclude8 || .@itemid == #FastSellExclude9 || .@itemid == #FastSellExclude10) {
+			set .@skipped_count, .@skipped_count + 1;
+			continue;
+		}
+		
+		// คำนวณราคาขายของไอเท็ม หาก 0 ให้ fallback เป็น BUY/2 หรือขั้นต่ำ 1z
+		set .@price, getiteminfo(.@itemid, ITEMINFO_SELL);
+		if(.@price <= 0) {
+			set .@buy, getiteminfo(.@itemid, ITEMINFO_BUY);
+			if (.@buy > 0)
+				set .@price, .@buy / 2;
+			else
+				set .@price, 1;
+		}
+
+		// คำนวณสกิล Overcharge เพิ่มราคาขายให้ผู้เล่น
+		set .@oc_lv, getskilllv("MC_OVERCHARGE");
+		if (.@oc_lv > 0) {
+			// อัตราการเพิ่มราคาขาย: อัตราโบนัส = 5 + (เลเวลสกิล*2) สูงสุด 10 เลเวล 24% (เลเวล 10 ลด 1%)
+			if (.@oc_lv == 10)
+				set .@oc_rate, 5 + (.@oc_lv * 2) - 1;
+			else
+				set .@oc_rate, 5 + (.@oc_lv * 2);
+			set .@price, (.@price * (100 + .@oc_rate)) / 100;
+		}
+
+		set .@sell_amount, .@price * .@amount;
+		
+		// ลบไอเท็มและบันทึกการขาย (ปลอดภัย)
+		if (countitem(.@itemid) >= .@amount) {
+			delitem .@itemid, .@amount;
+			set .@total_sold, .@total_sold + .@amount;
+			set .@total_zeny, .@total_zeny + .@sell_amount;
+		} else {
+			set .@skipped_count, .@skipped_count + 1;
+		}
+	}
+	
+	// เพิ่มเงินให้ผู้เล่น
+	if(.@total_zeny > 0) {
+		Zeny += .@total_zeny;
+	}
+	
+	mes "^FF0000[ระบบขายของด่วน]^000000";
+	mes "จำนวนที่ขายได้: " + F_InsertComma(.@total_sold) + " ชิ้น";
+	mes "เงินที่ได้รับทั้งหมด: " + F_InsertComma(.@total_zeny) + "z.";
+	mes "ไอเท็มที่ถูกข้าม (สวมใส่/ป้องกัน/FAV): " + F_InsertComma(.@skipped_count) + " ชิ้น";
+	next;
+	mes "^FF0000[ระบบขายของด่วน]^000000";
+	mes "ขอบคุณที่ใช้บริการ!";
+	close;
+}

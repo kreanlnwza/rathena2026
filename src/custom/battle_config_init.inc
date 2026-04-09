@@ -46,3 +46,8 @@
 // Refine UI Protection
 { "refine_delay_time",                  &battle_config.refine_delay_time,                  1800,   0,      30000,        },
 { "refine_ui_lock_time",                &battle_config.refine_ui_lock_time,                3000,   0,      10000,        },
+
+// Item Override System
+{ "override_equip_all_jobs",         &battle_config.override_equip_all_jobs,         1, 0, 1 },
+{ "override_item_sell_all",          &battle_config.override_item_sell_all,          1, 0, 1 },
+{ "override_item_buyingstore_all",   &battle_config.override_item_buyingstore_all,   1, 0, 1 },

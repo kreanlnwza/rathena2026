@@ -220,6 +220,7 @@
     <ClInclude Include="homunculus.hpp" />
     <ClInclude Include="instance.hpp" />
     <ClInclude Include="intif.hpp" />
+    <ClInclude Include="item_override.hpp" />
     <ClInclude Include="itemdb.hpp" />
     <ClInclude Include="log.hpp" />
     <ClInclude Include="mail.hpp" />
@@ -1574,6 +1575,7 @@
     <ClCompile Include="homunculus.cpp" />
     <ClCompile Include="instance.cpp" />
     <ClCompile Include="intif.cpp" />
+    <ClCompile Include="item_override.cpp" />
     <ClCompile Include="itemdb.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="mail.cpp" />

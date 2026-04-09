@@ -47,3 +47,8 @@ int32 sell_zeny_fee;
 // Refine UI Protection
 int32 refine_delay_time; // Delay in milliseconds between refine attempts (default: 1800ms) [@krit.k #3614]
 int32 refine_ui_lock_time; // Lock time in milliseconds for refine UI after each refine attempt (default: 3000ms) [@krit.k #3614]
+
+// Item Override System
+int32 override_equip_all_jobs;       ///< 1 = bypass job/class restrictions for non-weapon/ammo slots
+int32 override_item_sell_all;        ///< 1 = bypass NoSell trade restriction for all items
+int32 override_item_buyingstore_all; ///< 1 = bypass flag.buyingstore, all items listable in buying store

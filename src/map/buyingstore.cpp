@@ -20,6 +20,7 @@
 #include "log.hpp"  // log_pick_pc, log_zeny
 #include "npc.hpp"
 #include "pc.hpp"  // map_session_data
+#include "item_override.hpp"
 
 //Autotrader
 static DBMap *buyingstore_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
@@ -175,7 +176,9 @@ int8 buyingstore_create( map_session_data* sd, int32 zenylimit, unsigned char re
 		}
 
 		// restrictions: allowed and no character-bound items
-		if( !id->flag.buyingstore || !itemdb_cantrade_sub( id.get(), pc_get_group_level( sd ), pc_get_group_level( sd ) ) ){ 
+		// override_item_buyingstore_all bypasses flag.buyingstore; cantrade still applies.
+		if( !(battle_config.override_item_buyingstore_all ? item_override_canbuyingstore(id.get()) : id->flag.buyingstore)
+		||  !itemdb_cantrade_sub( id.get(), pc_get_group_level( sd ), pc_get_group_level( sd ) ) ){
 			break;
 		}
 
