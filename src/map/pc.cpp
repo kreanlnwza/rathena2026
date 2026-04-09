@@ -1960,11 +1960,10 @@ uint8 pc_isequip( const map_session_data* sd, int32 n )
 	}
 
 	//Not equipable by class. [Skotlex]
-	// Items equipping in weapon/ammo slots (EQP_ARMS, EQP_AMMO) retain original
-	// job/class restrictions from item_db.yml.
-	// All other equip slots (armor, headgear, accessory, shadowgear, etc.) allow
-	// any job via item_override.cpp.
-	if (item->equip & (EQP_ARMS | EQP_AMMO)) {
+	// When override_equip_all_jobs is disabled, always use original job/class checks.
+	// When enabled, weapon/ammo slots (EQP_ARMS, EQP_AMMO) still use original checks;
+	// all other equip slots bypass restrictions via item_override_alljob_equip().
+	if (!battle_config.override_equip_all_jobs || (item->equip & (EQP_ARMS | EQP_AMMO))) {
 		if (!pc_job_can_use_item(sd, item))
 			return ITEM_EQUIP_ACK_FAIL;
 		if (!pc_isItemClass(sd, item))

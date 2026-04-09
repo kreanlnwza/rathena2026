@@ -11,3 +11,5 @@
  *	 { "name", &battle_config.<variable name>, <default value>, <minimum value>, <maximum value> },
  **/
 
+	{ "override_equip_all_jobs",	&battle_config.override_equip_all_jobs,		1,	0,	1	},
+	{ "override_item_sell_all",		&battle_config.override_item_sell_all,		1,	0,	1	},

@@ -3290,8 +3290,9 @@ bool itemdb_canpartnertrade_sub( const item_data* item, int32 gmlv, int32 gmlv2 
 }
 
 bool itemdb_cansell_sub( const item_data* item, int32 gmlv, int32 unused ) {
-	// Universal sell override: all items can be sold regardless of NoSell flag (item_override.cpp)
-	return item_override_cansell(item);
+	if (battle_config.override_item_sell_all)
+		return item_override_cansell(item);  // Universal sell: ignore NoSell flag
+	return (item && (!(item->flag.trade_restriction.sell) || gmlv >= item->gm_lv_trade_override));
 }
 
 bool itemdb_cancartstore_sub( const item_data* item, int32 gmlv, int32 unused ) {

@@ -12,3 +12,5 @@
  *	 <datatype> name;
  **/
 
+	int32 override_equip_all_jobs;		///< 1 = bypass job/class restrictions for non-weapon/ammo slots
+	int32 override_item_sell_all;		///< 1 = bypass NoSell trade restriction for all items
