@@ -78060,6 +78060,22 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 887
+  - Id: 15854
+    AegisName: C_Phigasia_Scarf_EXE
+    Name: Costume Phigasia Scarf
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2079
+    Script: |
+      hateffect HAT_EF_C_Phigasia_Scarf_EXE,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_Phigasia_Scarf_EXE,false;
   - Id: 15855
     AegisName: Ermac_Veil_EXE
     Name: Ermac's Veil (OSM)
@@ -86975,8 +86991,9 @@ Body:
       Head_Low: true
       Head_Mid: true
     ArmorLevel: 1
-    Refineable: true
     View: 802
+    Script: |
+      bonus3 bAutoSpellWhenHit,"MC_LOUD",1,5;
   - Id: 18650
     AegisName: RWC_Shouting_Mouth
     Name: RWC Shouting Mouth
@@ -89748,8 +89765,17 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     ArmorLevel: 1
-    Refineable: true
+#   Bugfixes: can be refined according to aegis data
+#   Refineable: true
     View: 925
     Script: |
       bonus bAgi,1;
@@ -115121,6 +115147,11 @@ Body:
     Defense: 12
     Locations:
       Garment: true
+    Trade:
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     ArmorLevel: 1
     EquipLevelMin: 100
     Refineable: true
@@ -115144,8 +115175,8 @@ Body:
       }
       if (getskilllv("RA_CAMOUFLAGE") == 5) {
          bonus bDelayrate,-10;
+         bonus2 bSkillCooldown,"RA_ARROWSTORM",-200;
       }
-      bonus2 bSkillCooldown,"RA_ARROWSTORM",-200;
       bonus2 bSkillAtk,"RA_ARROWSTORM",getskilllv("RA_AIMEDBOLT");
     UnEquipScript: |
       sc_end SC_UNLIMIT;
@@ -176890,6 +176921,21 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 400671
+    AegisName: C_Broken_Egg
+    Name: Costume Fried Egg
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2542
   - Id: 400672
     AegisName: Marin_Pattern_Hat
     Name: Marin Pattern Hat
@@ -178427,6 +178473,21 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2673
+  - Id: 400801
+    AegisName: C_FumiHausu_Doll
+    Name: Costume Fumi Hausu Doll
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2676
   - Id: 400803
     AegisName: C_Muka_Sombrero
     Name: Costume Muka Sombrero
@@ -180122,6 +180183,27 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2556
+  - Id: 401113
+    AegisName: C_Rune_Helm_Ice
+    Name: Costume Snow Rune Helm
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    Trade:
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2203
+  - Id: 401114
+    AegisName: C_Asgard_Circlet_TH
+    Name: Costume Asgard Wing Hairband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2100
   - Id: 401115
     AegisName: Sky_Rune_Crown_MS
     Name: Sky Rune Crown (Meister)    # !todo check english name
@@ -180447,6 +180529,141 @@ Body:
       NoAuction: true
     ArmorLevel: 1
     View: 2805
+  - Id: 401213
+    AegisName: C_Jaow_Pirun
+    Name: Costume Jaow Pirun Sra Yok
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2810
+    Script: |
+      hateffect HAT_EF_C_JAOW_PIRUN,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_JAOW_PIRUN,false;
+  - Id: 401239
+    AegisName: Hs_Sun_God
+    Name: Herosria Hat of Sun God
+    Type: Armor
+    Weight: 3000
+    Defense: 120
+    Locations:
+      Head_Top: true
+    Trade:
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    View: 138
+    Script: |
+      bonus bMdef,8;
+      bonus bNearAtkDef,5;
+      bonus bLongAtkDef,5;
+      bonus2 bMagicSubDefEle,Ele_All,5;
+      bonus bShortAtkRate,-10;
+      bonus bLongAtkRate,-10;
+      bonus2 bMagicAtkEle,Ele_All,-10;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+  - Id: 401240
+    AegisName: Hs_Loard_Circlet
+    Name: Herosria Grand Circlet
+    Type: Armor
+    Weight: 2000
+    Defense: 90
+    Locations:
+      Head_Top: true
+    Trade:
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    View: 93
+    Script: |
+      bonus bMdef,2;
+      bonus bShortAtkRate,5;
+      bonus2 bMagicAtkEle,Ele_All,-10;
+      bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
+      bonus2 bSubRace,RC_Player_Human,-10;
+      bonus2 bSubRace,RC_Player_Doram,-10;
+  - Id: 401241
+    AegisName: Hs_Crown
+    Name: Herosria Crown
+    Type: Armor
+    Weight: 1000
+    Defense: 20
+    Locations:
+      Head_Top: true
+    Trade:
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    View: 45
+    Script: |
+      bonus bMdef,10;
+      bonus2 bMagicAtkEle,Ele_All,5;
+      bonus bShortAtkRate,-10;
+      bonus bLongAtkRate,-10;
+      bonus2 bMagicAddRace,RC_Player_Human,10;
+      bonus2 bMagicAddRace,RC_Player_Doram,10;
+      bonus2 bSubRace,RC_Player_Human,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
+  - Id: 401242
+    AegisName: Hs_Magestic_Goat
+    Name: Herosria Majestic Goat
+    Type: Armor
+    Weight: 1000
+    Defense: 60
+    Locations:
+      Head_Top: true
+    Trade:
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    View: 41
+    Script: |
+      bonus bMdef,7;
+      bonus bHealPower,5;
+      bonus bUseSPrate,10;
+      bonus bDelayrate,-5;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+  - Id: 401243
+    AegisName: Hs_Corsair
+    Name: Herosria Corsair
+    Type: Armor
+    Weight: 1400
+    Defense: 40
+    Locations:
+      Head_Top: true
+    Trade:
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+    ArmorLevel: 1
+    EquipLevelMin: 200
+    View: 105
+    Script: |
+      bonus bMdef,5;
+      bonus bLongAtkRate,5;
+      bonus2 bMagicAtkEle,Ele_All,-10;
+      bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
+      bonus2 bSubRace,RC_Player_Human,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
   - Id: 401246
     AegisName: aegis_401246
     Name: Costume Fafnir Helm
@@ -184784,6 +185001,22 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2594
+  - Id: 410368
+    AegisName: C_Perm_Frost_Oblivion
+    Name: Costume Permafrost Oblivion
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    Trage:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2595
+    Script: |
+      hateffect HAT_EF_PERM_FROST_OBLIVION,true;
+    UnEquipScript: |
+      hateffect HAT_EF_PERM_FROST_OBLIVION,false;
   - Id: 410370
     AegisName: C_Happy_Pierrot_Mask_V
     Name: Costume Happy Clown Mask (Middle)
@@ -184867,6 +185100,21 @@ Body:
       NoAuction: true
     ArmorLevel: 1
     View: 1303
+  - Id: 410397
+    AegisName: C_Doughkun
+    Name: Costume DoughKun
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2677
   - Id: 410399
     AegisName: C_Capybara
     Name: Costume Capybara
@@ -185071,6 +185319,22 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2748
+  - Id: 410508
+    AegisName: C_Midgard_Integrity
+    Name: Costume Celestial Integrity
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2750
+    Script: |
+      hateffect FOOTPRINT_EF_FEATHER,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_FEATHER,false;
   - Id: 410556
     AegisName: C_Emperor_Penguin
     Name: Costume Emperor Penguin
@@ -185087,6 +185351,18 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2795
+  - Id: 410576
+    AegisName: C_Eye_of_Necromancer
+    Name: Costume Eye of Necromancer
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2809
+    Script: |
+      hateffect HAT_EF_C_EYE_OF_NECROMANCER,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_EYE_OF_NECROMANCER,false;
   - Id: 410582
     AegisName: C_Nursing_Poring
     Name: Costume Nursing Poring    # !todo check english name
@@ -188369,6 +188645,17 @@ Body:
       bonus2 bSubRace,RC_Player_Human,3;
       bonus2 bAddSize,Size_All,BaseLevel/10;
       bonus2 bMagicAddSize,Size_All,BaseLevel/10;
+  - Id: 420357
+    AegisName: C_Baby_Seal
+    Name: Costume Baby Seal
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+    ArmorLevel: 1
+    View: 2570
   - Id: 420358
     AegisName: C_Experiment_Mind
     Name: Costume Experiment Mind
@@ -189290,6 +189577,29 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2746
+  - Id: 420602
+    AegisName: C_Red_Bat
+    Name: Costume Red Bat
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2439
+  - Id: 420618
+    AegisName: C_SS_Recognition
+    Name: Costume Solid State Recognition
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2751
   - Id: 420642
     AegisName: C_OpenAir_Headset_Red
     Name: Costume Open Air Headset (Red)
@@ -189389,6 +189699,29 @@ Body:
       hateffect HAT_EF_C_CLB_GAT_DOC,true;
     UnEquipScript: |
       hateffect HAT_EF_C_CLB_GAT_DOC,false;
+  - Id: 420743
+    AegisName: C_Spirit_Cat_TH
+    Name: Costume Spirit Cat
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2811
+  - Id: 420747
+    AegisName: Wishing_Sky_Lantern_TH
+    Name: Costume Wishing Sky Lantern
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 947
   - Id: 420750
     AegisName: C_Seyren_Hair
     Name: Costume Seyren Hair    # !todo check english name
@@ -212385,6 +212718,18 @@ Body:
          bonus bDelayrate,-12;
       if (.@r>=13)
          bonus2 bIgnoreMdefClassRate,Class_Boss,10;
+  - Id: 480155
+    AegisName: C_Vietnam_flag_hood
+    Name: Costume National Flag
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoAuction: true
+    ArmorLevel: 1
+    View: 122
   - Id: 480156
     AegisName: Aegis_System
     Name: Aegis System
@@ -214511,6 +214856,21 @@ Body:
       hateffect HAT_EF_SERPENT_SHADOW,true;
     UnEquipScript: |
       hateffect HAT_EF_SERPENT_SHADOW,false;
+  - Id: 480287
+    AegisName: C_Skia_Doll
+    Name: Costume Skia Doll
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 170
   - Id: 480288
     AegisName: C_Dark_Lord_Cloak
     Name: Costume Dark Lord Cloak
@@ -214651,6 +215011,18 @@ Body:
       hateffect(HAT_EF_rabbit_aura,true);
     UnEquipScript: |
       hateffect(HAT_EF_rabbit_aura,false);
+  - Id: 480305
+    AegisName: C_Pope_Doll
+    Name: Costume Pope Doll
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 171
   - Id: 480306
     AegisName: Dual_SW_Cape
     Name: Dual Shadow World Cloak
@@ -216319,6 +216691,18 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 195
+  - Id: 480377
+    AegisName: C_Cat_Doll_WH
+    Name: Costume White Cat Doll
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoAuction: true
+    ArmorLevel: 1
+    View: 196
   - Id: 480388
     AegisName: Gray_W_Muffler_JP
     Name: "[Not For Sale] Gray Wolf Muffler"
@@ -217579,6 +217963,14 @@ Body:
       NoGuildStorage: true
     ArmorLevel: 1
     View: 237
+  - Id: 480485
+    AegisName: C_Call_Octo
+    Name: Costume Call of the Deep Sea Octopus
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 238
   - Id: 480486
     AegisName: C_Shiba_Tail
     Name: Costume Shiba Inu Tail
@@ -217595,6 +217987,18 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 240
+  - Id: 480488
+    AegisName: C_Juncea_Wing
+    Name: Costume Wings Of Simulation Juncea
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 241
   - Id: 480492
     AegisName: C_Alice_Broom
     Name: Costume Alice's Broom
@@ -218688,6 +219092,22 @@ Body:
       NoGuildStorage: true
     ArmorLevel: 1
     View: 270
+  - Id: 480609
+    AegisName: C_Dimensional_Sword
+    Name: Costume Dimensional Sword
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 273
   - Id: 480611
     AegisName: C_Immortal_H_Spear
     Name: "Costume: Immortal Monarch's Spear"    # !todo check english name
@@ -218796,6 +219216,18 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 288
+  - Id: 480658
+    AegisName: C_Arcanum_Corvus_Corax
+    Name: Costume Arcanum Corvus Corax
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 289
   - Id: 480664
     AegisName: C_Cursed_Serpent
     Name: Costume Cursed Serpent
@@ -219184,6 +219616,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 298
+  - Id: 480725
+    AegisName: C_Sixth_Sense_Satan
+    Name: Costume Sixth Sense Satan
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 299
   - Id: 480742
     AegisName: Hs_Angelwing_W
     Name: Herosria White Angel Wing
@@ -229174,6 +229614,70 @@ Body:
       bonus2 bSkillAtk,"SS_KAGENOMAI",BaseLevel/10;
       bonus2 bSkillAtk,"SS_KAGEGISSEN",BaseLevel/10;
       bonus2 bSkillAtk,"SS_KAGEAKUMU",BaseLevel/10;
+  - Id: 490801
+    AegisName: ROS2025_Ring_TH
+    Name: Ragnarok Stars 2025 Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,10;
+      bonus bHPrecovRate,20;
+      bonus bSPrecovRate,20;
+      bonus2 bExpAddRace,RC_All,5;
+  - Id: 490894
+    AegisName: Lucky_Ring
+    Name: Lucky Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      .@lv = BaseLevel;
+      bonus2 bExpAddRace,RC_All,3;
+      bonus bBaseAtk,.@lv/10;
+      bonus bMatk,.@lv/10;
+  - Id: 490895
+    AegisName: Lucky_Ring_LT
+    Name: Lucky Ring-LT
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      .@lv = BaseLevel;
+      bonus2 bExpAddRace,RC_All,6;
+      bonus bBaseAtk,.@lv/5;
+      bonus bMatk,.@lv/5;
+      autobonus "{ bonus bLuk,200; bonus2 bAddMonsterDropItem,7444,10; }",15,5000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_MVP; showscript \"LUCKY MAX !!\"; }";
+      autobonus2 "{ bonus bLuk,200; bonus2 bAddMonsterDropItem,7444,1; }",15,5000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_MVP; showscript \"LUCKY MAX !!\"; }";
+      if(.@lv<199)
+         skill "LG_SHIELDSPELL",3;
   - Id: 500000
     AegisName: IDTest_weapon
     Name: IDTest weapon

@@ -1805,7 +1805,7 @@ struct block_list {
 ### รูปแบบการเพิ่มข้อความ
 
 ```conf
-// conf/msg_conf/Custom_msg.conf
+// conf/msg_conf/import/Custom_msg.conf
 3000: ข้อความ custom แรก
 3001: ข้อความ custom ที่สอง
 3002: Your custom message here

@@ -1969,8 +1969,10 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 					damage += damage * 120 / 100; 
 					break;
 				case HN_MEGA_SONIC_BLOW:
-				case HN_SPIRAL_PIERCE_MAX:
 					damage *= 2;
+					break;
+				case HN_SPIRAL_PIERCE_MAX:
+					damage += damage * 130 / 100; 
 					break;
 			}
 		}
@@ -2047,7 +2049,13 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 		if (md && md->damagetaken != 100)
 			damage = i64max(damage * md->damagetaken / 100, 1);
 	}
-	
+	else if (bl->type == BL_ELEM) {
+		s_elemental_data* ed = BL_CAST(BL_ELEM, bl);
+
+		if (ed != nullptr && ed->db->damagetaken != 100)
+			damage = i64max(damage * ed->db->damagetaken / 100, 1);
+	}
+
 	if (tsc != nullptr && !tsc->empty()) {
 		if (!battle_status_block_damage(src, bl, tsc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
 			return 0;
@@ -3082,8 +3090,13 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 			case GC_CROSSIMPACT:
 			case SHC_SAVAGE_IMPACT:
 			case SHC_ETERNAL_SLASH:
-			case SHC_IMPACT_CRATER:
 			case SHC_CROSS_SLASH:
+				cri /= 2;
+				break;
+			case SHC_IMPACT_CRATER:
+				if (sd == nullptr || sd->weapontype1 != W_KATAR)
+					return false;
+
 				cri /= 2;
 				break;
 			case WH_GALESTORM:
@@ -7497,7 +7510,7 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 	damage = wd.damage + wd.damage2;
 	if( damage > 0 && src != target )
 	{
-		if (sc && sc->getSCE(SC_DUPLELIGHT) && (wd.flag & BF_SHORT)) { // Activates only from regular melee damage. Success chance is seperate for both duple light attacks.
+		if (sc && sc->getSCE(SC_DUPLELIGHT) && (wd.flag & BF_SHORT)) { // Activates only from regular melee damage. Success chance is separate for both duple light attacks.
 			uint16 duple_rate = 10 + 2 * sc->getSCE(SC_DUPLELIGHT)->val1;
 
 			if (rand() % 100 < duple_rate)
