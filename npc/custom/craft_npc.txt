@@ -1,0 +1,13 @@
+prontera,155,183,4	script	Craft Master	47,{
+    mes "[Craft Master]";
+    mes "Welcome! I can craft ores for you.";
+    next;
+    switch( select( "View recipes & craft", "Never mind" ) ) {
+        case 1:
+            close2;
+            callshop "barter_craft_refine_1";
+            end;
+        case 2:
+            close;
+    }
+}

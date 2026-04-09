@@ -45,3 +45,169 @@
 Header:
   Type: BARTER_DB
   Version: 2
+
+Body:
+  # Tier 1: Basic Refine Materials (อิงจาก barter_refine_1)
+  - Name: barter_craft_refine_1
+    Craft: true
+    Items:
+      - Index: 0
+        Item: Oridecon
+        SuccessRate: 7000 # 70.00%
+        RequiredItems:
+          - Index: 0
+            Item: Oridecon_Stone
+            Amount: 5
+
+      - Index: 1
+        Item: Elunium
+        SuccessRate: 7000 # 70.00%
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 5
+
+      - Index: 2
+        Item: Bradium
+        SuccessRate: 5000 # 50.00%
+        RequiredItems:
+          - Index: 0
+            Item: Oridecon
+            Amount: 3
+
+      - Index: 3
+        Item: Carnium
+        SuccessRate: 5000 # 50.00%
+        RequiredItems:
+          - Index: 0
+            Item: Elunium
+            Amount: 3
+
+      - Index: 4
+        Item: Carnium
+        SuccessRate: 6000 # 60.00%
+        RequiredItems:
+          - Index: 0
+            Item: Purified_Bradium
+
+  # Tier 2: Ethel Materials (อิงจาก barter_refine_2)
+  - Name: barter_craft_refine_2
+    Craft: true
+    Items:
+      - Index: 0
+        Item: Ethernium
+        SuccessRate: 6000 # 60.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+          - Index: 1
+            Item: Elunium
+
+      - Index: 1
+        Item: Etherdeocon
+        SuccessRate: 6000 # 60.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+          - Index: 1
+            Item: Oridecon
+
+      - Index: 2
+        Item: Etel_Bradium
+        SuccessRate: 4000 # 40.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: Bradium
+
+      - Index: 3
+        Item: Etel_Carnium
+        SuccessRate: 4000 # 40.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: Carnium
+
+      - Index: 4
+        Item: Enriched_Ethernium
+        SuccessRate: 5000 # 50.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 2
+          - Index: 1
+            Item: Enriched_Elunium
+
+      - Index: 5
+        Item: Enriched_Etherdeocon
+        SuccessRate: 5000 # 50.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 2
+          - Index: 1
+            Item: Enriched_Oridecon
+
+      - Index: 6
+        Item: HD_Ethernium
+        SuccessRate: 3000 # 30.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: HD_Elunium
+
+      - Index: 7
+        Item: HD_Etherdeocon
+        SuccessRate: 3000 # 30.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: HD_Oridecon
+
+      - Index: 8
+        Item: HD_Etel_Bradium
+        SuccessRate: 3000 # 30.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: HD_Bradium
+
+      - Index: 9
+        Item: HD_Etel_Carnium
+        SuccessRate: 3000 # 30.00%
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 3
+          - Index: 1
+            Item: HD_Carnium
+
+  # Tier 3: Shadow Materials (อิงจาก barter_refine_3)
+  - Name: barter_craft_refine_3
+    Craft: true
+    Items:
+      - Index: 0
+        Item: Shadowdecon
+        SuccessRate: 5000 # 50.00%
+        RequiredItems:
+          - Index: 0
+            Item: Shadowdecon_Ore
+            Amount: 20
+
+      - Index: 1
+        Item: Zelunium
+        SuccessRate: 5000 # 50.00%
+        RequiredItems:
+          - Index: 0
+            Item: Zelunium_Ore
+            Amount: 20
