@@ -24,7 +24,7 @@
  */
 
 struct item_data;
-struct map_session_data;
+class map_session_data;
 
 /**
  * Cross-job equip override.
