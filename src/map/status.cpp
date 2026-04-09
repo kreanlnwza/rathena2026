@@ -482,6 +482,12 @@ bool RefineDatabase::calculate_refine_info( const struct item_data& data, e_refi
 		level = 1;
 
 		return true;
+	}else if( data.equip != 0 ){
+		// Other wearable items (e.g. accessories, costumes) - treat as armor for refinement
+		refine_type = REFINE_TYPE_ARMOR;
+		level = ( data.armor_level > 0 ) ? data.armor_level : 1;
+
+		return true;
 	}else{
 		return false;
 	}
@@ -612,6 +618,8 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		itemtype_maxlevel = MAX_WEAPON_LEVEL;
 	}else if( itemtype == IT_ARMOR ){
 		itemtype_maxlevel = MAX_ARMOR_LEVEL;
+	}else if( itemtype == IT_SHADOWGEAR ){
+		itemtype_maxlevel = 1; // Shadow gear uses level 1
 	}else{
 		this->invalidWarning( node["Type"], "Item type \"%s\" is not supported.\n", itemtype_constant.c_str() );
 		return 0;
@@ -972,6 +980,8 @@ std::shared_ptr<s_enchantgradelevel> EnchantgradeDatabase::findCurrentLevelInfo(
 		level = data.weapon_level;
 	}else if( data.type == IT_ARMOR ){
 		level = data.armor_level;
+	}else if( data.type == IT_SHADOWGEAR ){
+		level = 1; // Shadow gear always uses level 1
 	}
 
 	const auto& enchantgradelevels = enchantgrade->levels.find( level );
@@ -4013,6 +4023,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				refinedef += info->bonus;
 
 #ifdef RENEWAL
+				if( enchantgrade_info != nullptr ){
+					refinedef += ( ( info->bonus * enchantgrade_info->bonus ) / 100 );
+				}
+
 				if( sd->inventory_data[index]->armor_level == 2 ){
 					base_status->res += sd->inventory.u.items_inventory[index].refine * 2;
 					base_status->mres += sd->inventory.u.items_inventory[index].refine * 2;
@@ -4030,6 +4044,16 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 					return 1;
 			}
 		} else if( sd->inventory_data[index]->type == IT_SHADOWGEAR ) { // Shadow System
+			if( info != nullptr ){
+				refinedef += info->bonus;
+
+#ifdef RENEWAL
+				if( enchantgrade_info != nullptr ){
+					refinedef += ( ( info->bonus * enchantgrade_info->bonus ) / 100 );
+				}
+#endif
+			}
+
 			if (sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->m))) {
 				run_script(sd->inventory_data[index]->script,0,sd->id,0);
 				if( !calculating )
