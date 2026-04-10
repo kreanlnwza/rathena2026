@@ -54,6 +54,9 @@ Body:
       - Index: 0
         Item: Oridecon
         SuccessRate: 7000 # 70.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Oridecon_Stone
@@ -62,6 +65,9 @@ Body:
       - Index: 1
         Item: Elunium
         SuccessRate: 7000 # 70.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Elunium_Stone
@@ -70,6 +76,9 @@ Body:
       - Index: 2
         Item: Bradium
         SuccessRate: 5000 # 50.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Oridecon
@@ -78,6 +87,9 @@ Body:
       - Index: 3
         Item: Carnium
         SuccessRate: 5000 # 50.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Elunium
@@ -86,6 +98,9 @@ Body:
       - Index: 4
         Item: Carnium
         SuccessRate: 6000 # 60.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Purified_Bradium
@@ -97,6 +112,9 @@ Body:
       - Index: 0
         Item: Ethernium
         SuccessRate: 6000 # 60.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -106,6 +124,9 @@ Body:
       - Index: 1
         Item: Etherdeocon
         SuccessRate: 6000 # 60.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -115,6 +136,9 @@ Body:
       - Index: 2
         Item: Etel_Bradium
         SuccessRate: 4000 # 40.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -125,6 +149,9 @@ Body:
       - Index: 3
         Item: Etel_Carnium
         SuccessRate: 4000 # 40.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -135,6 +162,9 @@ Body:
       - Index: 4
         Item: Enriched_Ethernium
         SuccessRate: 5000 # 50.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -145,6 +175,9 @@ Body:
       - Index: 5
         Item: Enriched_Etherdeocon
         SuccessRate: 5000 # 50.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -155,6 +188,9 @@ Body:
       - Index: 6
         Item: HD_Ethernium
         SuccessRate: 3000 # 30.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -165,6 +201,9 @@ Body:
       - Index: 7
         Item: HD_Etherdeocon
         SuccessRate: 3000 # 30.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -175,6 +214,9 @@ Body:
       - Index: 8
         Item: HD_Etel_Bradium
         SuccessRate: 3000 # 30.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -185,6 +227,9 @@ Body:
       - Index: 9
         Item: HD_Etel_Carnium
         SuccessRate: 3000 # 30.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Etel_Dust
@@ -199,6 +244,9 @@ Body:
       - Index: 0
         Item: Shadowdecon
         SuccessRate: 5000 # 50.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Shadowdecon_Ore
@@ -207,6 +255,9 @@ Body:
       - Index: 1
         Item: Zelunium
         SuccessRate: 5000 # 50.00%
+        Protection:
+          Item: BlacksmithBlessing
+          Amount: 1
         RequiredItems:
           - Index: 0
             Item: Zelunium_Ore

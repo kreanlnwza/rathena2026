@@ -834,20 +834,37 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 					craftName, purchase.amount, succeededAmount, failCount, successPct );
 				clif_messagecolor( &sd, color_table[COLOR_YELLOW], msg, false, SELF );
 
+				bool hasProtection = purchase.item->protectionId != 0;
+				uint32 materialConsumed = hasProtection ? succeededAmount : purchase.amount;
+
 				std::string costStr;
 				for( const auto& [reqIdx, req] : purchase.item->requirements ){
 					std::shared_ptr<item_data> id = item_db.find( req->nameid );
 					if( id ){
 						if( !costStr.empty() ) costStr += " | ";
 						char tmp[128];
-						safesnprintf( tmp, sizeof(tmp), "%s x%u", id->ename.c_str(), req->amount * purchase.amount );
+						safesnprintf( tmp, sizeof(tmp), msg_txt( &sd, MSG_CRAFT_COST_ITEM ),
+							id->ename.c_str(), req->amount * materialConsumed );
+						costStr += tmp;
+					}
+				}
+				if( hasProtection && purchase.item->protectionAmount > 0 ){
+					std::shared_ptr<item_data> protData = item_db.find( purchase.item->protectionId );
+					if( protData ){
+						if( !costStr.empty() ) costStr += " | ";
+						char tmp[128];
+						safesnprintf( tmp, sizeof(tmp), msg_txt( &sd, MSG_CRAFT_COST_PROT ),
+							protData->ename.c_str(),
+							purchase.item->protectionAmount * purchase.amount,
+							purchase.item->protectionAmount );
 						costStr += tmp;
 					}
 				}
 				if( purchase.item->price > 0 ){
 					if( !costStr.empty() ) costStr += " | ";
 					char tmp[64];
-					safesnprintf( tmp, sizeof(tmp), "%u Zeny", (uint32)( purchase.item->price * (uint64)purchase.amount ) );
+					safesnprintf( tmp, sizeof(tmp), msg_txt( &sd, MSG_CRAFT_COST_ZENY ),
+						(uint32)( purchase.item->price * (uint64)materialConsumed ) );
 					costStr += tmp;
 				}
 				if( !costStr.empty() ){
