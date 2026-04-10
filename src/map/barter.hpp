@@ -31,7 +31,9 @@ struct s_npc_barter_item{
 	uint32 stock;
 	uint32 price;
 	int8 refine;
-	uint16 successRate; // craft success rate in basis points (0-10000, 10000 = 100.00%). Used when barter->craft is true.
+	uint16 successRate;    // craft success rate in basis points (0-10000, 10000 = 100.00%). Used when barter->craft is true.
+	t_itemid protectionId = 0;      // protection item (e.g. BlacksmithBlessing): consumed on failure instead of materials
+	uint16 protectionAmount = 0;    // amount of protection item consumed per attempt
 	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
 };
 
@@ -66,6 +68,8 @@ struct s_barter_purchase{
 	std::shared_ptr<s_npc_barter_item> item;
 	uint32 amount;
 	item_data* data;
+	uint32 succeededAmount = 0;      // pre-rolled for protection craft
+	std::vector<bool> craftResults;  // pre-rolled results for protection craft
 };
 
 e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases );

@@ -302,6 +302,51 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				}
 			}
 
+			if( this->nodeExists( itemNode, "Protection" ) ){
+				const ryml::NodeRef& protNode = itemNode["Protection"];
+
+				if( this->nodeExists( protNode, "Item" ) ){
+					std::string aegis_name;
+
+					if( !this->asString( protNode, "Item", aegis_name ) ){
+						return 0;
+					}
+
+					std::shared_ptr<item_data> data = item_db.search_aegisname( aegis_name.c_str() );
+
+					if( data == nullptr ){
+						this->invalidWarning( protNode["Item"], "barter_parseBodyNode: Unknown protection item %s.\n", aegis_name.c_str() );
+						return 0;
+					}
+
+					item->protectionId = data->nameid;
+				}
+
+				if( this->nodeExists( protNode, "Amount" ) ){
+					uint16 amount;
+
+					if( !this->asUInt16( protNode, "Amount", amount ) ){
+						return 0;
+					}
+
+					if( amount == 0 ){
+						this->invalidWarning( protNode["Amount"], "barter_parseBodyNode: Protection amount must be at least 1.\n" );
+						return 0;
+					}
+
+					item->protectionAmount = amount;
+				}else{
+					if( !item_exists && item->protectionId != 0 ){
+						item->protectionAmount = 1;
+					}
+				}
+			}else{
+				if( !item_exists ){
+					item->protectionId = 0;
+					item->protectionAmount = 0;
+				}
+			}
+
 			if( this->nodeExists( itemNode, "RequiredItems" ) ){
 				for( const ryml::NodeRef& requiredItemNode : itemNode["RequiredItems"] ){
 					uint16 requirement_index;
@@ -431,6 +476,22 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 	uint16 requiredSlots = 0;
 	uint32 requiredItems[MAX_INVENTORY] = { 0 };
 
+	// Pre-roll protection craft attempts before validation
+	// so material/zeny requirements reflect actual consumption (succeeded only)
+	for( s_barter_purchase& purchase : purchases ){
+		if( !barter->craft || purchase.item->protectionId == 0 ) continue;
+
+		purchase.craftResults.reserve( purchase.amount );
+
+		for( uint32 i = 0; i < purchase.amount; i++ ){
+			bool success = ( rnd() % 10000 < purchase.item->successRate );
+			purchase.craftResults.push_back( success );
+			if( success ){
+				purchase.succeededAmount++;
+			}
+		}
+	}
+
 	for( s_barter_purchase& purchase : purchases ){
 		purchase.data = item_db.find( purchase.item->nameid ).get();
 
@@ -438,22 +499,61 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 			return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
 		}
 
-		uint32 amount = purchase.amount;
+		bool hasProtection = barter->craft && purchase.item->protectionId != 0;
+		// For protection craft: only consume materials/zeny for succeeded attempts
+		uint32 giveAmount = hasProtection ? purchase.succeededAmount : purchase.amount;
+		uint32 materialAmount = giveAmount;
 
-		if( purchase.item->stockLimited && purchase.item->stock < amount ){
+		if( purchase.item->stockLimited && purchase.item->stock < purchase.amount ){
 			return e_purchase_result::PURCHASE_FAIL_STOCK_EMPTY;
 		}
 
-		char result = pc_checkadditem( &sd, purchase.item->nameid, amount );
+		if( giveAmount > 0 ){
+			char result = pc_checkadditem( &sd, purchase.item->nameid, giveAmount );
 
-		if( result == CHKADDITEM_OVERAMOUNT ){
-			return e_purchase_result::PURCHASE_FAIL_COUNT;
-		}else if( result == CHKADDITEM_NEW ){
-			requiredSlots += purchase.data->inventorySlotNeeded( amount );
+			if( result == CHKADDITEM_OVERAMOUNT ){
+				return e_purchase_result::PURCHASE_FAIL_COUNT;
+			}else if( result == CHKADDITEM_NEW ){
+				requiredSlots += purchase.data->inventorySlotNeeded( giveAmount );
+			}
 		}
 
-		requiredZeny += ( purchase.item->price * amount );
-		requiredWeight += ( purchase.data->weight * amount );
+		requiredZeny += ( purchase.item->price * giveAmount );
+		requiredWeight += ( purchase.data->weight * giveAmount );
+
+		// Check and reserve protection item (consumed on ALL attempts regardless of success)
+		if( hasProtection ){
+			std::shared_ptr<item_data> protData = item_db.find( purchase.item->protectionId );
+
+			if( protData == nullptr ){
+				return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+			}
+
+			uint32 protTotal = purchase.amount * purchase.item->protectionAmount;
+			int32 j;
+
+			for( j = 0; j < MAX_INVENTORY; j++ ){
+				if( sd.inventory.u.items_inventory[j].nameid == purchase.item->protectionId ){
+					if( sd.inventory.u.items_inventory[j].equip != 0 ) continue;
+					if( sd.inventory.u.items_inventory[j].equipSwitch != 0 ) continue;
+					if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite != 0 ) continue;
+
+					requiredItems[j] += protTotal;
+
+					if( requiredItems[j] > sd.inventory.u.items_inventory[j].amount ){
+						return e_purchase_result::PURCHASE_FAIL_GOODS;
+					}
+
+					break;
+				}
+			}
+
+			if( j == MAX_INVENTORY ){
+				return e_purchase_result::PURCHASE_FAIL_GOODS;
+			}
+
+			reducedWeight += protTotal * protData->weight;
+		}
 
 		for( const auto& requirementPair : purchase.item->requirements ){
 			std::shared_ptr<s_npc_barter_requirement> requirement = requirementPair.second;
@@ -490,7 +590,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 						}
 
 						// Found a match, accumulate required amount
-						requiredItems[j] += requirement->amount * amount;
+						requiredItems[j] += requirement->amount * materialAmount;
 
 						// Check if there are still enough items available
 						if( requiredItems[j] > sd.inventory.u.items_inventory[j].amount ){
@@ -507,7 +607,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 					return e_purchase_result::PURCHASE_FAIL_GOODS;
 				}
 			}else{
-				for( int32 i = 0; i < (requirement->amount * amount); i++ ){
+				for( int32 i = 0; i < (int32)(requirement->amount * materialAmount); i++ ){
 					int32 j;
 
 					for( j = 0; j < MAX_INVENTORY; j++ ){
@@ -610,7 +710,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 				}
 			}
 
-			reducedWeight += ( purchase.amount * requirement->amount * id->weight );
+			reducedWeight += ( materialAmount * requirement->amount * id->weight );
 		}
 	}
 
@@ -656,14 +756,20 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 		std::vector<bool> craftResults;
 
 		if( barter->craft ){
-			succeededAmount = 0;
-			craftResults.reserve( purchase.amount );
+			if( !purchase.craftResults.empty() ){
+				// Use pre-rolled results (protection craft mode)
+				succeededAmount = purchase.succeededAmount;
+				craftResults = std::move( purchase.craftResults );
+			}else{
+				succeededAmount = 0;
+				craftResults.reserve( purchase.amount );
 
-			for( uint32 i = 0; i < purchase.amount; i++ ){
-				bool success = ( rnd() % 10000 < purchase.item->successRate );
-				craftResults.push_back( success );
-				if( success ){
-					succeededAmount++;
+				for( uint32 i = 0; i < purchase.amount; i++ ){
+					bool success = ( rnd() % 10000 < purchase.item->successRate );
+					craftResults.push_back( success );
+					if( success ){
+						succeededAmount++;
+					}
 				}
 			}
 		}
