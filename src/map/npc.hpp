@@ -16,6 +16,7 @@
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
 #include "navi.hpp" // navi stuff
+#include "barter.hpp"
 
 struct block_list;
 struct npc_data;
@@ -79,57 +80,6 @@ public:
 };
 
 extern StylistDatabase stylist_db;
-
-struct s_npc_barter_requirement{
-	uint16 index;
-	t_itemid nameid;
-	uint16 amount;
-	int8 refine;
-};
-
-struct s_npc_barter_item{
-	uint16 index;
-	t_itemid nameid;
-	bool stockLimited;
-	uint32 stock;
-	uint32 price;
-	int8 refine;
-	uint16 successRate; // craft success rate in basis points (0-10000, 10000 = 100.00%). Used when barter->craft is true.
-	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
-};
-
-struct s_npc_barter{
-	std::string name;
-	int16 m;
-	uint16 x;
-	uint16 y;
-	uint8 dir;
-	int16 sprite;
-	bool craft; // if true, use crafting mechanics: items/zeny are always consumed but item is only given on successful rate roll.
-	std::map<uint16, std::shared_ptr<s_npc_barter_item>> items;
-	int32 npcid;
-
-	~s_npc_barter();
-};
-
-class BarterDatabase : public TypesafeYamlDatabase<std::string, s_npc_barter>{
-public:
-	BarterDatabase() : TypesafeYamlDatabase( "BARTER_DB", 2, 1 ){
-
-	}
-
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const ryml::NodeRef& node );
-	void loadingFinished();
-};
-
-extern BarterDatabase barter_db;
-
-struct s_barter_purchase{
-	std::shared_ptr<s_npc_barter_item> item;
-	uint32 amount;
-	item_data* data;
-};
 
 struct s_questinfo {
 	e_questinfo_types icon;
@@ -1630,7 +1580,6 @@ int32 npc_buysellsel(map_session_data* sd, int32 id, int32 type);
 e_purchase_result npc_buylist(map_session_data* sd, std::vector<s_npc_buy_list>& item_list);
 static int32 npc_buylist_sub(map_session_data* sd, std::vector<s_npc_buy_list>& item_list, npc_data* nd);
 uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list);
-e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases );
 void npc_parse_mob2(struct spawn_data* mob);
 npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 from_y, int16 xs, int16 ys, uint16 to_mapindex, int16 to_x, int16 to_y);
 int32 npc_globalmessage(const char* name,const char* mes);
