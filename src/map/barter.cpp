@@ -650,56 +650,60 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 			}
 		}
 
+		// Craft mode: roll each attempt independently.
+		// Materials and zeny are always consumed regardless of how many succeed.
+		uint32 succeededAmount = purchase.amount;
+		std::vector<bool> craftResults;
+
 		if( barter->craft ){
-			// Craft mode: roll each attempt independently, then give all successful results at once.
-			// Materials and zeny are always consumed regardless of how many succeed.
-			uint32 successCount = 0;
-			std::vector<bool> craftResults;
+			succeededAmount = 0;
 			craftResults.reserve( purchase.amount );
 
 			for( uint32 i = 0; i < purchase.amount; i++ ){
 				bool success = ( rnd() % 10000 < purchase.item->successRate );
 				craftResults.push_back( success );
 				if( success ){
-					successCount++;
+					succeededAmount++;
 				}
 			}
+		}
 
-			if( successCount > 0 ){
-				if( itemdb_isstackable2( purchase.data ) ){
-					struct item it = {};
+		// Unified item-giving logic for both craft and normal mode
+		if( succeededAmount > 0 ){
+			if( itemdb_isstackable2( purchase.data ) ){
+				struct item it = {};
 
-					it.nameid = purchase.item->nameid;
-					it.identify = true;
+				it.nameid = purchase.item->nameid;
+				it.identify = true;
 
-					if( pc_additem( &sd, &it, successCount, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
-						return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
-					}
-				}else{
+				if( pc_additem( &sd, &it, succeededAmount, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
+					return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+				}
+			}else{
+				for( uint32 i = 0; i < succeededAmount; i++ ){
 					if( purchase.data->type == IT_PETEGG ){
-						for( uint32 i = 0; i < successCount; i++ ){
-							if( !pet_create_egg( &sd, purchase.item->nameid ) ){
-								return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
-							}
+						if( !pet_create_egg( &sd, purchase.item->nameid ) ){
+							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
 						}
 					}else{
-						for( uint32 i = 0; i < successCount; i++ ){
-							struct item it = {};
+						struct item it = {};
 
-							it.nameid = purchase.item->nameid;
-							it.identify = true;
-							it.refine = purchase.item->refine;
+						it.nameid = purchase.item->nameid;
+						it.identify = true;
+						it.refine = purchase.item->refine;
 
-							if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
-								return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
-							}
+						if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
+							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
 						}
 					}
 				}
 			}
+		}
 
+		// Craft effects and summary (craft mode only)
+		if( barter->craft ){
 			int16 craftSlot = -1;
-			if( successCount > 0 ){
+			if( succeededAmount > 0 ){
 				craftSlot = pc_search_inventory( &sd, purchase.item->nameid );
 			}
 
@@ -713,15 +717,15 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 
 			// Craft summary
 			{
-				uint32 failCount = purchase.amount - successCount;
-				double successPct = purchase.amount > 0 ? ( successCount * 100.0 / purchase.amount ) : 0.0;
+				uint32 failCount = purchase.amount - succeededAmount;
+				double successPct = purchase.amount > 0 ? ( succeededAmount * 100.0 / purchase.amount ) : 0.0;
 				char msg[512];
 
 				std::shared_ptr<item_data> craftItem = item_db.find( purchase.item->nameid );
 				const char* craftName = craftItem ? craftItem->ename.c_str() : "Unknown";
 
 				safesnprintf( msg, sizeof(msg), msg_txt( &sd, MSG_CRAFT_SUMMARY ),
-					craftName, purchase.amount, successCount, failCount, successPct );
+					craftName, purchase.amount, succeededAmount, failCount, successPct );
 				clif_messagecolor( &sd, color_table[COLOR_YELLOW], msg, false, SELF );
 
 				std::string costStr;
@@ -743,37 +747,6 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 				if( !costStr.empty() ){
 					safesnprintf( msg, sizeof(msg), msg_txt( &sd, MSG_CRAFT_COST ), costStr.c_str() );
 					clif_messagecolor( &sd, color_table[COLOR_WHITE], msg, false, SELF );
-				}
-			}
-		}else{
-			if( itemdb_isstackable2( purchase.data ) ){
-				struct item it = {};
-
-				it.nameid = purchase.item->nameid;
-				it.identify = true;
-
-				if( pc_additem( &sd, &it, purchase.amount, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
-					return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
-				}
-			}else{
-				if( purchase.data->type == IT_PETEGG ){
-					for( int32 i = 0; i < purchase.amount; i++ ){
-						if( !pet_create_egg( &sd, purchase.item->nameid ) ){
-							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
-						}
-					}
-				}else{
-					for( int32 i = 0; i < purchase.amount; i++ ){
-						struct item it = {};
-
-						it.nameid = purchase.item->nameid;
-						it.identify = true;
-						it.refine = purchase.item->refine;
-
-						if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
-							return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
-						}
-					}
 				}
 			}
 		}
