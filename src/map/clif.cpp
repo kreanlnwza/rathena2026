@@ -23201,7 +23201,7 @@ void clif_barter_open( map_session_data& sd, npc_data& nd ){
 
 	// Display craft info (recipe list with success rates) when opening a craft barter shop
 	if( barter->craft ){
-		char msg[CHAT_SIZE_MAX];
+		char msg[512];
 
 		clif_messagecolor( &sd, color_table[COLOR_CYAN], "=== Craft Shop ===", false, SELF );
 
@@ -23212,36 +23212,46 @@ void clif_barter_open( map_session_data& sd, npc_data& nd ){
 				continue;
 			}
 
-			const char* displayName = id->ename.empty() ? id->name.c_str() : id->ename.c_str();
+			std::string itemLink = item_db.create_item_link( id );
 			double successPct = itemPair.second->successRate / 100.0;
 
-			snprintf( msg, sizeof(msg), "[%s] Success Rate: %.2f%%", displayName, successPct );
+			snprintf( msg, sizeof(msg), "%s ~ %.2f%%", itemLink.c_str(), successPct );
 			clif_messagecolor( &sd, color_table[COLOR_YELLOW], msg, false, SELF );
 
-			if( !itemPair.second->requirements.empty() ){
-				int reqLen = snprintf( msg, sizeof(msg), "  Required:" );
-				bool firstReq = true;
+			for( const auto& reqPair : itemPair.second->requirements ){
+				std::shared_ptr<item_data> reqId = item_db.find( reqPair.second->nameid );
 
-				for( const auto& reqPair : itemPair.second->requirements ){
-					std::shared_ptr<item_data> reqId = item_db.find( reqPair.second->nameid );
-
-					if( reqId == nullptr ){
-						continue;
-					}
-
-					const char* reqName = reqId->ename.empty() ? reqId->name.c_str() : reqId->ename.c_str();
-					int written = snprintf( msg + reqLen, sizeof(msg) - reqLen, "%s %s x%u",
-						firstReq ? "" : ",", reqName, reqPair.second->amount );
-
-					if( written < 0 || reqLen + written >= (int)sizeof(msg) - 1 ){
-						break;
-					}
-
-					reqLen += written;
-					firstReq = false;
+				if( reqId == nullptr ){
+					continue;
 				}
 
+				std::string reqLink;
+
+				if( reqPair.second->refine > 0 ){
+					struct item linkItem = {};
+
+					linkItem.nameid = reqPair.second->nameid;
+					linkItem.identify = true;
+					linkItem.refine = reqPair.second->refine;
+
+					reqLink = item_db.create_item_link( linkItem, reqId );
+				}else{
+					reqLink = item_db.create_item_link( reqId );
+				}
+
+				snprintf( msg, sizeof(msg), "  - %s x%u", reqLink.c_str(), reqPair.second->amount );
 				clif_messagecolor( &sd, color_table[COLOR_WHITE], msg, false, SELF );
+			}
+
+			if( itemPair.second->protectionId != 0 ){
+				std::shared_ptr<item_data> protId = item_db.find( itemPair.second->protectionId );
+
+				if( protId != nullptr ){
+					std::string protLink = item_db.create_item_link( protId );
+
+					snprintf( msg, sizeof(msg), "  - %s x%u (protection)", protLink.c_str(), itemPair.second->protectionAmount );
+					clif_messagecolor( &sd, color_table[COLOR_WHITE], msg, false, SELF );
+				}
 			}
 		}
 	}

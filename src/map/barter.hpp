@@ -12,6 +12,20 @@
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>
 
+// Craft Summary Messages
+#define MSG_CRAFT_SUMMARY       3018  // Craft: %s x%u ea | Success %u ea | Failed %u ea | %.0f%% success rate
+#define MSG_CRAFT_COST          3019  // Cost: %s
+
+// Craft Cost Component Messages
+#define MSG_CRAFT_COST_HEADER   3027  // Cost:
+#define MSG_CRAFT_COST_ITEM     3024  // %s x%u
+#define MSG_CRAFT_COST_PROT     3025  // %s x%u (x%u/craft)
+#define MSG_CRAFT_COST_ZENY     3026  // %u Zeny
+
+// Craft Protection Limit Messages
+#define MSG_CRAFT_NO_PROT       3028  // [Craft] You need %s to craft this item.
+#define MSG_CRAFT_CLAMP         3029  // [Craft] Amount reduced to %u (limited by %s x%u).
+
 #include "clif.hpp"   // e_purchase_result
 #include "itemdb.hpp" // item_data
 
@@ -70,6 +84,7 @@ struct s_barter_purchase{
 	item_data* data;
 	uint32 succeededAmount = 0;      // pre-rolled for protection craft
 	std::vector<bool> craftResults;  // pre-rolled results for protection craft
+	bool skipProtection = false;     // true when player has no protection item: craft without protection
 };
 
 e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases );

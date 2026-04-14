@@ -55,7 +55,7 @@ Body:
         Item: Oridecon
         SuccessRate: 7000 # 70.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -66,7 +66,7 @@ Body:
         Item: Elunium
         SuccessRate: 7000 # 70.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -77,7 +77,7 @@ Body:
         Item: Bradium
         SuccessRate: 5000 # 50.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -88,7 +88,7 @@ Body:
         Item: Carnium
         SuccessRate: 5000 # 50.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -99,7 +99,7 @@ Body:
         Item: Carnium
         SuccessRate: 6000 # 60.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -113,7 +113,7 @@ Body:
         Item: Ethernium
         SuccessRate: 6000 # 60.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -125,7 +125,7 @@ Body:
         Item: Etherdeocon
         SuccessRate: 6000 # 60.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -137,7 +137,7 @@ Body:
         Item: Etel_Bradium
         SuccessRate: 4000 # 40.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -150,7 +150,7 @@ Body:
         Item: Etel_Carnium
         SuccessRate: 4000 # 40.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -163,7 +163,7 @@ Body:
         Item: Enriched_Ethernium
         SuccessRate: 5000 # 50.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -176,7 +176,7 @@ Body:
         Item: Enriched_Etherdeocon
         SuccessRate: 5000 # 50.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -189,7 +189,7 @@ Body:
         Item: HD_Ethernium
         SuccessRate: 3000 # 30.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -202,7 +202,7 @@ Body:
         Item: HD_Etherdeocon
         SuccessRate: 3000 # 30.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -215,7 +215,7 @@ Body:
         Item: HD_Etel_Bradium
         SuccessRate: 3000 # 30.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -228,7 +228,7 @@ Body:
         Item: HD_Etel_Carnium
         SuccessRate: 3000 # 30.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -245,7 +245,7 @@ Body:
         Item: Shadowdecon
         SuccessRate: 5000 # 50.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0
@@ -256,7 +256,7 @@ Body:
         Item: Zelunium
         SuccessRate: 5000 # 50.00%
         Protection:
-          Item: BlacksmithBlessing
+          Item: Blacksmith_Blessing
           Amount: 1
         RequiredItems:
           - Index: 0

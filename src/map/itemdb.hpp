@@ -3558,8 +3558,6 @@ private:
 
 	e_sex defaultGender( const ryml::NodeRef& node, std::shared_ptr<item_data> id );
 
-	std::string create_item_link(struct item& item, std::shared_ptr<item_data>& data);
-
 	struct s_pricevalue {
 		bool has_buy;
 		bool has_sell;
@@ -3585,6 +3583,7 @@ public:
 	// Additional
 	std::shared_ptr<item_data> searchname( const char* name );
 	std::shared_ptr<item_data> search_aegisname( const char *name );
+	std::string create_item_link(struct item& item, std::shared_ptr<item_data>& data);
 	std::string create_item_link(struct item& item);
 	std::string create_item_link( std::shared_ptr<item_data>& data );
 	std::string create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name );
