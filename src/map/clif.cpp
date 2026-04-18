@@ -24187,18 +24187,35 @@ void clif_parse_enchantgrade_start( int32 fd, map_session_data* sd ){
 	}
 
 	if( rnd()%10000 < totalChance ){
+		struct item& target = sd->inventory.u.items_inventory[index];
+
+		// Remember equip state so we can restore it after refreshing the item
+		int32 equip_pos = target.equip;
+
+		if( equip_pos != 0 ){
+			pc_unequipitem( sd, index, 2 );
+		}
+
 		// Log removal of item
-		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, -1, &sd->inventory.u.items_inventory[index] );
+		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, -1, &target );
+		// Visually remove it from the client so the updated data can be re-sent
+		clif_delitem( *sd, index, 1, 0 );
 		// Increase enchantgrade
-		sd->inventory.u.items_inventory[index].enchantgrade = min( sd->inventory.u.items_inventory[index].enchantgrade + 1, MAX_ENCHANTGRADE );
+		target.enchantgrade = min( target.enchantgrade + 1, MAX_ENCHANTGRADE );
 		// On successful enchantgrade increase the refine is reset
-		sd->inventory.u.items_inventory[index].refine = 0;
+		target.refine = 0;
 		// Roll one random option from the configured group into the next empty slot
 		if( enchantgradelevel->randomOptionGroup != nullptr ){
-			enchantgradelevel->randomOptionGroup->apply_single( sd->inventory.u.items_inventory[index] );
+			enchantgradelevel->randomOptionGroup->apply_single( target );
 		}
-		// Log retrieving the item again -> with the new refine and enchantgrade
-		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &sd->inventory.u.items_inventory[index] );
+		// Log retrieving the item again -> with the new refine, enchantgrade and options
+		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &target );
+		// Make the updated item visible to the client again
+		clif_additem( sd, index, 1, 0 );
+		// Re-equip the item if it was equipped; this also recalculates stats
+		if( equip_pos != 0 ){
+			pc_equipitem( sd, index, equip_pos );
+		}
 		// Show success
 		clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_SUCCESS );
 
