@@ -24193,6 +24193,10 @@ void clif_parse_enchantgrade_start( int32 fd, map_session_data* sd ){
 		sd->inventory.u.items_inventory[index].enchantgrade = min( sd->inventory.u.items_inventory[index].enchantgrade + 1, MAX_ENCHANTGRADE );
 		// On successful enchantgrade increase the refine is reset
 		sd->inventory.u.items_inventory[index].refine = 0;
+		// Roll one random option from the configured group into the next empty slot
+		if( enchantgradelevel->randomOptionGroup != nullptr ){
+			enchantgradelevel->randomOptionGroup->apply_single( sd->inventory.u.items_inventory[index] );
+		}
 		// Log retrieving the item again -> with the new refine and enchantgrade
 		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &sd->inventory.u.items_inventory[index] );
 		// Show success

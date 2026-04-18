@@ -25,6 +25,7 @@ struct homun_data;
 struct s_mercenary_data;
 struct s_elemental_data;
 struct npc_data;
+struct s_random_opt_group;
 class status_change;
 
 /**
@@ -206,6 +207,7 @@ struct s_enchantgradelevel{
 		uint16 chanceIncrease;
 	}catalyst;
 	std::map<uint16,std::shared_ptr<s_enchantgradeoption>> options;
+	std::shared_ptr<s_random_opt_group> randomOptionGroup;
 };
 
 struct s_enchantgrade{

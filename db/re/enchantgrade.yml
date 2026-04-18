@@ -48,6 +48,9 @@
 #               Price                   Amount of zeny required. (Default: 0)
 #               BreakingRate            Chance of item breaking out of 0~10000. (Default: 0)
 #               DowngradeAmount         Number of refine levels reduced on failure. (Default: 0)
+#           RandomOptionGroup           Random option group rolled on successful upgrade.
+#                                       One random option is placed into the next empty
+#                                       item option slot. (Default: none)
 ###########################################################################
 
 Header:

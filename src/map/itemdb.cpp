@@ -4731,6 +4731,43 @@ void s_random_opt_group::apply( struct item& item ){
 	}
 }
 
+void s_random_opt_group::apply_single( struct item& item ){
+	// Find the first empty option slot
+	size_t target = MAX_ITEM_RDM_OPT;
+	for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+		if( item.option[i].id == 0 ){
+			target = i;
+			break;
+		}
+	}
+
+	// No empty slot available
+	if( target >= MAX_ITEM_RDM_OPT ){
+		return;
+	}
+
+	// Collect all candidate entries from Must slots and Random pool
+	std::vector<std::shared_ptr<s_random_opt_group_entry>> candidates;
+	for( const auto& slot : this->slots ){
+		for( const auto& entry : slot.second ){
+			candidates.push_back( entry );
+		}
+	}
+	for( const auto& entry : this->random_options ){
+		candidates.push_back( entry );
+	}
+
+	if( candidates.empty() ){
+		return;
+	}
+
+	std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( candidates );
+
+	item.option[target].id = option->id;
+	item.option[target].value = rnd_value( option->min_value, option->max_value );
+	item.option[target].param = option->param;
+}
+
 /**
  * Reads and parses an entry from the item_randomopt_group.
  * @param node: YAML node containing the entry.

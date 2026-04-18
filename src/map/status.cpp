@@ -945,6 +945,27 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				}
 			}
 
+			if( this->nodeExists( gradeNode, "RandomOptionGroup" ) ){
+				std::string name;
+
+				if( !this->asString( gradeNode, "RandomOptionGroup", name ) ){
+					return 0;
+				}
+
+				uint16 randomOptionGroupId;
+
+				if( !random_option_group.option_get_id( name, randomOptionGroupId ) ){
+					this->invalidWarning( gradeNode["RandomOptionGroup"], "Unknown random option group \"%s\".\n", name.c_str() );
+					return 0;
+				}
+
+				grade->randomOptionGroup = random_option_group.find( randomOptionGroupId );
+			}else{
+				if( !gradeExists ){
+					grade->randomOptionGroup = nullptr;
+				}
+			}
+
 			if( !gradeExists ){
 				grades[gradeLevel] = grade;
 			}
