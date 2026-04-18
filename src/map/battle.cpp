@@ -2733,10 +2733,11 @@ static int32 battle_range_type(const block_list* src, const block_list* target, 
 		case AT_PRIMAL_CLAW:
 		case AT_SAVAGE_LUNGE:
 			return BF_SHORT;
-		case CD_PETITIO: { // Skill range is 2 but damage is melee with books and ranged with mace.
-			const map_session_data* sd = BL_CAST(BL_PC,src);
+		case CD_EFFLIGO:	// Skill range is 2 but damage is melee with books and ranged with mace.
+		case CD_PETITIO: {
+			const map_session_data* sd = BL_CAST(BL_PC, src);
 
-			if (sd && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE))
+			if (sd != nullptr && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE))
 				return BF_LONG;
 
 			break;
