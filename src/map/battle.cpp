@@ -2895,14 +2895,16 @@ bool is_infinite_defense(const block_list* target, int32 flag)
 			return true;
 	}
 
-	if(status_has_mode(tstatus,MD_IGNOREMELEE) && (flag&(BF_WEAPON|BF_SHORT)) == (BF_WEAPON|BF_SHORT) )
-		return true;
-	if(status_has_mode(tstatus,MD_IGNOREMAGIC) && flag&(BF_MAGIC) )
-		return true;
-	if(status_has_mode(tstatus,MD_IGNORERANGED) && (flag&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG) )
-		return true;
-	if(status_has_mode(tstatus,MD_IGNOREMISC) && flag&(BF_MISC) )
-		return true;
+	if(battle_config.mob_ignore_infinite_defense) {
+		if(status_has_mode(tstatus,MD_IGNOREMELEE) && (flag&(BF_WEAPON|BF_SHORT)) == (BF_WEAPON|BF_SHORT) )
+			return true;
+		if(status_has_mode(tstatus,MD_IGNOREMAGIC) && flag&(BF_MAGIC) )
+			return true;
+		if(status_has_mode(tstatus,MD_IGNORERANGED) && (flag&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG) )
+			return true;
+		if(status_has_mode(tstatus,MD_IGNOREMISC) && flag&(BF_MISC) )
+			return true;
+	}
 
 	const status_change* tsc = status_get_sc(target);
 	if (tsc && tsc->getSCE(SC_INVINCIBLE))
@@ -8750,6 +8752,7 @@ static const struct _battle_data {
 	{ "default_fixed_castrate",             &battle_config.default_fixed_castrate,          20,     0,      100,            },
 	{ "default_bind_on_equip",              &battle_config.default_bind_on_equip,           BOUND_CHAR, BOUND_NONE, BOUND_MAX-1, },
 	{ "pet_ignore_infinite_def",            &battle_config.pet_ignore_infinite_def,         0,      0,      1,              },
+	{ "mob_ignore_infinite_defense",        &battle_config.mob_ignore_infinite_defense,     1,      0,      1,              },
 	{ "homunculus_evo_intimacy_need",       &battle_config.homunculus_evo_intimacy_need,    91100,  0,      INT_MAX,        },
 	{ "homunculus_evo_intimacy_reset",      &battle_config.homunculus_evo_intimacy_reset,   1000,   0,      INT_MAX,        },
 	{ "monster_loot_search_type",           &battle_config.monster_loot_search_type,        1,      0,      1,              },
