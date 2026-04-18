@@ -56,6 +56,7 @@
 #include "skill.hpp"
 #include "status.hpp"
 #include "storage.hpp"
+#include "custom_msg.hpp"
 #include "unit.hpp"
 #include "vending.hpp"
 
@@ -24214,7 +24215,12 @@ void clif_parse_enchantgrade_start( int32 fd, map_session_data* sd ){
 		bool fullProtect = p->blessing_flag && steps >= enchantgradelevel->catalyst.maximumSteps;
 		bool breakProtect = p->blessing_flag && steps >= halfMaxSteps;
 
+		if( breakProtect && !fullProtect && option->breaking_rate > 0 ){
+			clif_displaymessage( sd->fd, msg_txt( sd, MSG_ENCHANTGRADE_BREAK_PROTECTED ) );
+		}
+
 		if( fullProtect && ( option->breaking_rate > 0 || option->downgrade_amount > 0 ) ){
+			clif_displaymessage( sd->fd, msg_txt( sd, MSG_ENCHANTGRADE_FULL_PROTECTED ) );
 			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_PROTECTED );
 		// Delete the item if it is breakable and not break-protected
 		}else if( !breakProtect && option->breaking_rate > 0 && ( rnd() % 10000 ) < option->breaking_rate ){

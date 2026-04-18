@@ -60,6 +60,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "custom_msg.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
 
@@ -27201,6 +27202,7 @@ BUILDIN_FUNC( enchantgradeui ){
 	}
 
 	clif_ui_open( *sd, OUT_UI_ENCHANTGRADE, 0 );
+	clif_displaymessage( sd->fd, msg_txt( sd, MSG_ENCHANTGRADE_UI_OPEN ) );
 
 	return SCRIPT_CMD_SUCCESS;
 #else
