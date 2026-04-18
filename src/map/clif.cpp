@@ -24215,12 +24215,19 @@ void clif_parse_enchantgrade_start( int32 fd, map_session_data* sd ){
 		bool fullProtect = p->blessing_flag && steps >= enchantgradelevel->catalyst.maximumSteps;
 		bool breakProtect = p->blessing_flag && steps >= halfMaxSteps;
 
+		std::shared_ptr<item_data> catalystData = item_db.find( enchantgradelevel->catalyst.item );
+		const char* catalystName = ( catalystData != nullptr ) ? catalystData->ename.c_str() : "";
+
 		if( breakProtect && !fullProtect && option->breaking_rate > 0 ){
-			clif_displaymessage( sd->fd, msg_txt( sd, MSG_ENCHANTGRADE_BREAK_PROTECTED ) );
+			char msg[256];
+			safesnprintf( msg, sizeof(msg), msg_txt( sd, MSG_ENCHANTGRADE_BREAK_PROTECTED ), catalystName );
+			clif_displaymessage( sd->fd, msg );
 		}
 
 		if( fullProtect && ( option->breaking_rate > 0 || option->downgrade_amount > 0 ) ){
-			clif_displaymessage( sd->fd, msg_txt( sd, MSG_ENCHANTGRADE_FULL_PROTECTED ) );
+			char msg[256];
+			safesnprintf( msg, sizeof(msg), msg_txt( sd, MSG_ENCHANTGRADE_FULL_PROTECTED ), catalystName );
+			clif_displaymessage( sd->fd, msg );
 			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_PROTECTED );
 		// Delete the item if it is breakable and not break-protected
 		}else if( !breakProtect && option->breaking_rate > 0 && ( rnd() % 10000 ) < option->breaking_rate ){

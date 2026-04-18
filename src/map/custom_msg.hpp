@@ -7,9 +7,8 @@
 // Custom message IDs used with msg_txt() and clif_displaymessage().
 // Texts are defined in conf/msg_conf/import/custom_msg.conf.
 
-// Enchant Grade UI System (3040-3042)
+// Enchant Grade UI System (3041-3042)
 enum : uint16 {
-	MSG_ENCHANTGRADE_UI_OPEN         = 3040,
 	MSG_ENCHANTGRADE_BREAK_PROTECTED = 3041,
 	MSG_ENCHANTGRADE_FULL_PROTECTED  = 3042,
 };
