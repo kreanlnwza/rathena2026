@@ -24208,8 +24208,16 @@ void clif_parse_enchantgrade_start( int32 fd, map_session_data* sd ){
 			clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], false );
 		}
 
-		// Delete the item if it is breakable
-		if( option->breaking_rate > 0 && ( rnd() % 10000 ) < option->breaking_rate ){
+		// Catalyst at max steps protects from both break and downgrade.
+		// Catalyst at half of max steps (ceiling) protects from break only.
+		uint16 halfMaxSteps = ( enchantgradelevel->catalyst.maximumSteps + 1 ) / 2;
+		bool fullProtect = p->blessing_flag && steps >= enchantgradelevel->catalyst.maximumSteps;
+		bool breakProtect = p->blessing_flag && steps >= halfMaxSteps;
+
+		if( fullProtect && ( option->breaking_rate > 0 || option->downgrade_amount > 0 ) ){
+			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_PROTECTED );
+		// Delete the item if it is breakable and not break-protected
+		}else if( !breakProtect && option->breaking_rate > 0 && ( rnd() % 10000 ) < option->breaking_rate ){
 			// Delete the item
 			pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_ENCHANTGRADE );
 			// Show failure
