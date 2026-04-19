@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TOKEN = os.getenv('DISCORD_TOKEN', '')
-GUILD_ID = int(os.getenv('GUILD_ID', 0))
-DROP_CHANNEL_ID = int(os.getenv('DROP_CHANNEL_ID', 0))
-ADMIN_ROLE_ID = int(os.getenv('ADMIN_ROLE_ID', 0))
-VERIFIED_ROLE_ID = int(os.getenv('VERIFIED_ROLE_ID', 0))
+GUILD_ID = int(os.getenv('GUILD_ID') or 0)
+DROP_CHANNEL_ID = int(os.getenv('DROP_CHANNEL_ID') or 0)
+ADMIN_ROLE_ID = int(os.getenv('ADMIN_ROLE_ID') or 0)
+VERIFIED_ROLE_ID = int(os.getenv('VERIFIED_ROLE_ID') or 0)
 
 DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 DB_PORT = int(os.getenv('DB_PORT', 3306))

@@ -1,5 +1,6 @@
 import hashlib
 import re
+import time
 import discord
 from discord import app_commands
 from discord.ext import commands
@@ -182,7 +183,6 @@ class AccountCog(commands.Cog):
             return await interaction.response.send_message('❌ ยังไม่ได้ Verify — ใช้ /verify', ephemeral=True)
 
         userid, group_id, logincount, lastlogin, vip_time = row
-        import time
         vip_str = 'ไม่มี' if not vip_time or vip_time < time.time() else f'<t:{vip_time}:R>'
 
         embed = discord.Embed(title='👤 ข้อมูลบัญชีของคุณ', color=discord.Color.green())
@@ -196,7 +196,15 @@ class AccountCog(commands.Cog):
     @app_commands.command(name='accountinfo', description='ดูข้อมูลบัญชี (GM เท่านั้น)')
     @app_commands.describe(username='ชื่อบัญชีที่ต้องการดู')
     async def accountinfo(self, interaction: discord.Interaction, username: str):
-        # Allow GMs or the account owner (via linked account)
+        is_admin = False
+        if interaction.guild:
+            if config.ADMIN_ROLE_ID:
+                is_admin = any(r.id == config.ADMIN_ROLE_ID for r in interaction.user.roles)
+            else:
+                is_admin = interaction.user.guild_permissions.administrator
+        if not is_admin:
+            return await interaction.response.send_message('❌ คุณไม่มีสิทธิ์ใช้คำสั่งนี้', ephemeral=True)
+
         pool = get_pool()
         async with pool.acquire() as conn:
             async with conn.cursor() as cur:
@@ -212,7 +220,6 @@ class AccountCog(commands.Cog):
             return await interaction.response.send_message('❌ ไม่พบบัญชีนี้', ephemeral=True)
 
         acc_id, uid, sex, grp, state, lcount, lastlogin, last_ip, vip_time, exp_time = row
-        import time
         ban_str = '🔴 แบน' if state != 0 else '🟢 ปกติ'
         vip_str = 'ไม่มี' if not vip_time or vip_time < time.time() else f'<t:{vip_time}:f>'
 
