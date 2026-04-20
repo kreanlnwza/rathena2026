@@ -36,14 +36,8 @@ class RathenaBot(commands.Bot):
         for cog in COGS:
             await self.load_extension(cog)
 
-        guild = discord.Object(id=config.GUILD_ID) if config.GUILD_ID else None
-        if guild:
-            self.tree.copy_global_to(guild=guild)
-            await self.tree.sync(guild=guild)
-            logging.getLogger(__name__).info('Slash commands synced to guild %s', config.GUILD_ID)
-        else:
-            await self.tree.sync()
-            logging.getLogger(__name__).info('Slash commands synced globally')
+        await self.tree.sync()
+        logging.getLogger(__name__).info('Slash commands synced globally')
 
     async def on_ready(self):
         logging.getLogger(__name__).info('Logged in as %s (ID: %s)', self.user, self.user.id)

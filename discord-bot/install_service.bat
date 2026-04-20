@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 :: รัน script นี้ใน Command Prompt แบบ "Run as Administrator"
 cd /d "%~dp0"
 
