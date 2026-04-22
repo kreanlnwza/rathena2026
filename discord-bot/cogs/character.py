@@ -3,6 +3,7 @@ from discord import app_commands
 from discord.ext import commands
 from utils.db import get_pool
 from utils.constants import job_name, format_zeny
+from utils.checks import player_check
 
 
 class CharacterCog(commands.Cog):
@@ -11,6 +12,8 @@ class CharacterCog(commands.Cog):
 
     @app_commands.command(name='charinfo', description='ดูข้อมูลตัวละคร')
     @app_commands.describe(name='ชื่อตัวละคร')
+    @app_commands.default_permissions(send_messages=True)
+    @player_check()
     async def charinfo(self, interaction: discord.Interaction, name: str):
         pool = get_pool()
         async with pool.acquire() as conn:
@@ -62,6 +65,8 @@ class CharacterCog(commands.Cog):
         await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name='online', description='ดูผู้เล่นที่กำลัง Online อยู่')
+    @app_commands.default_permissions(send_messages=True)
+    @player_check()
     async def online(self, interaction: discord.Interaction):
         pool = get_pool()
         async with pool.acquire() as conn:

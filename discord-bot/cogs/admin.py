@@ -3,24 +3,8 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from utils.db import get_pool, get_log_pool
+from utils.checks import admin_check
 import config
-
-
-def _is_admin(interaction: discord.Interaction) -> bool:
-    if not interaction.guild:
-        return False
-    if config.ADMIN_ROLE_ID:
-        return any(r.id == config.ADMIN_ROLE_ID for r in interaction.user.roles)
-    return interaction.user.guild_permissions.administrator
-
-
-def admin_check():
-    async def predicate(interaction: discord.Interaction) -> bool:
-        if _is_admin(interaction):
-            return True
-        await interaction.response.send_message('❌ คุณไม่มีสิทธิ์ใช้คำสั่งนี้', ephemeral=True)
-        return False
-    return app_commands.check(predicate)
 
 
 class AdminCog(commands.Cog):
@@ -31,6 +15,7 @@ class AdminCog(commands.Cog):
 
     @app_commands.command(name='ban', description='[ADMIN] แบนบัญชีถาวร')
     @app_commands.describe(username='ชื่อบัญชี', reason='เหตุผล')
+    @app_commands.default_permissions(administrator=True)
     @admin_check()
     async def ban(self, interaction: discord.Interaction, username: str, reason: str = 'ไม่ระบุ'):
         pool = get_pool()
@@ -52,6 +37,7 @@ class AdminCog(commands.Cog):
 
     @app_commands.command(name='tempban', description='[ADMIN] แบนบัญชีชั่วคราว')
     @app_commands.describe(username='ชื่อบัญชี', hours='จำนวนชั่วโมง', reason='เหตุผล')
+    @app_commands.default_permissions(administrator=True)
     @admin_check()
     async def tempban(self, interaction: discord.Interaction, username: str, hours: int, reason: str = 'ไม่ระบุ'):
         if hours <= 0:
@@ -79,6 +65,7 @@ class AdminCog(commands.Cog):
 
     @app_commands.command(name='unban', description='[ADMIN] ปลดแบนบัญชี')
     @app_commands.describe(username='ชื่อบัญชี')
+    @app_commands.default_permissions(administrator=True)
     @admin_check()
     async def unban(self, interaction: discord.Interaction, username: str):
         pool = get_pool()
@@ -101,6 +88,7 @@ class AdminCog(commands.Cog):
 
     @app_commands.command(name='addvip', description='[ADMIN] เพิ่มเวลา VIP')
     @app_commands.describe(username='ชื่อบัญชี', days='จำนวนวัน')
+    @app_commands.default_permissions(administrator=True)
     @admin_check()
     async def addvip(self, interaction: discord.Interaction, username: str, days: int):
         if days <= 0:
@@ -139,6 +127,7 @@ class AdminCog(commands.Cog):
     @app_commands.command(name='logs', description='[ADMIN] ดู Logs')
     @app_commands.describe(log_type='ประเภท log', limit='จำนวนรายการ (สูงสุด 25)')
     @app_commands.choices(log_type=LogTypeChoice)
+    @app_commands.default_permissions(administrator=True)
     @admin_check()
     async def logs(
         self,
