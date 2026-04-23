@@ -52,6 +52,7 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 #include "quest.hpp"
+#include "refine_random_options.hpp"
 #include "script.hpp"
 #include "skill.hpp"
 #include "status.hpp"
@@ -22758,9 +22759,7 @@ void clif_parse_refineui_refine( int32 fd, map_session_data* sd ){
 		// Success
 		item->refine = cap_value( item->refine + 1, 0, MAX_REFINE );
 		// Roll one random option from the configured group into the next empty slot
-		if( info->randomOptionGroup != nullptr ){
-			info->randomOptionGroup->apply_single( *item );
-		}
+		refine_apply_random_option( info->randomOptionGroup, *item );
 		log_pick_pc( sd, LOG_TYPE_OTHER, 1, item );
 		// Make the updated item visible to the client again
 		clif_additem( sd, index, 1, 0 );
