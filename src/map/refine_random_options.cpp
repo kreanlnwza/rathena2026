@@ -3,15 +3,10 @@
 
 #include "refine_random_options.hpp"
 
-#include <vector>
-
 #include <common/mmo.hpp>
 #include <common/random.hpp>
-#include <common/utilities.hpp>
 
 #include "itemdb.hpp"
-
-using namespace rathena;
 
 void refine_apply_random_option( const std::shared_ptr<s_random_opt_group>& group, struct item& target ){
 	if( group == nullptr ){
@@ -32,24 +27,55 @@ void refine_apply_random_option( const std::shared_ptr<s_random_opt_group>& grou
 		return;
 	}
 
-	// Collect all candidate entries from Must slots and Random pool
-	std::vector<std::shared_ptr<s_random_opt_group_entry>> candidates;
+	// Sum the chance of every candidate entry (Must slots + Random pool). The
+	// chance field is used as a relative weight so the selection respects the
+	// database's configured rarity instead of being uniform.
+	uint32 total_weight = 0;
 	for( const auto& pair : group->slots ){
 		for( const auto& entry : pair.second ){
-			candidates.push_back( entry );
+			total_weight += entry->chance;
 		}
 	}
 	for( const auto& entry : group->random_options ){
-		candidates.push_back( entry );
+		total_weight += entry->chance;
 	}
 
-	if( candidates.empty() ){
+	if( total_weight == 0 ){
 		return;
 	}
 
-	std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( candidates );
+	uint32 roll = rnd() % total_weight;
+	uint32 accumulated = 0;
+	std::shared_ptr<s_random_opt_group_entry> selected;
 
-	target.option[slot].id = option->id;
-	target.option[slot].value = rnd_value( option->min_value, option->max_value );
-	target.option[slot].param = option->param;
+	for( const auto& pair : group->slots ){
+		for( const auto& entry : pair.second ){
+			accumulated += entry->chance;
+			if( roll < accumulated ){
+				selected = entry;
+				break;
+			}
+		}
+		if( selected != nullptr ){
+			break;
+		}
+	}
+
+	if( selected == nullptr ){
+		for( const auto& entry : group->random_options ){
+			accumulated += entry->chance;
+			if( roll < accumulated ){
+				selected = entry;
+				break;
+			}
+		}
+	}
+
+	if( selected == nullptr ){
+		return;
+	}
+
+	target.option[slot].id = selected->id;
+	target.option[slot].value = rnd_value( selected->min_value, selected->max_value );
+	target.option[slot].param = selected->param;
 }
