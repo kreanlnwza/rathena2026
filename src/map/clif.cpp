@@ -36,6 +36,7 @@
 #include "clan.hpp"
 #include "clif.hpp"
 #include "elemental.hpp"
+#include "enchantgrade_randopt.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
@@ -24199,7 +24200,7 @@ void clif_parse_enchantgrade_start( int32 fd, map_session_data* sd ){
 		target.refine = 0;
 		// Roll one random option from the configured group into the next empty slot
 		if( enchantgradelevel->randomOptionGroup != nullptr ){
-			enchantgradelevel->randomOptionGroup->apply_single( target );
+			enchantgrade_apply_random_option( target, *enchantgradelevel->randomOptionGroup );
 		}
 		// Log retrieving the item again -> with the new refine, enchantgrade and options
 		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &target );

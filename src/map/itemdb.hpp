@@ -3374,7 +3374,6 @@ struct s_random_opt_group {
 
 public:
 	void apply( struct item& item );
-	void apply_single( struct item& item );
 };
 
 class RandomOptionDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_data> {
