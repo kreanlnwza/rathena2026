@@ -931,6 +931,8 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 
 				if( tsc->getSCE(SC_MDEF_RATE) )
 					cardfix = cardfix * (100 - tsc->getSCE(SC_MDEF_RATE)->val1) / 100;
+				if (battle_config.cardfix_def_rate_cap > 0)
+					cardfix = max(cardfix, 1000 - battle_config.cardfix_def_rate_cap * 10);
 				APPLY_CARDFIX(damage, cardfix);
 			}
 			break;
@@ -1150,6 +1152,8 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 					cardfix = cardfix * (100 - tsd->bonus.long_attack_def_rate) / 100;
 				if( tsc->getSCE(SC_DEF_RATE) )
 					cardfix = cardfix * (100 - tsc->getSCE(SC_DEF_RATE)->val1) / 100;
+				if (battle_config.cardfix_def_rate_cap > 0)
+					cardfix = max(cardfix, 1000 - battle_config.cardfix_def_rate_cap * 10);
 				APPLY_CARDFIX(damage, cardfix);
 			}
 			// Custom on BF_WEAPON to follow SC_ debuff BF_MAGIC renewal behavior
@@ -1201,6 +1205,8 @@ int32 battle_calc_cardfix(int32 attack_type, block_list *src, block_list *target
 					cardfix = cardfix * (100 - tsd->bonus.near_attack_def_rate) / 100;
 				else if (!nk[NK_IGNORELONGCARD])	// BF_LONG (there's no other choice)
 					cardfix = cardfix * (100 - tsd->bonus.long_attack_def_rate) / 100;
+				if (battle_config.cardfix_def_rate_cap > 0)
+					cardfix = max(cardfix, 1000 - battle_config.cardfix_def_rate_cap * 10);
 				APPLY_CARDFIX(damage, cardfix);
 			}
 			// Custom on BF_MISC to follow SC_ debuff BF_MAGIC renewal behavior
@@ -8261,6 +8267,7 @@ static const struct _battle_data {
 	{ "skill_delay_attack_enable",          &battle_config.sdelay_attack_enable,            0,      0,      1,              },
 	{ "left_cardfix_to_right",              &battle_config.left_cardfix_to_right,           0,      0,      1,              },
 	{ "cardfix_monster_physical",           &battle_config.cardfix_monster_physical,        1,      0,      1,              },
+	{ "cardfix_def_rate_cap",               &battle_config.cardfix_def_rate_cap,            80,     0,      100,            },
 	{ "skill_add_range",                    &battle_config.skill_add_range,                 0,      0,      INT_MAX,        },
 	{ "skill_out_range_consume",            &battle_config.skill_out_range_consume,         1,      0,      1,              },
 	{ "skillrange_by_distance",             &battle_config.skillrange_by_distance,          ~BL_PC, BL_NUL, BL_ALL,         },

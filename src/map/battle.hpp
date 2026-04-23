@@ -171,6 +171,7 @@ struct Battle_Config
 	int32 sdelay_attack_enable;
 	int32 left_cardfix_to_right;
 	int32 cardfix_monster_physical;
+	int32 cardfix_def_rate_cap;
 	int32 skill_add_range;
 	int32 skill_out_range_consume;
 	int32 skill_amotion_leniency;
