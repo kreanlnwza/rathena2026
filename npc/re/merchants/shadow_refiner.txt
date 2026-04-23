@@ -19,6 +19,12 @@
 	}
 
 	.@zeny_cost = 200000; // Zeny cost is 200,000 according to official script [Secret]
+	// VIP refine discount: each level = 5% off (level 10 = 50% off)
+	if (vip_status(VIP_STATUS_ACTIVE)) {
+		.@vip_lv = vip_status(VIP_STATUS_LEVEL);
+		.@zeny_cost = .@zeny_cost * (100 - .@vip_lv * 5) / 100;
+		if (.@zeny_cost < 1) set .@zeny_cost, 1;
+	}
 	disable_items;
 	mes "[Shadow Blacksmith]";
 	mes "Do you want to refine a shadow item? Pick yer poison!";

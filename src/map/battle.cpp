@@ -8703,6 +8703,13 @@ static const struct _battle_data {
 	{ "vip_drop_increase",                  &battle_config.vip_drop_increase,              50,      0,      INT_MAX,        },
 	{ "vip_gemstone",                       &battle_config.vip_gemstone,                    2,      0,      2,              },
 	{ "vip_disp_rate",                      &battle_config.vip_disp_rate,                   1,      0,      1,              },
+	// Multi-level VIP configs
+	{ "vip_max_level",                      &battle_config.vip_max_level,                  10,      1,    255,              },
+	{ "vip_base_exp_per_level",             &battle_config.vip_base_exp_per_level,         90,      0, INT_MAX,              },
+	{ "vip_job_exp_per_level",              &battle_config.vip_job_exp_per_level,          90,      0, INT_MAX,              },
+	{ "vip_drop_per_level",                 &battle_config.vip_drop_per_level,             35,      0, INT_MAX,              },
+	{ "vip_storage_per_level",              &battle_config.vip_storage_per_level,          30,      0, MAX_STORAGE,          },
+	{ "vip_casttime_per_level",             &battle_config.vip_casttime_per_level,          2,      0,    100,              },
 	{ "mon_trans_disable_in_gvg",           &battle_config.mon_trans_disable_in_gvg,        0,      0,      1,              },
 	{ "homunculus_S_growth_level",          &battle_config.hom_S_growth_level,             99,      0,      MAX_LEVEL,      },
 	{ "discount_item_point_shop",			&battle_config.discount_item_point_shop,		0,		0,		3,				},

@@ -758,7 +758,8 @@ enum e_instance_live_info_type : uint8 {
 enum vip_status_type {
 	VIP_STATUS_ACTIVE = 1,
 	VIP_STATUS_EXPIRE,
-	VIP_STATUS_REMAINING
+	VIP_STATUS_REMAINING,
+	VIP_STATUS_LEVEL    // Get VIP level (1-10, 0 = not VIP)
 };
 
 enum e_special_effects {

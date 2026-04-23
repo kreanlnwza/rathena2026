@@ -23731,6 +23731,9 @@ BUILDIN_FUNC(vip_status) {
 			} else
 				script_pushint(st, 0);
 			break;
+		case VIP_STATUS_LEVEL: // Get VIP level (1-10, 0 = not VIP).
+			script_pushint(st, pc_isvip(sd) ? sd->vip.level : 0);
+			break;
 		default:
 			ShowError( "buildin_vip_status: Unsupported type %d.\n", type );
 			return SCRIPT_CMD_FAILURE;
@@ -23743,19 +23746,26 @@ BUILDIN_FUNC(vip_status) {
 
 
 /** Adds or removes VIP time in minutes. Need to enable VIP system
- * vip_time <time in mn>,{"<character name>"};
+ * vip_time <time in mn>, <level>, {"<character name>"};
  * @param time: VIP duration in minutes. If time < 0 remove time, else add time.
+ * @param level: VIP level 1-10 (0 = keep existing level)
  * @param name: Character name (optional)
  */
 BUILDIN_FUNC(vip_time) {
 #ifdef VIP_ENABLE //would be a pain for scripting npc otherwise
 	TBL_PC *sd;
 	int32 viptime = script_getnum(st, 2) * 60; // Convert since it's given in minutes.
+	int32 vip_level = script_getnum(st, 3); // VIP level (1-10, 0 = no change)
 
-	if( !script_nick2sd(3,sd) )
+	if( !script_nick2sd(4,sd) )
 		return SCRIPT_CMD_FAILURE;
 
-	chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_VIP, viptime, 7, 0); 
+	if (vip_level < 0 || vip_level > battle_config.vip_max_level) {
+		ShowError("buildin_vip_time: Invalid VIP level %d. Must be 0-%d.\n", vip_level, battle_config.vip_max_level);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_VIP, viptime, 7, vip_level);
 #endif
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -28494,7 +28504,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(montransform, "transform", "vi?????"), // Monster Transform [malufett/Hercules]
 	BUILDIN_DEF2(montransform, "active_transform", "vi?????"),
 	BUILDIN_DEF(vip_status,"i?"),
-	BUILDIN_DEF(vip_time,"i?"),
+	BUILDIN_DEF(vip_time,"ii?"),
 	BUILDIN_DEF(bonus_script,"si????"),
 	BUILDIN_DEF(bonus_script_clear,"??"),
 	BUILDIN_DEF(getgroupitem,"i??"),

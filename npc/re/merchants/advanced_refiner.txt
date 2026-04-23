@@ -123,6 +123,13 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		close;
 	}
 
+	// VIP refine discount: each level = 5% off (level 10 = 50% off)
+	if (vip_status(VIP_STATUS_ACTIVE)) {
+		.@vip_lv = vip_status(VIP_STATUS_LEVEL);
+		.@price = .@price * (100 - .@vip_lv * 5) / 100;
+		if (.@price < 1) set .@price, 1;
+	}
+
 	mes "You need ^ff9999"+getitemname(.@material)+"^000000 and ^ff9999"+.@price+"^000000 Zeny for this refine, meow~";
 	mes "Want to continue, meow?~";
 	next;

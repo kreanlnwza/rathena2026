@@ -585,6 +585,13 @@ struct Battle_Config
 	int32 vip_exp_penalty_base;
 	int32 vip_exp_penalty_job;
 	int32 vip_disp_rate;
+	// Multi-level VIP configs
+	int32 vip_max_level;
+	int32 vip_base_exp_per_level;
+	int32 vip_job_exp_per_level;
+	int32 vip_drop_per_level;
+	int32 vip_storage_per_level;
+	int32 vip_casttime_per_level;
 	int32 mon_trans_disable_in_gvg;
 	int32 discount_item_point_shop;
 	int32 update_enemy_position;

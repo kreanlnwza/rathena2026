@@ -37,7 +37,7 @@ int32 chmapif_parse_keepalive(int32 fd);
 int32 chmapif_parse_reqauth(int32 fd, int32 id);
 int32 chmapif_parse_updmapip(int32 fd, int32 id);
 
-int32 chmapif_vipack(int32 mapfd, uint32 aid, uint32 vip_time, uint32 groupid, uint8 flag);
+int32 chmapif_vipack(int32 mapfd, uint32 aid, uint32 vip_time, uint32 groupid, uint8 flag, uint8 vip_level = 0);
 int32 chmapif_parse_reqcharban(int32 fd);
 int32 chmapif_parse_reqcharunban(int32 fd);
 int32 chmapif_bonus_script_get(int32 fd);

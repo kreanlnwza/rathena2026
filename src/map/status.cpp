@@ -3809,8 +3809,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 
-	if (pc_isvip(sd)) // Magic Stone requirement avoidance for VIP.
-		sd->special_state.no_gemstone = battle_config.vip_gemstone;
+	if (pc_isvip(sd)) { // Gemstone bypass only at max VIP level
+		if (sd->vip.level >= battle_config.vip_max_level)
+			sd->special_state.no_gemstone = 2; // full bypass at max level
+	}
 
 	if (!sd->state.permanent_speed) {
 		memset(&base_status->max_hp, 0, sizeof(struct status_data)-(sizeof(base_status->hp)+sizeof(base_status->sp)+sizeof(base_status->ap)));
@@ -4986,6 +4988,12 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		sc_start(sd, sd, SC_SPRITEMABLE, 100, 1, INFINITE_TICK);
 	if (pc_checkskill(sd, SU_SOULATTACK) > 0 && !sd->sc.getSCE(SC_SOULATTACK))
 		sc_start(sd, sd, SC_SOULATTACK, 100, 1, INFINITE_TICK);
+
+#ifdef VIP_ENABLE
+	// Apply VIP variable cast time reduction per level
+	if (pc_isvip(sd) && sd->vip.level > 0 && battle_config.vip_casttime_per_level > 0)
+		sd->bonus.varcastrate += sd->vip.level * battle_config.vip_casttime_per_level;
+#endif
 
 	calculating = 0;
 

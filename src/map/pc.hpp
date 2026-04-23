@@ -188,6 +188,7 @@ extern CaptchaDatabase captcha_db;
 #ifdef VIP_ENABLE
 struct vip_info {
 	uint32 enabled : 1;
+	uint8 level;          // VIP level 1-10 (0 = not VIP)
 	time_t time;
 	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
 };

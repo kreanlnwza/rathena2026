@@ -785,6 +785,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `pincode` varchar(4) NOT NULL DEFAULT '',
   `pincode_change` int(11) unsigned NOT NULL DEFAULT '0',
   `vip_time` int(11) unsigned NOT NULL default '0',
+  `vip_level` tinyint(3) unsigned NOT NULL default '0',
   `old_group` tinyint(3) NOT NULL default '0',
   `web_auth_token` varchar(17) null,
   `web_auth_token_enabled` tinyint(2) NOT NULL default '0',

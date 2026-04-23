@@ -213,14 +213,15 @@ int32 logchrif_send_accdata(int32 fd, uint32 aid) {
  */
 int32 logchrif_sendvipdata(int32 fd, struct mmo_account* acc, unsigned char flag, int32 mapfd) {
 #ifdef VIP_ENABLE
-	WFIFOHEAD(fd,19);
+	WFIFOHEAD(fd,20);
 	WFIFOW(fd,0) = 0x2743;
 	WFIFOL(fd,2) = acc->account_id;
 	WFIFOL(fd,6) = (int32)acc->vip_time;
 	WFIFOB(fd,10) = flag;
 	WFIFOL(fd,11) = acc->group_id; //new group id
 	WFIFOL(fd,15) = mapfd; //link to mapserv
-	WFIFOSET(fd,19);
+	WFIFOB(fd,19) = acc->vip_level; //vip level (1-10, 0=no vip)
+	WFIFOSET(fd,20);
 	logchrif_send_accdata(fd,acc->account_id); //refresh char with new setting
 #endif
 	return 1;
@@ -655,7 +656,7 @@ int32 logchrif_parse_pincode_authfail(int32 fd){
  */
 int32 logchrif_parse_reqvipdata(int32 fd) {
 #ifdef VIP_ENABLE
-	if( RFIFOREST(fd) < 15 )
+	if( RFIFOREST(fd) < 16 )
 		return 0;
 	else { //request vip info
 		struct mmo_account acc;
@@ -664,8 +665,9 @@ int32 logchrif_parse_reqvipdata(int32 fd) {
 		int8 flag = RFIFOB(fd,6);
 		int32 timediff = RFIFOL(fd,7);
 		int32 mapfd = RFIFOL(fd,11);
-		RFIFOSKIP(fd,15);
-		
+		uint8 vip_level = RFIFOB(fd,15); // vip level (1-10, 0=no change)
+		RFIFOSKIP(fd,16);
+
 		if( accounts->load_num(accounts, &acc, aid ) ) {
 			time_t now = time(nullptr);
 			time_t vip_time = acc.vip_time;
@@ -679,6 +681,8 @@ int32 logchrif_parse_reqvipdata(int32 fd) {
 				if(!vip_time)
 					vip_time = now; //new entry
 				vip_time += timediff; // set new duration
+				if( vip_level > 0 ) // update level only when explicitly set
+					acc.vip_level = vip_level;
 			}
 			if( now < vip_time ) { //isvip
 				if(acc.group_id != login_config.vip_sys.group){ //only upd this if we're not vip already
@@ -692,6 +696,7 @@ int32 logchrif_parse_reqvipdata(int32 fd) {
 				isvip = true;
 			} else { //expired or @vip -xx
 				vip_time = 0;
+				acc.vip_level = 0; // reset level on expiry
 				if(acc.group_id == login_config.vip_sys.group){ //prevent alteration in case account wasn't registered as vip yet
 					acc.group_id = acc.old_group;
 					if( acc.char_slots == 0 ){

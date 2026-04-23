@@ -4407,6 +4407,7 @@
 	export_constant(VIP_STATUS_ACTIVE);
 	export_constant(VIP_STATUS_EXPIRE);
 	export_constant(VIP_STATUS_REMAINING);
+	export_constant(VIP_STATUS_LEVEL);
 
 	/* item groups */
 	export_constant(IG_BLUEBOX);
