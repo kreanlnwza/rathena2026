@@ -25,6 +25,7 @@ struct homun_data;
 struct s_mercenary_data;
 struct s_elemental_data;
 struct npc_data;
+struct s_random_opt_group;
 class status_change;
 
 /**
@@ -106,6 +107,7 @@ struct s_refine_level_info{
 	bool broadcast_success;
 	bool broadcast_failure;
 	std::unordered_map<uint16, std::shared_ptr<s_refine_cost>> costs;
+	std::shared_ptr<s_random_opt_group> randomOptionGroup;
 };
 
 struct s_refine_levels_info{

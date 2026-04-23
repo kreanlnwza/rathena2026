@@ -269,6 +269,27 @@ uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						}
 					}
 
+					if( this->nodeExists( refineLevelNode, "RandomOptionGroup" ) ){
+						std::string name;
+
+						if( !this->asString( refineLevelNode, "RandomOptionGroup", name ) ){
+							return 0;
+						}
+
+						uint16 randomOptionGroupId;
+
+						if( !random_option_group.option_get_id( name, randomOptionGroupId ) ){
+							this->invalidWarning( refineLevelNode["RandomOptionGroup"], "Unknown random option group \"%s\".\n", name.c_str() );
+							return 0;
+						}
+
+						level_info->randomOptionGroup = random_option_group.find( randomOptionGroupId );
+					}else{
+						if( !level_exists ){
+							level_info->randomOptionGroup = nullptr;
+						}
+					}
+
 					if( this->nodeExists( refineLevelNode, "Chances" ) ){
 						const auto& chancesNode = refineLevelNode["Chances"];
 						for( const auto& chanceNode : chancesNode ){
