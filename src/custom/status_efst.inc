@@ -15,3 +15,4 @@
  **/
 
 //EFST_EXAMPLE,
+EFST_VIP,  // VIP status icon for buff bar

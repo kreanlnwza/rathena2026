@@ -1,0 +1,43 @@
+VIP Icon - Client Side Setup
+==============================
+
+EFST_VIP numeric value = 1689
+  (EFST_BLOCK=1688 is the last entry before custom includes, so EFST_VIP=1689)
+
+Icon file: vip_icon.bmp  (48x48, 24-bit BMP, magenta FF00FF = transparent)
+
+-- Where to place the BMP --
+Copy vip_icon.bmp into your client's data folder:
+  data/texture/effect/vip_icon.bmp   (or your GRF's equivalent path)
+
+-- stateiconimginfo.lub --
+Open (or create):
+  data/luafiles514/lua files/stateicon/stateiconimginfo.lub
+
+Add the following entry inside the STATEICON_IMG_INFO table:
+  [EFST.EFST_VIP] = {
+      descript = "VIP",
+      efsticon = "effect\\vip_icon.bmp",
+  },
+
+If your client uses a numeric index instead of EFST enum names, use:
+  [1689] = {
+      descript = "VIP",
+      efsticon = "effect\\vip_icon.bmp",
+  },
+
+-- stateiconinfo.lub (tooltip, if applicable) --
+Open:
+  data/luafiles514/lua files/stateicon/stateiconinfo.lub
+
+Add inside STATEICON_INFO:
+  [EFST.EFST_VIP] = {
+      descript = { "VIP Status", "Bonus EXP/Drop/Cast active" },
+  },
+
+-- efstIds.lub (some clients) --
+If your client uses efstIds.lub to map enum names to numbers, add:
+  EFST_VIP = 1689,
+
+Note: The exact Lua structure depends on your client build.
+Check an existing entry in stateiconimginfo.lub to confirm the format.

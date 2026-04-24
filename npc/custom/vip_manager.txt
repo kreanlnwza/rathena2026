@@ -2,7 +2,7 @@
 //= VIP Manager (Test NPC)
 //===== Description: =========================================
 //= NPC for granting/removing multi-level VIP (for testing).
-//= Supports VIP Level 1-10 with configurable duration.
+//= Supports VIP Level 1-10; must own Level N before buying N+1.
 //===== Location: ============================================
 //= prontera 155 193
 //============================================================
@@ -29,7 +29,7 @@ prontera,155,193,4	script	VIP Manager	4_F_KAFRA1,{
 	next;
 
 	switch(select(
-		"ซื้อ VIP (เลือกระดับ)",
+		"ซื้อ/อัปเกรด VIP",
 		"ลบ VIP ออก",
 		"ดูสิทธิ์ VIP แต่ละระดับ",
 		"ยกเลิก"
@@ -40,32 +40,93 @@ prontera,155,193,4	script	VIP Manager	4_F_KAFRA1,{
 		case 4: close;
 	}
 
-// ─── ซื้อ VIP ───────────────────────────────────────────────
+// ─── ซื้อ / อัปเกรด VIP ────────────────────────────────────
 L_BuyVIP:
+	.@cur_lv = vip_status(VIP_STATUS_LEVEL);
+	// If no VIP yet, can only buy Level 1
+	// If already VIP, can buy the next level (sequential unlock)
+	if (.@cur_lv == 0) {
+		.@max_buy = 1;
+	} else {
+		.@max_buy = .@cur_lv + 1;
+		if (.@max_buy > 10) .@max_buy = 10;
+	}
+
 	mes "[VIP Manager]";
-	mes "เลือกระดับ VIP ที่ต้องการ:";
+	if (.@cur_lv > 0) {
+		mes "ระดับปัจจุบัน: ^00AA00VIP " + .@cur_lv + "^000000";
+		if (.@cur_lv < 10) {
+			mes "สามารถอัปเกรดได้ถึง: ^0055FFVIP " + .@max_buy + "^000000";
+		} else {
+			mes "^FF0000คุณมี VIP สูงสุดแล้ว (Level 10)^000000";
+			next;
+			close;
+		}
+	} else {
+		mes "เลือก VIP ที่ต้องการ:";
+	}
 	mes " ";
 	mes "^0055FF[Level 1]^000000 EXP +90% / Drop +35% / Cast -2%";
-	mes "^0055FF[Level 2]^000000 EXP +180% / Drop +70% / Cast -4%";
-	mes "^0055FF[Level 3]^000000 EXP +270% / Drop +105% / Cast -6%";
-	mes "^0055FF[Level 4]^000000 EXP +360% / Drop +140% / Cast -8%";
-	mes "^0055FF[Level 5]^000000 EXP +450% / Drop +175% / Cast -10%";
-	mes "^FF6600[Level 6]^000000 EXP +540% / Drop +210% / Cast -12%";
-	mes "^FF6600[Level 7]^000000 EXP +630% / Drop +245% / Cast -14%";
-	mes "^FF6600[Level 8]^000000 EXP +720% / Drop +280% / Cast -16%";
-	mes "^FF0000[Level 9]^000000 EXP +810% / Drop +315% / Cast -18%";
-	mes "^FF0000[Level 10]^000000 EXP +900%(10x) / Drop +350% / Cast -20% + Gemstone Bypass";
+	if (.@max_buy >= 2) mes "^0055FF[Level 2]^000000 EXP +180% / Drop +70% / Cast -4%";
+	if (.@max_buy >= 3) mes "^0055FF[Level 3]^000000 EXP +270% / Drop +105% / Cast -6%";
+	if (.@max_buy >= 4) mes "^0055FF[Level 4]^000000 EXP +360% / Drop +140% / Cast -8%";
+	if (.@max_buy >= 5) mes "^0055FF[Level 5]^000000 EXP +450% / Drop +175% / Cast -10%";
+	if (.@max_buy >= 6) mes "^FF6600[Level 6]^000000 EXP +540% / Drop +210% / Cast -12%";
+	if (.@max_buy >= 7) mes "^FF6600[Level 7]^000000 EXP +630% / Drop +245% / Cast -14%";
+	if (.@max_buy >= 8) mes "^FF6600[Level 8]^000000 EXP +280% / Drop +280% / Cast -16%";
+	if (.@max_buy >= 9) mes "^FF0000[Level 9]^000000 EXP +810% / Drop +315% / Cast -18%";
+	if (.@max_buy >= 10) mes "^FF0000[Level 10]^000000 EXP +900%(10x) / Drop +350% / Cast -20% + Gemstone Bypass";
 	next;
 
-	.@choice = select(
-		"Level 1","Level 2","Level 3","Level 4","Level 5",
-		"Level 6","Level 7","Level 8","Level 9","Level 10",
-		"ยกเลิก"
-	);
+	// Build select menu only up to max available level
+	if (.@max_buy == 1) {
+		.@choice = select("Level 1","ยกเลิก");
+		if (.@choice == 2) close;
+		.@vip_lv = 1;
+	} else if (.@max_buy == 2) {
+		.@choice = select("Level 1","Level 2","ยกเลิก");
+		if (.@choice == 3) close;
+		.@vip_lv = .@choice;
+	} else if (.@max_buy == 3) {
+		.@choice = select("Level 1","Level 2","Level 3","ยกเลิก");
+		if (.@choice == 4) close;
+		.@vip_lv = .@choice;
+	} else if (.@max_buy == 4) {
+		.@choice = select("Level 1","Level 2","Level 3","Level 4","ยกเลิก");
+		if (.@choice == 5) close;
+		.@vip_lv = .@choice;
+	} else if (.@max_buy == 5) {
+		.@choice = select("Level 1","Level 2","Level 3","Level 4","Level 5","ยกเลิก");
+		if (.@choice == 6) close;
+		.@vip_lv = .@choice;
+	} else if (.@max_buy == 6) {
+		.@choice = select("Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","ยกเลิก");
+		if (.@choice == 7) close;
+		.@vip_lv = .@choice;
+	} else if (.@max_buy == 7) {
+		.@choice = select("Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7","ยกเลิก");
+		if (.@choice == 8) close;
+		.@vip_lv = .@choice;
+	} else if (.@max_buy == 8) {
+		.@choice = select("Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7","Level 8","ยกเลิก");
+		if (.@choice == 9) close;
+		.@vip_lv = .@choice;
+	} else if (.@max_buy == 9) {
+		.@choice = select("Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7","Level 8","Level 9","ยกเลิก");
+		if (.@choice == 10) close;
+		.@vip_lv = .@choice;
+	} else {
+		.@choice = select("Level 1","Level 2","Level 3","Level 4","Level 5","Level 6","Level 7","Level 8","Level 9","Level 10","ยกเลิก");
+		if (.@choice == 11) close;
+		.@vip_lv = .@choice;
+	}
 
-	if (.@choice == 11) close;
-
-	.@vip_lv = .@choice; // 1-10
+	// Enforce sequential unlock: cannot skip levels
+	if (.@vip_lv > .@max_buy) {
+		mes "[VIP Manager]";
+		mes "^FF0000ต้องซื้อ VIP Level " + (.@vip_lv - 1) + " ก่อนครับ^000000";
+		close;
+	}
 
 	mes "[VIP Manager]";
 	mes "ระยะเวลา VIP:";
@@ -112,8 +173,6 @@ L_RemoveVIP:
 
 	if (select("ยืนยัน:ยกเลิก") == 2) close;
 
-	// ส่ง time เป็น negative ค่ามากพอเพื่อเคลียร์ VIP
-	// vip_time ใช้ minutes ส่ง -999999 (≈ 694 วัน) ครอบคลุมทุก duration ที่ตั้งไว้
 	vip_time(-999999, 0);
 
 	mes "[VIP Manager]";

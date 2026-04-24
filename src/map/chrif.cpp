@@ -1580,12 +1580,14 @@ void chrif_parse_ack_vipActive(int32 fd) {
 				sd->special_state.no_gemstone = 2; // full bypass
 			else
 				sd->special_state.no_gemstone = 0;
+			sc_start(nullptr, &sd->bl, SC_VIP, 100, sd->vip.level, INFINITE_TICK);
 		} else if (sd->vip.enabled) {
 			sd->vip.enabled = 0;
 			sd->vip.level = 0;
 			sd->vip.time = 0;
 			sd->storage.max_amount = MIN_STORAGE;
 			sd->special_state.no_gemstone = 0;
+			status_change_end(&sd->bl, SC_VIP);
 			clif_displaymessage(sd->fd,msg_txt(sd,438)); // You are no longer VIP.
 		}
 	}

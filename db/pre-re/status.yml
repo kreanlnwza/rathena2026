@@ -6849,3 +6849,12 @@ Body:
       StopAttacking: true
       StopCasting: true
       BossResist: true
+  - Status: Vip
+    Icon: EFST_VIP
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
