@@ -43,6 +43,7 @@
 #include "clif.hpp"
 #include "date.hpp" // date type enum, date_get()
 #include "elemental.hpp"
+#include "enchantgrade_randopt.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
@@ -25022,6 +25023,208 @@ BUILDIN_FUNC(removeitemoption) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*==========================================
+ * rerollitemoption(<inventory index>,<slot>,<random option group name>{,<char id>});
+ * Rolls a new random option from the given group into the specified slot,
+ * overwriting whatever was there. Lets NPCs offer a "reroll this option"
+ * service without touching the item's enchantgrade.
+ * Returns 1 on success, 0 on failure.
+ *------------------------------------------*/
+BUILDIN_FUNC(rerollitemoption) {
+	map_session_data *sd;
+
+	if( !script_charid2sd(5, sd) ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 index = script_getnum( st, 2 );
+	int32 slot = script_getnum( st, 3 );
+	const char* group_name = script_getstr( st, 4 );
+
+	if( index < 0 || index >= MAX_INVENTORY ){
+		ShowError( "buildin_rerollitemoption: Invalid inventory index %d.\n", index );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( slot < 0 || slot >= MAX_ITEM_RDM_OPT ){
+		ShowError( "buildin_rerollitemoption: Invalid slot %d (valid 0..%d).\n", slot, MAX_ITEM_RDM_OPT - 1 );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct item& it = sd->inventory.u.items_inventory[index];
+
+	if( it.nameid == 0 || it.amount < 1 ){
+		ShowError( "buildin_rerollitemoption: No item at inventory index %d (CID=%d).\n", index, sd->status.char_id );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint16 group_id;
+	if( !random_option_group.option_get_id( group_name, group_id ) ){
+		ShowError( "buildin_rerollitemoption: Unknown random option group \"%s\".\n", group_name );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	std::shared_ptr<s_random_opt_group> group = random_option_group.find( group_id );
+	if( group == nullptr ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	log_pick_pc( sd, LOG_TYPE_SCRIPT, -1, &it );
+	clif_delitem( *sd, index, 1, 0 );
+
+	bool ok = enchantgrade_reroll_option_slot( it, *group, static_cast<size_t>( slot ) );
+
+	log_pick_pc( sd, LOG_TYPE_SCRIPT, 1, &it );
+	clif_additem( sd, index, 1, 0 );
+
+	script_pushint( st, ok ? 1 : 0 );
+	return ok ? SCRIPT_CMD_SUCCESS : SCRIPT_CMD_FAILURE;
+}
+
+/*==========================================
+ * downgradeitemgrade(<inventory index>{,<char id>});
+ * Lowers the item's enchantgrade by one step. Removes the random option
+ * that was added when reaching the current grade (slot = grade - 1) and
+ * clears slot 4 too, because slot 4's precondition (grade=A with slots
+ * 0..3 filled) no longer holds after the downgrade. Refine is reset to 0
+ * to match the grade-up success behaviour. Returns 1 on success, 0 on
+ * failure.
+ *------------------------------------------*/
+BUILDIN_FUNC(downgradeitemgrade) {
+	map_session_data *sd;
+
+	if( !script_charid2sd(3, sd) ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 index = script_getnum( st, 2 );
+
+	if( index < 0 || index >= MAX_INVENTORY ){
+		ShowError( "buildin_downgradeitemgrade: Invalid inventory index %d.\n", index );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct item& it = sd->inventory.u.items_inventory[index];
+
+	if( it.nameid == 0 || it.amount < 1 ){
+		ShowError( "buildin_downgradeitemgrade: No item at inventory index %d (CID=%d).\n", index, sd->status.char_id );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( it.enchantgrade <= ENCHANTGRADE_NONE ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint8 old_grade = it.enchantgrade;
+	size_t grade_slot = static_cast<size_t>( old_grade - 1 );
+
+	log_pick_pc( sd, LOG_TYPE_SCRIPT, -1, &it );
+	clif_delitem( *sd, index, 1, 0 );
+
+	// Remove the option that was added when reaching the current grade.
+	it.option[grade_slot].id = 0;
+	it.option[grade_slot].value = 0;
+	it.option[grade_slot].param = 0;
+
+	// Slot 4 (bonus option) invariant breaks on any downgrade, clear it too.
+	it.option[MAX_ITEM_RDM_OPT - 1].id = 0;
+	it.option[MAX_ITEM_RDM_OPT - 1].value = 0;
+	it.option[MAX_ITEM_RDM_OPT - 1].param = 0;
+
+	it.enchantgrade = old_grade - 1;
+	it.refine = 0;
+
+	log_pick_pc( sd, LOG_TYPE_SCRIPT, 1, &it );
+	clif_additem( sd, index, 1, 0 );
+
+	script_pushint( st, 1 );
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * addenchantgradeoption(<inventory index>,<random option group name>{,<char id>});
+ * Adds the 5th random option (slot 4) using the named random option
+ * group. Requires the item to already be at grade A and to have options
+ * filled in slots 0..3 and slot 4 empty. Returns 1 on success, 0 on
+ * failure.
+ *------------------------------------------*/
+BUILDIN_FUNC(addenchantgradeoption) {
+	map_session_data *sd;
+
+	if( !script_charid2sd(4, sd) ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 index = script_getnum( st, 2 );
+	const char* group_name = script_getstr( st, 3 );
+
+	if( index < 0 || index >= MAX_INVENTORY ){
+		ShowError( "buildin_addenchantgradeoption: Invalid inventory index %d.\n", index );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct item& it = sd->inventory.u.items_inventory[index];
+
+	if( it.nameid == 0 || it.amount < 1 ){
+		ShowError( "buildin_addenchantgradeoption: No item at inventory index %d (CID=%d).\n", index, sd->status.char_id );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( it.enchantgrade != ENCHANTGRADE_A ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	// Require the first 4 slots filled and slot 4 empty.
+	for( size_t i = 0; i < MAX_ITEM_RDM_OPT - 1; i++ ){
+		if( it.option[i].id == 0 ){
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	if( it.option[MAX_ITEM_RDM_OPT - 1].id != 0 ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint16 group_id;
+	if( !random_option_group.option_get_id( group_name, group_id ) ){
+		ShowError( "buildin_addenchantgradeoption: Unknown random option group \"%s\".\n", group_name );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	std::shared_ptr<s_random_opt_group> group = random_option_group.find( group_id );
+	if( group == nullptr ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	log_pick_pc( sd, LOG_TYPE_SCRIPT, -1, &it );
+	clif_delitem( *sd, index, 1, 0 );
+
+	bool ok = enchantgrade_reroll_option_slot( it, *group, MAX_ITEM_RDM_OPT - 1 );
+
+	log_pick_pc( sd, LOG_TYPE_SCRIPT, 1, &it );
+	clif_additem( sd, index, 1, 0 );
+
+	script_pushint( st, ok ? 1 : 0 );
+	return ok ? SCRIPT_CMD_SUCCESS : SCRIPT_CMD_FAILURE;
+}
+
 /// Returns the number of stat points needed to change the specified stat by val.
 /// If val is negative, returns the number of stat points that would be needed to
 /// raise the specified stat from (current value - val) to current value.
@@ -28587,6 +28790,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
 	BUILDIN_DEF(removeitemoption,"ii?"),
+	BUILDIN_DEF(rerollitemoption,"iis?"),
+	BUILDIN_DEF(downgradeitemgrade,"i?"),
+	BUILDIN_DEF(addenchantgradeoption,"is?"),
 	BUILDIN_DEF(needed_status_point,"ii?"),
 	BUILDIN_DEF(needed_trait_point, "ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),

@@ -11324,6 +11324,56 @@ the enchantgrade system.
 
 ---------------------------------------
 
+*rerollitemoption(<inventory index>,<slot>,<random option group name>{,<char id>});
+
+Rolls a new random option from the given random option group (by name, as
+defined in 'db/(pre-)re/item_randomopt_group.yml') and writes it into <slot>
+of the inventory item at <inventory index>, overwriting whatever option was
+there.
+
+<slot> must be 0..MAX_ITEM_RDM_OPT-1.
+
+Returns 1 on success, 0 on failure.
+
+This command does not change the item's enchantgrade, so it can be used by
+NPCs to offer a "reroll this single option" service for items that are
+already at the maximum grade but have an unwanted option in a specific slot.
+
+---------------------------------------
+
+*downgradeitemgrade(<inventory index>{,<char id>});
+
+Lowers the enchantgrade of the inventory item at <inventory index> by one
+step (A -> B -> C -> D -> None). The random option that was awarded when
+the item reached its current grade is removed (slot = current grade - 1),
+and the 5th-option slot (slot 4) is cleared as well because its precondition
+(grade=A with slots 0..3 filled) no longer holds. Refine is reset to 0 to
+match the grade-up success behaviour.
+
+Returns 1 on success, 0 on failure (no item, or grade already None).
+
+Typical use: an NPC service that lets the player pay to remove an unwanted
+random option from a specific grade; after downgrading, the player can
+re-use the enchantgrade UI to grade back up and re-roll that slot.
+
+---------------------------------------
+
+*addenchantgradeoption(<inventory index>,<random option group name>{,<char id>});
+
+Adds the 5th random option (slot 4) to the inventory item at <inventory index>
+by rolling from the named random option group. Requires:
+
+- the item must be at grade A;
+- slots 0..3 must all contain a random option;
+- slot 4 must be empty.
+
+Returns 1 on success, 0 on failure.
+
+Typical use: a post-grade-A NPC service that awards a bonus random option
+for an extra fee or quest-item cost.
+
+---------------------------------------
+
 *randomoptgroup <random option group ID>;
 
 This command fills the following arrays with the results of a random option group.

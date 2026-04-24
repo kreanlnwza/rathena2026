@@ -208,7 +208,6 @@ struct s_enchantgradelevel{
 	}catalyst;
 	std::map<uint16,std::shared_ptr<s_enchantgradeoption>> options;
 	std::shared_ptr<s_random_opt_group> randomOptionGroup;
-	uint16 randomOptionAmount;
 };
 
 struct s_enchantgrade{
