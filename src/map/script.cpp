@@ -24959,6 +24959,69 @@ BUILDIN_FUNC(setrandomoption) {
 	return SCRIPT_CMD_FAILURE;
 }
 
+/*==========================================
+ * removeitemoption(<inventory index>,<slot>{,<char id>});
+ * Removes the random option at <slot> on the inventory item at <inventory index>.
+ * Pass slot -1 to clear every option on that item.
+ * Returns 1 on success, 0 on failure.
+ *------------------------------------------*/
+BUILDIN_FUNC(removeitemoption) {
+	map_session_data *sd;
+
+	if( !script_charid2sd(4, sd) ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 index = script_getnum( st, 2 );
+	int32 slot = script_getnum( st, 3 );
+
+	if( index < 0 || index >= MAX_INVENTORY ){
+		ShowError( "buildin_removeitemoption: Invalid inventory index %d.\n", index );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct item& it = sd->inventory.u.items_inventory[index];
+
+	if( it.nameid == 0 || it.amount < 1 ){
+		ShowError( "buildin_removeitemoption: No item at inventory index %d (CID=%d).\n", index, sd->status.char_id );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( slot >= MAX_ITEM_RDM_OPT ){
+		ShowError( "buildin_removeitemoption: Invalid slot %d (max %d).\n", slot, MAX_ITEM_RDM_OPT - 1 );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	log_pick_pc( sd, LOG_TYPE_SCRIPT, -1, &it );
+	clif_delitem( *sd, index, 1, 0 );
+
+	if( slot < 0 ){
+		for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+			it.option[i].id = 0;
+			it.option[i].value = 0;
+			it.option[i].param = 0;
+		}
+	}else{
+		// Remove the requested slot and shift later options forward so the client sees no gap.
+		for( size_t i = static_cast<size_t>( slot ); i + 1 < MAX_ITEM_RDM_OPT; i++ ){
+			it.option[i] = it.option[i + 1];
+		}
+		it.option[MAX_ITEM_RDM_OPT - 1].id = 0;
+		it.option[MAX_ITEM_RDM_OPT - 1].value = 0;
+		it.option[MAX_ITEM_RDM_OPT - 1].param = 0;
+	}
+
+	log_pick_pc( sd, LOG_TYPE_SCRIPT, 1, &it );
+	clif_additem( sd, index, 1, 0 );
+
+	script_pushint( st, 1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// Returns the number of stat points needed to change the specified stat by val.
 /// If val is negative, returns the number of stat points that would be needed to
 /// raise the specified stat from (current value - val) to current value.
@@ -28523,6 +28586,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getrandomoptinfo, "i"),
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
+	BUILDIN_DEF(removeitemoption,"ii?"),
 	BUILDIN_DEF(needed_status_point,"ii?"),
 	BUILDIN_DEF(needed_trait_point, "ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),

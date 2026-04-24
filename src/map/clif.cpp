@@ -24198,9 +24198,11 @@ void clif_parse_enchantgrade_start( int32 fd, map_session_data* sd ){
 		target.enchantgrade = min( target.enchantgrade + 1, MAX_ENCHANTGRADE );
 		// On successful enchantgrade increase the refine is reset
 		target.refine = 0;
-		// Roll one random option from the configured group into the next empty slot
+		// Roll N random options from the configured group into the next empty slots
 		if( enchantgradelevel->randomOptionGroup != nullptr ){
-			enchantgrade_apply_random_option( target, *enchantgradelevel->randomOptionGroup );
+			for( uint16 i = 0; i < enchantgradelevel->randomOptionAmount; i++ ){
+				enchantgrade_apply_random_option( target, *enchantgradelevel->randomOptionGroup );
+			}
 		}
 		// Log retrieving the item again -> with the new refine, enchantgrade and options
 		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &target );

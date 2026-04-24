@@ -966,6 +966,25 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				}
 			}
 
+			if( this->nodeExists( gradeNode, "RandomOptionAmount" ) ){
+				uint16 amount;
+
+				if( !this->asUInt16( gradeNode, "RandomOptionAmount", amount ) ){
+					return 0;
+				}
+
+				if( amount > MAX_ITEM_RDM_OPT ){
+					this->invalidWarning( gradeNode["RandomOptionAmount"], "RandomOptionAmount %hu exceeds maximum %d, capping.\n", amount, MAX_ITEM_RDM_OPT );
+					amount = MAX_ITEM_RDM_OPT;
+				}
+
+				grade->randomOptionAmount = amount;
+			}else{
+				if( !gradeExists ){
+					grade->randomOptionAmount = 1;
+				}
+			}
+
 			if( !gradeExists ){
 				grades[gradeLevel] = grade;
 			}

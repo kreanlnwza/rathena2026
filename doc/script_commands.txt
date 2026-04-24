@@ -11309,6 +11309,21 @@ Param - Parameter of random option
 
 ---------------------------------------
 
+*removeitemoption(<inventory index>,<slot>{,<char id>});
+
+Removes a random option from the item at <inventory index> in the player's
+inventory. <slot> is the option index (0 to MAX_ITEM_RDM_OPT-1). Pass -1 to
+clear every random option on that item.
+
+Returns 1 on success, 0 on failure.
+
+Unlike setrandomoption, this works on inventory items, so the item does not
+need to be equipped. Typically used by "option cleaner" NPCs that charge the
+player zeny or items to strip an unwanted random option that was awarded by
+the enchantgrade system.
+
+---------------------------------------
+
 *randomoptgroup <random option group ID>;
 
 This command fills the following arrays with the results of a random option group.

@@ -51,6 +51,9 @@
 #           RandomOptionGroup           Random option group rolled on successful upgrade.
 #                                       One random option is placed into the next empty
 #                                       item option slot. (Default: none)
+#           RandomOptionAmount          Number of random options rolled from RandomOptionGroup
+#                                       on successful upgrade. Each roll fills the next empty
+#                                       option slot (max MAX_ITEM_RDM_OPT). (Default: 1)
 ###########################################################################
 
 Header:
