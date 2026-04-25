@@ -1,0 +1,170 @@
+//===== rAthena Script =======================================
+//= Enchant Inserter NPC
+//===== Description: =========================================
+//= Inserts an Enchant-subtype card (IT_CARD with SubType:
+//= Enchant) into a non-card slot of an equipped item.
+//=
+//= Slot rules (MAX_SLOTS = 4, indices 0..3):
+//=  - Slots 0..(card_slot_count - 1) are reserved for cards
+//=    and CANNOT be used by this NPC.
+//=  - Slots card_slot_count..(MAX_SLOTS - 1) are usable for
+//=    enchants by this NPC, provided they are empty.
+//=
+//= Examples:
+//=  - Knife [1]: card slot count = 1
+//=      cards   -> slot 0
+//=      enchant -> slot 1, 2, 3
+//=  - Knife [0]: card slot count = 0
+//=      cards   -> none
+//=      enchant -> slot 0, 1, 2, 3
+//=  - Knife [4]: card slot count = 4
+//=      cards   -> slot 0, 1, 2, 3
+//=      enchant -> none (NPC will refuse)
+//============================================================
+
+prontera,150,180,4	script	Enchant Inserter#custom	101,{
+
+	set .@zenycost, 50000;	// fee per insertion (Zeny)
+
+	disable_items;
+	mes "[Enchant Inserter]";
+	mes "I can install an ^0055FFEnchant^000000 into one of your equipment's non-card slots.";
+	mes "Service fee: ^FF0000"+ .@zenycost +"^000000 zeny.";
+	next;
+	if (select("Insert an Enchant:How does this work?:Cancel") == 2) {
+		mes "[Enchant Inserter]";
+		mes "Each item has a number of ^0055FFcard slots^000000, shown by the [N] mark.";
+		mes "Cards must use slots 0 .. N-1.";
+		mes "I only fill the remaining slots N .. 3 with Enchant-type cards.";
+		next;
+		mes "[Enchant Inserter]";
+		mes "Knife ^006400[1]^000000: enchant fits slot 1, 2, 3.";
+		mes "Knife ^006400[0]^000000: enchant fits slot 0, 1, 2, 3.";
+		mes "Knife ^006400[4]^000000: no enchant slot available.";
+		close;
+	}
+	if (@menu == 3) close;
+
+	// ---------- pick an equipped item ----------
+	setarray .@indices[0],
+		EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R,
+		EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R,
+		EQI_HEAD_MID, EQI_HEAD_LOW;
+	set .@count, getarraysize(.@indices);
+	set .@menu$, "";
+	for (set .@i, 0; .@i < .@count; set .@i, .@i + 1) {
+		if (getequipisequiped(.@indices[.@i]))
+			set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + " - [" + getequipname(.@indices[.@i]) + "]";
+		set .@menu$, .@menu$ + ":";
+	}
+	set .@part, .@indices[ select(.@menu$) - 1 ];
+	if (!getequipisequiped(.@part)) {
+		mes "[Enchant Inserter]";
+		mes "There is nothing equipped in that slot.";
+		close;
+	}
+
+	set .@equip_id, getequipid(.@part);
+	set .@equip_refine, getequiprefinerycnt(.@part);
+	for (set .@i, 0; .@i < MAX_SLOTS; set .@i, .@i + 1)
+		set .@equip_card[.@i], getequipcardid(.@part, .@i);
+
+	set .@card_slots, getiteminfo(.@equip_id, ITEMINFO_SLOT);
+	if (.@card_slots < 0) set .@card_slots, 0;
+
+	// ---------- determine free enchant slots ----------
+	if (.@card_slots >= MAX_SLOTS) {
+		mes "[Enchant Inserter]";
+		mes "^FF0000"+ getequipname(.@part) +"^000000 has no slot left for an enchant.";
+		mes "Every slot on this item is reserved for cards.";
+		close;
+	}
+
+	set .@avail_menu$, "";
+	set .@avail_count, 0;
+	for (set .@i, .@card_slots; .@i < MAX_SLOTS; set .@i, .@i + 1) {
+		if (.@equip_card[.@i] == 0) {
+			set .@avail_idx[.@avail_count], .@i;
+			set .@avail_menu$, .@avail_menu$ + "Slot " + .@i + ":";
+			set .@avail_count, .@avail_count + 1;
+		}
+	}
+	if (.@avail_count == 0) {
+		mes "[Enchant Inserter]";
+		mes "All non-card slots on this item are already filled with enchants.";
+		close;
+	}
+
+	mes "[Enchant Inserter]";
+	mes "Item: ^006400"+ getequipname(.@part) +"^000000";
+	mes "Card slots (reserved): ^0055FF"+ .@card_slots +"^000000";
+	mes "Free enchant slots: ^0055FF"+ .@avail_count +"^000000";
+	next;
+	mes "[Enchant Inserter]";
+	mes "Pick the slot to enchant.";
+	next;
+	set .@target_slot, .@avail_idx[ select(.@avail_menu$) - 1 ];
+
+	// ---------- pick an enchant card from inventory ----------
+	getinventorylist;
+	set .@card_menu$, "";
+	set .@card_count, 0;
+	for (set .@i, 0; .@i < @inventorylist_count; set .@i, .@i + 1) {
+		if (@inventorylist_equip[.@i]) continue;
+		set .@id, @inventorylist_id[.@i];
+		if (getiteminfo(.@id, ITEMINFO_TYPE) != IT_CARD) continue;
+		if (getiteminfo(.@id, ITEMINFO_SUBTYPE) != CARD_ENCHANT) continue;
+		set .@card_id[.@card_count], .@id;
+		set .@card_menu$, .@card_menu$ + getitemname(.@id) + " (x" + @inventorylist_amount[.@i] + "):";
+		set .@card_count, .@card_count + 1;
+	}
+	if (.@card_count == 0) {
+		mes "[Enchant Inserter]";
+		mes "You don't carry any Enchant-type card in your inventory.";
+		close;
+	}
+
+	mes "[Enchant Inserter]";
+	mes "Choose the enchant to install.";
+	next;
+	set .@chosen, .@card_id[ select(.@card_menu$) - 1 ];
+
+	// ---------- confirm + sanity checks ----------
+	mes "[Enchant Inserter]";
+	mes "Install ^0055FF"+ getitemname(.@chosen) +"^000000";
+	mes "into ^006400"+ getequipname(.@part) +"^000000 at slot ^FF0000"+ .@target_slot +"^000000?";
+	mes "Fee: ^FF0000"+ .@zenycost +"^000000 zeny.";
+	next;
+	if (select("Yes, do it:No") == 2) close;
+
+	if (Zeny < .@zenycost) {
+		mes "[Enchant Inserter]";
+		mes "You don't have enough zeny.";
+		close;
+	}
+	if (countitem(.@chosen) < 1) {
+		mes "[Enchant Inserter]";
+		mes "You no longer have that enchant card.";
+		close;
+	}
+	// re-check that the equipment hasn't changed mid-dialogue
+	if (getequipid(.@part) != .@equip_id || getequipcardid(.@part, .@target_slot) != 0) {
+		mes "[Enchant Inserter]";
+		mes "Something changed on your equipment. Please try again.";
+		close;
+	}
+
+	// ---------- apply ----------
+	set Zeny, Zeny - .@zenycost;
+	delitem .@chosen, 1;
+	set .@equip_card[.@target_slot], .@chosen;
+	delequip .@part;
+	getitem2 .@equip_id, 1, 1, .@equip_refine, 0,
+		.@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
+	equip .@equip_id;
+
+	specialeffect2 EF_REPAIRWEAPON;
+	mes "[Enchant Inserter]";
+	mes "Done. Enjoy your enchanted gear!";
+	close;
+}
