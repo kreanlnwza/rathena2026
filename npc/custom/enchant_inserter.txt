@@ -28,8 +28,15 @@ prontera,150,180,4	script	Enchant Inserter#custom	101,{
 	set .@safe_cost, 200000;	// safe plan fee (Zeny)
 	set .@fail_chance, 25;		// failure rate (%)
 	set .@cheap_eq_break, 40;	// on cheap-plan failure: % chance the equipment is destroyed (otherwise the enchant is destroyed)
+	set .@cast_seconds, 3;		// cast / processing time (seconds)
 
 	disable_items;
+	if (checkweight(1201, 1) == 0) {
+		mes "[Enchant Inserter]";
+		mes "Your inventory is too full for me to safely return your gear.";
+		mes "Please drop some weight first.";
+		close;
+	}
 	mes "[Enchant Inserter]";
 	mes "I can install an ^0055FFEnchant^000000 into one of your equipment's non-card slots.";
 	mes "Failure rate: ^FF0000"+ .@fail_chance +"%^000000.";
@@ -157,6 +164,7 @@ prontera,150,180,4	script	Enchant Inserter#custom	101,{
 	mes "into ^006400"+ getequipname(.@part) +"^000000 at slot ^FF0000"+ .@target_slot +"^000000?";
 	mes "Plan: ^006400"+ ((.@plan == 1) ? "Safe" : "Cheap") +"^000000";
 	mes "Fee: ^FF0000"+ .@cost +"^000000 zeny.";
+	mes "Cast time: ^FF0000"+ .@cast_seconds +"^000000 seconds. Don't move!";
 	next;
 	if (select("Yes, do it:No") == 2) close;
 
@@ -170,14 +178,48 @@ prontera,150,180,4	script	Enchant Inserter#custom	101,{
 		mes "You no longer have that enchant card.";
 		close;
 	}
-	// re-check that the equipment hasn't changed mid-dialogue
-	if (getequipid(.@part) != .@equip_id || getequipcardid(.@part, .@target_slot) != 0) {
+	if (!getequipisequiped(.@part)) {
 		mes "[Enchant Inserter]";
-		mes "Something changed on your equipment. Please try again.";
+		mes "You unequipped the item. Try again.";
+		close;
+	}
+	// anti-hack: equipment / refine / card must match what we read at the start
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) ||
+	    callfunc("F_IsEquipRefineHack", .@part, .@equip_refine) ||
+	    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3])) {
+		mes "[Enchant Inserter]";
+		emotion ET_FRET;
+		mes "Wait a second...";
+		mes "Did you really think you could swap the item while I wasn't looking?";
+		mes "Get out of here!";
+		close;
+	}
+	if (getequipcardid(.@part, .@target_slot) != 0) {
+		mes "[Enchant Inserter]";
+		mes "That slot is no longer empty. Please try again.";
 		close;
 	}
 
-	// ---------- charge + consume the enchant card up front ----------
+	// ---------- 3-second cast (player must stand still) ----------
+	mes "[Enchant Inserter]";
+	mes "Hold still...";
+	close2;
+	progressbar "0xFFFF00", .@cast_seconds;
+
+	// ---------- post-cast re-validation (anti-hack again, in case anything changed) ----------
+	if (!getequipisequiped(.@part) ||
+	    callfunc("F_IsEquipIDHack", .@part, .@equip_id) ||
+	    callfunc("F_IsEquipRefineHack", .@part, .@equip_refine) ||
+	    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) ||
+	    countitem(.@chosen) < 1 ||
+	    Zeny < .@cost) {
+		mes "[Enchant Inserter]";
+		emotion ET_FRET;
+		mes "Something changed during the cast. The work is cancelled.";
+		close;
+	}
+
+	// ---------- charge + consume the enchant card now that the cast finished ----------
 	set Zeny, Zeny - .@cost;
 	delitem .@chosen, 1;
 
