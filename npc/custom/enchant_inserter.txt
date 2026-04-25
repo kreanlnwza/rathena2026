@@ -24,12 +24,19 @@
 
 prontera,150,180,4	script	Enchant Inserter#custom	101,{
 
-	set .@zenycost, 50000;	// fee per insertion (Zeny)
+	set .@cheap_cost, 50000;	// cheap plan fee (Zeny)
+	set .@safe_cost, 200000;	// safe plan fee (Zeny)
+	set .@fail_chance, 25;		// failure rate (%)
+	set .@cheap_eq_break, 40;	// on cheap-plan failure: % chance the equipment is destroyed (otherwise the enchant is destroyed)
 
 	disable_items;
 	mes "[Enchant Inserter]";
 	mes "I can install an ^0055FFEnchant^000000 into one of your equipment's non-card slots.";
-	mes "Service fee: ^FF0000"+ .@zenycost +"^000000 zeny.";
+	mes "Failure rate: ^FF0000"+ .@fail_chance +"%^000000.";
+	mes " ";
+	mes "Plans:";
+	mes "  ^006400Safe^000000 ("+ .@safe_cost +"z): on failure your equipment survives, only the enchant card is lost.";
+	mes "  ^006400Cheap^000000 ("+ .@cheap_cost +"z): on failure either the equipment OR the enchant is destroyed ("+ .@cheap_eq_break +"/"+ (100 - .@cheap_eq_break) +").";
 	next;
 	if (select("Insert an Enchant:How does this work?:Cancel") == 2) {
 		mes "[Enchant Inserter]";
@@ -129,15 +136,28 @@ prontera,150,180,4	script	Enchant Inserter#custom	101,{
 	next;
 	set .@chosen, .@card_id[ select(.@card_menu$) - 1 ];
 
+	// ---------- choose plan ----------
+	mes "[Enchant Inserter]";
+	mes "Failure rate is ^FF0000"+ .@fail_chance +"%^000000. Pick a plan.";
+	next;
+	set .@plan, select(
+		"Safe plan ("+ .@safe_cost +"z) - on failure: enchant lost, equipment safe":
+		"Cheap plan ("+ .@cheap_cost +"z) - on failure: "+ .@cheap_eq_break +"% lose equipment / "+ (100 - .@cheap_eq_break) +"% lose enchant":
+		"Cancel");
+	if (.@plan == 3) close;
+	if (.@plan == 1) set .@cost, .@safe_cost;
+	else set .@cost, .@cheap_cost;
+
 	// ---------- confirm + sanity checks ----------
 	mes "[Enchant Inserter]";
 	mes "Install ^0055FF"+ getitemname(.@chosen) +"^000000";
 	mes "into ^006400"+ getequipname(.@part) +"^000000 at slot ^FF0000"+ .@target_slot +"^000000?";
-	mes "Fee: ^FF0000"+ .@zenycost +"^000000 zeny.";
+	mes "Plan: ^006400"+ ((.@plan == 1) ? "Safe" : "Cheap") +"^000000";
+	mes "Fee: ^FF0000"+ .@cost +"^000000 zeny.";
 	next;
 	if (select("Yes, do it:No") == 2) close;
 
-	if (Zeny < .@zenycost) {
+	if (Zeny < .@cost) {
 		mes "[Enchant Inserter]";
 		mes "You don't have enough zeny.";
 		close;
@@ -154,9 +174,38 @@ prontera,150,180,4	script	Enchant Inserter#custom	101,{
 		close;
 	}
 
-	// ---------- apply ----------
-	set Zeny, Zeny - .@zenycost;
+	// ---------- charge + consume the enchant card up front ----------
+	set Zeny, Zeny - .@cost;
 	delitem .@chosen, 1;
+
+	// ---------- roll for failure ----------
+	if (rand(100) < .@fail_chance) {
+		// Failure path
+		if (.@plan == 1) {
+			// Safe plan: equipment intact, enchant destroyed (already deleted above)
+			specialeffect2 EF_SUI_EXPLOSION;
+			mes "[Enchant Inserter]";
+			mes "The enchant shattered. Your ^006400"+ getequipname(.@part) +"^000000 is unharmed.";
+			close;
+		}
+		// Cheap plan: 40/60 - equipment OR enchant destroyed
+		if (rand(100) < .@cheap_eq_break) {
+			// Equipment destroyed - it's already removed via the implicit unequip below.
+			set .@eq_name$, getequipname(.@part);
+			delequip .@part;
+			specialeffect2 EF_SUI_EXPLOSION;
+			mes "[Enchant Inserter]";
+			mes "Disaster... Your ^FF0000"+ .@eq_name$ +"^000000 was destroyed in the process.";
+			close;
+		}
+		// Enchant destroyed only (equipment safe)
+		specialeffect2 EF_SUI_EXPLOSION;
+		mes "[Enchant Inserter]";
+		mes "The enchant shattered. Your ^006400"+ getequipname(.@part) +"^000000 is unharmed.";
+		close;
+	}
+
+	// ---------- success ----------
 	set .@equip_card[.@target_slot], .@chosen;
 	delequip .@part;
 	getitem2 .@equip_id, 1, 1, .@equip_refine, 0,
