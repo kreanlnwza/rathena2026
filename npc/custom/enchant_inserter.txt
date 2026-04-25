@@ -67,7 +67,10 @@ prontera,150,180,4	script	Enchant Inserter#custom	101,{
 	set .@part, .@indices[ select(.@menu$) - 1 ];
 	if (!getequipisequiped(.@part)) {
 		mes "[Enchant Inserter]";
-		mes "There is nothing equipped in that slot.";
+		mes "You're not wearing";
+		mes "anything there that";
+		mes "I can enchant.";
+		emotion ET_FRET;
 		close;
 	}
 
@@ -178,30 +181,72 @@ prontera,150,180,4	script	Enchant Inserter#custom	101,{
 	set Zeny, Zeny - .@cost;
 	delitem .@chosen, 1;
 
+	mes "[Enchant Inserter]";
+	mes "Clang, clang!!!";
+	next;
+
 	// ---------- roll for failure ----------
 	if (rand(100) < .@fail_chance) {
-		// Failure path
+		// Failure path - refine-style FX (no actual refine change)
+		specialeffect2 EF_REFINEFAIL;
+		emotion (!rand(5)) ? ET_MONEY : ET_HUK;
+		set .@lose, rand(1, 3);
+
 		if (.@plan == 1) {
 			// Safe plan: equipment intact, enchant destroyed (already deleted above)
-			specialeffect2 EF_SUI_EXPLOSION;
 			mes "[Enchant Inserter]";
-			mes "The enchant shattered. Your ^006400"+ getequipname(.@part) +"^000000 is unharmed.";
+			if (.@lose == 1) {
+				mes "OH! MY GOD!";
+				mes "The enchant shattered against the metal!";
+				mes "Your ^006400"+ getequipname(.@part) +"^000000 came out unscathed though.";
+			} else if (.@lose == 2) {
+				mes "Nooooooo!";
+				mes "The enchant didn't take...";
+				mes "But at least your equipment is safe.";
+			} else {
+				mes "Crap!";
+				mes "The enchant couldn't bind!";
+				mes "Your ^006400"+ getequipname(.@part) +"^000000 is intact.";
+			}
 			close;
 		}
+
 		// Cheap plan: 40/60 - equipment OR enchant destroyed
 		if (rand(100) < .@cheap_eq_break) {
-			// Equipment destroyed - it's already removed via the implicit unequip below.
 			set .@eq_name$, getequipname(.@part);
 			delequip .@part;
-			specialeffect2 EF_SUI_EXPLOSION;
 			mes "[Enchant Inserter]";
-			mes "Disaster... Your ^FF0000"+ .@eq_name$ +"^000000 was destroyed in the process.";
+			if (.@lose == 1) {
+				mes "OH! MY GOD!";
+				mes "Damn it! The whole thing blew up!";
+				mes "Your ^FF0000"+ .@eq_name$ +"^000000 is gone.";
+			} else if (.@lose == 2) {
+				mes "Nooooooo!";
+				mes "It broke!";
+				mes "Your ^FF0000"+ .@eq_name$ +"^000000 didn't survive...";
+			} else {
+				mes "Crap!";
+				mes "It couldn't take much more tempering!";
+				mes "^FF0000"+ .@eq_name$ +"^000000 has been destroyed.";
+			}
 			close;
 		}
+
 		// Enchant destroyed only (equipment safe)
-		specialeffect2 EF_SUI_EXPLOSION;
 		mes "[Enchant Inserter]";
-		mes "The enchant shattered. Your ^006400"+ getequipname(.@part) +"^000000 is unharmed.";
+		if (.@lose == 1) {
+			mes "OH! MY GOD!";
+			mes "The enchant blew apart in my hand!";
+			mes "Lucky for you, the equipment held.";
+		} else if (.@lose == 2) {
+			mes "Nooooooo!";
+			mes "I-I'm sorry! The enchant is gone!";
+			mes "Your ^006400"+ getequipname(.@part) +"^000000 is unharmed.";
+		} else {
+			mes "Crap!";
+			mes "Wasted that enchant...";
+			mes "Your ^006400"+ getequipname(.@part) +"^000000 is fine, at least.";
+		}
 		close;
 	}
 
@@ -212,8 +257,27 @@ prontera,150,180,4	script	Enchant Inserter#custom	101,{
 		.@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
 	equip .@equip_id;
 
-	specialeffect2 EF_REPAIRWEAPON;
+	specialeffect2 EF_REFINEOK;
+	emotion ET_BEST;
 	mes "[Enchant Inserter]";
-	mes "Done. Enjoy your enchanted gear!";
+	set .@win, rand(1, 3);
+	if (.@win == 1) {
+		mes "Perfect!";
+		mes "Heh heh!";
+		mes "Once again,";
+		mes "flawless work";
+		mes "from the master~";
+	} else if (.@win == 2) {
+		mes "Success...!";
+		mes "Yet again, my amazing";
+		mes "talent truly dazzles";
+		mes "and shines today.";
+	} else {
+		mes "Heh heh!";
+		mes "I'm all done.";
+		mes "No doubt, my work is";
+		mes "to your satisfaction.";
+		mes "Sheer, utter perfection~";
+	}
 	close;
 }
