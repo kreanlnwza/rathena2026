@@ -5597,9 +5597,17 @@ int32 pc_insert_card(map_session_data* sd, int32 idx_card, int32 idx_equip)
 	if( sd->inventory.u.items_inventory[idx_equip].equip != 0 )
 		return 0; // item must be unequipped
 
-	ARR_FIND( 0, item_eq->slots, i, sd->inventory.u.items_inventory[idx_equip].card[i] == 0 );
-	if( i == item_eq->slots )
-		return 0; // no free slots
+	// Enchant-type cards go into the non-card slots [item_eq->slots, MAX_SLOTS),
+	// regular cards go into the card slots [0, item_eq->slots).
+	if( item_card->subtype == CARD_ENCHANT ){
+		ARR_FIND( item_eq->slots, MAX_SLOTS, i, sd->inventory.u.items_inventory[idx_equip].card[i] == 0 );
+		if( i == MAX_SLOTS )
+			return 0; // no free enchant slots
+	}else{
+		ARR_FIND( 0, item_eq->slots, i, sd->inventory.u.items_inventory[idx_equip].card[i] == 0 );
+		if( i == item_eq->slots )
+			return 0; // no free slots
+	}
 
 	// remember the card id to insert
 	nameid = sd->inventory.u.items_inventory[idx_card].nameid;

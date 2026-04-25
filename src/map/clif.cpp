@@ -7082,6 +7082,7 @@ void clif_use_card( const map_session_data* sd,int32 idx)
 		return; //Avoid parsing invalid item indexes (no card/no item)
 
 	ep=sd->inventory_data[idx]->equip;
+	bool is_enchant = (sd->inventory_data[idx]->subtype == CARD_ENCHANT);
 	WFIFOHEAD(fd,MAX_INVENTORY * 2 + 4);
 	WFIFOW(fd,0)=0x17b;
 
@@ -7107,9 +7108,16 @@ void clif_use_card( const map_session_data* sd,int32 idx)
 		if(sd->inventory_data[i]->type == IT_ARMOR && (ep & EQP_ACC) && ((ep & EQP_ACC) != EQP_ACC) && ((sd->inventory_data[i]->equip & EQP_ACC) != (ep & EQP_ACC)) ) // specific accessory-card can only be inserted to specific accessory.
 			continue;
 
-		ARR_FIND( 0, sd->inventory_data[i]->slots, j, sd->inventory.u.items_inventory[i].card[j] == 0 );
-		if( j == sd->inventory_data[i]->slots )	// No room
-			continue;
+		// Enchant cards target [slots, MAX_SLOTS); regular cards target [0, slots).
+		if( is_enchant ){
+			ARR_FIND( sd->inventory_data[i]->slots, MAX_SLOTS, j, sd->inventory.u.items_inventory[i].card[j] == 0 );
+			if( j == MAX_SLOTS )	// No room for enchant
+				continue;
+		}else{
+			ARR_FIND( 0, sd->inventory_data[i]->slots, j, sd->inventory.u.items_inventory[i].card[j] == 0 );
+			if( j == sd->inventory_data[i]->slots )	// No room
+				continue;
+		}
 
 		if( sd->inventory.u.items_inventory[i].equip > 0 )	// Do not check items that are already equipped
 			continue;
