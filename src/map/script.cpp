@@ -28024,7 +28024,7 @@ BUILDIN_FUNC(aa_getautoattackint)
 	case 1: // HP / SP Potions available in inventory
 		for (int i = 0; i < MAX_INVENTORY; ++i) {
 			item_data = item_db.find(sd->inventory.u.items_inventory[i].nameid);
-			if (!item_data) break;
+			if (!item_data) continue;
 			if (item_data->type == IT_HEALING) ++num;
 		}
 		break;

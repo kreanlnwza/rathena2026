@@ -1263,7 +1263,8 @@ int aa_status(map_session_data* sd) {
 		if (sd->aa.duration_ <= 0) {
 			std::string msg = "Automessage - You don't have timer left on autoattack system!";
 			aa_message(sd, "TimerOut", msg.data(), 5, nullptr);
-			return -1;
+			status_change_end(sd, SC_AUTOATTACK);
+			return 0;
 		}
 
 		sd->aa.duration_ = sd->aa.duration_ - battle_config.feature_autoattack_timer;

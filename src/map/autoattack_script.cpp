@@ -8,6 +8,7 @@
 #include <cstdlib> // atoi, strtol, strtoll, exit
 #include <sstream>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 bool find_aa_skill_heal(map_session_data* sd, int skill_id, s_autoheal& found_buff) {
@@ -73,8 +74,7 @@ std::map<int, std::string> get_unique_monsters_onmap(TBL_PC* sd, const char* mon
 	// add other mobs
 	unsigned short mapindex = sd->mapindex;
 	s_mapiterator* it = mapit_geteachmob();
-	bool mob_searched[MAX_MOB_DB2];
-	memset(mob_searched, 0, MAX_MOB_DB2);
+	std::unordered_set<int> mob_searched;
 
 	while (true) {
 		TBL_MOB* md = (TBL_MOB*)mapit_next(it);
@@ -84,14 +84,14 @@ std::map<int, std::string> get_unique_monsters_onmap(TBL_PC* sd, const char* mon
 		if (md->m != sd->m || md->status.hp <= 0)
 			continue;
 
-		if (mob_searched[md->mob_id] == true)
+		if (mob_searched.count(md->mob_id))
 			continue; // Already found, skip it
 
 		std::shared_ptr<s_mob_db> mob = mob_db.find(md->mob_id);
 		if (!mob)
 			continue;
 
-		mob_searched[md->mob_id] = true;
+		mob_searched.insert(md->mob_id);
 
 		if (unique_mobs.count(md->mob_id) == 0) {
 			std::ostringstream mob_temp;
