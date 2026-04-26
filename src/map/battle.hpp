@@ -603,6 +603,38 @@ struct Battle_Config
 	int32 feature_autotrade_sit;
 	int32 feature_autotrade_open_delay;
 
+	// auto attack
+	int feature_autoattack_autoheal;
+	int feature_autoattack_autopotion;
+	int feature_autoattack_sittorest;
+	int feature_autoattack_attackskill;
+	int feature_autoattack_buffskill;
+	int feature_autoattack_buffitems;
+	int feature_autoattack_teleport;
+	int feature_autoattack_teleport_mvp;
+	int feature_autoattack_pickup;
+	int feature_autoattack_prefixname;
+	int feature_autoattack_hateffect;
+	int feature_autoattack_pdetection;
+	int feature_autoattack_mselection;
+	int feature_autoattack_mdetection;
+	int feature_autoattack_pickup_delay;
+	int feature_autoattack_move_min;
+	int feature_autoattack_move_max;
+	int feature_autoattack_movetype;
+	int feature_autoattack_askill_delay;
+	int feature_autoattack_bskill_delay;
+	int feature_autoattack_drop_ratio;
+	int feature_autoattack_exp_ratio;
+	int feature_autoattack_allow_town;
+	int feature_autoattack_allow_pvp;
+	int feature_autoattack_allow_gvg;
+	int feature_autoattack_allow_bg;
+	int feature_autoattack_duration_type;
+	int feature_autoattack_timer;
+	int feature_autoattack_iplimit;
+	int feature_autoattack_gepardlimit;
+
 	// Fame points
 	int32 fame_taekwon_mission;
 	int32 fame_refine_lv1;

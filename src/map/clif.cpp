@@ -27,6 +27,7 @@
 
 #include "achievement.hpp"
 #include "atcommand.hpp"
+#include "autoattack.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
 #include "cashshop.hpp"
@@ -5941,6 +5942,7 @@ void clif_skillcasting( const block_list& src, const block_list* dst, uint16 dst
 	p.y = dst_y;
 	p.skillId = skill_id;
 	p.delayTime = casttime;
+
 	if( property > ELE_NONE && property < ELE_ALL ){
 		p.element = property;
 	}else{
@@ -6004,6 +6006,9 @@ void clif_skillcastcancel( const block_list& bl ){
 /// Note: when this packet is received an unknown flag is always set to 0,
 /// suggesting this is an ACK packet for the UseSkill packets and should be sent on success too [FlavioJS]
 void clif_skill_fail( const map_session_data& sd, uint16 skill_id, enum useskill_fail_cause cause, int32 btype, t_itemid itemId ){
+	if(sd.state.autoattack)
+		return;
+
 	if(battle_config.display_skill_fail&1)
 		return; //Disable all skill failed messages
 
@@ -9943,11 +9948,13 @@ void clif_name( const block_list* src, const block_list* bl, send_target target 
 
 			if( sd->fakename[0] ) {
 				safestrncpy( packet.name, sd->fakename, NAME_LENGTH );
-				clif_send( &packet, sizeof(packet), src, target );
-				return;
+				if (!(battle_config.feature_autoattack_prefixname && sd->state.autoattack)) {
+					clif_send(&packet, sizeof(packet), src, target);
+					return;
+				}
 			}
-
-			safestrncpy( packet.name, sd->status.name, NAME_LENGTH );
+			else
+				safestrncpy( packet.name, sd->status.name, NAME_LENGTH );
 
 			party_data *p = nullptr;
 
@@ -11838,6 +11845,8 @@ void clif_parse_Restart(int32 fd, map_session_data *sd)
 {
 	switch(RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0])) {
 	case 0x00:
+		if(sd->state.autoattack)
+			status_change_end(sd, SC_AUTOATTACK);
 		pc_respawn(sd,CLR_OUTSIGHT);
 		break;
 	case 0x01:

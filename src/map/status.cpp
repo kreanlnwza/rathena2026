@@ -19,6 +19,7 @@
 #include <common/utilities.hpp>
 #include <common/utils.hpp>
 
+#include "autoattack.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
 #include "clif.hpp"
@@ -1784,6 +1785,7 @@ int32 status_damage(block_list *src,block_list *target,int64 dhp, int64 dsp, int
 		}
 
 		npc_script_event( *sd, NPCE_DIE );
+		aa_token_respawn(sd, flag);
 	}
 
 	return (int32)(hp+sp+ap);
@@ -12467,6 +12469,14 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			tick_time = 1000;
 			val4 = tick / tick_time;
 			break;
+		case SC_AUTOATTACK:
+			tick_time = battle_config.feature_autoattack_timer;
+			val4 = tick;
+
+			if (sd && !aa_changestate_autoattack(sd, 1))
+				return 0;
+
+			break;
 		case SC_TELEKINESIS_INTENSE:
 			val2 = 10 * val1; // sp consum / casttime reduc %
 			val3 = 40 * val1; // magic dmg bonus
@@ -13520,6 +13530,9 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 	status_data* status = status_get_status_data(*bl);
 
 	switch(type) {
+		case SC_AUTOATTACK:
+			aa_changestate_autoattack(sd, 2);
+			break;
 		case SC_KEEPING:
 		case SC_BARRIER:
 			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr) {
@@ -14171,6 +14184,11 @@ TIMER_FUNC(status_change_timer){
 	FreeBlockLock freeLock(false);
 
 	switch(type) {
+	case SC_AUTOATTACK:
+		if (aa_status(sd))
+			sce->timer = add_timer(battle_config.feature_autoattack_timer + tick, status_change_timer, bl->id, data);
+		return 0;
+		break;
 	case SC_MAXIMIZEPOWER:
 	case SC_CLOAKING:
 		if(!status_damage(nullptr, bl, 0, 1, 0, 3, 0))

@@ -20319,18 +20319,24 @@ Body:
     Script: |
       getitem 14598,10;
   - Id: 14316
-    AegisName: July7_Scroll
-    Name: July7 Scroll
+    AegisName: Autoattack Device
+    Name: Autoattack Device
     Type: Usable
+    Flags:
+      NoConsume: true
     Buy: 20
-    Weight: 10
+    Weight: 0
+    Script: |
+      callfunc "F_autoattacktoggle";
+    UnEquipScript: |
+      sc_end SC_AUTOATTACK;
     Trade:
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
   - Id: 14317
-    AegisName: Bacsojin_Scroll
-    Name: Bacsojin Scroll
+    AegisName: Autoattack Pack
+    Name: Autoattack Pack
     Type: Usable
     Buy: 20
     Weight: 10
@@ -20340,6 +20346,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      rentitem 14316,604800
   - Id: 14343
     AegisName: Spiked_Scarf_Box
     Name: Spiked Scarf Box
