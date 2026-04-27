@@ -349,24 +349,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -673,6 +693,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -711,28 +733,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -1304,24 +1350,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -1628,6 +1694,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -1666,28 +1734,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -2256,24 +2348,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -2580,6 +2692,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -2618,28 +2732,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -3211,24 +3349,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -3535,6 +3693,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -3573,28 +3733,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -4163,24 +4347,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -4487,6 +4691,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -4525,28 +4731,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -5115,24 +5345,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -5439,6 +5689,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -5477,28 +5729,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -6070,24 +6346,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -6394,6 +6690,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -6432,28 +6730,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -7022,24 +7344,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -7346,6 +7688,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -7384,28 +7728,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -7974,24 +8342,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -8298,6 +8686,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -8336,28 +8726,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -8926,24 +9340,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -9250,6 +9684,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -9288,28 +9724,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -9881,24 +10341,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -10205,6 +10685,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -10243,28 +10725,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -10833,24 +11339,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -11157,6 +11683,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -11195,28 +11723,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -11785,24 +12337,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -12109,6 +12681,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -12147,28 +12721,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -12737,24 +13335,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -13061,6 +13679,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -13099,28 +13719,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
@@ -13689,24 +14333,44 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: BODY_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: RACE_TOLERACE_NOTHING
             MinValue: 1
@@ -14013,6 +14677,8 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: DAMAGE_CRI_TARGET
             MinValue: 1
@@ -14051,28 +14717,52 @@ Body:
             MaxValue: 10
             Chance: 5000
           - Option: WEAPON_ATTR_NOTHING
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WATER
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_GROUND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_FIRE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_WIND
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_POISON
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_SAINT
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_DARKNESS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_TELEKINESIS
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_ATTR_UNDEAD
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: WEAPON_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: BODY_INDESTRUCTIBLE
+            MinValue: 1
+            MaxValue: 1
             Chance: 5000
           - Option: MDAMAGE_SIZE_SMALL_TARGET
             MinValue: 1
