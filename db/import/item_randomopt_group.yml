@@ -24,14 +24,13 @@
 ###########################################################################
 # - Id                  Item Random Option Group ID.
 #   Group               Item Random Option Group constant.
-#   Slots:              Slot in which an Item Random Option is guaranteed to be applied. Max of MAX_ITEM_RDM_OPT.
+#   Slots:              Slot in which an Item Random Option is guaranteed to be applied.
 #     - Slot            Slot number.
 #       Options:        List of possible Item Random Options for slot.
 #         - Option      Item Random Option constant.
 #           MinValue    Minimum value. (Default: 0)
 #           MaxValue    Maximum value. (Default: 0)
-#           Param       Parameter value. (Default: 0)
-#           Chance      Chance applied specifically to this Item Random Option (1 = 0.01%, 10000 = 100%). (Default: 0)
+#           Chance      Chance applied specifically to this option (1=0.01%, 10000=100%).
 ###########################################################################
 
 Header:
