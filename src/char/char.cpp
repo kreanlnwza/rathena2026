@@ -81,12 +81,9 @@ std::unordered_map<uint32, std::shared_ptr<struct auth_node>> auth_db;
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>> online_char_db;
 // uint32 char_id -> struct mmo_charstatus*
 std::unordered_map<uint32, std::shared_ptr<struct mmo_charstatus>> char_db;
-// uint32 account_id -> count of map-server-side autotrade chars
-std::unordered_map<uint32, uint32> autotrade_count_db;
 std::unordered_map<uint32, std::shared_ptr<struct auth_node>>& char_get_authdb() { return auth_db; }
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& char_get_onlinedb() { return online_char_db; }
 std::unordered_map<uint32, std::shared_ptr<struct mmo_charstatus>>& char_get_chardb() { return char_db; }
-std::unordered_map<uint32, uint32>& char_get_autotrade_count() { return autotrade_count_db; }
 
 online_char_data::online_char_data( uint32 account_id ){
 	this->account_id = account_id;
@@ -95,7 +92,6 @@ online_char_data::online_char_data( uint32 account_id ){
 	this->fd = -1;
 	this->waiting_disconnect = INVALID_TIMER;
 	this->pincode_success = false;
-	this->autotrade = false;
 }
 
 void char_set_charselect(uint32 account_id) {
@@ -132,17 +128,9 @@ void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id) {
 
 	if( character != nullptr ){
 		if( character->char_id != -1 && character->server > -1 && character->server != map_id ){
-			// Don't disconnect a different autotrade-standby char from
-			// the same account when a sibling logs in.
-			bool autotrade_keep = character->autotrade && character->char_id != (int32)char_id;
-			if (autotrade_keep) {
-				ShowInfo("set_char_online: Account %d has autotrade char %d on server %d; allowing sibling char %d on server %d.\n",
-					character->account_id, character->char_id, character->server, char_id, map_id);
-			} else {
-				ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
-					character->account_id, character->char_id, character->server, map_id, account_id, char_id);
-				mapif_disconnectplayer(map_server[character->server].fd, character->account_id, character->char_id, 2);
-			}
+			ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
+				character->account_id, character->char_id, character->server, map_id, account_id, char_id);
+			mapif_disconnectplayer(map_server[character->server].fd, character->account_id, character->char_id, 2);
 		}
 
 		// Get rid of disconnect timer
@@ -1980,25 +1968,12 @@ void char_auth_ok(int32 fd, struct char_session_data *sd) {
 	// Check if character is not online already. [Skotlex]
 	if( character != nullptr ){
 		if (character->server > -1)
-		{	//Character already online.
-			uint32 autotrade_count = 0;
-			auto it = char_get_autotrade_count().find(sd->account_id);
-			if (it != char_get_autotrade_count().end())
-				autotrade_count = it->second;
-			bool allow_multilogin = autotrade_count > 0 &&
-				autotrade_count < (uint32)charserv_config.autotrade_max_per_account;
-
-			if (!allow_multilogin) {
-				// KICK KICK KICK
-				mapif_disconnectplayer(map_server[character->server].fd, character->account_id, character->char_id, 2);
-				if (character->waiting_disconnect == INVALID_TIMER)
-					character->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, char_chardb_waiting_disconnect, character->account_id, 0);
-				chclif_send_auth_result(fd,8);
-				return;
-			}
-			// Existing session is in autotrade-style standby and the
-			// per-account limit has not been reached. Let the new login
-			// proceed; the standby chars stay parked on the map server.
+		{	//Character already online. KICK KICK KICK
+			mapif_disconnectplayer(map_server[character->server].fd, character->account_id, character->char_id, 2);
+			if (character->waiting_disconnect == INVALID_TIMER)
+				character->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, char_chardb_waiting_disconnect, character->account_id, 0);
+			chclif_send_auth_result(fd,8);
+			return;
 		}
 		if (session_isValid(character->fd) && character->fd != fd)
 		{	//There's already a connection from this account that hasn't picked a char yet.
@@ -2843,7 +2818,6 @@ void char_set_defaults(){
 #endif
 
 	charserv_config.clear_parties = 0;
-	charserv_config.autotrade_max_per_account = 3;
 }
 
 /**
@@ -3128,8 +3102,6 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.allowed_job_flag = atoi(w2);
 		} else if (strcmpi(w1, "clear_parties") == 0) {
 			charserv_config.clear_parties = config_switch(w2);
-		} else if (strcmpi(w1, "autotrade_max_per_account") == 0) {
-			charserv_config.autotrade_max_per_account = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}

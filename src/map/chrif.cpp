@@ -1428,32 +1428,11 @@ int32 chrif_skillcooldown_load(int fd) {
 	return 0;
 }
 
-/**
- * Tell char-server that this character has entered or left autotrade-style
- * standby (e.g. @autotrade, @afk, AutoAttack offline). Used to bypass the
- * single-session-per-account kick when at least one char from the account is
- * already parked on the map server.
- */
-void chrif_set_autotrade_state( const map_session_data* sd, bool autotrade ) {
-	if (!chrif_isconnected())
-		return;
-
-	WFIFOHEAD(char_fd, 11);
-	WFIFOW(char_fd, 0) = 0x2b29;
-	WFIFOL(char_fd, 2) = sd->status.account_id;
-	WFIFOL(char_fd, 6) = sd->status.char_id;
-	WFIFOB(char_fd, 10) = autotrade ? 1 : 0;
-	WFIFOSET(char_fd, 11);
-}
-
 /*=========================================
  * Tell char-server charcter disconnected [Wizputer]
  *-----------------------------------------*/
 int32 chrif_char_offline( const map_session_data* sd ) {
 	chrif_check(-1);
-
-	if (sd->state.autotrade)
-		chrif_set_autotrade_state(sd, false);
 
 	WFIFOHEAD(char_fd,10);
 	WFIFOW(char_fd,0) = 0x2b17;

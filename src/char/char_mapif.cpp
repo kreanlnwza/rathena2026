@@ -922,41 +922,6 @@ int32 chmapif_parse_setcharonline(int32 fd, int32 id){
 }
 
 /**
- * Map server tells us a character has entered/left autotrade-style
- * standby (e.g. @autotrade, @afk, AutoAttack offline). When at least one
- * autotrade char exists for an account, char_auth_ok and
- * char_set_char_online stop forcibly kicking the previous session, up to
- * charserv_config.autotrade_max_per_account chars in standby per account.
- */
-int32 chmapif_parse_set_autotrade(int32 fd, int32 id){
-	if (RFIFOREST(fd) < 11)
-		return 0;
-	uint32 account_id = RFIFOL(fd, 2);
-	uint32 char_id = RFIFOL(fd, 6);
-	bool flag = RFIFOB(fd, 10) != 0;
-	RFIFOSKIP(fd, 11);
-
-	auto& counts = char_get_autotrade_count();
-	if (flag) {
-		counts[account_id]++;
-	} else {
-		auto it = counts.find(account_id);
-		if (it != counts.end()) {
-			if (it->second > 0)
-				it->second--;
-			if (it->second == 0)
-				counts.erase(it);
-		}
-	}
-
-	auto character = util::umap_find(char_get_onlinedb(), account_id);
-	if (character && character->char_id == (int32)char_id)
-		character->autotrade = flag;
-
-	return 1;
-}
-
-/**
  * Build and send fame ranking lists
  * @author [DracoRPG]
  * @param fd: which fd to parse from
@@ -1475,7 +1440,6 @@ int32 chmapif_parse(int32 fd){
 			case 0x2b23: next=chmapif_parse_keepalive(fd); break;
 			case 0x2b26: next=chmapif_parse_reqauth(fd,id); break;
 			case 0x2b28: next=chmapif_parse_reqcharban(fd); break; //charban
-			case 0x2b29: next=chmapif_parse_set_autotrade(fd,id); break; //autotrade flag sync
 			case 0x2b2a: next=chmapif_parse_reqcharunban(fd); break; //charunban
 			//case 0x2b2c: /*free*/; break;
 			case 0x2b2d: next=chmapif_bonus_script_get(fd); break; //Load data

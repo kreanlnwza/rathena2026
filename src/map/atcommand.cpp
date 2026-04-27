@@ -6825,7 +6825,6 @@ ACMD_FUNC(autotrade) {
 	}
 
 	sd->state.autotrade = 1;
-	chrif_set_autotrade_state(sd, true);
 	if (battle_config.autotrade_monsterignore)
 		sd->state.block_action |= PCBLOCK_IMMUNE;
 
@@ -11485,7 +11484,6 @@ ACMD_FUNC(afk) {
 	}
 
 	sd->state.autotrade = 1;
-	chrif_set_autotrade_state(sd, true);
 	clif_authfail_fd(fd, 15);
 
 	return 0;
