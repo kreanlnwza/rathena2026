@@ -1,0 +1,134 @@
+//===== rAthena Script =======================================
+//= Random Useable Item Shop
+//===== By: ==================================================
+//= Custom Script
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project (RE & pre-RE)
+//===== Description: =========================================
+//= NPC Shop ที่สุ่มไอเทม type Healing/Usable/DelayConsume
+//= มาขาย และรีเฟรชสต็อกใหม่อัตโนมัติทุก 30 นาที (ตรงนาทีที่ 00 และ 30)
+//=
+//= การตั้งค่าอยู่ใน OnInit ของ NPC "rand_shop_ctrl"
+//=   .num_items   - จำนวนไอเทมในร้านต่อรอบ (default: 8)
+//=   .min_price   - ราคา buy ขั้นต่ำของไอเทมที่จะสุ่ม (default: 100)
+//=   .max_price   - ราคา buy สูงสุดของไอเทมที่จะสุ่ม (default: 50000)
+//=   .price_rate  - อัตราราคา % เทียบกับราคา buy ปกติ (default: 100)
+//=                  เช่น 150 = แพงกว่าราคาปกติ 50%
+//===== Additional Comments: =================================
+//= ต้องการ SQL item database (item_db_re หรือ item_db)
+//= เปิดใช้งานโดยเพิ่มใน scripts_custom.conf:
+//=   npc: npc/custom/random_useable_shop.txt
+//============================================================
+
+// =============================================
+// NPC ที่ผู้เล่นคุยด้วย - วางที่ Prontera
+// แก้ไข map/พิกัดตามต้องการ
+// =============================================
+prontera,150,180,5	script	Random Shop	100,{
+	mes "[Random Shop]";
+	mes "ยินดีต้อนรับสู่ร้านสุ่มไอเทม!";
+	mes "ฉันขายไอเทม ^0055FF" + getvariableofnpc(.num_items, "rand_shop_ctrl") + " ชนิด^000000 ที่เปลี่ยนทุก 30 นาที";
+
+	.@min = gettime(GETTIME_MINUTE);
+	if (.@min < 30)
+		.@next = 30 - .@min;
+	else
+		.@next = 60 - .@min;
+
+	if (.@next == 0)
+		mes "สต็อกกำลังจะรีเฟรช ^FF0000เดี๋ยวนี้!^000000";
+	else
+		mes "รีสต็อกถัดไปใน: ^FF0000" + .@next + " นาที^000000";
+
+	next;
+	switch (select("ซื้อไอเทม", "ปิด")) {
+	case 1:
+		callshop "rand_shop_items", 1;
+		end;
+	case 2:
+		close;
+	}
+}
+
+// =============================================
+// Shop NPC (hidden) - ต้องมี placeholder item ก่อน
+// npcshopadditem/delitem จะจัดการ items จริง
+// =============================================
+-	shop	rand_shop_items	-1,501:-1
+
+// =============================================
+// Controller NPC (hidden) - จัดการ refresh logic
+// =============================================
+-	script	rand_shop_ctrl	-1,{
+	end;
+
+// ทำงานทุกชั่วโมงที่นาที 00 และ 30
+OnMinute00:
+OnMinute30:
+	callsub RefreshShop;
+	end;
+
+OnInit:
+	// ===== ตั้งค่าร้านค้า =====
+	.num_items  = 8;        // จำนวนไอเทมต่อรอบ
+	.min_price  = 100;      // ราคา buy ขั้นต่ำ (zeny)
+	.max_price  = 50000;    // ราคา buy สูงสุด (zeny)
+	.price_rate = 100;      // % ของราคา buy (100 = ราคาปกติ)
+	// =========================
+	callsub RefreshShop;
+	end;
+
+RefreshShop:
+	freeloop 1;
+
+	if (checkre(0))
+		.@db$ = "item_db_re";
+	else
+		.@db$ = "item_db";
+
+	// ดึงไอเทม useable แบบสุ่มจาก SQL DB
+	.@count = query_sql(
+		"SELECT `id`, `price_buy` FROM `" + .@db$ + "` " +
+		"WHERE `type` IN ('Healing', 'Usable', 'DelayConsume') " +
+		"AND `price_buy` >= " + .min_price + " " +
+		"AND `price_buy` <= " + .max_price + " " +
+		"AND `price_buy` IS NOT NULL " +
+		"ORDER BY RAND() LIMIT " + .num_items,
+		.@new_ids, .@new_prices
+	);
+
+	// ลบไอเทมของรอบก่อนออกจากร้าน
+	.@prev_size = getarraysize(.shop_ids);
+	for (.@i = 0; .@i < .@prev_size; .@i++) {
+		npcshopdelitem "rand_shop_items", .shop_ids[.@i];
+	}
+	// ลบ placeholder (501) กรณีเป็น startup ครั้งแรก
+	npcshopdelitem "rand_shop_items", 501;
+
+	deletearray .shop_ids;
+
+	// กรณีไม่พบไอเทมใน DB ใส่ placeholder กลับไปเพื่อไม่ให้ shop ว่าง
+	if (.@count == 0) {
+		npcshopadditem "rand_shop_items", 501, 50;
+		.shop_ids[0] = 501;
+		freeloop 0;
+		debugmes "[rand_shop_ctrl] RefreshShop: ไม่พบไอเทมใน " + .@db$ + " ตรงเงื่อนไข";
+		return;
+	}
+
+	// เพิ่มไอเทมชุดใหม่เข้าร้าน
+	for (.@i = 0; .@i < .@count; .@i++) {
+		.@price = .@new_prices[.@i] * .price_rate / 100;
+		if (.@price < 1) .@price = 1;
+		npcshopadditem "rand_shop_items", .@new_ids[.@i], .@price;
+		.shop_ids[.@i] = .@new_ids[.@i];
+	}
+
+	freeloop 0;
+
+	// ประกาศให้ผู้เล่นทราบ
+	announce "[ Random Shop ] สต็อกไอเทมถูกรีเฟรชแล้ว " + .@count + " รายการ! มาเลือกซื้อกันได้เลยที่ Prontera!", bc_all|bc_blue;
+	return;
+}
