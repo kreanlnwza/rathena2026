@@ -30,7 +30,7 @@
 
 using namespace rathena;
 
-std::vector<t_itemid> AA_ITEMIDS = { 14316 }; // Important here, define the item on which you can start autoattack from rental item
+std::vector<t_itemid> AA_ITEMIDS = { 14991, 14993 }; // Important here, define the item on which you can start autoattack from rental item
 
 void aa_save(map_session_data* sd) {
 	int i;
