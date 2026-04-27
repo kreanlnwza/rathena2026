@@ -29,9 +29,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The macos-latest label currently points to macos-14.
-          # macos-latest YAML-label will use macos-15 in August 2025
-          os: [macos-14, macos-15]
+          # The macos-latest label currently points to macos-15 (as of August 2025).
+          # Available: macos-15
+          os: [macos-latest]
 
     steps:
       - uses: actions/checkout@v4

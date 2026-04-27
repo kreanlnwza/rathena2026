@@ -28,8 +28,8 @@ jobs:
     strategy:
       matrix:
           # The ubuntu-latest label currently points to ubuntu-24.04.
-          # Available: ubuntu-24.04, ubuntu-22.04
-          os: [ubuntu-22.04]
+          # Available: ubuntu-24.04
+          os: [ubuntu-24.04]
           # Version list can be found on https://github.com/marketplace/actions/install-clang
           clang: ['13','14','15','16','17','18','19','20']
 
