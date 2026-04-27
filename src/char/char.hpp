@@ -206,6 +206,8 @@ struct CharServ_Config {
 
 	int32 allowed_job_flag;
 	int32 clear_parties;
+
+	int32 autotrade_max_per_account;
 };
 extern struct CharServ_Config charserv_config;
 
@@ -242,12 +244,14 @@ struct online_char_data {
 	int32 waiting_disconnect;
 	int16 server; // -2: unknown server, -1: not connected, 0+: id of server
 	bool pincode_success;
+	bool autotrade;
 
-public: 
+public:
 	online_char_data( uint32 account_id );
 };
 
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& char_get_onlinedb();
+std::unordered_map<uint32, uint32>& char_get_autotrade_count();
 
 struct char_session_data {
 	bool auth; // whether the session is authed or not
