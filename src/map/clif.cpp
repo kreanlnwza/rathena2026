@@ -22748,7 +22748,6 @@ void clif_parse_refineui_refine( int32 fd, map_session_data* sd ){
 		int32 zeny_cost = cost->zeny;
 #ifdef VIP_ENABLE
 		if( pc_isvip(sd) && sd->vip.level > 0 ){
-			// VIP refine discount: 5% per level (level 10 = 50% off)
 			zeny_cost = zeny_cost * (100 - sd->vip.level * 5) / 100;
 			if( zeny_cost < 0 ) zeny_cost = 0;
 		}

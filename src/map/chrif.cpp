@@ -1569,13 +1569,11 @@ void chrif_parse_ack_vipActive(int32 fd) {
 			sd->vip.enabled = 1;
 			sd->vip.level = (vip_level > 0 && vip_level <= (uint8)battle_config.vip_max_level) ? vip_level : 1;
 			sd->vip.time = vip_time;
-			// Increase storage size per VIP level
 			sd->storage.max_amount = (battle_config.vip_storage_per_level * sd->vip.level) + MIN_STORAGE;
 			if (sd->storage.max_amount > MAX_STORAGE) {
 				ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
 				sd->storage.max_amount = MAX_STORAGE;
 			}
-			// Gemstone bypass only at max VIP level
 			if (sd->vip.level >= battle_config.vip_max_level)
 				sd->special_state.no_gemstone = 2; // full bypass
 			else
