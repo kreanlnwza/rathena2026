@@ -88663,3 +88663,24 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1100038
+    AegisName: Lucky_Drop_Booster
+    Name: Lucky Drop Booster
+    Type: Usable
+    Buy: 10000
+    Weight: 10
+    Delay:
+      Duration: 60000
+      Status: Reuse_Limit_D
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      set .@boost, rand(1, 300);
+      dispbottom "Lucky Drop Booster activated! Drop Rate +" + .@boost + "% for 30 minutes.";
+      sc_start SC_ITEMBOOST, 1800000, .@boost;
