@@ -3,33 +3,39 @@
 //===== By: ==================================================
 //= Custom Script
 //===== Current Version: =====================================
-//= 1.0
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena Project (RE & pre-RE)
 //===== Description: =========================================
 //= NPC Shop ที่สุ่มไอเทม type Healing/Usable/DelayConsume
-//= มาขาย และรีเฟรชสต็อกใหม่อัตโนมัติทุก 30 นาที (ตรงนาทีที่ 00 และ 30)
+//= มาขาย และรีเฟรชสต็อกใหม่อัตโนมัติทุก 30 นาที
+//= ไม่ใช้ SQL — อ่านข้อมูลไอเทมจาก RAM ผ่าน getiteminfo()
 //=
-//= การตั้งค่าอยู่ใน OnInit ของ NPC "rand_shop_ctrl"
-//=   .num_items   - จำนวนไอเทมในร้านต่อรอบ (default: 8)
-//=   .min_price   - ราคา buy ขั้นต่ำของไอเทมที่จะสุ่ม (default: 100)
-//=   .max_price   - ราคา buy สูงสุดของไอเทมที่จะสุ่ม (default: 50000)
-//=   .price_rate  - อัตราราคา % เทียบกับราคา buy ปกติ (default: 100)
-//=                  เช่น 150 = แพงกว่าราคาปกติ 50%
-//===== Additional Comments: =================================
-//= ต้องการ SQL item database (item_db_re หรือ item_db)
-//= เปิดใช้งานโดยเพิ่มใน scripts_custom.conf:
-//=   npc: npc/custom/random_useable_shop.txt
+//= การทำงาน:
+//=   OnInit     → สแกน item IDs ทั้งหมดสร้าง pool แล้วรีเฟรชครั้งแรก
+//=   OnMinute00/30 → สุ่มเลือกไอเทมจาก pool แล้ว swap เข้าร้าน
+//=
+//= การตั้งค่าอยู่ใน OnInit ของ NPC "rand_shop_ctrl":
+//=   .num_items   - จำนวนไอเทมในร้านต่อรอบ          (default: 8)
+//=   .min_price   - ราคา buy ขั้นต่ำของไอเทมที่สุ่   (default: 100)
+//=   .max_price   - ราคา buy สูงสุดของไอเทมที่สุ่    (default: 50000)
+//=   .price_rate  - % ของราคา buy (150 = บวก 50%)   (default: 100)
+//=   .min_id      - item ID เริ่มต้นในการสแกน         (default: 501)
+//=   .max_id      - item ID สุดท้ายในการสแกน          (default: 32767)
+//===== Changelogs: ==========================================
+//= 1.0 First version (SQL-based)
+//= 2.0 Rewrite to use getiteminfo() from RAM, no SQL needed
 //============================================================
 
 // =============================================
-// NPC ที่ผู้เล่นคุยด้วย - วางที่ Prontera
+// NPC ที่ผู้เล่นคุยด้วย — วางที่ Prontera
 // แก้ไข map/พิกัดตามต้องการ
 // =============================================
 prontera,150,180,5	script	Random Shop	100,{
 	mes "[Random Shop]";
 	mes "ยินดีต้อนรับสู่ร้านสุ่มไอเทม!";
 	mes "ฉันขายไอเทม ^0055FF" + getvariableofnpc(.num_items, "rand_shop_ctrl") + " ชนิด^000000 ที่เปลี่ยนทุก 30 นาที";
+	mes "(pool รวม ^00AA00" + getvariableofnpc(.pool_size, "rand_shop_ctrl") + " ไอเทม^000000)";
 
 	.@min = gettime(GETTIME_MINUTE);
 	if (.@min < 30)
@@ -53,18 +59,17 @@ prontera,150,180,5	script	Random Shop	100,{
 }
 
 // =============================================
-// Shop NPC (hidden) - ต้องมี placeholder item ก่อน
-// npcshopadditem/delitem จะจัดการ items จริง
+// Shop NPC (hidden) — placeholder จะถูกแทนที่ใน OnInit
 // =============================================
 -	shop	rand_shop_items	-1,501:-1
 
 // =============================================
-// Controller NPC (hidden) - จัดการ refresh logic
+// Controller NPC (hidden) — จัดการ pool และ refresh
 // =============================================
 -	script	rand_shop_ctrl	-1,{
 	end;
 
-// ทำงานทุกชั่วโมงที่นาที 00 และ 30
+// รีเฟรชทุกชั่วโมงที่นาที :00 และ :30
 OnMinute00:
 OnMinute30:
 	callsub RefreshShop;
@@ -75,60 +80,100 @@ OnInit:
 	.num_items  = 8;        // จำนวนไอเทมต่อรอบ
 	.min_price  = 100;      // ราคา buy ขั้นต่ำ (zeny)
 	.max_price  = 50000;    // ราคา buy สูงสุด (zeny)
-	.price_rate = 100;      // % ของราคา buy (100 = ราคาปกติ)
+	.price_rate = 100;      // % ของราคา buy (100 = ราคาปกติ, 150 = +50%)
+	.min_id     = 501;      // item ID เริ่มต้นสแกน
+	.max_id     = 32767;    // item ID สุดท้ายสแกน
 	// =========================
+	callsub BuildPool;
 	callsub RefreshShop;
 	end;
 
-RefreshShop:
+// --------------------------------------------------
+// BuildPool: สแกน item IDs ทั้งหมดจาก RAM
+//   เก็บ IDs ที่ผ่านเงื่อนไขไว้ใน .item_pool[] และ .item_buy[]
+//   ทำครั้งเดียวตอน OnInit
+// --------------------------------------------------
+BuildPool:
 	freeloop 1;
 
-	if (checkre(0))
-		.@db$ = "item_db_re";
-	else
-		.@db$ = "item_db";
+	deletearray .item_pool;
+	deletearray .item_buy;
+	.pool_size = 0;
 
-	// ดึงไอเทม useable แบบสุ่มจาก SQL DB
-	.@count = query_sql(
-		"SELECT `id`, `price_buy` FROM `" + .@db$ + "` " +
-		"WHERE `type` IN ('Healing', 'Usable', 'DelayConsume') " +
-		"AND `price_buy` >= " + .min_price + " " +
-		"AND `price_buy` <= " + .max_price + " " +
-		"AND `price_buy` IS NOT NULL " +
-		"ORDER BY RAND() LIMIT " + .num_items,
-		.@new_ids, .@new_prices
-	);
+	for (.@id = .min_id; .@id <= .max_id; .@id++) {
+		.@type = getiteminfo(.@id, ITEMINFO_TYPE);
+		if (.@type == -1) continue;  // ไม่มีไอเทม ID นี้ใน DB
 
-	// ลบไอเทมของรอบก่อนออกจากร้าน
-	.@prev_size = getarraysize(.shop_ids);
-	for (.@i = 0; .@i < .@prev_size; .@i++) {
-		npcshopdelitem "rand_shop_items", .shop_ids[.@i];
+		// กรอง type: Healing(0), Usable(2), DelayConsume(11)
+		if (.@type != IT_HEALING && .@type != IT_USABLE && .@type != IT_DELAYCONSUME)
+			continue;
+
+		.@buy = getiteminfo(.@id, ITEMINFO_BUY);
+		if (.@buy < .min_price || .@buy > .max_price)
+			continue;
+
+		.item_pool[.pool_size] = .@id;
+		.item_buy[.pool_size]  = .@buy;
+		.pool_size++;
 	}
-	// ลบ placeholder (501) กรณีเป็น startup ครั้งแรก
-	npcshopdelitem "rand_shop_items", 501;
 
-	deletearray .shop_ids;
+	freeloop 0;
+	debugmes "[rand_shop_ctrl] BuildPool: พบ " + .pool_size + " ไอเทมใน pool (ID " + .min_id + "-" + .max_id + ")";
+	return;
 
-	// กรณีไม่พบไอเทมใน DB ใส่ placeholder กลับไปเพื่อไม่ให้ shop ว่าง
-	if (.@count == 0) {
-		npcshopadditem "rand_shop_items", 501, 50;
-		.shop_ids[0] = 501;
-		freeloop 0;
-		debugmes "[rand_shop_ctrl] RefreshShop: ไม่พบไอเทมใน " + .@db$ + " ตรงเงื่อนไข";
+// --------------------------------------------------
+// RefreshShop: สุ่มเลือกไอเทมจาก pool แล้ว swap เข้าร้าน
+// ใช้ rejection sampling — ปลอดภัยเพราะ num_items << pool_size
+// --------------------------------------------------
+RefreshShop:
+	if (.pool_size == 0) {
+		debugmes "[rand_shop_ctrl] RefreshShop: pool ว่าง ข้ามการรีเฟรช";
 		return;
 	}
 
-	// เพิ่มไอเทมชุดใหม่เข้าร้าน
-	for (.@i = 0; .@i < .@count; .@i++) {
-		.@price = .@new_prices[.@i] * .price_rate / 100;
+	freeloop 1;
+
+	.@pick = (.num_items < .pool_size) ? .num_items : .pool_size;
+
+	// เลือก index แบบไม่ซ้ำ (rejection sampling)
+	.@picked = 0;
+	.@attempts = 0;
+	.@max_attempts = .@pick * 20;
+
+	while (.@picked < .@pick && .@attempts < .@max_attempts) {
+		.@attempts++;
+		.@r = rand(.pool_size);
+
+		// ตรวจว่า index นี้ถูกเลือกแล้วหรือยัง
+		.@dup = 0;
+		for (.@j = 0; .@j < .@picked; .@j++) {
+			if (.@sel[.@j] == .@r) {
+				.@dup = 1;
+				break;
+			}
+		}
+		if (!.@dup) .@sel[.@picked++] = .@r;
+	}
+
+	// ลบไอเทมรอบก่อนออกจากร้าน
+	.@prev = getarraysize(.shop_ids);
+	for (.@i = 0; .@i < .@prev; .@i++) {
+		npcshopdelitem "rand_shop_items", .shop_ids[.@i];
+	}
+	npcshopdelitem "rand_shop_items", 501;  // ลบ placeholder ครั้งแรก
+	deletearray .shop_ids;
+
+	// เพิ่มไอเทมชุดใหม่
+	for (.@i = 0; .@i < .@picked; .@i++) {
+		.@pool_i = .@sel[.@i];
+		.@price  = .item_buy[.@pool_i] * .price_rate / 100;
 		if (.@price < 1) .@price = 1;
-		npcshopadditem "rand_shop_items", .@new_ids[.@i], .@price;
-		.shop_ids[.@i] = .@new_ids[.@i];
+		npcshopadditem "rand_shop_items", .item_pool[.@pool_i], .@price;
+		.shop_ids[.@i] = .item_pool[.@pool_i];
 	}
 
 	freeloop 0;
 
-	// ประกาศให้ผู้เล่นทราบ
-	announce "[ Random Shop ] สต็อกไอเทมถูกรีเฟรชแล้ว " + .@count + " รายการ! มาเลือกซื้อกันได้เลยที่ Prontera!", bc_all|bc_blue;
+	announce "[ Random Shop ] สต็อกไอเทมถูกรีเฟรชแล้ว " + .@picked + " รายการ! มาเลือกซื้อกันได้เลยที่ Prontera!", bc_all|bc_blue;
 	return;
 }
