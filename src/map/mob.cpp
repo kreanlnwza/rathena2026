@@ -3168,13 +3168,13 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 				}
 			}
 
-			// change experience for monster rank
-			if (battle_config.mob_rank_system && md->rank > MOBRANK_F) {
-				per = per * mob_rank_multipliers[md->rank].exp / 100.;
-			}
-
 			if( entry.flag == MDLF_PET )
 				per *= battle_config.pet_attack_exp_rate/100.;
+
+			uint16 rank_exp_rate = 100;
+			if (battle_config.mob_rank_system && md->rank > MOBRANK_F) {
+				rank_exp_rate = mob_rank_multipliers[md->rank].exp;
+			}
 
 			if(battle_config.zeny_from_mobs && md->level) {
 				 // zeny calculation moblv + random moblv [Valaris]
@@ -3187,6 +3187,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 				base_exp = 0;
 			else {
 				double exp = apply_rate2(md->db->base_exp, per, 1);
+				exp = apply_rate(exp, rank_exp_rate);
 				exp = apply_rate(exp, bonus);
 				exp = apply_rate(exp, map_getmapflag(m, MF_BEXP));
 				base_exp = (t_exp)cap_value(exp, 1, MAX_EXP);
@@ -3200,6 +3201,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 				job_exp = 0;
 			else {
 				double exp = apply_rate2(md->db->job_exp, per, 1);
+				exp = apply_rate(exp, rank_exp_rate);
 				exp = apply_rate(exp, bonus);
 				exp = apply_rate(exp, map_getmapflag(m, MF_JEXP));
 				job_exp = (t_exp)cap_value(exp, 1, MAX_EXP);
