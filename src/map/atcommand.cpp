@@ -36,6 +36,7 @@
 #include "homunculus.hpp"
 #include "instance.hpp"
 #include "intif.hpp"
+#include "enchantgrade_randopt.hpp"
 #include "itemdb.hpp" // MAX_ITEMGROUP
 #include "cashshop.hpp"
 #include "log.hpp"

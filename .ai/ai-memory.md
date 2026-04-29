@@ -288,6 +288,10 @@ mes "- ^i[" + .@item_id + "] " + getitemname(.@item_id) + " x" + .@amount;
 | `^e[EmotionID]` | แสดง emoticon/อีโมจิ |
 | `getitemname(ItemID)` | แสดงชื่อไอเทม |
 
+> **⚠️ ข้อจำกัด:** `^i[ItemID]` และ `^e[EmotionID]` **ใช้ได้เฉพาะใน `mes`** เท่านั้น
+> **ห้ามใช้ใน `select()` หรือ `menu`** เพราะจะแสดงเป็นตัวเลขดิบ เช่น `i[2101]` แทนที่จะเป็น icon
+> ใน select/menu ให้ใช้ `getitemname()` อย่างเดียวแทน
+
 ### Emoticon สำหรับ NPC (^e[])
 
 ใช้ `^e[EmotionID]` เพื่อแสดง emoticon ใน dialog:

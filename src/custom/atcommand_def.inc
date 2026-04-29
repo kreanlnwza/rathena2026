@@ -11,3 +11,9 @@
 //ACMD_DEF(newcommand),
 ACMD_DEF(guildskillpoint),
 ACMD_DEF(guildallskill),
+
+// Enchantgrade random-option helpers
+// Author: V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+ACMD_DEF(gradedown),
+ACMD_DEF(addopt5),
+ACMD_DEF(rerollopt),
