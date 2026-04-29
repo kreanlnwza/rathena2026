@@ -74,7 +74,6 @@ ACMD_FUNC(gradedown)
 	it.option[MAX_ITEM_RDM_OPT - 1].param = 0;
 
 	it.enchantgrade = old_grade - 1;
-	it.refine = 0;
 
 	log_pick_pc( sd, LOG_TYPE_COMMAND, 1, &it );
 	clif_additem( sd, index, 1, 0 );

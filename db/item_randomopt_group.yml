@@ -50,3 +50,8 @@ Footer:
   - Path: db/re/item_randomopt_group.yml
     Mode: Renewal
   - Path: db/import/item_randomopt_group.yml
+  - Path: db/re/randomoptgroup_id1.yml
+  - Path: db/re/randomoptgroup_id2.yml
+  - Path: db/re/randomoptgroup_id3.yml
+  - Path: db/re/randomoptgroup_id4.yml
+  - Path: db/re/randomoptgroup_id5.yml
