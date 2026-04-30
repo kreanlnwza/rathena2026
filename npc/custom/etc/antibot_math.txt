@@ -1,0 +1,185 @@
+//===== rAthena Script =======================================
+//= Anti-Bot / Anti-Macro Math Check
+//===== Description: =========================================
+//= สุ่มตรวจผู้เล่นด้วยโจทย์เลขคณิต พร้อมตัวเลือกคำตอบ A-E
+//= - ตรวจทุกๆ ฆ่ามอนสเตอร์ครบ .CHECK_KILLS ตัว (default 3000)
+//= - เมื่อครบโควต้า มีโอกาส .CHECK_CHANCE % (default 30) ที่จะถูกเรียกตรวจ
+//= - มีเวลาตอบ .ANSWER_TIME วินาที (default 30)
+//= - ตอบผิด/หมดเวลา = ลงโทษตาม .PUNISH_MODE
+//============================================================
+
+-	script	AntiBotMath	-1,{
+	end;
+
+OnInit:
+	// ============ ตั้งค่า ============
+	.CHECK_KILLS    = 3000;     // ฆ่ากี่ตัวจึงเริ่มสุ่มตรวจ
+	.CHECK_CHANCE   = 30;       // % โอกาสโดนตรวจเมื่อครบโควต้า
+	.ANSWER_TIME    = 30;       // เวลาตอบ (วินาที)
+	.MAX_FAILS      = 1;        // ตอบผิดได้กี่ครั้งก่อนโดนลงโทษ
+	.PUNISH_MODE    = 1;        // 1 = kick, 2 = jail, 3 = ban (ผ่าน atcommand)
+	.BAN_DURATION$  = "+1d";    // ใช้กับ PUNISH_MODE 3
+	// =================================
+	end;
+
+// ----------- ตัวนับการฆ่ามอนสเตอร์ -----------
+OnNPCKillEvent:
+	// ถ้ากำลังถูกตรวจอยู่แล้ว ไม่ต้องนับ
+	if (@antibot_checking) end;
+
+	@antibot_kills += 1;
+	if (@antibot_kills < .CHECK_KILLS) end;
+
+	// ครบโควต้าแล้ว รีเซ็ตตัวนับ และสุ่มว่าจะตรวจหรือไม่
+	@antibot_kills = 0;
+	if (rand(100) >= .CHECK_CHANCE) end;
+
+	// เริ่มตรวจ
+	callsub OnStartCheck;
+	end;
+
+// ----------- เริ่มเซสชันการตรวจ -----------
+OnStartCheck:
+	@antibot_checking = 1;
+	@antibot_fails    = 0;
+
+	// สร้างโจทย์ใหม่
+	callsub OnGenerateQuestion;
+
+	// ตั้งเวลาตอบ
+	deltimer strnpcinfo(3) + "::OnTimeout";
+	addtimer .ANSWER_TIME * 1000, strnpcinfo(3) + "::OnTimeout";
+
+	// แจ้งผู้เล่นและเปิดเมนู
+	dispbottom "[Anti-Bot] ระบบสุ่มตรวจการเล่น กรุณาตอบโจทย์ภายใน " + .ANSWER_TIME + " วินาที!";
+	callsub OnAskQuestion;
+	end;
+
+// ----------- สุ่มสร้างโจทย์ + ตัวเลือก -----------
+OnGenerateQuestion:
+	// สุ่มประเภทโจทย์: 0=บวก, 1=ลบ, 2=คูณ
+	.@op  = rand(3);
+	.@a   = rand(2, 50);
+	.@b   = rand(2, 50);
+
+	if (.@op == 0) {
+		@antibot_q$  = .@a + " + " + .@b;
+		.@correct    = .@a + .@b;
+	}
+	else if (.@op == 1) {
+		// ทำให้ผลลัพธ์ไม่ติดลบ
+		if (.@a < .@b) { .@tmp = .@a; .@a = .@b; .@b = .@tmp; }
+		@antibot_q$  = .@a + " - " + .@b;
+		.@correct    = .@a - .@b;
+	}
+	else {
+		.@a = rand(2, 12);
+		.@b = rand(2, 12);
+		@antibot_q$  = .@a + " x " + .@b;
+		.@correct    = .@a * .@b;
+	}
+
+	// สร้างตัวเลือก 5 ตัว (A-E) โดยสุ่มตำแหน่งคำตอบที่ถูก
+	.@correct_slot = rand(5);
+	@antibot_correct = .@correct_slot;
+
+	for (.@i = 0; .@i < 5; .@i++) {
+		if (.@i == .@correct_slot) {
+			@antibot_choice[.@i] = .@correct;
+			continue;
+		}
+		// สร้างคำตอบลวงที่ไม่ซ้ำกับคำตอบจริงและตัวเลือกอื่น
+		while (1) {
+			.@delta = rand(1, 10) * (rand(2) ? 1 : -1);
+			.@fake  = .@correct + .@delta;
+			if (.@fake < 0) continue;
+			if (.@fake == .@correct) continue;
+			.@dup = 0;
+			for (.@j = 0; .@j < .@i; .@j++) {
+				if (@antibot_choice[.@j] == .@fake) { .@dup = 1; break; }
+			}
+			if (!.@dup) {
+				@antibot_choice[.@i] = .@fake;
+				break;
+			}
+		}
+	}
+	return;
+
+// ----------- เปิดหน้าต่างถามคำตอบ -----------
+OnAskQuestion:
+	mes "[ระบบ Anti-Bot]";
+	mes "ตรวจสอบการเล่น (ปลอม/มาโคร)";
+	mes " ";
+	mes "โจทย์: ^FF0000" + @antibot_q$ + " = ?^000000";
+	mes " ";
+	mes "เลือกคำตอบที่ถูกต้องภายใน " + .ANSWER_TIME + " วินาที";
+	.@sel = select(
+		"A. " + @antibot_choice[0],
+		"B. " + @antibot_choice[1],
+		"C. " + @antibot_choice[2],
+		"D. " + @antibot_choice[3],
+		"E. " + @antibot_choice[4]
+	) - 1;
+
+	// ยกเลิก timer หมดเวลา (ตอบทัน)
+	deltimer strnpcinfo(3) + "::OnTimeout";
+
+	if (.@sel == @antibot_correct) {
+		mes " ";
+		mes "^00AA00ถูกต้อง! ขอบคุณที่ให้ความร่วมมือ^000000";
+		close2;
+		callsub OnPassed;
+		end;
+	}
+
+	// ตอบผิด
+	@antibot_fails += 1;
+	mes " ";
+	mes "^FF0000คำตอบไม่ถูกต้อง^000000";
+	if (@antibot_fails < .MAX_FAILS) {
+		mes "เหลือโอกาสอีก " + (.MAX_FAILS - @antibot_fails) + " ครั้ง";
+		close2;
+		callsub OnGenerateQuestion;
+		deltimer strnpcinfo(3) + "::OnTimeout";
+		addtimer .ANSWER_TIME * 1000, strnpcinfo(3) + "::OnTimeout";
+		callsub OnAskQuestion;
+		end;
+	}
+	close2;
+	callsub OnFailed;
+	end;
+
+// ----------- ตอบถูก -----------
+OnPassed:
+	@antibot_checking = 0;
+	@antibot_fails    = 0;
+	deltimer strnpcinfo(3) + "::OnTimeout";
+	dispbottom "[Anti-Bot] ผ่านการตรวจสอบเรียบร้อย";
+	return;
+
+// ----------- หมดเวลา -----------
+OnTimeout:
+	if (!@antibot_checking) end;
+	dispbottom "[Anti-Bot] หมดเวลาตอบโจทย์!";
+	callsub OnFailed;
+	end;
+
+// ----------- ลงโทษ -----------
+OnFailed:
+	@antibot_checking = 0;
+	@antibot_fails    = 0;
+	announce "[Anti-Bot] ผู้เล่น " + strcharinfo(0) + " ไม่ผ่านการตรวจสอบ", bc_self;
+	logmes "AntiBot: " + strcharinfo(0) + " (AID:" + getcharid(3) + ") ไม่ผ่านการตรวจสอบ";
+
+	if (.PUNISH_MODE == 1) {
+		atcommand "@kick " + strcharinfo(0);
+	}
+	else if (.PUNISH_MODE == 2) {
+		atcommand "@jail " + strcharinfo(0);
+	}
+	else if (.PUNISH_MODE == 3) {
+		atcommand "@ban " + .BAN_DURATION$ + " " + strcharinfo(0);
+	}
+	return;
+}
