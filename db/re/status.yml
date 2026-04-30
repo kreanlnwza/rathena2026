@@ -335,7 +335,6 @@ Body:
       Agi: true
       Dex: true
     Flags:
-      FailedMado: true
       RemoveOnHermode: true
     Fail:
       Quagmire: true
@@ -471,7 +470,6 @@ Body:
       Speed: true
       Aspd: true
     Flags:
-      FailedMado: true
       TaekwonAngel: true
       RemoveOnHermode: true
     Fail:
@@ -567,7 +565,6 @@ Body:
     CalcFlags:
       Regen: true
     Flags:
-      FailedMado: true
       NoSave: true
       SuperNoviceAngel: true
       RemoveOnHermode: true
@@ -978,7 +975,6 @@ Body:
     Opt3:
       Quicken: true
     Flags:
-      FailedMado: true
       RequireWeapon: true
       RemoveOnHermode: true
     Fail:
@@ -1322,7 +1318,6 @@ Body:
       Cri: true
       Hit: true
     Flags:
-      FailedMado: true
       NoSave: true
       RemoveOnHermode: true
     Fail:
@@ -1334,7 +1329,6 @@ Body:
       Flee: true
       Speed: true
     Flags:
-      FailedMado: true
       NoSave: true
       RemoveOnHermode: true
     Fail:
@@ -1941,7 +1935,6 @@ Body:
       Aspd: true
     Flags:
       NoRemoveOnDead: true
-      FailedMado: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
