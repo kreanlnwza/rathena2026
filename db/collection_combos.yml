@@ -1,0 +1,63 @@
+###########################################################################
+# Collection Combo Database
+###########################################################################
+#
+# Settings
+#
+###########################################################################
+# - Combos:                 List of combo sets.
+#    - Combo:               Sequence of items to define a combo (minimum of 2 items).
+#       - <item name>       AEGIS name of the item
+#   Script                  Script to execute when one of the combos is equipped. (Default: null)
+#   Clear                   Remove the defined combos from database. (Default: false)
+###########################################################################
+
+Header:
+  Type: COLLECTION_COMBO_DB
+  Version: 1
+
+Body:
+  - Combos:
+      - Combo:
+          - Item: Poring_Card
+          - Item: Fabre_Card
+    Script: |
+      bonus bMaxHP,300;
+      bonus bMatkRate,min(5, getequiprefinerycnt(EQI_HAND_R)-5);
+      bonus2 bSubEle,Ele_Neutral,min(30, getequiprefinerycnt(EQI_GARMENT)*3);
+      bonus bAllTraitStats,100;
+  - Combos:
+      - Combo:
+          - Item: Drops_Card
+            Amount: 3
+          - Item: Lunatic_Card
+            Amount: 2
+    Script: |
+      bonus bAspd,2;
+      bonus bCritical,10;
+      bonus bMaxSP,150;
+      bonus2 bAddRace,RC_Brute,15;
+  - Combos:
+      - Combo:
+          - Item: Thief_Bug_Card
+          - Item: Rocker_Card
+            Amount: 4
+    Script: |
+      bonus bDef,5;
+      bonus bMdef,3;
+      bonus2 bSubRace,RC_Insect,20;
+      bonus2 bResEff,Eff_Poison,5000;
+      bonus bHealPower,10;
+  - Combos:
+      - Combo:
+          - Item: Spore_Card
+          - Item: Plankton_Card
+          - Item: Pecopeco_Egg_Card
+    Script: |
+      bonus2 bAddEle,Ele_Fire,10;
+      bonus2 bAddEle,Ele_Water,10;
+      bonus2 bAddEle,Ele_Earth,10;
+      bonus2 bSubEle,Ele_Fire,15;
+      bonus2 bSubEle,Ele_Water,15;
+      bonus2 bSubEle,Ele_Earth,15;
+      bonus bAllStats,2;

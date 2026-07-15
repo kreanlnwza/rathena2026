@@ -1,0 +1,1452 @@
+Header:
+  Type: COLLECTION_BONUS
+  Version: 1
+
+Body:
+  - Item: Afro_Wig
+    Script: |
+      bonus bAgi,2;
+  - Item: Alarm_Mask
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Alca_Bringer
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Alice_Doll
+    Script: |
+      bonus batk,5;
+  - Item: Altas_Weapon
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Angel_Spirit
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Angeling_Hairpin
+    Script: |
+      bonus bmatk,4;
+  - Item: Angeling_Hat
+    Script: |
+      bonus bStr,2;
+  - Item: Angeling_Wanna_Fly
+    Script: |
+      bonus bStr,2;
+  - Item: Anti_Magic_Manteau
+    Script: |
+      bonus bAddMaxWeight,2000;
+  - Item: Anti_Magic_Suit
+    Script: |
+      bonus bAddMaxWeight,2000;
+  - Item: Antique_Pipe
+    Script: |
+      bonus bDef,4;
+  - Item: Antler
+    Script: |
+      bonus bAgi,2;
+  - Item: Assasin_Dagger
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Assassin_Mask_
+    Script: |
+      bonus bCritical,1;
+  - Item: Ati_Atihan_Hat_
+    Script: |
+      bonus bStr,2;
+  - Item: Ayam
+    Script: |
+      bonus bVit,2;
+  - Item: Ayothaya_Hat
+    Script: |
+      bonus bDex,2;
+  - Item: Baby_Pacifier
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Balloon_Hat
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Bankruptcy_Of_Heart
+    Script: |
+      bonus bStr,2;
+  - Item: Baseball_Cap
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Bazerald
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Beard
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Beer_Cap
+    Script: |
+      bonus bLuk,2;
+  - Item: Bell_Ribbon
+    Script: |
+      bonus bVit,2;
+  - Item: Bf_Recruiter_Hat
+    Script: |
+      bonus bAgi,2;
+  - Item: Binit_Doll_Hat
+    Script: |
+      bonus bVit,2;
+  - Item: Binoculars
+    Script: |
+      bonus batk,5;
+  - Item: Bird_Nest
+    Script: |
+      bonus bMatk,20;
+  - Item: Bird_Nest_Hat
+    Script: |
+      bonus bint,2;
+  - Item: Bison_Horn
+    Script: |
+      bonus bAspd,1;
+  - Item: Black_Bunny_Band
+    Script: |
+      bonus bVit,2;
+  - Item: Black_Glasses
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Bloody_Iron_Ball
+    Script: |
+      bonus batk,5;
+  - Item: Blue_Drooping_Kitty
+    Script: |
+      bonus bAllstats,10;
+  - Item: Blue_Fur_Hat
+    Script: |
+      bonus bHit,3;
+  - Item: Blue_Ribbon
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Blue_Wizardry_Hat
+    Script: |
+      bonus bStr,2;
+  - Item: Blush
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Blush_Of_Groom
+    Script: |
+      bonus bStr,2;
+  - Item: Body_Power_Up_Ring
+    Script: |
+      bonus bAddMaxWeight,2000;
+  - Item: Bogy_Cap
+    Script: |
+      bonus bFlee,3;
+  - Item: Bone_Helm_
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Boy's_Cap
+    Script: |
+      bonus bint,2;
+  - Item: Bread_Bag2
+    Script: |
+      bonus bflee,3;
+  - Item: Bride_Mask
+    Script: |
+      bonus bVit,2;
+  - Item: Brood_Axe
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Brown_Bear_Cap
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Bulb_Hairband
+    Script: |
+      bonus bStr,2;
+  - Item: Bullock_Helm
+    Script: |
+      bonus bmatk,4;
+  - Item: Bunny_Band
+    Script: |
+      bonus bDef,4;
+  - Item: Cakram
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Campfire_Hat
+    Script: |
+      bonus bflee,3;
+  - Item: Candle
+    Script: |
+      bonus bHit,3;
+  - Item: Cap_Of_Blindness
+    Script: |
+      bonus bDef,4;
+  - Item: Cap_Of_Concentration
+    Script: |
+      bonus bflee,3;
+  - Item: Cape_Of_Ancient_Lord
+    Script: |
+      bonus baspdrate,2;
+  - Item: Captain_Hat
+    Script: |
+      bonus bAgi,2;
+  - Item: Carmen_Miranda's_Hat
+    Script: |
+      bonus bLuk,2;
+  - Item: Cat_Hat
+    Script: |
+      bonus bDef,4;
+  - Item: Celestial_Robe
+    Script: |
+      bonus bFixedCast,-100;
+  - Item: Censor_Bar
+    Script: |
+      bonus bHit,3;
+  - Item: Champion_Wreath
+    Script: |
+      bonus batk,5;
+  - Item: Charming_Ribbon
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Chick_Hat
+    Script: |
+      bonus batk,5;
+  - Item: Chicken_Hat
+    Script: |
+      bonus bmatk,4;
+  - Item: Chinese_Crown
+    Script: |
+      bonus bDex,2;
+  - Item: Chinese_Crown_
+    Script: |
+      bonus bVit,2;
+  - Item: Chrome_Twohand_Sword
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Chullos
+    Script: |
+      bonus bAgi,2;
+  - Item: Clack_Of_Servival
+    Script: |
+      bonus bmatkrate,1;
+  - Item: Claris_Doll_Hat
+    Script: |
+      bonus bDef,4;
+  - Item: Claw_Of_Garm
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Close_Helmet
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Cookie_Hat
+    Script: |
+      bonus bStr,2;
+  - Item: Coppola
+    Script: |
+      bonus bint,2;
+  - Item: Coronet
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Corsair
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Counter_Dagger
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Cowboy_Hat
+    Script: |
+      bonus bFlee,3;
+  - Item: Crescent_Helm
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Crescent_Scythe
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Cross_Band
+    Script: |
+      bonus bAgi,2;
+  - Item: Crossed_Hair_Band
+    Script: |
+      bonus bmatk,4;
+  - Item: Crown
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Crown_Parrot
+    Script: |
+      bonus bHit,3;
+  - Item: Cutlas
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Cyclops_Visor
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Dark_Blindfold
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Dark_Snake_Lord_Hat
+    Script: |
+      bonus bDex,2;
+  - Item: Dark_Wing
+    Script: |
+      bonus bVit,2;
+  - Item: Darkness_Helm
+    Script: |
+      bonus bLuk,2;
+  - Item: Dea_Staff
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Death_Note
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Debril_Doll_Hat
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Deprotai_Doll_Hat
+    Script: |
+      bonus bDex,2;
+  - Item: Destruction_Rod
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Detective_Hat
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Deviling_Hat
+    Script: |
+      bonus batk,5;
+  - Item: Deviruchi_Cap
+    Script: |
+      bonus bMatk,20;
+  - Item: Diabolus_Armor
+    Script: |
+      bonus batkrate,1;
+  - Item: Diabolus_Boots
+    Script: |
+      bonus bmaxhprate,2;
+  - Item: Diabolus_Robe
+    Script: |
+      bonus bmaxsprate,2;
+  - Item: Diadem
+    Script: |
+      bonus bflee,3;
+  - Item: Doctor_Cap
+    Script: |
+      bonus bint,2;
+  - Item: Doom_Slayer_
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Dragon_Skull
+    Script: |
+      bonus bdef,3;
+              bonus bMdef,3;
+  - Item: Dress_Hat
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Drooping_Bunny
+    Script: |
+      bonus bVit,2;
+  - Item: Drooping_Kitty
+    Script: |
+      bonus bDex,2;
+  - Item: Drooping_Nine_Tail
+    Script: |
+      bonus bFlee,3;
+  - Item: Drooping_White_Kitty
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Ear_Mufs
+    Script: |
+      bonus bint,2;
+  - Item: Ear_Of_Angel's_Wing
+    Script: |
+      bonus baspdrate,1;
+  - Item: Ear_Of_Black_Cat
+    Script: |
+      bonus bStr,2;
+  - Item: Ear_Of_Devil's_Wing
+    Script: |
+      bonus batk,5;
+  - Item: Elephant_Hat
+    Script: |
+      bonus bVit,2;
+  - Item: Encyclopedia_Revision
+    Script: |
+      bonus bAddMaxWeight,2000;
+  - Item: Erde
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: euRO_Baseball_Cap
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Fallen_Leaves_
+    Script: |
+      bonus bLuk,2;
+  - Item: Fanta_Grape_Can
+    Script: |
+      bonus bflee,3;
+  - Item: Fanta_Orange_Can
+    Script: |
+      bonus bHit,3;
+  - Item: Fantastic_Wig
+    Script: |
+      bonus bint,2;
+  - Item: Fashion_Sunglass
+    Script: |
+      bonus bAgi,2;
+  - Item: Feather_Beret
+    Script: |
+      bonus bDex,2;
+  - Item: Feather_Bonnet
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Filir_Hat
+    Script: |
+      bonus batk,5;
+  - Item: Fire_Brand
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: First_Moon_Hair_Pin
+    Script: |
+      bonus bint,2;
+  - Item: Fish_Head_Hat
+    Script: |
+      bonus bDef,4;
+  - Item: Fish_In_Mouth
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Fish_On_Head
+    Script: |
+      bonus bDex,2;
+  - Item: Fisherman_Hat
+    Script: |
+      bonus bmatk,4;
+  - Item: Flower_Coronet
+    Script: |
+      bonus bStr,2;
+  - Item: Flower_Hairpin
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Flower_Love_Hat
+    Script: |
+      bonus batk,5;
+  - Item: Flu_Mask_F
+    Script: |
+      bonus bLuk,2;
+  - Item: Flying_Angel
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Forturn_Sword
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Fox_Hat
+    Script: |
+      bonus bint,2;
+  - Item: Fried_Egg
+    Script: |
+      bonus bLuk,2;
+  - Item: Friend_Recruiter_Hat
+    Script: |
+      bonus bAgi,2;
+  - Item: Fur_Hat
+    Script: |
+      bonus bflee,3;
+  - Item: Gae_Bolg
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Gambler_Hat
+    Script: |
+      bonus bVit,2;
+  - Item: Gang_Scarf
+    Script: |
+      bonus bDex,2;
+  - Item: Geffen_Mage_Robe
+    Script: |
+      bonus bAddMaxWeight,2000;
+  - Item: Geffen_Magic_Muffler
+    Script: |
+      bonus bAddMaxWeight,2000;
+  - Item: Gemmed_Crown
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Gemmed_Sallet_
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Gf_Recruiter_Hat
+    Script: |
+      bonus batk,5;
+  - Item: Giant_Axe
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Glittering_Clothes
+    Script: |
+      bonus bdelayrate,-1;
+  - Item: Gold_Spirit_Chain
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Gold_Tiara
+    Script: |
+      bonus bflee,3;
+  - Item: Golden_Gear
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Golden_Mace
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Golden_Wreath
+    Script: |
+      bonus bmatk,4;
+  - Item: Granpa_Beard_F
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Gray_Deviruchi_Cap
+    Script: |
+      bonus bDef,4;
+  - Item: Gray_Drooping_Kitty
+    Script: |
+      bonus batk,5;
+  - Item: Gray_Fur_Hat
+    Script: |
+      bonus bint,2;
+  - Item: Gray_Wizardry_Hat
+    Script: |
+      bonus bFlee,3;
+  - Item: Guardian_Lion_Mask
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Guildsman_Recruiter
+    Script: |
+      bonus bHit,3;
+  - Item: Gungnir
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Hahoe_Mask
+    Script: |
+      bonus bint,2;
+  - Item: Hairband_Of_Grandpeco
+    Script: |
+      bonus bStr,2;
+  - Item: Happy_Wig
+    Script: |
+      bonus bAgi,2;
+  - Item: Hat_Of_Bundle
+    Script: |
+      bonus bHit,3;
+  - Item: Hat_Of_Cake
+    Script: |
+      bonus bStr,2;
+  - Item: Hat_Of_Cake_
+    Script: |
+      bonus bFlee,3;
+  - Item: Hat_Of_Cook
+    Script: |
+      bonus bDex,2;
+  - Item: Hat_Of_Judge
+    Script: |
+      bonus bLuk,2;
+  - Item: Headband_Of_Power
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Headgear_Of_Queen
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Headset
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Headset_OST
+    Script: |
+      bonus bAgi,2;
+  - Item: Hell_Fire
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Hellomother_Hat
+    Script: |
+      bonus bmatk,4;
+  - Item: Helm_Of_Abyss
+    Script: |
+      bonus bDex,2;
+  - Item: Helm_Of_Angel
+    Script: |
+      bonus bVit,2;
+  - Item: Helm_Of_Darkness
+    Script: |
+      bonus bLuk,2;
+  - Item: Helm_Of_Sun
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Hibiscus
+    Script: |
+      bonus batk,5;
+  - Item: Hockey_Mask
+    Script: |
+      bonus bDef,4;
+  - Item: Holy_Robe
+    Script: |
+      bonus bdelayrate,-1;
+  - Item: House_Auger
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Hunting_Cap
+    Script: |
+      bonus bFlee,3;
+  - Item: Hunting_Spear
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Hurricane_Fury
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Ice_Falchon
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Ifrit's_Ear
+    Script: |
+      bonus bHit,3;
+  - Item: Immaterial_Sword
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Indian_Headband
+    Script: |
+      bonus bint,2;
+  - Item: Indonesian_Bandana
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Iron_Driver
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Ixion_Wing
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: J_Captain_Hat
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Jasper_Crest
+    Script: |
+      bonus bHit,3;
+  - Item: Jumping_Poring
+    Script: |
+      bonus bDef,4;
+  - Item: Kabuki_Mask
+    Script: |
+      bonus bVit,2;
+  - Item: Kafra_Band
+    Script: |
+      bonus bDex,2;
+  - Item: Karada_Meguri_Tea_Hat
+    Script: |
+      bonus bDex,2;
+  - Item: Kettle_Hat
+    Script: |
+      bonus bmatk,4;
+  - Item: Kitty_Bell
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Krasnaya
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Krieg
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Kronos
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: L_Orc_Hero_Helm
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Large_Hibiscus
+    Script: |
+      bonus bHit,3;
+  - Item: Laurel_Wreath
+    Script: |
+      bonus bStr,2;
+  - Item: Lazy_Raccoon
+    Script: |
+      bonus bDef,4;
+  - Item: Leaf_Headgear
+    Script: |
+      bonus bint,2;
+  - Item: Lif_Doll_Hat
+    Script: |
+      bonus bStr,2;
+  - Item: Light_Bulb_Band
+    Script: |
+      bonus batk,5;
+  - Item: Linguistic_Book_Cap
+    Script: |
+      bonus bint,2;
+  - Item: Lion_Mask
+    Script: |
+      bonus bAgi,2;
+  - Item: Little_Angel_Doll
+    Script: |
+      bonus bLuk,2;
+  - Item: Loard_Circlet
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Loki_Mask
+    Script: |
+      bonus bDex,2;
+  - Item: Long_Mace
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Lotus_Flower_Hat
+    Script: |
+      bonus bFlee,3;
+  - Item: Louyang_Cap
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Love_Berry
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Magestic_Goat
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Magic_Eyes
+    Script: |
+      bonus bmatk,4;
+  - Item: Magic_Reflector
+    Script: |
+      bonus bAddMaxWeight,2000;
+  - Item: Marvelous_Wig
+    Script: |
+      bonus bDex,2;
+  - Item: Masamune
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Mask_Of_Fox
+    Script: |
+      bonus bDef,4;
+  - Item: Mask_Of_Ifrit
+    Script: |
+      bonus batk,5;
+  - Item: MD_Geffen_Hood
+    Script: |
+      bonus bInt,2;
+  - Item: MD_Geffen_Hood2
+    Script: |
+      bonus bInt,2;
+  - Item: MD_Geffen_Hood3
+    Script: |
+      bonus bInt,2;
+  - Item: MD_Geffen_Hood4
+    Script: |
+      bonus bInt,2;
+  - Item: MD_Geffen_Ring
+    Script: |
+      bonus bPatk,1;
+  - Item: MD_Geffen_Ring2
+    Script: |
+      bonus bSMatk,1;
+  - Item: MD_Geffen_Robe
+    Script: |
+      bonus bInt,2;
+  - Item: MD_Geffen_Shield
+    Script: |
+      bonus bInt,2;
+  - Item: MD_Geffen_Shield2
+    Script: |
+      bonus bInt,2;
+  - Item: MD_Geffen_Suits
+    Script: |
+      bonus bInt,2;
+  - Item: Meteo_Plate_Armor
+    Script: |
+      bonus bdef,3;
+  - Item: Mine_Helm
+    Script: |
+      bonus bLuk,2;
+  - Item: Mini_Propeller_
+    Script: |
+      bonus bLuk,2;
+  - Item: Minstrel_Hat
+    Script: |
+      bonus bDef,4;
+  - Item: Misstrance_Crown
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Mistress_Crown
+    Script: |
+      bonus bStr,2;
+  - Item: Moonlight_Flower_Hat
+    Script: |
+      bonus bVit,2;
+  - Item: Moonlight_Sword
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Morpheus's_Armlet
+    Script: |
+      bonus bmaxsp,30;
+  - Item: Morpheus's_Ring
+    Script: |
+      bonus bmaxHp,300;
+  - Item: Morrigane's_Belt
+    Script: |
+      bonus bdelayrate,-1;
+  - Item: Morrigane's_Manteau
+    Script: |
+      bonus bCritatkrate,2;
+  - Item: Morrigane's_Pendant
+    Script: |
+      bonus bdelayrate,-1;
+  - Item: Mottled_Egg_Shell
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Mr_Scream
+    Script: |
+      bonus bmatk,4;
+  - Item: Mr_Smile
+    Script: |
+      bonus bAgi,2;
+  - Item: Mushroom_Band
+    Script: |
+      bonus bHit,3;
+  - Item: Muslim_Hat_F
+    Script: |
+      bonus bDef,4;
+  - Item: Muslim_Hat_M
+    Script: |
+      bonus bVit,2;
+  - Item: Mystery_Fruit_Shell
+    Script: |
+      bonus bAgi,2;
+  - Item: Mystic_Bow
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Nagan
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: New_Cowboy_Hat
+    Script: |
+      bonus bAgi,2;
+  - Item: Observer
+    Script: |
+      bonus batk,5;
+  - Item: October_Fest_Cap
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Opera_Ghost_Mask
+    Script: |
+      bonus bVit,2;
+  - Item: Orc_Hero_Helm
+    Script: |
+      bonus bDex,2;
+  - Item: Orchid_Hairband
+    Script: |
+      bonus batk,5;
+  - Item: Orcish_Sword
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Oxygen_Mask
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Party_Hat
+    Script: |
+      bonus bint,2;
+  - Item: Party_Recruiter_Hat
+    Script: |
+      bonus bAgi,2;
+  - Item: Pecopeco_Hairband
+    Script: |
+      bonus bdef,3;
+              bonus bMdef,3;
+  - Item: Pecopeco_Wing_Ears
+    Script: |
+      bonus bLuk,2;
+  - Item: Phantom_Of_Opera
+    Script: |
+      bonus bLuk,2;
+  - Item: Picnic_Hat
+    Script: |
+      bonus bint,2;
+  - Item: Piece_Of_Angent_Skin
+    Script: |
+      bonus bmaxsprate,2;
+  - Item: Pink_Drooping_Kitty
+    Script: |
+      bonus bmatk,4;
+  - Item: Pink_Fur_Hat
+    Script: |
+      bonus bAgi,2;
+  - Item: Pirate_Bandana
+    Script: |
+      bonus bHit,3;
+  - Item: Pirate_Dagger
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Plaster
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Poem_Natalia_Hat
+    Script: |
+      bonus bHit,3;
+  - Item: Poenetentia_Attendo
+    Script: |
+      bonus batk,2;
+  - Item: Poenetentia_Dilacero
+    Script: |
+      bonus bstr,2;
+  - Item: Poenetentia_Vatia
+    Script: |
+      bonus bmatk,2;
+  - Item: Poenitentia_Ascia
+    Script: |
+      bonus bluk,2;
+  - Item: Poenitentia_Caestus
+    Script: |
+      bonus bVit,2;
+  - Item: Poenitentia_Catapulta
+    Script: |
+      bonus bluk,2;
+  - Item: Poenitentia_Chorda
+    Script: |
+      bonus bdex,2;
+  - Item: Poenitentia_Clava
+    Script: |
+      bonus bdex,2;
+  - Item: Poenitentia_Codex
+    Script: |
+      bonus bagi,2;
+  - Item: Poenitentia_Crystallum
+    Script: |
+      bonus bvit,2;
+  - Item: Poenitentia_Ensis
+    Script: |
+      bonus bluk,2;
+  - Item: Poenitentia_Ferrum
+    Script: |
+      bonus bdex,2;
+  - Item: Poenitentia_Flagellum
+    Script: |
+      bonus bdex,2;
+  - Item: Poenitentia_Foramen
+    Script: |
+      bonus bmatk,2;
+  - Item: Poenitentia_Gladius
+    Script: |
+      bonus bstr,2;
+  - Item: Poenitentia_Hasta
+    Script: |
+      bonus bagi,2;
+  - Item: Poenitentia_Jana
+    Script: |
+      bonus bagi,2;
+  - Item: Poenitentia_Liber
+    Script: |
+      bonus bagi,2;
+  - Item: Poenitentia_Ligula
+    Script: |
+      bonus bstr,2;
+  - Item: Poenitentia_Manus
+    Script: |
+      bonus bluk,2;
+  - Item: Poenitentia_Mucro
+    Script: |
+      bonus bstr,2;
+  - Item: Poenitentia_Nervus
+    Script: |
+      bonus batk,2;
+  - Item: Poenitentia_Orbis
+    Script: |
+      bonus bstr,2;
+  - Item: Poenitentia_Pendulus
+    Script: |
+      bonus bluk,2;
+  - Item: Poenitentia_Penet
+    Script: |
+      bonus bmatk,2;
+  - Item: Poenitentia_Planta
+    Script: |
+      bonus bvit,2;
+  - Item: Poenitentia_Radius
+    Script: |
+      bonus bvit,2;
+  - Item: Poenitentia_Ramus
+    Script: |
+      bonus bvit,2;
+  - Item: Poenitentia_Ruina
+    Script: |
+      bonus bmatk,2;
+  - Item: Poenitentia_Scipio
+    Script: |
+      bonus bvit,2;
+  - Item: Poenitentia_Sol
+    Script: |
+      bonus bagi,2;
+  - Item: Poenitentia_Tenon
+    Script: |
+      bonus batk,2;
+  - Item: Poenitentia_Termes
+    Script: |
+      bonus batk,2;
+  - Item: Poenitentia_Ungula
+    Script: |
+      bonus bdex,2;
+  - Item: Poenitentia_Veloci
+    Script: |
+      bonus bmatk,2;
+  - Item: Poenitentia_Virga
+    Script: |
+      bonus batk,2;
+  - Item: Popcorn_Hat
+    Script: |
+      bonus batk,5;
+  - Item: Poporing_Cap
+    Script: |
+      bonus bmatk,4;
+  - Item: Poring_Cake_Cap
+    Script: |
+      bonus bDef,4;
+  - Item: Poring_Party_Hat
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Pretend_Murdered
+    Script: |
+      bonus bStr,2;
+  - Item: Pumpkin_Hat_
+    Script: |
+      bonus bHit,3;
+  - Item: Puppy_Hat
+    Script: |
+      bonus bint,2;
+  - Item: Rabbit_Ear_Hat
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Radio_Antenna
+    Script: |
+      bonus bint,2;
+  - Item: Ramen_Hat
+    Script: |
+      bonus batk,5;
+  - Item: Red_Bonnet
+    Script: |
+      bonus bHit,3;
+  - Item: Red_Deviruchi_Cap
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Red_Silk_Seal
+    Script: |
+      bonus bVariableCastrate,-2;
+  - Item: Red_Square_Bag
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Red_Tailed_Ribbon
+    Script: |
+      bonus bHit,3;
+  - Item: Red_Wizardry_Hat
+    Script: |
+      bonus bHit,3;
+  - Item: Ribbon_Black
+    Script: |
+      bonus bLuk,2;
+  - Item: Ribbon_Green
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Ribbon_Of_Bride
+    Script: |
+      bonus bint,2;
+  - Item: Ribbon_Orange
+    Script: |
+      bonus bmatk,4;
+  - Item: Ribbon_Pink
+    Script: |
+      bonus bflee,3;
+  - Item: Ribbon_Red
+    Script: |
+      bonus bDef,4;
+  - Item: Ribbon_White
+    Script: |
+      bonus bLuk,2;
+  - Item: Ribbon_Yellow
+    Script: |
+      bonus bStr,2;
+  - Item: Rideword_Hat
+    Script: |
+      bonus bStr,2;
+  - Item: Right_Epsilon
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Ring_Of_Flame_Lord
+    Script: |
+      bonus2 bAddEle,Ele_Fire,2;
+              bonus2 bMagicAddEle,Ele_Water,2;
+  - Item: Ring_Of_Resonance
+    Script: |
+      bonus2 bAddEle,Ele_Fire,2;
+              bonus2 bMagicAddEle,Ele_Water,2;
+  - Item: Ring_Of_Spell_Explosion
+    Script: |
+      bonus bAddMaxWeight,2000;
+  - Item: Robo_Eye
+    Script: |
+      bonus bflee,3;
+  - Item: Romantic_White_Flower
+    Script: |
+      bonus bdef,3;
+              bonus bMdef,3;
+  - Item: Round_Eyes
+    Script: |
+      bonus baspdrate,1;
+  - Item: Russian_Ribbon
+    Script: |
+      bonus batk,5;
+  - Item: Sacred_Torch_Coronet
+    Script: |
+      bonus bDef,4;
+  - Item: Safety_Ring
+    Script: |
+      bonus bmaxhprate,3;
+  - Item: Sahkkat
+    Script: |
+      bonus bAgi,2;
+  - Item: Sales_Signboard
+    Script: |
+      bonus bdef,3;
+              bonus bMdef,3;
+  - Item: Santa_Beard
+    Script: |
+      bonus bDex,2;
+  - Item: Santa_Hat_1
+    Script: |
+      bonus bflee,3;
+  - Item: Santa_Hat_2
+    Script: |
+      bonus bLuk,2;
+  - Item: Santa_Poring_Hat
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Satanic_Chain_P
+    Script: |
+      bonus bHit,3;
+  - Item: Satanic_Helm
+    Script: |
+      bonus bmatk,4;
+  - Item: Satellite_Hairband
+    Script: |
+      bonus bVit,2;
+  - Item: Satto_Hat
+    Script: |
+      bonus bMdef,3;
+              bonus bMdef,3;
+  - Item: Scarf
+    Script: |
+      bonus batk,5;
+  - Item: Schweizersabel
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Scuba_Mask
+    Script: |
+      bonus bmatk,4;
+  - Item: Sea_Otter_Cap
+    Script: |
+      bonus bDef,4;
+  - Item: Sharp_Gear
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Sheep_Hat
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Shiny_Wig
+    Script: |
+      bonus bflee,3;
+  - Item: Silver_Tiara
+    Script: |
+      bonus bHit,3;
+  - Item: Smokie_Hat
+    Script: |
+      bonus bDex,2;
+  - Item: Smoking_Pipe
+    Script: |
+      bonus bFixedCast,-100;
+  - Item: Snake_Head
+    Script: |
+      bonus bLuk,2;
+  - Item: Solar_Sword
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Soldier_Hat
+    Script: |
+      bonus bflee,3;
+  - Item: Sombrero
+    Script: |
+      bonus bLuk,2;
+  - Item: Sorin_Doll_Hat
+    Script: |
+      bonus bDex,2;
+  - Item: Soulless_Wing
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Spanner
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Spectral_Spear
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Spinx_Helm
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Spiritual_Ring
+    Script: |
+      bonus bVariableCastrate,-2;
+  - Item: Spore_Hat
+    Script: |
+      bonus bmatk,4;
+  - Item: Staff_Of_Bordeaux
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Stop_Post
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Straw_Hat
+    Script: |
+      bonus bStr,2;
+  - Item: Stripe_Band
+    Script: |
+      bonus bflee,3;
+  - Item: Sucsamad
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Sunflower_Hairpin
+    Script: |
+      bonus bAgi,2;
+  - Item: Sunglasses_F
+    Script: |
+      bonus bVit,2;
+  - Item: Sweet_Candy
+    Script: |
+      bonus bLuk,2;
+  - Item: Tablet
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Tayelin_Doll_Hat
+    Script: |
+      bonus bVit,2;
+  - Item: Tiara
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Tidung
+    Script: |
+      bonus bmatk,3;
+  - Item: Tiger_Mask
+    Script: |
+      bonus batk,5;
+  - Item: Tiraya_Bonnet
+    Script: |
+      bonus bDex,2;
+  - Item: Tongue_Mask
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Triple_Poring_Hat
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Tulip_Hairpin
+    Script: |
+      bonus bStr,2;
+  - Item: Twin_Ribbon
+    Script: |
+      bonus bVit,2;
+  - Item: Ulle_Cap
+    Script: |
+      bonus2 bAddSize,Size_all,1;
+              bonus2 bMagicAddSize,Size_all,1;
+  - Item: Umbrella_Hat
+    Script: |
+      bonus bHit,14;
+  - Item: Valentine_Hat
+    Script: |
+      bonus bmatk,4;
+  - Item: Valkyrie_Armor
+    Script: |
+      bonus bluk,1;
+              bonus bstr,1;
+  - Item: Valkyrie_Feather_Band
+    Script: |
+      bonus bAgi,2;
+  - Item: Valkyrie_Helm
+    Script: |
+      bonus bint,2;
+  - Item: Valkyrie_Manteau
+    Script: |
+      bonus bHit,5;
+  - Item: Valkyrie_Shoes
+    Script: |
+      bonus bflee,10;
+  - Item: Valkyrja's_Shield
+    Script: |
+      bonus2 bSubRace,RC_All,1;
+  - Item: Vane_Hairpin
+    Script: |
+      bonus bdef,3;
+              bonus bMdef,3;
+  - Item: Vanilmirth_Hat
+    Script: |
+      bonus bLuk,2;
+  - Item: Variant_Shoes
+    Script: |
+      bonus bHPrecovRate,10;
+              bonus bHPrecovRate,10;
+  - Item: Vesper_Core01
+    Script: |
+      bonus bAtkrate,1;
+  - Item: Vesper_Core02
+    Script: |
+      bonus bMatkrate,1;
+  - Item: Vesper_Core03
+    Script: |
+      bonus bFlee,5;
+  - Item: Vesper_Core04
+    Script: |
+      bonus bHit,5;
+  - Item: Victorious_Coronet
+    Script: |
+      bonus bDex,2;
+  - Item: Water_Lily_Crown
+    Script: |
+      bonus bint,2;
+  - Item: Weihna
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Weird_Goatee
+    Script: |
+      bonus bmatk,4;
+  - Item: Welding_Mask
+    Script: |
+      bonus bStr,2;
+  - Item: Well_Baked_Toast
+    Script: |
+      bonus bmatk,4;
+  - Item: Whike_Black_Tail
+    Script: |
+      bonus bmatk,4;
+  - Item: Whisper_Mask
+    Script: |
+      bonus bflee,3;
+  - Item: White_Deviruchi_Cap
+    Script: |
+      bonus bStr,2;
+  - Item: White_Drooping_Kitty
+    Script: |
+      bonus batk,5;
+  - Item: White_Snake_Hat
+    Script: |
+      bonus bVit,2;
+  - Item: White_Wing
+    Script: |
+      bonus bDex,2;
+  - Item: White_Wizardry_Hat
+    Script: |
+      bonus bint,2;
+  - Item: Wing_Of_Eagle
+    Script: |
+      bonus blongatkrate,1;
+  - Item: Wings_Of_Victory
+    Script: |
+      bonus bMaxhp,200;
+  - Item: Winter_Hat
+    Script: |
+      bonus bHit,3;
+  - Item: Wizardry_Hat
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Wizardy_Staff
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Wreath
+    Script: |
+      bonus bMdef,3;
+              bonus bdef,3;
+  - Item: Yellow_Bandana
+    Script: |
+      bonus batk,5;
+  - Item: Yellow_Baseball_Cap
+    Script: |
+      bonus bAgi,2;
+  - Item: Yellow_Drooping_Kitty
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Yellow_Ribbon
+    Script: |
+      bonus bDef,4;
+  - Item: Yellow_Wizardry_Hat
+    Script: |
+      bonus bAgi,2;
+  - Item: Yoyo_Hat
+    Script: |
+      bonus bmaxsp,20;
+  - Item: Zephyrus
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Zherlthsh_Mask
+    Script: |
+      bonus bflee,3;
+  - Item: Zweihander
+    Script: |
+      bonus2 bAddClass,Class_Boss,1;
+              bonus2 bMagicAddClass,Class_Boss,1;
+  - Item: Ahura_Mazda
+    Script: |
+      bonus bPow,999;
