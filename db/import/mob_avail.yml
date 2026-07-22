@@ -43,7 +43,7 @@ Header:
   Type: MOB_AVAIL_DB
   Version: 1
 
-#Body:
+Body:
   # Examples
 #  - Mob: PORING
 #    Sprite: BAPHOMET
@@ -123,3 +123,743 @@ Header:
 #    Sprite: WHISPER
 #  - Mob: EP14_3_DEATH_B_MOB3
 #    Sprite: DARK_LORD
+
+  # iRO Halloween Event 2009
+#  - Mob: EP14_3_DEATH_B_MOB2
+#    Sprite: WHISPER
+#  - Mob: EP14_3_DEATH_B_MOB3
+#    Sprite: DARK_LORD
+
+ # DevilSquare
+#  - Mob: DVC_BOSS_01
+#    Sprite: ECHIDNA
+#  - Mob: DVC_BOSS_02
+#    Sprite: SIREN
+#  - Mob: DVC_BOSS_03
+#    Sprite: LILITH
+#  - Mob: DVC_BOSS_04
+#    Sprite: HERA
+#  - Mob: DVC_BOSS_05
+#    Sprite: ANGLERFISH
+#  - Mob: DVC_BOSS_06
+#    Sprite: CHAOS_DEVIL_DRAGON       
+
+ # Cosmic Field
+#  - Mob: COSMIC_F_1
+#    Sprite: EP18_GREY_WOLF_BABY
+#  - Mob: MON_B_Q_1
+#    Sprite: C_WHITEKNIGHT
+#  - Mob: MON_B_Q_2
+#    Sprite: EP21_MD_CAPTAIN
+#  - Mob: MON_B_Q_3
+#    Sprite: IFRIT
+#  - Mob: MON_B_Q_4
+#    Sprite: MOROCC
+#  - Mob: MON_B_Q_5
+#    Sprite: MOONLIGHT
+#  - Mob: MON_B_Q_6
+#    Sprite: FLAME_SKULL
+#  - Mob: MON_B_Q_7
+#    Sprite: PAYONSOLDIER
+#  - Mob: MON_B_Q_8
+#    Sprite: IRENE_ELDER
+#  - Mob: MON_B_Q_9
+#    Sprite: FEI_KANABIAN
+  - Mob: F2P_INF_BOSS
+    Sprite: PORING
+
+ # Destroyed Geffen Field
+  - Mob: F2P_PEEPING
+    Sprite: CH1_PEEPING
+  - Mob: F2P_SILK_FROG
+    Sprite: CH1_SILK_FROG
+  - Mob: F2P_SILK_SNAIL
+    Sprite: CH1_SILK_SNAIL
+  - Mob: F2P_IMMORTAL_CORPS1
+    Sprite: CH1_IMMORTAL_CORPS1
+  - Mob: F2P_IMMORTAL_CORPS2
+    Sprite: CH1_IMMORTAL_CORPS2
+  - Mob: F2P_IMMORTAL_CORPS3
+    Sprite: CH1_IMMORTAL_CORPS3
+
+ # Dimension Tower
+  - Mob: DIMEN_TOWER_1
+    Sprite: DUSTINESS
+  - Mob: DIMEN_TOWER_2
+    Sprite: FARMILIAR
+  - Mob: DIMEN_TOWER_3
+    Sprite: POISON_SPORE
+  - Mob: DIMEN_TOWER_4
+    Sprite: POPORING
+  - Mob: DIMEN_TOWER_5
+    Sprite: AMBERNITE
+  - Mob: DIMEN_TOWER_6
+    Sprite: KAHO
+  - Mob: DIMEN_TOWER_7
+    Sprite: GOAT
+  - Mob: DIMEN_TOWER_8
+    Sprite: ASTER
+  - Mob: DIMEN_TOWER_9
+    Sprite: MARINE_SPHERE
+  - Mob: DIMEN_TOWER_10
+    Sprite: GARGOYLE
+  - Mob: DIMEN_TOWER_11
+    Sprite: BRILIGHT
+  - Mob: DIMEN_TOWER_12
+    Sprite: WILOW
+  - Mob: DIMEN_TOWER_13
+    Sprite: MUNAK
+  - Mob: DIMEN_TOWER_14
+    Sprite: PECOPECO
+  - Mob: DIMEN_TOWER_15
+    Sprite: ANT_EGG
+  - Mob: DIMEN_TOWER_16
+    Sprite: SKELETON
+  - Mob: DIMEN_TOWER_17
+    Sprite: MOONLIGHT
+  - Mob: DIMEN_TOWER_18
+    Sprite: EGGYRA
+  - Mob: DIMEN_TOWER_19
+    Sprite: YOYO
+  - Mob: DIMEN_TOWER_20
+    Sprite: ANDRE
+  - Mob: DIMEN_TOWER_21
+    Sprite: CARAMEL
+  - Mob: DIMEN_TOWER_22
+    Sprite: PHEN
+  - Mob: DIMEN_TOWER_23
+    Sprite: STAINER
+  - Mob: DIMEN_TOWER_24
+    Sprite: MYST
+  - Mob: DIMEN_TOWER_25
+    Sprite: VADON
+  - Mob: DIMEN_TOWER_26
+    Sprite: MUMMY
+  - Mob: DIMEN_TOWER_27
+    Sprite: ARCHER_SKELETON
+  - Mob: DIMEN_TOWER_28
+    Sprite: ZOMBIE
+  - Mob: DIMEN_TOWER_29
+    Sprite: VERIT
+  - Mob: DIMEN_TOWER_30
+    Sprite: ISIS
+  - Mob: DIMEN_TOWER_31
+    Sprite: SIDE_WINDER
+  - Mob: DIMEN_TOWER_32
+    Sprite: ANACONDAQ
+  - Mob: DIMEN_TOWER_33
+    Sprite: SNAKE
+  - Mob: DIMEN_TOWER_34
+    Sprite: DARK_SNAKE_LORD
+  - Mob: DIMEN_TOWER_35
+    Sprite: THARA_FROG
+  - Mob: DIMEN_TOWER_36
+    Sprite: CREAMY
+  - Mob: DIMEN_TOWER_37
+    Sprite: SMOKIE
+  - Mob: DIMEN_TOWER_38
+    Sprite: PECOPECO_EGG
+  - Mob: DIMEN_TOWER_39
+    Sprite: SHELLFISH
+  - Mob: DIMEN_TOWER_40
+    Sprite: MUKA
+  - Mob: DIMEN_TOWER_41
+    Sprite: NIGHTMARE
+  - Mob: DIMEN_TOWER_42
+    Sprite: WOLF
+  - Mob: DIMEN_TOWER_43
+    Sprite: WORM_TAIL
+  - Mob: DIMEN_TOWER_44
+    Sprite: CORNUTUS
+  - Mob: DIMEN_TOWER_45
+    Sprite: ARGOS
+  - Mob: DIMEN_TOWER_46
+    Sprite: RED_PLANT
+  - Mob: DIMEN_TOWER_47
+    Sprite: PIRATE_SKEL
+  - Mob: DIMEN_TOWER_48
+    Sprite: PUNK
+  - Mob: DIMEN_TOWER_49
+    Sprite: GOLEM
+  - Mob: DIMEN_TOWER_50
+    Sprite: ELDER_WILOW
+  - Mob: DIMEN_TOWER_51
+    Sprite: OSIRIS
+  - Mob: DIMEN_TOWER_52
+    Sprite: GHOUL
+  - Mob: DIMEN_TOWER_53
+    Sprite: MANDRAGORA
+  - Mob: DIMEN_TOWER_54
+    Sprite: PUPA
+  - Mob: DIMEN_TOWER_55
+    Sprite: CONDOR
+  - Mob: DIMEN_TOWER_56
+    Sprite: HORNET
+  - Mob: DIMEN_TOWER_57
+    Sprite: RODA_FROG
+  - Mob: DIMEN_TOWER_58
+    Sprite: ORK_WARRIOR
+  - Mob: DIMEN_TOWER_59
+    Sprite: CHONCHON
+  - Mob: DIMEN_TOWER_60
+    Sprite: SOLDIER_SKELETON
+  - Mob: DIMEN_TOWER_61
+    Sprite: PICKY
+  - Mob: DIMEN_TOWER_62
+    Sprite: OBEAUNE
+  - Mob: DIMEN_TOWER_63
+    Sprite: PORING_
+  - Mob: DIMEN_TOWER_64
+    Sprite: COCO
+  - Mob: DIMEN_TOWER_65
+    Sprite: FLORA
+  - Mob: DIMEN_TOWER_66
+    Sprite: ARGIOPE
+  - Mob: DIMEN_TOWER_67
+    Sprite: METALLER
+  - Mob: DIMEN_TOWER_68
+    Sprite: BIGFOOT
+  - Mob: DIMEN_TOWER_69
+    Sprite: SWORD_FISH
+  - Mob: DIMEN_TOWER_70
+    Sprite: STEEL_CHONCHON
+  - Mob: DIMEN_TOWER_71
+    Sprite: THIEF_BUG
+  - Mob: DIMEN_TOWER_72
+    Sprite: PICKY_
+  - Mob: DIMEN_TOWER_73
+    Sprite: JAKK
+  - Mob: DIMEN_TOWER_74
+    Sprite: KHALITZBURG
+  - Mob: DIMEN_TOWER_75
+    Sprite: FRILLDORA
+  - Mob: DIMEN_TOWER_76
+    Sprite: MYSTCASE
+  - Mob: DIMEN_TOWER_77
+    Sprite: RAFFLESIA
+  - Mob: DIMEN_TOWER_78
+    Sprite: SOHEE
+  - Mob: DIMEN_TOWER_79
+    Sprite: JOKER
+  - Mob: DIMEN_TOWER_80
+    Sprite: MISTRESS
+  - Mob: DIMEN_TOWER_81
+    Sprite: MANTIS
+  - Mob: DIMEN_TOWER_82
+    Sprite: HODE
+  - Mob: DIMEN_TOWER_83
+    Sprite: HORONG
+  - Mob: DIMEN_TOWER_84
+    Sprite: PETIT_
+  - Mob: DIMEN_TOWER_85
+    Sprite: DEVIACE
+  - Mob: DIMEN_TOWER_86
+    Sprite: ANUBIS
+  - Mob: DIMEN_TOWER_87
+    Sprite: RED_MUSHROOM
+  - Mob: DIMEN_TOWER_88
+    Sprite: THIEF_BUG__
+  - Mob: DIMEN_TOWER_89
+    Sprite: ORC_LADY
+  - Mob: DIMEN_TOWER_90
+    Sprite: HYDRA
+  - Mob: DIMEN_TOWER_91
+    Sprite: KUKRE
+  - Mob: DIMEN_TOWER_92
+    Sprite: BAPHOMET_
+  - Mob: DIMEN_TOWER_93
+    Sprite: DR_BASILISK2
+  - Mob: DIMEN_TOWER_94
+    Sprite: KNIGHT_OF_ABYSS
+  - Mob: DIMEN_TOWER_95
+    Sprite: RAGGLER
+  - Mob: DIMEN_TOWER_96
+    Sprite: INJUSTICE
+  - Mob: DIMEN_TOWER_97
+    Sprite: SASQUATCH
+  - Mob: DIMEN_TOWER_98
+    Sprite: MEGALITH
+  - Mob: DIMEN_TOWER_99
+    Sprite: SAGEWORM
+  - Mob: DIMEN_TOWER_100
+    Sprite: GREATEST_GENERAL
+  - Mob: DIMEN_TOWER_101
+    Sprite: ORK_HERO
+  - Mob: DIMEN_TOWER_102
+    Sprite: DENIRO
+  - Mob: DIMEN_TOWER_103
+    Sprite: GREEN_PLANT
+  - Mob: DIMEN_TOWER_104
+    Sprite: BATHORY
+  - Mob: DIMEN_TOWER_105
+    Sprite: CRAB
+  - Mob: DIMEN_TOWER_106
+    Sprite: DEVIRUCHI
+  - Mob: DIMEN_TOWER_107
+    Sprite: GIEARTH
+  - Mob: DIMEN_TOWER_108
+    Sprite: THIEF_BUG_
+  - Mob: DIMEN_TOWER_109
+    Sprite: ZEROM
+  - Mob: DIMEN_TOWER_110
+    Sprite: MARINA
+  - Mob: DIMEN_TOWER_111
+    Sprite: STROUF
+  - Mob: DIMEN_TOWER_112
+    Sprite: VOCAL
+  - Mob: DIMEN_TOWER_113
+    Sprite: HUNTER_FLY
+  - Mob: DIMEN_TOWER_114
+    Sprite: DEVILING
+  - Mob: DIMEN_TOWER_115
+    Sprite: GHOSTRING
+  - Mob: DIMEN_TOWER_116
+    Sprite: ANGELING
+  - Mob: DIMEN_TOWER_117
+    Sprite: MASTERING
+  - Mob: DIMEN_TOWER_118
+    Sprite: MIMIC
+  - Mob: DIMEN_TOWER_119
+    Sprite: CHOCO
+  - Mob: DIMEN_TOWER_120
+    Sprite: MARDUK
+  - Mob: DIMEN_TOWER_121
+    Sprite: MARTIN
+  - Mob: DIMEN_TOWER_122
+    Sprite: BAPHOMET
+  - Mob: DIMEN_TOWER_123
+    Sprite: HORN
+  - Mob: DIMEN_TOWER_124
+    Sprite: MARC
+  - Mob: DIMEN_TOWER_125
+    Sprite: THIEF_BUG_EGG
+  - Mob: DIMEN_TOWER_126
+    Sprite: CLOCK
+  - Mob: DIMEN_TOWER_127
+    Sprite: GOBLIN_1
+  - Mob: DIMEN_TOWER_128
+    Sprite: PETIT
+  - Mob: DIMEN_TOWER_129
+    Sprite: KOBOLD_1
+  - Mob: DIMEN_TOWER_130
+    Sprite: ORC_ZOMBIE
+  - Mob: DIMEN_TOWER_131
+    Sprite: SAVAGE
+  - Mob: DIMEN_TOWER_132
+    Sprite: GOBLIN_ARCHER
+  - Mob: DIMEN_TOWER_133
+    Sprite: SAND_MAN
+  - Mob: DIMEN_TOWER_134
+    Sprite: MAGNOLIA
+  - Mob: DIMEN_TOWER_135
+    Sprite: ALARM
+  - Mob: DIMEN_TOWER_136
+    Sprite: KOBOLD_ARCHER
+  - Mob: DIMEN_TOWER_137
+    Sprite: MEDUSA
+  - Mob: DIMEN_TOWER_138
+    Sprite: PLANKTON
+  - Mob: DIMEN_TOWER_139
+    Sprite: BON_GUN
+  - Mob: DIMEN_TOWER_140
+    Sprite: ORC_ARCHER
+  - Mob: DIMEN_TOWER_141
+    Sprite: RED_MUSHROOM
+  - Mob: DIMEN_TOWER_142
+    Sprite: SKEL_WORKER
+  - Mob: DIMEN_TOWER_143
+    Sprite: DOPPELGANGER
+  - Mob: DIMEN_TOWER_144
+    Sprite: DESERT_WOLF
+  - Mob: DIMEN_TOWER_145
+    Sprite: RAYDRIC_ARCHER
+  - Mob: DIMEN_TOWER_146
+    Sprite: SAVAGE_BABE
+  - Mob: DIMEN_TOWER_147
+    Sprite: NINE_TAIL
+  - Mob: DIMEN_TOWER_148
+    Sprite: PASANA
+  - Mob: DIMEN_TOWER_149
+    Sprite: PHENDARK
+  - Mob: DIMEN_TOWER_150
+    Sprite: VITATA
+  - Mob: DIMEN_TOWER_151
+    Sprite: STING
+  - Mob: DIMEN_TOWER_152
+    Sprite: MINOROUS
+  - Mob: DIMEN_TOWER_153
+    Sprite: REQUIEM
+  - Mob: DIMEN_TOWER_154
+    Sprite: ORC_SKELETON
+  - Mob: DIMEN_TOWER_155
+    Sprite: MARSE
+  - Mob: DIMEN_TOWER_156
+    Sprite: ZENORC
+  - Mob: DIMEN_TOWER_157
+    Sprite: MARIN
+  - Mob: DIMEN_TOWER_158
+    Sprite: CHEPET
+  - Mob: DIMEN_TOWER_159
+    Sprite: PEST
+  - Mob: DIMEN_TOWER_160
+    Sprite: ANOLIAN
+  - Mob: DIMEN_TOWER_161
+    Sprite: PENOMENA
+  - Mob: DIMEN_TOWER_162
+    Sprite: DRAGON_TAIL
+  - Mob: DIMEN_TOWER_163
+    Sprite: BLOODY_MURDERER
+  - Mob: DIMEN_TOWER_164
+    Sprite: DRAKE
+  - Mob: DIMEN_TOWER_165
+    Sprite: BLACK_MUSHROOM
+  - Mob: DIMEN_TOWER_166
+    Sprite: TOAD
+  - Mob: DIMEN_TOWER_167
+    Sprite: SPORE
+  - Mob: DIMEN_TOWER_168
+    Sprite: NERAID
+  - Mob: DIMEN_TOWER_169
+    Sprite: WHISPER
+  - Mob: DIMEN_TOWER_170
+    Sprite: ZHERLTHSH
+  - Mob: DIMEN_TOWER_171
+    Sprite: EVIL_DRUID
+  - Mob: DIMEN_TOWER_172
+    Sprite: DRAGON_FLY
+  - Mob: DIMEN_TOWER_173
+    Sprite: ALLIGATOR
+  - Mob: DIMEN_TOWER_174
+    Sprite: CRUISER
+  - Mob: DIMEN_TOWER_175
+    Sprite: CARAT
+  - Mob: DIMEN_TOWER_176
+    Sprite: GOBLIN_2
+  - Mob: DIMEN_TOWER_177
+    Sprite: ANTONIO
+  - Mob: DIMEN_TOWER_178
+    Sprite: IRON_FIST
+  - Mob: DIMEN_TOWER_179
+    Sprite: PIERE
+  - Mob: DIMEN_TOWER_180
+    Sprite: STALACTIC_GOLEM
+  - Mob: DIMEN_TOWER_181
+    Sprite: WRAITH
+  - Mob: DIMEN_TOWER_182
+    Sprite: COOKIE_XMAS
+  - Mob: DIMEN_TOWER_183
+    Sprite: ALICE
+  - Mob: DIMEN_TOWER_184
+    Sprite: STEM_WORM
+  - Mob: DIMEN_TOWER_185
+    Sprite: MD_GIANT_OCTOPUS
+  - Mob: DIMEN_TOWER_186
+    Sprite: MEGALODON
+  - Mob: DIMEN_TOWER_187
+    Sprite: DOKEBI
+  - Mob: DIMEN_TOWER_188
+    Sprite: DRAINLIAR
+  - Mob: DIMEN_TOWER_189
+    Sprite: KOBOLD_2
+  - Mob: DIMEN_TOWER_190
+    Sprite: WILD_ROSE
+  - Mob: DIMEN_TOWER_191
+    Sprite: MUTANT_DRAGON
+  - Mob: DIMEN_TOWER_192
+    Sprite: WIND_GHOST
+  - Mob: DIMEN_TOWER_193
+    Sprite: DARK_FRAME
+  - Mob: DIMEN_TOWER_194
+    Sprite: SPRING_RABBIT
+  - Mob: DIMEN_TOWER_195
+    Sprite: VIOLY
+  - Mob: DIMEN_TOWER_196
+    Sprite: GALAPAGO
+  - Mob: DIMEN_TOWER_197
+    Sprite: CRYSTAL_1
+  - Mob: DIMEN_TOWER_198
+    Sprite: DESERT_WOLF_B
+  - Mob: DIMEN_TOWER_199
+    Sprite: MARIONETTE
+  - Mob: DIMEN_TOWER_200
+    Sprite: RIDEWORD
+  - Mob: DIMEN_TOWER_201
+    Sprite: SKEL_PRISONER
+  - Mob: DIMEN_TOWER_202
+    Sprite: FACEWORM
+  - Mob: DIMEN_TOWER_203
+    Sprite: FACEWORM_DARK
+  - Mob: DIMEN_TOWER_204
+    Sprite: VENOM_BUG
+  - Mob: DIMEN_TOWER_205
+    Sprite: FACEWORM_EGG
+  - Mob: DIMEN_TOWER_206
+    Sprite: FACEWORM_QUEEN_Y
+  - Mob: DIMEN_TOWER_207
+    Sprite: ORK_WARRIOR
+  - Mob: DIMEN_TOWER_208
+    Sprite: ASSULTER
+  - Mob: DIMEN_TOWER_209
+    Sprite: ORC_XMAS
+  - Mob: DIMEN_TOWER_210
+    Sprite: SLEEPER
+  - Mob: DIMEN_TOWER_211
+    Sprite: SCORPION
+  - Mob: DIMEN_TOWER_212
+    Sprite: COOKIE
+  - Mob: DIMEN_TOWER_213
+    Sprite: PERMETER
+  - Mob: DIMEN_TOWER_214
+    Sprite: KARAKASA
+  - Mob: DIMEN_TOWER_215
+    Sprite: MATYR
+  - Mob: DIMEN_TOWER_216
+    Sprite: BLAZZER
+  - Mob: DIMEN_TOWER_217
+    Sprite: KOBOLD_3
+  - Mob: DIMEN_TOWER_218
+    Sprite: WHISPER_BOSS
+  - Mob: DIMEN_TOWER_219
+    Sprite: FUR_SEAL
+  - Mob: DIMEN_TOWER_220
+    Sprite: HARPY
+  - Mob: DIMEN_TOWER_221
+    Sprite: GOBLIN_3
+  - Mob: DIMEN_TOWER_222
+    Sprite: KIND_OF_BEETLE
+  - Mob: DIMEN_TOWER_223
+    Sprite: DRILLER
+  - Mob: DIMEN_TOWER_224
+    Sprite: KAPHA
+  - Mob: DIMEN_TOWER_225
+    Sprite: WILD_GINSENG
+  - Mob: DIMEN_TOWER_226
+    Sprite: GOBLINE_XMAS
+  - Mob: DIMEN_TOWER_227
+    Sprite: DETALE
+  - Mob: DIMEN_TOWER_228
+    Sprite: GIG
+  - Mob: DIMEN_TOWER_229
+    Sprite: PANZER_GOBLIN
+  - Mob: DIMEN_TOWER_230
+    Sprite: YELLOW_PLANT
+  - Mob: DIMEN_TOWER_231
+    Sprite: ZOMBIE_PRISONER
+  - Mob: DIMEN_TOWER_232
+    Sprite: RYBIO
+  - Mob: DIMEN_TOWER_233
+    Sprite: STEAM_GOBLIN
+  - Mob: DIMEN_TOWER_234
+    Sprite: CATERPILLAR
+  - Mob: DIMEN_TOWER_235
+    Sprite: GOBLIN_4
+  - Mob: DIMEN_TOWER_236
+    Sprite: MERMAN
+  - Mob: DIMEN_TOWER_237
+    Sprite: BLOOD_BUTTERFLY
+  - Mob: DIMEN_TOWER_238
+    Sprite: LEIB_OLMAI
+  - Mob: DIMEN_TOWER_239
+    Sprite: DIABOLIC
+  - Mob: DIMEN_TOWER_240
+    Sprite: GULLINBURSTI
+  - Mob: DIMEN_TOWER_241
+    Sprite: ANTIQUE_FIRELOCK
+  - Mob: DIMEN_TOWER_242
+    Sprite: C_TOWER_MANAGER
+  - Mob: DIMEN_TOWER_243
+    Sprite: ORC_BABY
+  - Mob: DIMEN_TOWER_244
+    Sprite: GOBLIN_5
+  - Mob: DIMEN_TOWER_245
+    Sprite: EVIL_CLOUD_HERMIT
+  - Mob: DIMEN_TOWER_246
+    Sprite: ELDER
+  - Mob: DIMEN_TOWER_247
+    Sprite: SOLIDER
+  - Mob: DIMEN_TOWER_248
+    Sprite: EP16_2_H_HUNTER_EV
+  - Mob: DIMEN_TOWER_249
+    Sprite: MYSTELTAINN
+  - Mob: DIMEN_TOWER_250
+    Sprite: ROTAR_ZAIRO
+  - Mob: DIMEN_TOWER_251
+    Sprite: ZIPPER_BEAR
+  - Mob: DIMEN_TOWER_252
+    Sprite: TRI_JOINT
+  - Mob: DIMEN_TOWER_253
+    Sprite: HEATER
+  - Mob: DIMEN_TOWER_254
+    Sprite: FAKE_ANGEL
+  - Mob: DIMEN_TOWER_255
+    Sprite: CRYSTAL_2
+  - Mob: DIMEN_TOWER_256
+    Sprite: JAKK_XMAS
+  - Mob: DIMEN_TOWER_257
+    Sprite: RAYDRIC
+  - Mob: DIMEN_TOWER_258
+    Sprite: CREMY_FEAR
+  - Mob: DIMEN_TOWER_259
+    Sprite: MIYABI_NINGYO
+  - Mob: DIMEN_TOWER_260
+    Sprite: INCREASE_SOIL
+  - Mob: DIMEN_TOWER_261
+    Sprite: TIRFING
+  - Mob: DIMEN_TOWER_262
+    Sprite: DEMON_PUNGUS
+  - Mob: DIMEN_TOWER_263
+    Sprite: FREEZER
+  - Mob: DIMEN_TOWER_264
+    Sprite: GIBBET
+  - Mob: DIMEN_TOWER_265
+    Sprite: CHUNG_E
+  - Mob: DIMEN_TOWER_266
+    Sprite: TENGU
+  - Mob: DIMEN_TOWER_267
+    Sprite: WICKED_NYMPH
+  - Mob: DIMEN_TOWER_268
+    Sprite: AM_MUT
+  - Mob: DIMEN_TOWER_269
+    Sprite: INCANTATION_SAMURAI
+  - Mob: DIMEN_TOWER_270
+    Sprite: DELETER_
+  - Mob: DIMEN_TOWER_271
+    Sprite: DRYAD
+  - Mob: DIMEN_TOWER_272
+    Sprite: HYLOZOIST
+  - Mob: DIMEN_TOWER_273
+    Sprite: APOCALIPS
+  - Mob: DIMEN_TOWER_274
+    Sprite: SHINOBI
+  - Mob: DIMEN_TOWER_275
+    Sprite: EXPLOSION
+  - Mob: DIMEN_TOWER_276
+    Sprite: INCUBUS
+  - Mob: DIMEN_TOWER_277
+    Sprite: DULLAHAN
+  - Mob: DIMEN_TOWER_278
+    Sprite: DELETER
+  - Mob: DIMEN_TOWER_279
+    Sprite: RICE_CAKE_BOY
+  - Mob: DIMEN_TOWER_280
+    Sprite: GRAND_PECO
+  - Mob: DIMEN_TOWER_281
+    Sprite: THE_PAPER
+  - Mob: DIMEN_TOWER_282
+    Sprite: BABY_LEOPARD
+  - Mob: DIMEN_TOWER_283
+    Sprite: LIVE_PEACH_TREE
+  - Mob: DIMEN_TOWER_284
+    Sprite: GIANT_HONET
+  - Mob: DIMEN_TOWER_285
+    Sprite: MAJORUROS
+  - Mob: DIMEN_TOWER_286
+    Sprite: GIANT_SPIDER
+  - Mob: DIMEN_TOWER_287
+    Sprite: POISON_TOAD
+  - Mob: DIMEN_TOWER_288
+    Sprite: GEOGRAPHER
+  - Mob: DIMEN_TOWER_289
+    Sprite: LAVA_GOLEM
+  - Mob: DIMEN_TOWER_290
+    Sprite: NAGHT_SIEGER
+  - Mob: DIMEN_TOWER_291
+    Sprite: ANCIENT_WORM
+  - Mob: DIMEN_TOWER_292
+    Sprite: STONE_SHOOTER
+  - Mob: DIMEN_TOWER_293
+    Sprite: LOLI_RURI
+  - Mob: DIMEN_TOWER_294
+    Sprite: ANCIENT_MUMMY
+  - Mob: DIMEN_TOWER_295
+    Sprite: DISGUISE
+  - Mob: DIMEN_TOWER_296
+    Sprite: MOLE
+  - Mob: DIMEN_TOWER_297
+    Sprite: GRIZZLY
+  - Mob: DIMEN_TOWER_298
+    Sprite: WRAITH_DEAD
+  - Mob: DIMEN_TOWER_299
+    Sprite: KILLER_MANTIS
+  - Mob: DIMEN_TOWER_300
+    Sprite: WOOTAN_SHOOTER
+  - Mob: DIMEN_TOWER_301
+    Sprite: OWL_DUKE
+  - Mob: DIMEN_TOWER_302
+    Sprite: GOBLIN_LEADER
+  - Mob: DIMEN_TOWER_303
+    Sprite: WOOTAN_FIGHTER
+  - Mob: DIMEN_TOWER_304
+    Sprite: PARASITE
+  - Mob: DIMEN_TOWER_305
+    Sprite: QUVE
+  - Mob: DIMEN_TOWER_306
+    Sprite: BOILED_RICE
+  - Mob: DIMEN_TOWER_307
+    Sprite: EXECUTIONER
+  - Mob: DIMEN_TOWER_308
+    Sprite: LUDE
+  - Mob: DIMEN_TOWER_309
+    Sprite: EVENT_RICECAKE
+  - Mob: DIMEN_TOWER_310
+    Sprite: WOODEN_GOLEM
+  - Mob: DIMEN_TOWER_311
+    Sprite: PHARAOH
+  - Mob: DIMEN_TOWER_312
+    Sprite: KOBOLD_LEADER
+  - Mob: DIMEN_TOWER_313
+    Sprite: BEHOLDER
+  - Mob: DIMEN_TOWER_314
+    Sprite: BLUE_FLOWER
+  - Mob: DIMEN_TOWER_315
+    Sprite: NIGHTMARE_TERROR
+  - Mob: DIMEN_TOWER_316
+    Sprite: SKELETON_GENERAL
+  - Mob: DIMEN_TOWER_317
+    Sprite: SUCCUBUS
+  - Mob: DIMEN_TOWER_318
+    Sprite: OWL_BARON
+  - Mob: DIMEN_TOWER_319
+    Sprite: MINI_DEMON
+  - Mob: DIMEN_TOWER_320
+    Sprite: HYEGUN
+  - Mob: DIMEN_TOWER_321
+    Sprite: OBSIDIAN
+  - Mob: DIMEN_TOWER_322
+    Sprite: CIVIL_SERVANT
+  - Mob: DIMEN_TOWER_323
+    Sprite: LI_ME_MANG_RYANG
+  - Mob: DIMEN_TOWER_324
+    Sprite: DANCING_DRAGON
+  - Mob: DIMEN_TOWER_325
+    Sprite: POTON_CANON
+  - Mob: DIMEN_TOWER_326
+    Sprite: GAJOMART
+  - Mob: DIMEN_TOWER_327
+    Sprite: ZOMBIE_MASTER
+  - Mob: DIMEN_TOWER_328
+    Sprite: MOBSTER
+  - Mob: DIMEN_TOWER_329
+    Sprite: MINERAL
+  - Mob: DIMEN_TOWER_330
+    Sprite: PLASMA_Y
+  - Mob: DIMEN_TOWER_331
+    Sprite: WASTE_STOVE
+  - Mob: DIMEN_TOWER_332
+    Sprite: TAO_GUNKA
+  - Mob: DIMEN_TOWER_333
+    Sprite: KRABEN
+  - Mob: DIMEN_TOWER_334
+    Sprite: POTON_CANON_1
+  - Mob: DIMEN_TOWER_335
+    Sprite: BLUE_PLANT
+  - Mob: DIMEN_TOWER_336
+    Sprite: METALING
+  - Mob: DIMEN_TOWER_337
+    Sprite: LEAF_CAT
+  - Mob: DIMEN_TOWER_338
+    Sprite: NOXIOUS
+  - Mob: DIMEN_TOWER_339
+    Sprite: DEATHWORD
+  - Mob: DIMEN_TOWER_340
+    Sprite: AGAV
