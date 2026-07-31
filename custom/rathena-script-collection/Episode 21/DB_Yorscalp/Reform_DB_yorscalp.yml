@@ -1,0 +1,113 @@
+Body:
+  - Item: Yorscalp_Scroll_A
+    BaseItems:
+      - BaseItem: Gaebolg_Armor
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Armor
+      - BaseItem: Gaebolg_Robe
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Robe
+      - BaseItem: Gaebolg_Manteau
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Manteau
+      - BaseItem: Gaebolg_Muffler
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Muffler
+      - BaseItem: Gaebolg_Boots
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Boots
+      - BaseItem: Gaebolg_Shoes
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Shoes
+      - BaseItem: Gaebolg_Ring
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Ring
+      - BaseItem: Gaebolg_Glove
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Glove
+      - BaseItem: Gaebolg_Earring
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Earring
+      - BaseItem: Gaebolg_Necklace
+        Materials:
+          - Material: Ep21_Wigner_Ticket
+            Amount: 200
+          - Material: Yorscalp_Serpent
+            Amount: 10
+          - Material: Yorscalp_Symbol
+            Amount: 50
+          - Material: Yorscalp_Spirit
+            Amount: 200
+        ResultItem: Yorscalp_Necklace

@@ -1,0 +1,467 @@
+Header:
+  Type: MOB_DB
+  Version: 5
+
+Body:
+  - Id: 22174
+    AegisName: MD_PRI_RIGEL
+    Name: Rigel
+    Level: 275
+    Hp: 800000000
+    Attack: 24998
+    Attack2: 37102
+    Defense: 379
+    MagicDefense: 138
+    Resistance: 1833
+    MagicResistance: 1850
+    Str: 515
+    Agi: 330
+    Vit: 413
+    Int: 408
+    Dex: 584
+    Luk: 580
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 678
+    AttackMotion: 374
+    ClientAttackMotion: 374
+    DamageMotion: 376
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 22175
+    AegisName: MD_PRI_RIGEL_AC
+    Name: Rigel
+    Level: 275
+    Hp: 800000000
+    Attack: 24998
+    Attack2: 37102
+    Defense: 379
+    MagicDefense: 138
+    Resistance: 1833
+    MagicResistance: 1850
+    Str: 515
+    Agi: 330
+    Vit: 413
+    Int: 408
+    Dex: 584
+    Luk: 580
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 678
+    AttackMotion: 374
+    ClientAttackMotion: 374
+    DamageMotion: 376
+    DamageTaken: 1
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 22176
+    AegisName: MD_PRI_RIGEL_ACS
+    Name: Rigel's Illusion
+    Level: 275
+    Hp: 1500000
+    Attack: 24998
+    Attack2: 37102
+    Defense: 379
+    MagicDefense: 138
+    Resistance: 1833
+    MagicResistance: 1850
+    Str: 515
+    Agi: 330
+    Vit: 413
+    Int: 408
+    Dex: 584
+    Luk: 580
+    AttackRange: 10
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 1000
+    AttackDelay: 678
+    AttackMotion: 374
+    ClientAttackMotion: 374
+    DamageMotion: 376
+    DamageTaken: 100
+    Ai: 21
+    Class: Boss
+    Modes:
+      CanMove: false
+  - Id: 22177
+    AegisName: MD_PRI_DRAGON_1
+    Name: Spring Divine Beast
+    Level: 275
+    Hp: 700000000
+    Attack: 45409
+    Attack2: 67733
+    Defense: 374
+    MagicDefense: 134
+    Resistance: 1741
+    MagicResistance: 807
+    Str: 486
+    Agi: 390
+    Vit: 386
+    Int: 311
+    Dex: 552
+    Luk: 520
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 8
+    Size: Large
+    Race: Angel
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 130
+    AttackDelay: 930
+    AttackMotion: 874
+    ClientAttackMotion: 568
+    DamageMotion: 376
+    DamageTaken: 100
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Energy_Of_Spring
+        Rate: 5000
+      - Item: Old_Card_Album
+        Rate: 2500
+      - Item: Magic_Card_Album
+        Rate: 2500
+    Drops:
+      - Item: Energy_Of_Spring
+        Rate: 2000
+      - Item: Energy_Of_Spring
+        Rate: 1000
+      - Item: MD_Hol_Fragment
+        Rate: 1000
+      - Item: Spring_Material_1
+        Rate: 500
+      - Item: Spring_Material_2
+        Rate: 500
+      - Item: Spring_Material_3
+        Rate: 500
+  - Id: 22178
+    AegisName: MD_PRI_DRAGON_2
+    Name: Summer Divine Beast
+    Level: 275
+    Hp: 700000000
+    Attack: 43805
+    Attack2: 65408
+    Defense: 213
+    MagicDefense: 241
+    Resistance: 1020
+    MagicResistance: 1682
+    Str: 324
+    Agi: 303
+    Vit: 330
+    Int: 445
+    Dex: 521
+    Luk: 520
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 8
+    Size: Large
+    Race: Fish
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 130
+    AttackDelay: 930
+    AttackMotion: 874
+    ClientAttackMotion: 568
+    DamageMotion: 376
+    DamageTaken: 100
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Energy_Of_Summer
+        Rate: 5000
+      - Item: Old_Card_Album
+        Rate: 2500
+      - Item: Magic_Card_Album
+        Rate: 2500
+    Drops:
+      - Item: Energy_Of_Summer
+        Rate: 2000
+      - Item: Energy_Of_Summer
+        Rate: 1000
+      - Item: MD_Hol_Fragment
+        Rate: 1000
+      - Item: Summer_Material_1
+        Rate: 500
+      - Item: Summer_Material_2
+        Rate: 500
+      - Item: Summer_Material_3
+        Rate: 500
+  - Id: 22179
+    AegisName: MD_PRI_DRAGON_3
+    Name: Autumn Divine Beast
+    Level: 275
+    Hp: 700000000
+    Attack: 35450
+    Attack2: 52830
+    Defense: 213
+    MagicDefense: 241
+    Resistance: 1399
+    MagicResistance: 2324
+    Str: 415
+    Agi: 213
+    Vit: 241
+    Int: 485
+    Dex: 532
+    Luk: 525
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 8
+    Size: Large
+    Race: Plant
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 130
+    AttackDelay: 680
+    AttackMotion: 874
+    ClientAttackMotion: 568
+    DamageMotion: 376
+    DamageTaken: 100
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Energy_Of_Autumn
+        Rate: 5000
+      - Item: Old_Card_Album
+        Rate: 2500
+      - Item: Magic_Card_Album
+        Rate: 2500
+    Drops:
+      - Item: Energy_Of_Autumn
+        Rate: 2000
+      - Item: Energy_Of_Autumn
+        Rate: 1000
+      - Item: MD_Hol_Fragment
+        Rate: 1000
+      - Item: Autumn_Material_1
+        Rate: 500
+      - Item: Autumn_Material_2
+        Rate: 500
+      - Item: Autumn_Material_3
+        Rate: 500
+  - Id: 22180
+    AegisName: MD_PRI_DRAGON_4
+    Name: Winter Divine Beast
+    Level: 275
+    Hp: 700000000
+    Attack: 45786
+    Attack2: 68299
+    Defense: 347
+    MagicDefense: 134
+    Resistance: 1741
+    MagicResistance: 807
+    Str: 486
+    Agi: 390
+    Vit: 386
+    Int: 311
+    Dex: 552
+    Luk: 515
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 8
+    Size: Large
+    Race: Plant
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 130
+    AttackDelay: 870
+    AttackMotion: 874
+    ClientAttackMotion: 568
+    DamageMotion: 376
+    DamageTaken: 100
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Energy_Of_Winter
+        Rate: 5000
+      - Item: Old_Card_Album
+        Rate: 2500
+      - Item: Magic_Card_Album
+        Rate: 2500
+    Drops:
+      - Item: Energy_Of_Winter
+        Rate: 2000
+      - Item: Energy_Of_Winter
+        Rate: 1000
+      - Item: MD_Hol_Fragment
+        Rate: 1000
+      - Item: Winter_Material_1
+        Rate: 500
+      - Item: Winter_Material_2
+        Rate: 500
+      - Item: Winter_Material_3
+        Rate: 500
+  - Id: 22183
+    AegisName: MD_MANASTORM
+    Name: Mana Storm
+    Level: 275
+    Hp: 15000000
+    Attack: 1000
+    Attack2: 1000
+    Defense: 1000
+    MagicDefense: 1000
+    Resistance: 1000
+    MagicResistance: 1000
+    Str: 200
+    Agi: 200
+    Vit: 200
+    Int: 200
+    Dex: 200
+    Luk: 200
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1000
+    AttackMotion: 1000
+    ClientAttackMotion: 1000
+    DamageMotion: 1000
+    DamageTaken: 1
+    Ai: 06
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+  - Id: 22184
+    AegisName: MD_MANABARRIER
+    Name: Mana Barrier
+    Level: 275
+    Hp: 15000000
+    Attack: 5000
+    Attack2: 10000
+    Defense: 1000
+    MagicDefense: 1000
+    Resistance: 1000
+    MagicResistance: 1000
+    Str: 200
+    Agi: 200
+    Vit: 200
+    Int: 200
+    Dex: 200
+    Luk: 200
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1000
+    AttackMotion: 1000
+    ClientAttackMotion: 1000
+    DamageMotion: 1000
+    DamageTaken: 1
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+  - Id: 20582
+    AegisName: MD_MANHOLE4
+    Name: Manhole
+    Level: 275
+    Hp: 15000000
+    Attack: 2000
+    Attack2: 4000
+    Defense: 1000
+    MagicDefense: 1000
+    Resistance: 1000
+    MagicResistance: 1000
+    Str: 100
+    Agi: 100
+    Vit: 100
+    Int: 100
+    Dex: 100
+    Luk: 100
+    AttackRange: 10
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1000
+    AttackMotion: 1000
+    ClientAttackMotion: 1000
+    DamageMotion: 1000
+    DamageTaken: 1
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+  - Id: 20562 #custom
+    AegisName: HIDDEN_MOB8
+    Name: Sanctuary
+    Level: 275
+    Hp: 15000000
+    Attack: 1000
+    Attack2: 1000
+    Defense: 1000
+    MagicDefense: 1000
+    Resistance: 1000
+    MagicResistance: 1000
+    Str: 200
+    Agi: 200
+    Vit: 200
+    Int: 200
+    Dex: 200
+    Luk: 200
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1000
+    AttackMotion: 1000
+    ClientAttackMotion: 1000
+    DamageMotion: 1000
+    DamageTaken: 1
+    Ai: 06
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true

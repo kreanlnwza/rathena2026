@@ -1,0 +1,41 @@
+Header:
+  Type: MOB_DB
+  Version: 5
+
+Body:
+  - Id: 21634
+    AegisName: 20TH_GATE_GREEN
+    Name: NPC
+  - Id: 21809
+    AegisName: 20TH_GATE_GREEN_M
+    Name: NPC
+  - Id: 21810
+    AegisName: 20TH_GATE_GREEN_S
+    Name: NPC
+  - Id: 21635
+    AegisName: 20TH_GATE_PURPLE
+    Name: NPC
+  - Id: 21811
+    AegisName: 20TH_GATE_PURPLE_M
+    Name: NPC
+  - Id: 21812
+    AegisName: 20TH_GATE_PURPLE_S
+    Name: NPC
+  - Id: 21636
+    AegisName: 20TH_GATE_RED
+    Name: NPC
+  - Id: 21813
+    AegisName: 20TH_GATE_RED_M
+    Name: NPC
+  - Id: 21814
+    AegisName: 20TH_GATE_RED_S
+    Name: NPC
+  - Id: 21639
+    AegisName: 20TH_CRYSTAL_L
+    Name: NPC
+  - Id: 21638
+    AegisName: 20TH_CRYSTAL_M
+    Name: NPC
+  - Id: 21637
+    AegisName: 20TH_CRYSTAL_S
+    Name: NPC

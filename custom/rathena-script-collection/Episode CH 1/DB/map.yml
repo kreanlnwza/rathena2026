@@ -1,0 +1,248 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Map Drop Database
+###########################################################################
+#
+# Map Drop Settings
+#
+###########################################################################
+# - Map                             Name of the map.
+#   GlobalDrops                     Drops for all monsters on this map. (Default: empty)
+#                                   These drops are unaffected by server drop rate and cannot be stolen.
+#     - Index                       Unique index of the drop.
+#       Item                        Item name.
+#       Rate                        Drop rate of item, n/100000.
+#       RandomOptionGroup           Random Option Group applied to item on drop. (Default: None)
+#   SpecificDrops                   Drops for specific monsters on this map. (Default: empty)
+#     - Monster                     Monster name.
+#       Drops                       Drops for this specific monster. (Default: empty)
+#                                   These drops are unaffected by server drop rate and cannot be stolen.
+#         - Index                   Unique index of the drop.
+#           Item                    Item name.
+#           Rate                    Drop rate of item, n/100000.
+#           RandomOptionGroup       Random Option Group applied to item on drop. (Default: None)
+###########################################################################
+
+Header:
+  Type: MAP_DROP_DB
+  Version: 2
+
+Body:
+  - Map: mu_fild01
+    GlobalDrops:
+      - Index: 0
+        Item: Shadowdecon_Ore
+        Rate: 1500
+      - Index: 1
+        Item: Shadowdecon
+        Rate: 200
+      - Index: 2
+        Item: Zelunium_Ore
+        Rate: 1500
+      - Index: 3
+        Item: Zelunium
+        Rate: 200
+      - Index: 4
+        Item: Etel_Dust
+        Rate: 875
+      - Index: 5
+        Item: Ch1_Hal
+        Rate: 7500
+  - Map: hem_fild
+    GlobalDrops:
+      - Index: 0
+        Item: Shadowdecon_Ore
+        Rate: 1000
+      - Index: 1
+        Item: Shadowdecon
+        Rate: 100
+      - Index: 2
+        Item: Zelunium_Ore
+        Rate: 1000
+      - Index: 3
+        Item: Zelunium
+        Rate: 100
+      - Index: 4
+        Item: Etel_Dust
+        Rate: 475
+  - Map: hem_dun01
+    GlobalDrops:
+      - Index: 0
+        Item: Shadowdecon_Ore
+        Rate: 1500
+      - Index: 1
+        Item: Shadowdecon
+        Rate: 200
+      - Index: 2
+        Item: Zelunium_Ore
+        Rate: 1500
+      - Index: 3
+        Item: Zelunium
+        Rate: 200
+      - Index: 4
+        Item: Etel_Dust
+        Rate: 875
+  - Map: uknw_ruin
+    GlobalDrops:
+      - Index: 0
+        Item: Shadowdecon_Ore
+        Rate: 1500
+      - Index: 1
+        Item: Shadowdecon
+        Rate: 200
+      - Index: 2
+        Item: Zelunium_Ore
+        Rate: 1500
+      - Index: 3
+        Item: Zelunium
+        Rate: 200
+      - Index: 4
+        Item: Etel_Dust
+        Rate: 875
+  - Map: uknw_ruin2
+    GlobalDrops:
+      - Index: 0
+        Item: Shadowdecon_Ore
+        Rate: 1500
+      - Index: 1
+        Item: Shadowdecon
+        Rate: 200
+      - Index: 2
+        Item: Zelunium_Ore
+        Rate: 1500
+      - Index: 3
+        Item: Zelunium
+        Rate: 200
+      - Index: 4
+        Item: Etel_Dust
+        Rate: 875
+  - Map: hem_dun02
+    GlobalDrops:
+      - Index: 0
+        Item: Shadowdecon
+        Rate: 2000
+      - Index: 1
+        Item: Zelunium
+        Rate: 2000
+      - Index: 2
+        Item: Etel_Dust
+        Rate: 7500
+      - Index: 3
+        Item: Frontier_Magic_Dust
+        Rate: 6000
+      - Index: 4
+        Item: Illusion_Fragment_BL
+        Rate: 3500
+      - Index: 5
+        Item: Illusion_Fragment_YL
+        Rate: 3500
+      - Index: 6
+        Item: Dimension_Energy_BL
+        Rate: 2500
+      - Index: 7
+        Item: Dimension_Energy_YL
+        Rate: 2500
+      - Index: 8
+        Item: Chaotic_Rune_Ore
+        Rate: 500
+      - Index: 9
+        Item: Chaotic_Rune
+        Rate: 200
+  - Map: ch1_gfn01
+    GlobalDrops:
+      - Index: 0
+        Item: Shadowdecon
+        Rate: 3000
+      - Index: 1
+        Item: Zelunium
+        Rate: 3000
+      - Index: 2
+        Item: Etel_Dust
+        Rate: 10000
+      - Index: 3
+        Item: Frontier_Magic_Dust
+        Rate: 6000
+      - Index: 4
+        Item: Illusion_Fragment_GR
+        Rate: 3500
+      - Index: 5
+        Item: Illusion_Fragment_BK
+        Rate: 3500
+      - Index: 6
+        Item: Dimension_Energy_GR
+        Rate: 2500
+      - Index: 7
+        Item: Dimension_Energy_BK
+        Rate: 2500
+      - Index: 8
+        Item: Disparate_Rune_Ore
+        Rate: 3500
+      - Index: 9
+        Item: Disparate_Rune
+        Rate: 2000
+      - Index: 10
+        Item: Disparate_Essence
+        Rate: 500
+      - Index: 11
+        Item: Chaotic_Essence
+        Rate: 500
+      - Index: 12
+        Item: Frontier_M_Stone
+        Rate: 500
+  - Map: ch1_gfn03
+    GlobalDrops:
+      - Index: 0
+        Item: Shadowdecon
+        Rate: 3000
+      - Index: 1
+        Item: Zelunium
+        Rate: 3000
+      - Index: 2
+        Item: Etel_Dust
+        Rate: 10000
+      - Index: 3
+        Item: Frontier_Magic_Dust
+        Rate: 6000
+      - Index: 4
+        Item: Illusion_Fragment_GR
+        Rate: 3500
+      - Index: 5
+        Item: Illusion_Fragment_BK
+        Rate: 3500
+      - Index: 6
+        Item: Dimension_Energy_GR
+        Rate: 2500
+      - Index: 7
+        Item: Dimension_Energy_BK
+        Rate: 2500
+      - Index: 8
+        Item: Disparate_Rune_Ore
+        Rate: 3500
+      - Index: 9
+        Item: Disparate_Rune
+        Rate: 2000
+      - Index: 10
+        Item: Disparate_Essence
+        Rate: 500
+      - Index: 11
+        Item: Chaotic_Essence
+        Rate: 500
+      - Index: 12
+        Item: Frontier_M_Stone
+        Rate: 500

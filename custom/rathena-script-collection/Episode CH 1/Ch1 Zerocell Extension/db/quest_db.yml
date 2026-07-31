@@ -1,0 +1,53 @@
+Body:
+  - Id: 27089
+    Title: Abandoned Laboratory Zero Cell
+  - Id: 27090
+    Title: Abandoned Laboratory Zero Cell
+  - Id: 27091
+    Title: Abandoned Laboratory Zero Cell
+  - Id: 27092
+    Title: Abandoned Laboratory Zero Cell
+  - Id: 27093
+    Title: Abandoned Laboratory Cleanup
+  - Id: 27094
+    Title: Zero Cell Lux Cleanup
+    Targets:
+      - Id: 1
+        Count: 300
+        Location: ch1zero1
+        MapName: Zero Cell Sector-Lux
+  - Id: 27095
+    Title: Zero Cell Lux Cleanup - Wait
+    TimeLimit: 4h
+  - Id: 27096
+    Title: Zero Cell Nox Cleanup
+    Targets:
+      - Id: 1
+        Count: 300
+        Location: ch1zero2
+        MapName: Zero Cell Sector-Nox
+  - Id: 27097
+    Title: Zero Cell Nox Cleanup - Wait
+    TimeLimit: 4h
+  - Id: 27098
+    Title: Zero Cell Vita Cleanup
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: ch1zero3
+        MapName: Zero Cell Sector-Vita
+  - Id: 27099
+    Title: Zero Cell Vita Cleanup - Wait
+    TimeLimit: 4h
+  - Id: 27100
+    Title: Zero Cell Arc Cleanup
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: ch1zero4
+        MapName: Zero Cell Sector-Arc
+  - Id: 27101
+    Title: Zero Cell Arc Cleanup - Wait
+    TimeLimit: 4h
+  - Id: 27102
+    Title: Laboratory Entry

@@ -1,0 +1,3350 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Database
+###########################################################################
+#
+# Item Settings
+#
+###########################################################################
+# - Id                      Item ID.
+#   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
+#   Name                    Name in English for displaying as output.
+#   Type                    Item type. (Default: Etc)
+#   SubType                 Weapon, Ammo or Card type. (Default: 0)
+#   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
+#   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)
+#   Weight                  Item weight. Each 10 is 1 weight. (Default: 0)
+#   Attack                  Weapon's attack. (Default: 0)
+#   MagicAttack             Weapon's magic attack. (Default: 0)
+#   Defense                 Armor's defense. (Default: 0)
+#   Range                   Weapon's attack range. (Default: 0)
+#   Slots                   Available slots in item. (Default: 0)
+#   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
+#   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
+#   Gender                  Gender that can equip the item. (Default: Both)
+#   Locations               Equipment's placement. (Default: None)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
+#   EquipLevelMin           Minimum required level to equip. (Default: 0)
+#   EquipLevelMax           Maximum level that can equip. (Default: 0)
+#   Refineable              If the item can be refined. (Default: false)
+#   Gradable                If the item can be graded. (Default: false)
+#   View                    View sprite of an item. (Default: 0)
+#   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
+#   Flags:                  Item flags. (Default: null)
+#     BuyingStore           If the item is available for Buyingstores. (Default: false)
+#     DeadBranch            If the item is a Dead Branch. (Default: false)
+#     Container             If the item is part of a container. (Default: false)
+#     UniqueId              If the item is a unique stack. (Default: false)
+#     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
+#     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
+#     NoConsume             If the item is consumed on use. (Default: false)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
+#   Delay:                  Item use delay. (Default: null)
+#     Duration              Duration of delay in seconds.
+#     Status                Status Change used to track delay. (Default: None)
+#   Stack:                  Item stack amount. (Default: null)
+#     Amount                Maximum amount that can be stacked.
+#     Inventory             If the stack is applied to player's inventory. (Default: true)
+#     Cart                  If the stack is applied to the player's cart. (Default: false)
+#     Storage               If the stack is applied to the player's storage. (Default: false)
+#     GuildStorage          If the stack is applied to the player's guild storage. (Default: false)
+#   NoUse:                  Conditions when the item is unusable. (Default: null)
+#     Override              Group level to override these conditions. (Default: 100)
+#     Sitting               If the item can not be used while sitting. (Default: false)
+#   Trade:                  Trade restrictions. (Default: null)
+#     Override              Group level to override these conditions. (Default: 100)
+#     NoDrop                If the item can not be dropped. (Default: false)
+#     NoTrade               If the item can not be traded. (Default: false)
+#     TradePartner          If the item can not be traded to the player's partner. (Default: false)
+#     NoSell                If the item can not be sold. (Default: false)
+#     NoCart                If the item can not be put in a cart. (Default: false)
+#     NoStorage             If the item can not be put in a storage. (Default: false)
+#     NoGuildStorage        If the item can not be put in a guild storage. (Default: false)
+#     NoMail                If the item can not be put in a mail. (Default: false)
+#     NoAuction             If the item can not be put in an auction. (Default: false)
+#   Script                  Script to execute when the item is used/equipped. (Default: null)
+#   EquipScript             Script to execute when the item is equipped. (Default: null)
+#   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires. (Default: null)
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 104000
+    AegisName: Ch1_Warp_Leaf
+    Name: Traveler's Leaf
+    Type: Usable
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoStorage: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      if ( select("Land of Darkness", "Decayed Geffen") == 1 )
+        warp "ygg_roots", 325, 147;
+      else
+        warp "ch1_geffen", 120, 64;
+  - Id: 104002
+    AegisName: MD_Fragment_Box_BL
+    Name: Blue Fragment Box
+    Type: Usable
+    Weight: 50
+    Flags:
+      Container: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getitem "Illusion_Fragment_BL", rand(25,40);
+  - Id: 104003
+    AegisName: MD_Fragment_Box_YL
+    Name: Yellow Fragment Box
+    Type: Usable
+    Weight: 50
+    Flags:
+      Container: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getitem "Illusion_Fragment_YL", rand(25,40);
+  - Id: 104004
+    AegisName: MD_Fragment_Box_GR
+    Name: Green Fragment Box
+    Type: Usable
+    Weight: 50
+    Flags:
+      Container: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getitem "Illusion_Fragment_GR", rand(25,40);
+  - Id: 104005
+    AegisName: MD_Fragment_Box_BK
+    Name: Black Fragment Box
+    Type: Usable
+    Weight: 50
+    Flags:
+      Container: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getitem "Illusion_Fragment_BK", rand(25,40);
+  - Id: 104006
+    AegisName: Ch1_MD_Reward_1
+    Name: Immortal Magic Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    EquipLevelMin: 200
+    Script: |
+      getitem "Ch1_Root_Coin", 20;
+      getitem "Ch1_Mana_Ring", 10;
+      getitem "MD_Fragment_Box_BL", 1;
+  - Id: 104007
+    AegisName: Ch1_MD_Reward_2
+    Name: Mid-Grade Immortal Magic Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    EquipLevelMin: 200
+    Script: |
+      getitem "Ch1_Root_Coin", 40;
+      getitem "Ch1_Mana_Ring", 20;
+      getitem "MD_Fragment_Box_BL", 1;
+      getitem "MD_Fragment_Box_YL", 1;
+  - Id: 104008
+    AegisName: Ch1_MD_Reward_3
+    Name: High-Grade Immortal Magic Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    EquipLevelMin: 200
+    Script: |
+      getitem "Ch1_Root_Coin", 60;
+      getitem "Ch1_Mana_Ring", 30;
+      getitem "MD_Fragment_Box_BL", 1;
+      getitem "MD_Fragment_Box_YL", 1;
+      getitem "MD_Fragment_Box_GR", 1;
+  - Id: 104009
+    AegisName: Ch1_MD_Reward_4
+    Name: Top-Grade Immortal Magic Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    EquipLevelMin: 200
+    Script: |
+      getitem "Ch1_Root_Coin", 100;
+      getitem "Ch1_Mana_Ring", 50;
+      getitem "MD_Fragment_Box_BL", 1;
+      getitem "MD_Fragment_Box_YL", 1;
+      getitem "MD_Fragment_Box_GR", 1;
+      getitem "MD_Fragment_Box_BK", 1;
+  - Id: 300633
+    AegisName: Yggring_Card
+    Name: Yggring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCritical, 7;
+  - Id: 300634
+    AegisName: Leafring_Card
+    Name: Leafring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCritical, 3;
+  - Id: 300635
+    AegisName: Charcoaring_Card
+    Name: Charcoaring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine() / 3;
+      bonus bDef, 80 + ( 15 * .@r );
+      bonus bRes, 40 + ( 8 * .@r );
+  - Id: 300636
+    AegisName: Vulring_Card
+    Name: Vulring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk, 7;
+      bonus2 bAddEle, Ele_Wind, 12 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300637
+    AegisName: Fire_Ring_Card
+    Name: Fire Ring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine() / 3;
+      bonus2 bSubEle, Ele_Neutral, 15;
+      bonus bLongAtkRate, 20 + ( .@r * 4 );
+  - Id: 300638
+    AegisName: Firafflesia_Card
+    Name: Firafflesia Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate, 8;
+      bonus2 bAddRace, RC_DemiHuman, ( .@r >= 9 ? 20 : ( .@r >= 7 ? 12 : 0 ) );
+  - Id: 300639
+    AegisName: Volcano_Clam_Card
+    Name: Volcano Clam Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk, 5;
+      bonus2 bMagicAddEle, Ele_Undead, 7 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300640
+    AegisName: Fire_Flower_Card
+    Name: Fire Flower Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate, 8;
+      bonus2 bAddRace, RC_Plant, ( .@r >= 9 ? 20 : ( .@r >= 7 ? 12 : 0 ) );
+  - Id: 300641
+    AegisName: Big_Eye_Card
+    Name: Big Eye Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      .@r2 = .@r / 3;
+      bonus bVariableCastrate, -5;
+      bonus2 bMagicAddEle, Ele_Fire, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Water, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Holy, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Wind, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Dark, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Ghost, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Undead, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+  - Id: 300642
+    AegisName: Corrupted_Silk_Frog_Card
+    Name: Corrupted Silk Frog Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk, 7;
+      bonus2 bAddEle, Ele_Fire, 12 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300643
+    AegisName: Corrupted_Silk_Snail_Card
+    Name: Corrupted Silk Snail Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      .@r2 = .@r / 3;
+      bonus bVariableCastrate, -5;
+      bonus2 bMagicAddEle, Ele_Water, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Wind, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Earth, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Fire, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Poison, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Dark, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+      bonus2 bMagicAddEle, Ele_Neutral, ( .@r2 * 4 ) + ( .@r <= 10 ? 20 : 0 );
+  - Id: 300644
+    AegisName: Encroached_Recon_Robot_Card
+    Name: Encroached Recon Robot Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine() / 3;
+      bonus2 bSubEle, Ele_Neutral, 20;
+      bonus bShortAtkRate, 20 + ( .@r * 4 );
+  - Id: 300645
+    AegisName: Encroached_Repair_Robot_Card
+    Name: Encroached Repair Robot Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine() / 2;
+      bonus bVariableCastrate, -5;
+      bonus2 bMagicAddEle, Ele_All, ( .@r * 3 );
+  - Id: 300646
+    AegisName: Encroached_Dimic_Card
+    Name: Encroached Dimic Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine() / 2;
+      bonus bFlee, 30;
+      bonus bCritical, 7;
+      bonus bLongAtkRate, ( .@r * 3 );
+      bonus bShortAtkRate, ( .@r * 3 );
+  - Id: 300647
+    AegisName: Nyaise_Card
+    Name: Nyaise Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk, 5;
+      bonus2 bMagicAddEle, Ele_Dark, 7 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300648
+    AegisName: Shadow_Jailer_Card
+    Name: Shadow Jailer Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk, 7;
+      bonus2 bAddEle, Ele_Ghost, 12 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300649
+    AegisName: Tulip_Card
+    Name: Tulip Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate, -5;
+      bonus bMaxSPrate, -5;
+  - Id: 300650
+    AegisName: Calendula_Card
+    Name: Calendula Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCritical, 2;
+      bonus bShortAtkRate, 7;
+  - Id: 300651
+    AegisName: Scabiosa_Card
+    Name: Scabiosa Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate, -5;
+      bonus bLongAtkRate, 7;
+  - Id: 300652
+    AegisName: Lobelia_Card
+    Name: Lobelia Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate, -5;
+      bonus bDelayRate, -3;
+  - Id: 300653
+    AegisName: Myosotis_Card
+    Name: Myosotis Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCritical, 5;
+      bonus bCRate, 1;
+      bonus bShortAtkRate, 5;
+  - Id: 300654
+    AegisName: Anemone_Card
+    Name: Anemone Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCritical, 5;
+      bonus bVariableCastrate, -3;
+      bonus bLongAtkRate, 7;
+  - Id: 300655
+    AegisName: Strange_Skogul_Card
+    Name: Strange Skogul Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate, 5;
+      bonus2 bMagicAddRace, RC_Angel, ( .@r >= 9 ? 17 : ( .@r >= 7 ? 10 : 0 ) );
+  - Id: 300656
+    AegisName: Strange_Frus_Card
+    Name: Strange Frus Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk, 7;
+      bonus2 bAddEle, Ele_Holy, 12 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300657
+    AegisName: Listener_Card
+    Name: Listener Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk, 5;
+      bonus2 bMagicAddEle, Ele_Water, 7 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300658
+    AegisName: Immortal_Legion_Officer_Card
+    Name: Immortal Legion Officer Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk, 5;
+      bonus2 bMagicAddEle, Ele_Holy, 7 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300659
+    AegisName: Toxit_Card
+    Name: Toxit Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine() / 3;
+      bonus bPAtk, 7;
+      if ( getenchantgrade() >= ENCHANTGRADE_A ) {
+        bonus2 bAddEle, Ele_All, 10;
+      }
+      if ( getequipweaponlv() == 5 ) {
+        bonus2 bAddClass, Class_Boss, ( .@r * 2 );
+      }
+  - Id: 300660
+    AegisName: Lunarina_Card
+    Name: Lunarina Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine() / 3;
+      bonus bSMatk, 5;
+      if ( getenchantgrade() >= ENCHANTGRADE_A ) {
+        bonus2 bMagicAddSize, Size_All, 12;
+      }
+      if ( getequipweaponlv() == 5 ) {
+        bonus2 bMagicAddClass, Class_Normal, ( .@r * 2 );
+      }
+  - Id: 300661
+    AegisName: Bloody_Slasher_Card
+    Name: Bloody Slasher Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine() / 3;
+      bonus bPAtk, 7;
+      if ( getenchantgrade() >= ENCHANTGRADE_A ) {
+        bonus2 bAddSize, Size_All, 12;
+      }
+      if ( getequipweaponlv() == 5 ) {
+        bonus2 bAddClass, Class_Normal, ( .@r * 2 );
+      }
+  - Id: 300662
+    AegisName: Shadiest_Card
+    Name: Shadiest Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine() / 3;
+      bonus bSMatk, 5;
+      if ( getenchantgrade() >= ENCHANTGRADE_A ) {
+        bonus2 bMagicAddEle, Ele_All, 10;
+      }
+      if ( getequipweaponlv() == 5 ) {
+        bonus2 bMagicAddClass, Class_Boss, ( .@r * 2 );
+      }
+  - Id: 300663
+    AegisName: High_Succubus_Card
+    Name: High Succubus Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk, 5;
+      bonus2 bMagicAddEle, Ele_Neutral, 7 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300664
+    AegisName: High_Incubus_Card
+    Name: High Incubus Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk, 7;
+      bonus2 bAddEle, Ele_Neutral, 12 + ( .@r >= 10 ? 8 : 0 );
+  - Id: 300665
+    AegisName: Abyss_Commander_Card
+    Name: Abyss Commander Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPRate, -25;
+      if ( .@r >= 12 ) {
+        bonus2 bAddClass, Class_Boss, 7;
+        bonus2 bMagicAddClass, Class_Boss, 4;
+      }
+      if ( getenchantgrade() >= ENCHANTGRADE_A ) {
+        bonus2 bAddClass, Class_Boss, 10;
+        bonus2 bMagicAddClass, Class_Boss, 10;
+      }
+      if ( getequiparmorlv() == 2 ) {
+        bonus2 bAddClass, Class_Boss, ( .@r /3 ) * 2;
+        bonus2 bMagicAddClass, Class_Boss, ( .@r /3 ) * 2;
+      }
+  - Id: 300666
+    AegisName: Bulgasari_Card
+    Name: Bulgasari Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk, 15;
+      bonus bASPD, 3;
+      bonus3 bAutoSpell, "AG_ROCK_DOWN", 5, 100;
+      bonus3 bAutoSpell, "ABC_ABYSS_FLAME", 5, 70;
+  - Id: 300667
+    AegisName: Glutton_Card
+    Name: Glutton Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPRate, 25;
+      bonus bMaxSPrate, -25;
+      bonus2 bAddItemHealRate, 517, 150;
+  - Id: 313822
+    AegisName: Ch01_1_War
+    Name: Dimensional Magic (Warrior)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk, 30;
+      bonus bShortAtkRate, ( .@r >= 9 ? 7 : ( .@r >= 7 ? 3 : 0 ) );
+  - Id: 313823
+    AegisName: Ch01_1_Ran
+    Name: Dimensional Magic (Shooter)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk, 30;
+      bonus bLongAtkRate, ( .@r >= 9 ? 7 : ( .@r >= 7 ? 3 : 0 ) );
+  - Id: 313824
+    AegisName: Ch01_1_Sage
+    Name: Dimensional Magic (Sage)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bMatk, 30;
+      if ( .@r >= 7 ) {
+        bonus2 bMagicAtkEle, Ele_Water, 7;
+        bonus2 bMagicAtkEle, Ele_Wind, 7;
+        bonus2 bMagicAtkEle, Ele_Undead, 7;
+        if ( .@r >= 9 ) {
+          bonus2 bMagicAtkEle, Ele_Fire, 7;
+          bonus2 bMagicAtkEle, Ele_Poison, 7;
+          bonus2 bMagicAtkEle, Ele_Dark, 7;
+          bonus2 bMagicAtkEle, Ele_Neutral, 7;
+        }
+      }
+  - Id: 313825
+    AegisName: Ch01_1_Mag
+    Name: Dimensional Magic (Mage)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bMatk, 30;
+      if ( .@r >= 7 ) {
+        bonus2 bMagicAtkEle, Ele_Fire, 7;
+        bonus2 bMagicAtkEle, Ele_Neutral, 7;
+        bonus2 bMagicAtkEle, Ele_Holy, 7;
+        if ( .@r >= 9 ) {
+          bonus2 bMagicAtkEle, Ele_Wind, 7;
+          bonus2 bMagicAtkEle, Ele_Dark, 7;
+          bonus2 bMagicAtkEle, Ele_Ghost, 7;
+          bonus2 bMagicAtkEle, Ele_Undead, 7;
+        }
+      }
+  - Id: 313826
+    AegisName: Ch01_1_Assassin
+    Name: Dimensional Magic (Assassin)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk, 20;
+      bonus bCritical, 2;
+      bonus bCritAtkRate, ( .@r >= 9 ? 7 : ( .@r >= 7 ? 3 : 0 ) );
+  - Id: 313827
+    AegisName: Ch01_2_War2
+    Name: Dimensional Magic (Berserker)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bBaseAtk, 25;
+      bonus bAtkRate, 2;
+      bonus bPAtk, 2;
+      bonus bShortAtkRate, ( .@r >= 9 ? 10 : ( .@r >= 7 ? 5 : 0 ) );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313828
+    AegisName: Ch01_2_Ran2
+    Name: Dimensional Magic (Marksman)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bBaseAtk, 25;
+      bonus bAtkRate, 2;
+      bonus bPAtk, 2;
+      bonus bLongAtkRate, ( .@r >= 9 ? 10 : ( .@r >= 7 ? 5 : 0 ) );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313829
+    AegisName: Ch01_2_Sage2
+    Name: Dimensional Magic (Great Sage)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bMatk, 25;
+      bonus bMatkRate, 2;
+      bonus bSMatk, 2;
+      if ( .@r >= 7 ) {
+        bonus2 bMagicAtkEle, Ele_Water, 10;
+        bonus2 bMagicAtkEle, Ele_Wind, 10;
+        bonus2 bMagicAtkEle, Ele_Undead, 10;
+        if ( .@r >= 9 ) {
+          bonus2 bMagicAtkEle, Ele_Fire, 10;
+          bonus2 bMagicAtkEle, Ele_Poison, 10;
+          bonus2 bMagicAtkEle, Ele_Dark, 10;
+          bonus2 bMagicAtkEle, Ele_Neutral, 10;
+        }
+      }
+      if ( .@g >= ENCHANTGRADE_D ) {
+        bonus2 bMagicAtkEle, Ele_Water, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Wind, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Undead, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Fire, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Poison, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Dark, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Neutral, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      }
+  - Id: 313830
+    AegisName: Ch01_2_Mag2
+    Name: Dimensional Magic (Great Mage)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bMatk, 25;
+      bonus bMatkRate, 2;
+      bonus bSMatk, 2;
+      if ( .@r >= 7 ) {
+        bonus2 bMagicAtkEle, Ele_Fire, 10;
+        bonus2 bMagicAtkEle, Ele_Neutral, 10;
+        bonus2 bMagicAtkEle, Ele_Holy, 10;
+        if ( .@r >= 9 ) {
+          bonus2 bMagicAtkEle, Ele_Wind, 10;
+          bonus2 bMagicAtkEle, Ele_Dark, 10;
+          bonus2 bMagicAtkEle, Ele_Ghost, 10;
+          bonus2 bMagicAtkEle, Ele_Undead, 10;
+        }
+      }
+      if ( .@g >= ENCHANTGRADE_D ) {
+        bonus2 bMagicAtkEle, Ele_Fire, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Neutral, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Holy, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Wind, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Dark, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Ghost, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+        bonus2 bMagicAtkEle, Ele_Undead, 5 + ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      }
+  - Id: 313831
+    AegisName: Ch01_2_Assassin2
+    Name: Dimensional Magic (Executioner)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bBaseAtk, 25;
+      bonus bCritical, 5;
+      bonus bPAtk, 2;
+      bonus bCritAtkRate, ( .@r >= 9 ? 10 : ( .@r >= 7 ? 5 : 0 ) );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313832
+    AegisName: Ch01_3_S_Delay
+    Name: Dimensional Magic (Global Cooldown)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bDelayRate, -2 - ( .@r >= 9 ? 4 : ( .@r >= 7 ? 2 : 0 ) );
+      bonus bDelayRate, ( .@g >= ENCHANTGRADE_C ? -4 : ( .@g >= ENCHANTGRADE_D ? -2 : 0 ) );
+  - Id: 313833
+    AegisName: Ch01_3_Force
+    Name: Dimensional Magic (Power Force)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bPAtk, 1;
+      bonus bAtkRate, 2 + ( .@r >= 9 ? 7 : ( .@r >= 7 ? 3 : 0 ) );
+      bonus bAtkRate, ( .@g >= ENCHANTGRADE_C ? 5 : ( .@g >= ENCHANTGRADE_D ? 2 : 0 ) );
+  - Id: 313834
+    AegisName: Ch01_3_M_Force
+    Name: Dimensional Magic (Magic Force)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bSMatk, 1;
+      bonus bMatkRate, 2 + ( .@r >= 9 ? 7 : ( .@r >= 7 ? 3 : 0 ) );
+      bonus bMatkRate, ( .@g >= ENCHANTGRADE_C ? 5 : ( .@g >= ENCHANTGRADE_D ? 2 : 0 ) );
+  - Id: 313835
+    AegisName: Ch01_1_Def
+    Name: Dimensional Magic (Physical Defense)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bDef, 100 + ( .@r >= 9 ? 50 : ( .@r >= 7 ? 25 : 0 ) );
+      bonus bRes, 15 + ( .@r >= 9 ? 10 : ( .@r >= 7 ? 5 : 0 ) );
+  - Id: 313836
+    AegisName: Ch01_1_Mdef
+    Name: Dimensional Magic (Magic Defense)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bMdef, 20 + ( .@r >= 9 ? 10 : ( .@r >= 7 ? 5 : 0 ) );
+      bonus bMres, 10 + ( .@r >= 9 ? 6 : ( .@r >= 7 ? 3 : 0 ) );
+  - Id: 313837
+    AegisName: Ch01_2_Speed
+    Name: Dimensional Magic (Speed)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate, 10 + ( .@r >= 9 ? 10 : ( .@r >= 7 ? 5 : 0 ) );
+  - Id: 313838
+    AegisName: Ch01_2_Caster
+    Name: Dimensional Magic (Caster)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate, -10 - ( .@r >= 9 ? 10 : ( .@r >= 7 ? 5 : 0 ) );
+  - Id: 313839
+    AegisName: Ch01_3_Melee
+    Name: Dimensional Magic (Melee)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bPAtk, 2;
+      bonus bShortAtkRate, 5 + ( .@r >= 9 ? 6 : ( .@r >= 7 ? 3 : 0 ) );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus bPerfectHitAddRate, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313840
+    AegisName: Ch01_3_Range
+    Name: Dimensional Magic (Range)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bPAtk, 2;
+      bonus bLongAtkRate, 5 + ( .@r >= 9 ? 6 : ( .@r >= 7 ? 3 : 0 ) );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus bPerfectHitAddRate, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313841
+    AegisName: Ch01_3_Spell
+    Name: Dimensional Magic (Spell)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bSMatk, 2;
+      bonus2 bMagicAtkEle, Ele_Water, 5 + ( .@r >= 7 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, 5 + ( .@r >= 7 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Earth, 5 + ( .@r >= 7 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, 5 + ( .@r >= 9 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Poison, 5 + ( .@r >= 9 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, 5 + ( .@r >= 9 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, 5 + ( .@r >= 9 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Water, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Earth, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Poison, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus bMaxSPrate, ( .@g >= ENCHANTGRADE_C ? 5 : ( .@g >= ENCHANTGRADE_D ? 2 : 0 ) );
+  - Id: 313842
+    AegisName: Ch01_3_Magic_P
+    Name: Dimensional Magic (Magic Power)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bSMatk, 2;
+      bonus2 bMagicAtkEle, Ele_Fire, 5 + ( .@r >= 7 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, 5 + ( .@r >= 7 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Holy, 5 + ( .@r >= 7 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, 5 + ( .@r >= 9 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, 5 + ( .@r >= 9 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Ghost, 5 + ( .@r >= 9 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Undead, 5 + ( .@r >= 9 ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Holy, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Ghost, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Undead, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus bMaxSPrate, ( .@g >= ENCHANTGRADE_C ? 5 : ( .@g >= ENCHANTGRADE_D ? 2 : 0 ) );
+  - Id: 313843
+    AegisName: Ch01_3_Critical
+    Name: Dimensional Magic (Critical)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus bCRate, 2;
+      bonus bCritAtkRate, 5 + ( .@r >= 9 ? 6 : ( .@r >= 7 ? 3 : 0 ) );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 9 : ( .@g >= ENCHANTGRADE_D ? 4 : 0 ) );
+      bonus bCritical, ( .@g >= ENCHANTGRADE_C ? 5 : ( .@g >= ENCHANTGRADE_D ? 2 : 0 ) );
+  - Id: 313844
+    AegisName: Ch01_1_Size_Atk
+    Name: Dimensional Magic (Size Attack)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize, Size_All, 3 + ( .@r >= 9 ? 5 : ( .@r >= 7 ? 2 : 0 ) );
+  - Id: 313845
+    AegisName: Ch01_1_Size_Hiking
+    Name: Dimensional Magic (Size Spell)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAddSize, Size_All, 3 + ( .@r >= 9 ? 5 : ( .@r >= 7 ? 2 : 0 ) );
+  - Id: 313846
+    AegisName: Ch01_2_P_F
+    Name: Dimensional Magic (Physical Force)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk, 10 + ( .@r >= 9 ? 25 : ( .@r >= 7 ? 10 : 0 ) );
+      bonus bAtkRate, 1 + ( .@r >= 9 ? 3 : ( .@r >= 7 ? 1 : 0 ) );
+      bonus bPAtk, 1;
+  - Id: 313847
+    AegisName: Ch01_2_M_F
+    Name: Dimensional Magic (Physical Force)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      bonus bMatk, 10 + ( .@r >= 9 ? 25 : ( .@r >= 7 ? 10 : 0 ) );
+      bonus bMatkRate, 1 + ( .@r >= 9 ? 3 : ( .@r >= 7 ? 1 : 0 ) );
+      bonus bSMatk, 1;
+  - Id: 313848
+    AegisName: Ch01_3_Over_Power
+    Name: Dimensional Magic (Over Power)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus bAtkRate, 2;
+      bonus bPAtk, 3 + ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313849
+    AegisName: Ch01_3_Fire_Shot
+    Name: Dimensional Magic (Firing Shot)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus bAtkRate, 2;
+      bonus bPAtk, 3 + ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313850
+    AegisName: Ch01_3_Spl_Buster
+    Name: Dimensional Magic (Spell Buster)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus bMatkRate, 2;
+      bonus bSMatk, 3 + ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Water, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Earth, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Poison, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313851
+    AegisName: Ch01_3_Mag_Storm
+    Name: Dimensional Magic (Magic Storm)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus bMatkRate, 2;
+      bonus bSMatk, 3 + ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Holy, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Ghost, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Undead, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313852
+    AegisName: Ch01_3_Lucky_Strike
+    Name: Dimensional Magic (Lucky Strike)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus bCritical, 5;
+      bonus bPAtk, 3 + ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : ( .@g >= ENCHANTGRADE_D ? 5 : 0 ) );
+  - Id: 313853
+    AegisName: Ch01_S_E_Life01
+    Name: Dimensional Crystal (Life) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Brute, 3 + min(.@g, 1);
+      bonus2 bAddRace, RC_Plant, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Brute, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Plant, 3 + min(.@g, 1);
+  - Id: 313854
+    AegisName: Ch01_S_E_Life02
+    Name: Dimensional Crystal (Life) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Brute, 4 + min(.@g, 2);
+      bonus2 bAddRace, RC_Plant, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Brute, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Plant, 4 + min(.@g, 2);
+  - Id: 313855
+    AegisName: Ch01_S_E_Life03
+    Name: Dimensional Crystal (Life) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Brute, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddRace, RC_Plant, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Brute, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Plant, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313856
+    AegisName: Ch01_S_E_Life04
+    Name: Dimensional Crystal (Life) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Brute, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Plant, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Brute, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Plant, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313857
+    AegisName: Ch01_S_E_Life05
+    Name: Dimensional Crystal (Life) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Brute, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Plant, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Brute, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Plant, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313858
+    AegisName: Ch01_S_E_Regiment01
+    Name: Dimensional Crystal (Solidarity) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Fish, 3 + min(.@g, 1);
+      bonus2 bAddRace, RC_Demihuman, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Fish, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Demihuman, 3 + min(.@g, 1);
+  - Id: 313859
+    AegisName: Ch01_S_E_Regiment02
+    Name: Dimensional Crystal (Solidarity) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Fish, 4 + min(.@g, 2);
+      bonus2 bAddRace, RC_Demihuman, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Fish, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Demihuman, 4 + min(.@g, 2);
+  - Id: 313860
+    AegisName: Ch01_S_E_Regiment03
+    Name: Dimensional Crystal (Solidarity) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Fish, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddRace, RC_Demihuman, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Fish, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Demihuman, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313861
+    AegisName: Ch01_S_E_Regiment04
+    Name: Dimensional Crystal (Solidarity) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Fish, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Demihuman, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Fish, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Demihuman, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313862
+    AegisName: Ch01_S_E_Regiment05
+    Name: Dimensional Crystal (Solidarity) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Fish, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Demihuman, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Fish, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Demihuman, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313863
+    AegisName: Ch01_S_E_GAE01
+    Name: Dimensional Crystal (Good and Evil) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Angel, 3 + min(.@g, 1);
+      bonus2 bAddRace, RC_Demon, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Angel, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Demon, 3 + min(.@g, 1);
+  - Id: 313864
+    AegisName: Ch01_S_E_GAE02
+    Name: Dimensional Crystal (Good and Evil) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Angel, 4 + min(.@g, 2);
+      bonus2 bAddRace, RC_Demon, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Angel, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Demon, 4 + min(.@g, 2);
+  - Id: 313865
+    AegisName: Ch01_S_E_GAE03
+    Name: Dimensional Crystal (Good and Evil) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Angel, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddRace, RC_Demon, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Angel, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Demon, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313866
+    AegisName: Ch01_S_E_GAE04
+    Name: Dimensional Crystal (Good and Evil) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Angel, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Demon, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Angel, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Demon, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313867
+    AegisName: Ch01_S_E_GAE05
+    Name: Dimensional Crystal (Good and Evil) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Angel, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Demon, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Angel, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Demon, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313868
+    AegisName: Ch01_S_E_Immo01
+    Name: Dimensional Crystal (Immortal) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Dragon, 3 + min(.@g, 1);
+      bonus2 bAddRace, RC_Undead, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Dragon, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Undead, 3 + min(.@g, 1);
+  - Id: 313869
+    AegisName: Ch01_S_E_Immo02
+    Name: Dimensional Crystal (Immortal) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Dragon, 4 + min(.@g, 2);
+      bonus2 bAddRace, RC_Undead, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Dragon, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Undead, 4 + min(.@g, 2);
+  - Id: 313870
+    AegisName: Ch01_S_E_Immo03
+    Name: Dimensional Crystal (Immortal) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Dragon, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddRace, RC_Undead, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Dragon, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Undead, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313871
+    AegisName: Ch01_S_E_Immo04
+    Name: Dimensional Crystal (Immortal) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Dragon, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Undead, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Dragon, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Undead, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313872
+    AegisName: Ch01_S_E_Immo05
+    Name: Dimensional Crystal (Immortal) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Dragon, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Undead, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Dragon, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Undead, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313873
+    AegisName: Ch01_S_E_Vain01
+    Name: Dimensional Crystal (Void) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Formless, 3 + min(.@g, 1);
+      bonus2 bAddRace, RC_Insect, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Formless, 3 + min(.@g, 1);
+      bonus2 bMagicAddRace, RC_Insect, 3 + min(.@g, 1);
+  - Id: 313874
+    AegisName: Ch01_S_E_Vain02
+    Name: Dimensional Crystal (Void) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Formless, 4 + min(.@g, 2);
+      bonus2 bAddRace, RC_Insect, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Formless, 4 + min(.@g, 2);
+      bonus2 bMagicAddRace, RC_Insect, 4 + min(.@g, 2);
+  - Id: 313875
+    AegisName: Ch01_S_E_Vain03
+    Name: Dimensional Crystal (Void) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Formless, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddRace, RC_Insect, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Formless, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddRace, RC_Insect, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313876
+    AegisName: Ch01_S_E_Vain04
+    Name: Dimensional Crystal (Void) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Formless, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Insect, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Formless, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Insect, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313877
+    AegisName: Ch01_S_E_Vain05
+    Name: Dimensional Crystal (Void) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace, RC_Formless, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddRace, RC_Insect, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Formless, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddRace, RC_Insect, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313878
+    AegisName: Ch01_S_E_Flame01
+    Name: Dimensional Crystal (Flame) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Fire, 3 + min(.@g, 1);
+      bonus2 bAddEle, Ele_Dark, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Fire, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Dark, 3 + min(.@g, 1);
+  - Id: 313879
+    AegisName: Ch01_S_E_Flame02
+    Name: Dimensional Crystal (Flame) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Fire, 4 + min(.@g, 2);
+      bonus2 bAddEle, Ele_Dark, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Fire, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Dark, 4 + min(.@g, 2);
+  - Id: 313880
+    AegisName: Ch01_S_E_Flame03
+    Name: Dimensional Crystal (Flame) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Fire, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddEle, Ele_Dark, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Fire, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Dark, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313881
+    AegisName: Ch01_S_E_Flame04
+    Name: Dimensional Crystal (Flame) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Fire, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Dark, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Fire, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Dark, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313882
+    AegisName: Ch01_S_E_Flame05
+    Name: Dimensional Crystal (Flame) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Fire, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Dark, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Fire, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Dark, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313883
+    AegisName: Ch01_S_E_Frozen01
+    Name: Dimensional Crystal (Frost) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Water, 3 + min(.@g, 1);
+      bonus2 bAddEle, Ele_Holy, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Water, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Holy, 3 + min(.@g, 1);
+  - Id: 313884
+    AegisName: Ch01_S_E_Frozen02
+    Name: Dimensional Crystal (Frost) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Water, 4 + min(.@g, 2);
+      bonus2 bAddEle, Ele_Holy, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Water, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Holy, 4 + min(.@g, 2);
+  - Id: 313885
+    AegisName: Ch01_S_E_Frozen03
+    Name: Dimensional Crystal (Frost) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Water, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddEle, Ele_Holy, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Water, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Holy, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313886
+    AegisName: Ch01_S_E_Frozen04
+    Name: Dimensional Crystal (Frost) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Water, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Holy, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Water, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Holy, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313887
+    AegisName: Ch01_S_E_Frozen05
+    Name: Dimensional Crystal (Frost) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Water, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Holy, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Water, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Holy, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313888
+    AegisName: Ch01_S_E_Earth01
+    Name: Dimensional Crystal (Earth) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Wind, 3 + min(.@g, 1);
+      bonus2 bAddEle, Ele_Undead, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Wind, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Undead, 3 + min(.@g, 1);
+  - Id: 313889
+    AegisName: Ch01_S_E_Earth02
+    Name: Dimensional Crystal (Earth) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Wind, 4 + min(.@g, 2);
+      bonus2 bAddEle, Ele_Undead, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Wind, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Undead, 4 + min(.@g, 2);
+  - Id: 313890
+    AegisName: Ch01_S_E_Earth03
+    Name: Dimensional Crystal (Earth) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Wind, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddEle, Ele_Undead, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Wind, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Undead, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313891
+    AegisName: Ch01_S_E_Earth04
+    Name: Dimensional Crystal (Earth) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Wind, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Undead, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Wind, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Undead, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313892
+    AegisName: Ch01_S_E_Earth05
+    Name: Dimensional Crystal (Earth) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Wind, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Undead, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Wind, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Undead, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313893
+    AegisName: Ch01_S_E_Death01
+    Name: Dimensional Crystal (Death) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Ghost, 3 + min(.@g, 1);
+      bonus2 bAddEle, Ele_Undead, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Ghost, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Undead, 3 + min(.@g, 1);
+  - Id: 313894
+    AegisName: Ch01_S_E_Death02
+    Name: Dimensional Crystal (Death) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Ghost, 4 + min(.@g, 2);
+      bonus2 bAddEle, Ele_Undead, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Ghost, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Undead, 4 + min(.@g, 2);
+  - Id: 313895
+    AegisName: Ch01_S_E_Death03
+    Name: Dimensional Crystal (Death) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Ghost, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddEle, Ele_Undead, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Ghost, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Undead, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313896
+    AegisName: Ch01_S_E_Death04
+    Name: Dimensional Crystal (Death) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Ghost, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Undead, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Ghost, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Undead, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313897
+    AegisName: Ch01_S_E_Death05
+    Name: Dimensional Crystal (Death) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Ghost, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Undead, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Ghost, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Undead, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313898
+    AegisName: Ch01_S_E_Poison01
+    Name: Dimensional Crystal (Poison) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Poison, 3 + min(.@g, 1);
+      bonus2 bAddEle, Ele_Neutral, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Poison, 3 + min(.@g, 1);
+      bonus2 bMagicAddEle, Ele_Neutral, 3 + min(.@g, 1);
+  - Id: 313899
+    AegisName: Ch01_S_E_Poison02
+    Name: Dimensional Crystal (Poison) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Poison, 4 + min(.@g, 2);
+      bonus2 bAddEle, Ele_Neutral, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Poison, 4 + min(.@g, 2);
+      bonus2 bMagicAddEle, Ele_Neutral, 4 + min(.@g, 2);
+  - Id: 313900
+    AegisName: Ch01_S_E_Poison03
+    Name: Dimensional Crystal (Poison) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Poison, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bAddEle, Ele_Neutral, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Poison, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+      bonus2 bMagicAddEle, Ele_Neutral, 5 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_B ? 2 : 0 );
+  - Id: 313901
+    AegisName: Ch01_S_E_Poison04
+    Name: Dimensional Crystal (Poison) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Poison, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Neutral, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Poison, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Neutral, 7 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 4 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313902
+    AegisName: Ch01_S_E_Poison05
+    Name: Dimensional Crystal (Poison) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle, Ele_Poison, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bAddEle, Ele_Neutral, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Poison, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Neutral, 10 + min(.@g, 2) + ( .@g >= ENCHANTGRADE_A ? 6 : ( .@r >= ENCHANTGRADE_B ? 2 : 0 ) );
+  - Id: 313903
+    AegisName: Ch01_S_E_Fighting01
+    Name: Dimensional Crystal (Fighting Spirit) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 7;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 1 : 0 );
+  - Id: 313904
+    AegisName: Ch01_S_E_Fighting02
+    Name: Dimensional Crystal (Fighting Spirit) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 10;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+  - Id: 313905
+    AegisName: Ch01_S_E_Fighting03
+    Name: Dimensional Crystal (Fighting Spirit) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine() / 5;
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 14;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_B ? 3 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? (.@r * 3) : 0 );
+  - Id: 313906
+    AegisName: Ch01_S_E_Fighting04
+    Name: Dimensional Crystal (Fighting Spirit) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 19;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 6 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_B ? 4 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/4) * 5) : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_A ? ((.@r/3) * 5) : 0 );
+  - Id: 313907
+    AegisName: Ch01_S_E_Fighting05
+    Name: Dimensional Crystal (Fighting Spirit) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 25;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_B ? 5 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 7) : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 6) : 0 );
+  - Id: 313908
+    AegisName: Ch01_S_E_Fighting06
+    Name: Dimensional World Crystal (Fighting Spirit)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddClass, Class_Boss, 5;
+      bonus2 bAddSize, Size_All, 15;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 25;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_B ? 5 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 9) : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 6) : 0 );
+  - Id: 313909
+    AegisName: Ch01_S_E_Prudence01
+    Name: Dimensional Crystal (Prudence) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 7;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+  - Id: 313910
+    AegisName: Ch01_S_E_Prudence02
+    Name: Dimensional Crystal (Prudence) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 10;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+  - Id: 313911
+    AegisName: Ch01_S_E_Prudence03
+    Name: Dimensional Crystal (Prudence) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine() / 5;
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 14;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_B ? 5 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? (.@r * 4) : 0 );
+  - Id: 313912
+    AegisName: Ch01_S_E_Prudence04
+    Name: Dimensional Crystal (Prudence) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 19;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 6 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 6 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_B ? 6 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/4) * 6) : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_A ? ((.@r/3) * 6) : 0 );
+  - Id: 313913
+    AegisName: Ch01_S_E_Prudence05
+    Name: Dimensional Crystal (Prudence) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 25;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_B ? 7 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 8) : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 7) : 0 );
+  - Id: 313914
+    AegisName: Ch01_S_E_Prudence06
+    Name: Dimensional World Crystal (Prudence)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddClass, Class_Boss, 5;
+      bonus2 bAddSize, Size_All, 15;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 25;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 15 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 15 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_B ? 7 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 10) : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 7) : 0 );
+  - Id: 313915
+    AegisName: Ch01_S_E_Pride01
+    Name: Dimensional Crystal (Pride) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 6;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 1 : 0 );
+  - Id: 313916
+    AegisName: Ch01_S_E_Pride02
+    Name: Dimensional Crystal (Pride) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 8;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Water, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Earth, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Poison, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+  - Id: 313917
+    AegisName: Ch01_S_E_Pride03
+    Name: Dimensional Crystal (Pride) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine() / 5;
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 11;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Water, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Earth, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Poison, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_B ? (.@r * 3) : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_B ? 3 : 0 );
+  - Id: 313918
+    AegisName: Ch01_S_E_Pride04
+    Name: Dimensional Crystal (Pride) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 15;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 6 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Water, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Earth, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Poison, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_B ? ((.@r/4) * 5): 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_B ? 4 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_A ? ((.@r/3) * 5) : 0 );
+  - Id: 313919
+    AegisName: Ch01_S_E_Pride05
+    Name: Dimensional Crystal (Pride) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 20;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Water, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Earth, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Poison, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 7): 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_B ? 5 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 6) : 0 );
+  - Id: 313920
+    AegisName: Ch01_S_E_Pride06
+    Name: Dimensional World Crystal (Pride)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bMagicAddClass, Class_Boss, 5;
+      bonus2 bMagicAddSize, Size_All, 15;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 20;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Water, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Earth, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Poison, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 9): 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_B ? 5 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 6) : 0 );
+  - Id: 313921
+    AegisName: Ch01_S_E_Sageness01
+    Name: Dimensional Crystal (Wise) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 6;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 1 : 0 );
+  - Id: 313922
+    AegisName: Ch01_S_E_Sageness02
+    Name: Dimensional Crystal (Wise) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 8;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Holy, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Ghost, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Undead, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 2 : 0 );
+  - Id: 313923
+    AegisName: Ch01_S_E_Sageness03
+    Name: Dimensional Crystal (Wise) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine() / 5;
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 11;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Holy, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Ghost, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Undead, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_B ? (.@r * 3) : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_B ? 3 : 0 );
+  - Id: 313924
+    AegisName: Ch01_S_E_Sageness04
+    Name: Dimensional Crystal (Wise) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 15;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 6 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Holy, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Ghost, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Undead, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 6 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_B ? ((.@r/4) * 5): 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_B ? 4 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_A ? ((.@r/3) * 5) : 0 );
+  - Id: 313925
+    AegisName: Ch01_S_E_Sageness05
+    Name: Dimensional Crystal (Wise) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 20;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Holy, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Ghost, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Undead, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 7): 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_B ? 5 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 6) : 0 );
+  - Id: 3139126
+    AegisName: Ch01_S_E_Sageness06
+    Name: Dimensional World Crystal (Wise)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bMagicAddClass, Class_Boss, 5;
+      bonus2 bMagicAddSize, Size_All, 15;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 20;
+      bonus bSMatk, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Holy, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Ghost, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Undead, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, ( .@g >= ENCHANTGRADE_C ? 12 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 9): 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_B ? 5 : 0 );
+      bonus bSpl, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 6) : 0 );
+  - Id: 313927
+    AegisName: Ch01_S_E_Volition01
+    Name: Dimensional Crystal (Volition) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 6;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 1 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 1 : 0 );
+  - Id: 313928
+    AegisName: Ch01_S_E_Volition02
+    Name: Dimensional Crystal (Volition) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 8;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 1 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 1 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 1 : 0 );
+  - Id: 313929
+    AegisName: Ch01_S_E_Volition03
+    Name: Dimensional Crystal (Volition) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine() / 5;
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 11;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 3 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 3 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 1 : 0 );
+      bonus bCritical, 3 + ( .@g >= ENCHANTGRADE_B ? .@r : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? (.@r * 2) : 0 );
+  - Id: 313930
+    AegisName: Ch01_S_E_Volition04
+    Name: Dimensional Crystal (Volition) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 15;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 3 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 3 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 3 : 0 );
+      bonus bCritical, 4 + ( .@g >= ENCHANTGRADE_B ? ((.@r/4) * 2) : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/4) * 3) : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_A ? ((.@r/3) * 4) : 0 );
+      bonus bCritical, ( .@g >= ENCHANTGRADE_A ? ((.@r/3) * 1) : 0 );
+  - Id: 313931
+    AegisName: Ch01_S_E_Volition05
+    Name: Dimensional Crystal (Volition) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 20;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      bonus bCritical, 5 + ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 2) : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 5) : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 4) : 0 );
+      bonus bCritical, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 2) : 0 );
+  - Id: 313932
+    AegisName: Ch01_S_E_Volition06
+    Name: Dimensional World Crystal (Volition)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddClass, Class_Boss, 5;
+      bonus2 bAddSize, Size_All, 15;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 20;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 7 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 7 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 7 : 0 );
+      bonus bCritical, 5 + ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 4) : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 5) : 0 );
+      bonus bPow, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 4) : 0 );
+      bonus bCritical, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 2) : 0 );
+  - Id: 313933
+    AegisName: Ch01_S_E_Will01
+    Name: Dimensional Crystal (Will) LV1
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 6;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 1 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+  - Id: 313934
+    AegisName: Ch01_S_E_Will02
+    Name: Dimensional Crystal (Will) LV2
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 8;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 3 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 3 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 1 : 0 );
+  - Id: 313935
+    AegisName: Ch01_S_E_Will03
+    Name: Dimensional Crystal (Will) LV3
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine() / 5;
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 11;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 1 : 0 );
+      bonus bCritical, 3 + ( .@g >= ENCHANTGRADE_B ? .@r : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? (.@r * 3) : 0 );
+  - Id: 313936
+    AegisName: Ch01_S_E_Will04
+    Name: Dimensional Crystal (Will) LV4
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 15;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 6 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 2 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 3 : 0 );
+      bonus bCritical, 4 + ( .@g >= ENCHANTGRADE_B ? ((.@r/4) * 2) : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/4) * 3) : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_A ? ((.@r/3) * 3) : 0 );
+      bonus bCritical, ( .@g >= ENCHANTGRADE_A ? ((.@r/3) * 2) : 0 );
+  - Id: 313937
+    AegisName: Ch01_S_E_Will05
+    Name: Dimensional Crystal (Will) LV5
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 20;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 7 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 7 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 5 : 0 );
+      bonus bCritical, 5 + ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 2) : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 6) : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 4) : 0 );
+      bonus bCritical, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 3) : 0 );
+  - Id: 313938
+    AegisName: Ch01_S_E_Will06
+    Name: Dimensional World Crystal (Will)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@r = getrefine();
+      .@g = getenchantgrade();
+      bonus2 bAddClass, Class_Boss, 5;
+      bonus2 bAddSize, Size_All, 15;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 20;
+      bonus bPAtk, ( .@g >= ENCHANTGRADE_D ? 4 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 7 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_C ? 10 : 0 );
+      bonus bCritAtkRate, ( .@g >= ENCHANTGRADE_C ? 8 : 0 );
+      bonus bCritical, 5 + ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 4) : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_B ? ((.@r/3) * 6) : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 4) : 0 );
+      bonus bCritical, ( .@g >= ENCHANTGRADE_A ? ((.@r/2) * 3) : 0 );
+  - Id: 313939
+    AegisName: Ch01_S_E_Life06
+    Name: Dimensional World Crystal (Life)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bAddRace, RC_Brute, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddRace, RC_Plant, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Brute, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Plant, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 313940
+    AegisName: Ch01_S_E_Regiment06
+    Name: Dimensional World Crystal (Solidarity)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bAddRace, RC_Fish, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddRace, RC_Demihuman, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Fish, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Demihuman, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 313941
+    AegisName: Ch01_S_E_GAE06
+    Name: Dimensional World Crystal (Good and Evil)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bAddRace, RC_Angel, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddRace, RC_Demon, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Angel, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Demon, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 313942
+    AegisName: Ch01_S_E_Immo06
+    Name: Dimensional World Crystal (Immortal)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bAddRace, RC_Dragon, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddRace, RC_Undead, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Dragon, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Undead, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 313943
+    AegisName: Ch01_S_E_Vain06
+    Name: Dimensional World Crystal (Void)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bAddRace, RC_Formless, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddRace, RC_Insect, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Formless, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddRace, RC_Insect, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 313944
+    AegisName: Ch01_S_E_Flame06
+    Name: Dimensional World Crystal (Flame)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;    
+      bonus2 bAddEle, Ele_Fire, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddEle, Ele_Dark, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Fire, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Dark, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 313945
+    AegisName: Ch01_S_E_Frozen06
+    Name: Dimensional World Crystal (Frost)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;  
+      bonus2 bAddEle, Ele_Water, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddEle, Ele_Holy, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Water, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Holy, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 313946
+    AegisName: Ch01_S_E_Earth06
+    Name: Dimensional World Crystal (Earth)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;  
+      bonus2 bAddEle, Ele_Wind, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddEle, Ele_Undead, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Wind, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Undead, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 313947
+    AegisName: Ch01_S_E_Death06
+    Name: Dimensional World Crystal (Death)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;  
+      bonus2 bAddEle, Ele_Ghost, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddEle, Ele_Undead, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Ghost, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Undead, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 313902
+    AegisName: Ch01_S_E_Poison06
+    Name: Dimensional World Crystal (Poison)
+    Type: Card
+    SubType: Enchant
+    Buy: 20
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;
+      bonus2 bAddEle, Ele_Poison, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bAddEle, Ele_Neutral, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Poison, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+      bonus2 bMagicAddEle, Ele_Neutral, 12 + min(.@g, 4) + ( .@g >= ENCHANTGRADE_A ? 9 : ( .@r >= ENCHANTGRADE_B ? 4 : 0 ) );
+  - Id: 450440
+    AegisName: Entwined_Armor
+    Name: Entwined Magic Armor
+    Type: Armor
+    Weight: 2000
+    Defense: 158
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 220
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk, 130 + ((.@r/2) * 15) + ( .@r >= 10 ? 25 : 0 );
+      bonus bAspdRate, (.@r >= 7 ? 10 : 0 );
+      bonus bShortAtkRate, (.@r >= 7 ? 10 : 0 );
+      bonus bLongAtkRate, (.@r >= 7 ? 10 : 0 );
+      bonus bPAtk, (.@r >= 9 ? 3 : 0 );
+      bonus bDef, 100;
+      bonus bPow, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bDelayRate, ( .@g >= ENCHANTGRADE_D ? -5 : 0 );
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_C ? 10 : 0 );
+  - Id: 450441
+    AegisName: Entwined_Robe
+    Name: Entwined Magic Robe
+    Type: Armor
+    Weight: 1200
+    Defense: 126
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 220
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk, 120 + ((.@r/2) * 15) + ( .@r >= 10 ? 25 : 0 );
+      bonus bVariableCastrate, (.@r >= 7 ? -10 : 0 );
+      bonus2 bMagicAtkEle, Ele_All, (.@r >= 7 ? 5 : 0 );
+      bonus bSMatk, (.@r >= 9 ? 3 : 0 );
+      bonus bDef, 100;
+      bonus bSpl, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bCon, ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bDelayRate, ( .@g >= ENCHANTGRADE_D ? -5 : 0 );
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_C ? 10 : 0 );
+  - Id: 470333
+    AegisName: Entwined_Boots
+    Name: Entwined Magic Boots
+    Type: Armor
+    Weight: 900
+    Defense: 84
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 220
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bDef, 250 + ( .@r >= 10 ? 50 : 0 );
+      bonus bMdef, 25;
+      bonus bHit, 25;
+      bonus bCritical, 5;
+      bonus bShortAtkRate, (.@r >= 7 ? 7 : 0 );
+      bonus bLongAtkRate, (.@r >= 7 ? 7 : 0 );
+      bonus bPAtk, (.@r >= 9 ? 3 : 0 );
+      bonus bAspdRate, (.@r >= 10 ? 7 : 0 );
+      bonus bRes, ( .@g >= ENCHANTGRADE_D ? 25 : 0 );
+      bonus bMres, ( .@g >= ENCHANTGRADE_D ? 25 : 0 );
+      bonus bFixedCast, ( .@g >= ENCHANTGRADE_C ? -1000 : 0 );
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_C ? 15 : 0 );
+  - Id: 470334
+    AegisName: Entwined_Shoes
+    Name: Entwined Magic Shoes
+    Type: Armor
+    Weight: 500
+    Defense: 67
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 220
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bDef, 150 + ( .@r >= 10 ? 50 : 0 );
+      bonus bMdef, 40;
+      bonus bFlee, 35;
+      bonus2 bMagicAtkEle, Ele_All, (.@r >= 7 ? 7 : 0 );
+      bonus bSMatk, (.@r >= 9 ? 3 : 0 );
+      bonus bVariableCastrate, (.@r >= 10 ? -7 : 0 );
+      bonus bRes, ( .@g >= ENCHANTGRADE_D ? 25 : 0 );
+      bonus bMres, ( .@g >= ENCHANTGRADE_D ? 25 : 0 );
+      bonus bFixedCast, ( .@g >= ENCHANTGRADE_C ? -1000 : 0 );
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_C ? 10 : 0 );
+  - Id: 470335
+    AegisName: Dimension_B_Greave
+    Name: Dimensional Battle Greaves
+    Type: Armor
+    Weight: 1200
+    Defense: 100
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 260
+    Refineable: true
+    Gradable: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoSell: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPow, 7 + ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bCon, 7 + ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bMaxHPRate, -10;
+      bonus bVariableCastrate, ((.@r/2) * -1) - ( .@r >= 11 ? -5 : 0 );
+      bonus bAspdRate, ( .@r >= 7 ? 10 : 0 );
+      bonus bPAtk, ( .@r >= 9 : 5 ? 0 ) + ( .@g >= ENCHANTGRADE_B ? 6 : ( .@g >= ENCHANTGRADE_C ? 3 : 0 ) );
+      bonus bShortAtkRate, ( .@r >= 11 ? 20 : ( .@r >= 9 ? 10 : 0 ) ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus bFixedCast, ( .@r >= 11 ? -1000 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_D ? 25 : 0 );
+      bonus bAtkRate, ( .@g >= ENCHANTGRADE_B ? 8 : ( .@g >= ENCHANTGRADE_C ? 3 : 0 ) );
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+  - Id: 470336
+    AegisName: Dimension_H_Boots
+    Name: Dimensional Hunting Boots
+    Type: Armor
+    Weight: 1200
+    Defense: 100
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 260
+    Refineable: true
+    Gradable: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoSell: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPow, 7 + ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bCon, 7 + ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bMaxHPRate, -10;
+      bonus bVariableCastrate, ((.@r/2) * -1) - ( .@r >= 11 ? -5 : 0 );
+      bonus bAspdRate, ( .@r >= 7 ? 10 : 0 );
+      bonus bPAtk, ( .@r >= 9 : 5 ? 0 ) + ( .@g >= ENCHANTGRADE_B ? 6 : ( .@g >= ENCHANTGRADE_C ? 3 : 0 ) );
+      bonus bLongAtkRate, ( .@r >= 11 ? 20 : ( .@r >= 9 ? 10 : 0 ) ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus bFixedCast, ( .@r >= 11 ? -1000 : 0 );
+      bonus bBaseAtk, ( .@g >= ENCHANTGRADE_D ? 25 : 0 );
+      bonus bAtkRate, ( .@g >= ENCHANTGRADE_B ? 8 : ( .@g >= ENCHANTGRADE_C ? 3 : 0 ) );
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+  - Id: 470337
+    AegisName: Dimension_S_Shoes
+    Name: Dimensional Spell Shoes
+    Type: Armor
+    Weight: 1200
+    Defense: 100
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 260
+    Refineable: true
+    Gradable: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoSell: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSpl, 7 + ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bCon, 7 + ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bUseSPrate, 10;
+      bonus bVariableCastrate, ((.@r/2) * -1) - ( .@r >= 11 ? -5 : 0 );
+      bonus bAspdRate, ( .@r >= 7 ? 10 : 0 );
+      bonus bSMatk, ( .@r >= 9 : 5 ? 0 ) + ( .@g >= ENCHANTGRADE_B ? 6 : ( .@g >= ENCHANTGRADE_C ? 3 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Poison, (.@r >= 9 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, (.@r >= 9 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, (.@r >= 9 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Fire, (.@r >= 11 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, (.@r >= 11 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Earth, (.@r >= 11 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Water, (.@r >= 11 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus bFixedCast, ( .@r >= 11 ? -1000 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_D ? 25 : 0 );
+      bonus bMatkRate, ( .@g >= ENCHANTGRADE_B ? 8 : ( .@g >= ENCHANTGRADE_C ? 3 : 0 ) );
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+  - Id: 470338
+    AegisName: Dimension_M_Shoes
+    Name: Dimensional Magic Shoes
+    Type: Armor
+    Weight: 1200
+    Defense: 100
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 260
+    Refineable: true
+    Gradable: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoSell: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSpl, 7 + ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bCon, 7 + ( .@g >= ENCHANTGRADE_D ? 5 : 0 );
+      bonus bUseSPrate, 10;
+      bonus bVariableCastrate, ((.@r/2) * -1) - ( .@r >= 11 ? -5 : 0 );
+      bonus bAspdRate, ( .@r >= 7 ? 10 : 0 );
+      bonus bSMatk, ( .@r >= 9 : 5 ? 0 ) + ( .@g >= ENCHANTGRADE_B ? 6 : ( .@g >= ENCHANTGRADE_C ? 3 : 0 ) );
+      bonus2 bMagicAtkEle, Ele_Fire, (.@r >= 9 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Neutral, (.@r >= 9 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Holy, (.@r >= 9 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Wind, (.@r >= 11 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Dark, (.@r >= 11 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Ghost, (.@r >= 11 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus2 bMagicAtkEle, Ele_Undead, (.@r >= 11 ? 15 : 0 ) + ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+      bonus bFixedCast, ( .@r >= 11 ? -1000 : 0 );
+      bonus bMatk, ( .@g >= ENCHANTGRADE_D ? 25 : 0 );
+      bonus bMatkRate, ( .@g >= ENCHANTGRADE_B ? 8 : ( .@g >= ENCHANTGRADE_C ? 3 : 0 ) );
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_A ? 15 : 0 );
+  - Id: 470339
+    AegisName: Dimension_E_Boots
+    Name: Dimensional Executioner Boots
+    Type: Armor
+    Weight: 1200
+    Defense: 100
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 260
+    Refineable: true
+    Gradable: true
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoSell: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPow, 5 + ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bCrt, 5 + ( .@g >= ENCHANTGRADE_D ? 3 : 0 );
+      bonus bCritical, 3 + ( .@g >= ENCHANTGRADE_D ? 10 : 0 );
+      bonus bMaxHPRate, -10;
+      bonus bVariableCastrate, ((.@r/2) * -1) - ( .@r >= 11 ? -5 : 0 );
+      bonus bAspdRate, ( .@r >= 7 ? 10 : 0 );
+      bonus bPAtk, ( .@r >= 9 : 5 ? 0 ) + ( .@g >= ENCHANTGRADE_B ? 4 : 0 );
+      bonus bCritAtkRate, ( .@r >= 11 ? 15 : ( .@r >= 9 ? 5 : 0 ) ) + ( .@g >= ENCHANTGRADE_C ? 10 : 0 );
+      bonus bCRate, ( .@g >= ENCHANTGRADE_C ? 4 : 0 );
+      bonus bFixedCast, ( .@r >= 11 ? -1000 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_A ? 8 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_A ? 8 : 0 );
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_A ? 12 : 0 );
+  - Id: 480545
+    AegisName: Entwined_Manteau
+    Name: Entwined Magic Manteau
+    Type: Armor
+    Weight: 1200
+    Defense: 92
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 220
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMaxHP, 4500;
+      bonus bMaxSP, 150;
+      bonus bHit, 25;
+      bonus bCritical, 5;
+      bonus bAspdRate, ( .@r >= 7 ? 10 : 0 );
+      bonus bPow, ( .@r >= 9 ? 3 : 0 );
+      bonus bVariableCastrate, ( .@r >= 10 ? -5 : 0 );
+      bonus bShortAtkRate, ( .@g >= ENCHANTGRADE_D ? 10 : 0 );
+      bonus bLongAtkRate, ( .@g >= ENCHANTGRADE_D ? 10 : 0 );
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_C ? 15 : 0 );
+  - Id: 480546
+    AegisName: Entwined_Muffler
+    Name: Entwined Magic Muffler
+    Type: Armor
+    Weight: 700
+    Defense: 73
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 220
+    Refineable: true
+    Gradable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMaxHP, 2500;
+      bonus bMaxSP, 250;
+      bonus bFlee, 35;
+      bonus bVariableCastrate, ( .@r >= 7 ? -10 : 0 );
+      bonus bSpl, ( .@r >= 9 ? 3 : 0 );
+      bonus bAspdRate, ( .@r >= 10 ? 5 : 0 );
+      bonus2 bMagicAtkEle, Ele_All, ( .@g >= ENCHANTGRADE_D ? 10 : 0 );
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, ( .@g >= ENCHANTGRADE_C ? 10 : 0 );
+  - Id: 1001972
+    AegisName: Ch1_Root_Coin
+    Name: Golden Root Coin
+    Type: Etc
+    Weight: 1
+  - Id: 1001973
+    AegisName: Ch1_Purifi_Amulet
+    Name: Purification Amulet
+    Type: Etc
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 1001974
+    AegisName: Ch1_Sample
+    Name: Collected Sample
+    Type: Etc
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 1001975
+    AegisName: Ch1_Gray_Petal
+    Name: Gray Petals
+    Type: Etc
+    Weight: 10
+  - Id: 1001976
+    AegisName: Ch1_Broken_Petal
+    Name: Broken Petals
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoStorage: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 1001977
+    AegisName: Ch1_Hal
+    Name: Hal
+    Type: Etc
+    Weight: 10
+  - Id: 1001978
+    AegisName: Ch1_Scalet_Hal
+    Name: Scarlet Hal
+    Type: Etc
+    Weight: 10
+  - Id: 1001979
+    AegisName: Ch1_Light_Green_Hal
+    Name: Light Green Hal
+    Type: Etc
+    Weight: 10
+  - Id: 1001980
+    AegisName: Ch1_Light_Yellow_Hal
+    Name: Light Yellow Hal
+    Type: Etc
+    Weight: 10
+  - Id: 1001981
+    AegisName: Ch1_Sky_Blue_Hal
+    Name: Sky Blue Hal
+    Type: Etc
+    Weight: 10
+  - Id: 1001982
+    AegisName: Ch1_Purple_Hal
+    Name: Purple Hal
+    Type: Etc
+    Weight: 10
+  - Id: 1001983
+    AegisName: Ch1_Black_Hal
+    Name: Black Hal
+    Type: Etc
+    Weight: 10
+  - Id: 1001984
+    AegisName: Ch1_Ultimate_Hal
+    Name: Ultimate Hal
+    Type: Etc
+    Weight: 10
+  - Id: 1001985
+    AegisName: Ch1_Steako
+    Name: Steako
+    Type: Etc
+    Weight: 10
+  - Id: 1001986
+    AegisName: Ch1_Black_Wing
+    Name: Black Wing Piece
+    Type: Etc
+    Weight: 10
+  - Id: 1001987
+    AegisName: Ch1_Huge_Leaf
+    Name: Huge Firafflesia Leaf
+    Type: Etc
+    Weight: 10
+  - Id: 1001988
+    AegisName: Ch1_Sound_Bean
+    Name: Sound Bean
+    Type: Etc
+    Weight: 10
+  - Id: 1001989
+    AegisName: Ch1_Red_Ash
+    Name: Red Ash
+    Type: Etc
+    Weight: 10
+  - Id: 1001990
+    AegisName: Ch1_Fire_Ring
+    Name: Fire Ring
+    Type: Etc
+    Weight: 10
+  - Id: 1001991
+    AegisName: Ch1_Big_Tooth
+    Name: Set of Giant Fang
+    Type: Etc
+    Weight: 10
+  - Id: 1001992
+    AegisName: Ch1_Noise
+    Name: Noise
+    Type: Etc
+    Weight: 10
+  - Id: 1001993
+    AegisName: Ch1_Purple_Anemone
+    Name: Purple Anemone
+    Type: Etc
+    Weight: 10
+  - Id: 1001994
+    AegisName: Ch1_Black_Tulip
+    Name: Black Tulip
+    Type: Etc
+    Weight: 10
+  - Id: 1001995
+    AegisName: Ch1_Calendula_
+    Name: Calendula
+    Type: Etc
+    Weight: 10
+  - Id: 1001996
+    AegisName: Ch1_Mana_Ring
+    Name: Mana Ring
+    Type: Etc
+    Weight: 10
+  - Id: 1001997
+    AegisName: Frontier_Magic_Dust
+    Name: Frontier Magic Dust
+    Type: Etc
+    Weight: 10
+  - Id: 1001998
+    AegisName: Frontier_M_Stone
+    Name: Frontier Magic Stone
+    Type: Etc
+    Weight: 10
+  - Id: 1001999
+    AegisName: Illusion_Fragment_BL
+    Name: Blue Illusion Fragment
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 1002000
+    AegisName: Illusion_Fragment_YL
+    Name: Yellow Illusion Fragment
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 1002001
+    AegisName: Illusion_Fragment_GR
+    Name: Green Illusion Fragment
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 1002002
+    AegisName: Illusion_Fragment_BK
+    Name: Black Illusion Fragment
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoTrade: true
+      NoDrop: true
+      NoCart: true
+      NoMail: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 1002003
+    AegisName: Illusion_Stone_BL
+    Name: Blue Illusion Stone
+    Type: Etc
+    Weight: 10
+  - Id: 1002004
+    AegisName: Illusion_Stone_YL
+    Name: Yellow Illusion Stone
+    Type: Etc
+    Weight: 10
+  - Id: 1002005
+    AegisName: Illusion_Stone_GR
+    Name: Green Illusion Stone
+    Type: Etc
+    Weight: 10
+  - Id: 1002006
+    AegisName: Illusion_Stone_BK
+    Name: Black Illusion Stone
+    Type: Etc
+    Weight: 10
+  - Id: 1002007
+    AegisName: Frontier_Stone_BL
+    Name: Blue Frontier Stone
+    Type: Etc
+    Weight: 10
+  - Id: 1002008
+    AegisName: Frontier_Stone_YL
+    Name: Yellow Frontier Stone
+    Type: Etc
+    Weight: 10
+  - Id: 1002009
+    AegisName: Frontier_Stone_GR
+    Name: Green Frontier Stone
+    Type: Etc
+    Weight: 10
+  - Id: 1002010
+    AegisName: Frontier_Stone_BK
+    Name: Black Frontier Stone
+    Type: Etc
+    Weight: 10
+  - Id: 1002011
+    AegisName: Chaotic_Rune_Ore
+    Name: Chaotic Rune Ore
+    Type: Etc
+    Weight: 1
+  - Id: 1002012
+    AegisName: Chaotic_Rune
+    Name: Chaotic Rune
+    Type: Etc
+    Weight: 10
+  - Id: 1002013
+    AegisName: Chaotic_Essence
+    Name: Chaotic Essence
+    Type: Etc
+    Weight: 10
+  - Id: 1002014
+    AegisName: Disparate_Rune_Ore
+    Name: Disparate Rune Ore
+    Type: Etc
+    Weight: 1
+  - Id: 1002015
+    AegisName: Disparate_Rune
+    Name: Disparate Rune
+    Type: Etc
+    Weight: 10
+  - Id: 1002016
+    AegisName: Disparate_Essence
+    Name: Disparate Essence
+    Type: Etc
+    Weight: 10
+  - Id: 1002017
+    AegisName: Ch1_Scabiosa_
+    Name: Scabiosa
+    Type: Etc
+    Weight: 10
+  - Id: 1002018
+    AegisName: Ch1_Myosotis_
+    Name: Myosotosis
+    Type: Etc
+    Weight: 10
+  - Id: 1002019
+    AegisName: Ch1_Lobelia_
+    Name: Lobelia
+    Type: Etc
+    Weight: 10
+  - Id: 1002020
+    AegisName: Ch1_Teardrop
+    Name: Teardrop
+    Type: Etc
+    Weight: 10
+  - Id: 1002021
+    AegisName: Ch1_Yggpy
+    Name: Yggpy
+    Type: Etc
+    Weight: 10
+  - Id: 1002034
+    AegisName: Dimension_Energy_BL
+    Name: Blue Dimensional Energy
+    Type: Etc
+    Weight: 10
+  - Id: 1002035
+    AegisName: Dimension_Energy_YL
+    Name: Yellow Dimensional Energy
+    Type: Etc
+    Weight: 10
+  - Id: 1002036
+    AegisName: Dimension_Energy_GR
+    Name: Green Dimensional Energy
+    Type: Etc
+    Weight: 10
+  - Id: 1002037
+    AegisName: Dimension_Energy_BK
+    Name: Black Dimensional Energy
+    Type: Etc
+    Weight: 10
+  - Id: 1002038
+    AegisName: Dimension_Essence_BL
+    Name: Blue Dimensional Essence
+    Type: Etc
+    Weight: 10
+  - Id: 1002039
+    AegisName: Dimension_Essence_YL
+    Name: Yellow Dimensional Essence
+    Type: Etc
+    Weight: 10
+  - Id: 1002040
+    AegisName: Dimension_Essence_GR
+    Name: Green Dimensional Essence
+    Type: Etc
+    Weight: 10
+  - Id: 1002041
+    AegisName: Dimension_Essence_BK
+    Name: Black Dimensional Essence
+    Type: Etc
+    Weight: 10
+  - Id: 1002048
+    AegisName: Ch1_Lava_Jelly
+    Name: Soft Lava Jelly
+    Type: Etc
+    Weight: 10

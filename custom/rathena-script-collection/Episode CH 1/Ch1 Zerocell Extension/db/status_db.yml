@@ -1,0 +1,33 @@
+Body:
+  - Status: CONTENTS_37
+    Icon: EFST_CONTENTS_37
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: CONTENTS_38
+    Icon: EFST_CONTENTS_38
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: CONTENTS_42
+    Icon: EFST_CONTENTS_42
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: CONTENTS_44
+    Icon: EFST_CONTENTS_44
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

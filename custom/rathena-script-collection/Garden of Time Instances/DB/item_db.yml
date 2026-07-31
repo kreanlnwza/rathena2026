@@ -1,0 +1,201 @@
+Body:
+  - Id: 102433
+    AegisName: Unsealing_Scroll
+    Name: Unsealing Scroll
+    Type: Usable
+    Weight: 100
+    Flags:
+      BuyingStore: true
+    Script: |
+      if ( getstatus(SC_BLOCK_SEAL) )
+        sc_end SC_BLOCK_SEAL;
+  - Id: 102434
+    AegisName: Warm_Shield_Scroll
+    Name: Warm Shield Scroll
+    Type: Usable
+    Weight: 100
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_WARM_SHIELD, 30000, 0;
+
+  - Id: 312453
+    AegisName: aegis_312453
+    Name: Constellation's Barrier (1)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER1,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER1,false;
+  - Id: 312454
+    AegisName: aegis_312454
+    Name: Constellation's Barrier (2)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER2,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER2,false;
+  - Id: 312455
+    AegisName: aegis_312455
+    Name: Constellation's Barrier (3)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER3,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER3,false;
+  - Id: 312456
+    AegisName: aegis_312456
+    Name: Constellation's Barrier (4)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER4,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER4,false;
+  - Id: 312457
+    AegisName: aegis_312457
+    Name: Constellation's Barrier (5)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER5,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER5,false;
+  - Id: 312458
+    AegisName: aegis_312458
+    Name: Constellation's Barrier (6)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER6,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER6,false;
+  - Id: 312459
+    AegisName: aegis_312459
+    Name: Constellation's Barrier (7)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER7,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER7,false;
+  - Id: 312460
+    AegisName: aegis_312460
+    Name: Constellation's Barrier (8)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER8,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER8,false;
+  - Id: 312461
+    AegisName: aegis_312461
+    Name: Constellation's Barrier (9)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER9,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER9,false;
+  - Id: 312462
+    AegisName: aegis_312462
+    Name: Constellation's Barrier (10)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER10,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER10,false;
+  - Id: 312463
+    AegisName: aegis_312463
+    Name: Constellation's Barrier (11)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER11,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER11,false;
+  - Id: 312464
+    AegisName: aegis_312464
+    Name: Constellation's Barrier (12)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER12,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER12,false;
+  - Id: 312465
+    AegisName: aegis_312465
+    Name: Constellation's Barrier (13)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER13,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER13,false;
+  - Id: 312466
+    AegisName: aegis_312466
+    Name: Constellation's Barrier (14)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER14,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER14,false;
+  - Id: 312467
+    AegisName: aegis_312467
+    Name: Constellation's Barrier (15)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER15,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER15,false;
+  - Id: 312468
+    AegisName: aegis_312468
+    Name: Constellation's Barrier (16)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER16,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER16,false;
+  - Id: 312469
+    AegisName: aegis_312469
+    Name: Constellation's Barrier (17)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER17,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER17,false;
+  - Id: 312470
+    AegisName: aegis_312470
+    Name: Constellation's Barrier (18)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER18,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER18,false;
+  - Id: 312471
+    AegisName: aegis_312471
+    Name: Constellation's Barrier (19)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER19,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER19,false;
+  - Id: 312472
+    AegisName: aegis_312472
+    Name: Constellation's Barrier (20)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_MD_HOL_BARRIER20,true;
+    UnEquipScript: |
+      hateffect HAT_EF_MD_HOL_BARRIER20,false;

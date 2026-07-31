@@ -1,0 +1,17 @@
+Body:
+  - Id: 120
+    Name: Ominous Dark Whisper
+    TimeLimit: 14400
+    IdleTimeOut: 300
+    Enter:
+      Map: 1@ch1a
+      X: 217
+      Y: 63
+  - Id: 121
+    Name: Simulated Dark Whisper
+    TimeLimit: 14400
+    IdleTimeOut: 300
+    Enter:
+      Map: 1@ch1b
+      X: 86
+      Y: 146

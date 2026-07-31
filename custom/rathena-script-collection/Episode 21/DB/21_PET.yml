@@ -1,0 +1,25 @@
+Header:
+  Type: PET_DB
+  Version: 1
+
+Body:
+  - Mob: EP21_ICESEAHORSE
+    EggItem: Ice_Seahorse_Egg
+    FoodItem: Pet_Food
+    Fullness: 2
+    HungryDelay: 120
+    IntimacyFed: 15
+    CaptureRate: 500
+    SpecialPerformance: false
+    AllowAutoFeed: true
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if (.@i >= PET_INTIMATE_LOYAL) {
+         bonus bRes,10;  
+         bonus bMRes,10;  
+      }
+      else if (.@i >= PET_INTIMATE_CORDIAL) {
+         bonus bRes,5;  
+         bonus bMRes,5;  
+      }

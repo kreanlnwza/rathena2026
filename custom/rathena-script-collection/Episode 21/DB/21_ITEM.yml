@@ -1,0 +1,170 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 9157
+    AegisName: Ice_Seahorse_Egg
+    Name: Ice Seahorse Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 1001618
+    AegisName: Ep21_Wigner_Ticket
+    Name: Wigner Merchant Guild Voucher
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001628
+    AegisName: Ep21_Jor_Rosary
+    Name: Snake Shape Rosary
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001629
+    AegisName: Ep21_Jor_Bible
+    Name: Jormungandr Catechism
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001630
+    AegisName: Ep21_Old_Bandana
+    Name: Old Bandana
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001631
+    AegisName: Ep21_Old_Apron
+    Name: Old Apron
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001632
+    AegisName: Ep21_Old_Homi
+    Name: Old Hoe
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001633
+    AegisName: Ep21_Fanatic_Mask
+    Name: Fanatic Mask
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001634
+    AegisName: Ep21_Fanatic_Cap
+    Name: Fanatic Cap
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001635
+    AegisName: Ep21_Jor_Stick
+    Name: Snake Shape Stick
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001636
+    AegisName: Ep21_Jor_Wand_Acc
+    Name: Snake Shape Ornament
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001637
+    AegisName: Ep21_Jor_Dagger_Pcs
+    Name: Snake Shape Dagger Piece
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001638
+    AegisName: Ep21_Jor_G_Rosary
+    Name: Glittering Snake Shape Rosary
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001639
+    AegisName: Ep21_Jor_Accessary
+    Name: Flashy Accessory
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001640
+    AegisName: Ep21_Daribitsal
+    Name: Scalleg Flesh
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001641
+    AegisName: Ep21_Bright_Eye
+    Name: Bright Eye
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001642
+    AegisName: Ep21_Guano
+    Name: Guano
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001643
+    AegisName: Ep21_Vellelopy
+    Name: Vellelopy
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001644
+    AegisName: Ep21_Skipskip_Fin
+    Name: Skipskipper Fin
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001645
+    AegisName: Ep21_Stiff_Limb
+    Name: Stiff Limb
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001646
+    AegisName: Ep21_Fluffy_Core
+    Name: Fluffy Core
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001647
+    AegisName: Ep21_Thick_Flesh
+    Name: Thick Flesh
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001648
+    AegisName: Ep21_Star_Candy
+    Name: Ice Star Candy
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001649
+    AegisName: Ep21_Shining_Coral
+    Name: Glowing Ice Coral
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true

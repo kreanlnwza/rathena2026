@@ -1,0 +1,146 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+Body:
+  - Name: EP21_STORE5
+    Items:
+      - Index: 0
+        Item: Tris_Card
+        RequiredItems:
+          - Index: 0
+            Item: Tris_Card_Fragment
+            Amount: 30
+      - Index: 1
+        Item: Tan_Card
+        RequiredItems:
+          - Index: 0
+            Item: Tan_Card_Fragment
+            Amount: 30
+      - Index: 2
+        Item: W_Lugenburg_Card
+        RequiredItems:
+          - Index: 0
+            Item: W_Lugenburg_Card_Fragment
+            Amount: 30
+      - Index: 3
+        Item: R_Lugenburg_Card
+        RequiredItems:
+          - Index: 0
+            Item: R_Lugenburg_Card_Fragment
+            Amount: 30
+      - Index: 4
+        Item: Ivan_Card
+        RequiredItems:
+          - Index: 0
+            Item: Ivan_Card_Fragment
+            Amount: 30
+      - Index: 5
+        Item: Lalaila_Card
+        RequiredItems:
+          - Index: 0
+            Item: Lalaila_Card_Fragment
+            Amount: 30
+      - Index: 6
+        Item: Richard_Card
+        RequiredItems:
+          - Index: 0
+            Item: Richard_Card_Fragment
+            Amount: 30
+      - Index: 7
+        Item: Valdaris_Card
+        RequiredItems:
+          - Index: 0
+            Item: Valdaris_Card_Fragment
+            Amount: 30
+      - Index: 8
+        Item: Aurelie_Card
+        RequiredItems:
+          - Index: 0
+            Item: Aurelie_Card_Fragment
+            Amount: 30
+      - Index: 9
+        Item: Heine_Card
+        RequiredItems:
+          - Index: 0
+            Item: Heine_Card_Fragment
+            Amount: 30
+      - Index: 10
+        Item: Epesto_Card
+        RequiredItems:
+          - Index: 0
+            Item: Epesto_Card_Fragment
+            Amount: 30
+      - Index: 11
+        Item: Maristella_Card
+        RequiredItems:
+          - Index: 0
+            Item: Maristella_Card_Fragment
+            Amount: 30
+      - Index: 12
+        Item: Yohan_Card
+        RequiredItems:
+          - Index: 0
+            Item: Yohan_Card_Fragment
+            Amount: 30
+      - Index: 13
+        Item: Gunter_Card
+        RequiredItems:
+          - Index: 0
+            Item: Gunter_Card_Fragment
+            Amount: 30
+      - Index: 14
+        Item: Galaxia_Card
+        RequiredItems:
+          - Index: 0
+            Item: Galaxia_Card_Fragment
+            Amount: 30
+      - Index: 15
+        Item: Iana_Card
+        RequiredItems:
+          - Index: 0
+            Item: Iana_Card_Fragment
+            Amount: 30
+      - Index: 15
+        Item: Lee_Card
+        RequiredItems:
+          - Index: 0
+            Item: Lee_Card_Fragment
+            Amount: 30
+      - Index: 16
+        Item: Nadoyo_Card
+        RequiredItems:
+          - Index: 0
+            Item: Nadoyo_Card_Fragment
+            Amount: 30
+  - Name: EP21_STORE6
+    Items:
+      - Index: 0
+        Item: Yorscalp_P_Circlet
+        RequiredItems:
+          - Index: 0
+            Item: Corruped_Fruit
+            Amount: 5
+          - Index: 1
+            Item: Yorscalp_Spirit
+            Amount: 100
+          - Index: 2
+            Item: Yorscalp_Symbol
+            Amount: 30
+      - Index: 2
+        Item: Yorscalp_M_Circlet
+        RequiredItems:
+          - Index: 0
+            Item: Corruped_Fruit
+            Amount: 5
+          - Index: 1
+            Item: Yorscalp_Spirit
+            Amount: 100
+          - Index: 2
+            Item: Yorscalp_Symbol
+            Amount: 30

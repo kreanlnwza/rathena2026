@@ -1,0 +1,72 @@
+diff --git a/db/atelier_db/skill_db.yml b/db/atelier_db/skill_db.yml
+index b9e3b4e62..ec75aad55 100644
+--- a/db/custom/skill_db.yml
++++ b/db/custom/skill_db.yml
+@@ -36,6 +36,18 @@ Body:
+       Target: Enemy
+       Flag:
+         PathCheck: true
++  - Id: 778
++    Name: NPC_STRIP_SHADOW
++    Description: Strip Shadow Equipment
++    MaxLevel: 10
++    TargetType: Attack
++    DamageFlags:
++      NoDamage: true
++    Flags:
++      IsNpc: true
++    Range: 10
++    Duration1: 1000
++    Status: Shadow_Strip
+   - Id: 785
+     Name: NPC_TARGET_MARKER
+     Description: Target Marker
+diff --git a/src/map/skill.cpp b/src/map/skill.cpp
+index 1d9bc9ceb..aae8c065b 100755
+--- a/src/map/skill.cpp
++++ b/src/map/skill.cpp
+@@ -3003,6 +3003,9 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
+ 			rate = 50 * (skill_lv + 3) + 2 * (sstatus->dex - tstatus->dex);
+ 			mod = 1000;
+ 			break;
++		case NPC_STRIP_SHADOW:
++			rate = skill_lv * 10;
++			break;
+ 		default:
+ 			return false;
+ 	}
+@@ -3013,6 +3016,7 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
+ 	switch (skill_id) { // Duration
+ 		case SC_STRIPACCESSARY:
+ 		case GS_DISARM:
++		case NPC_STRIP_SHADOW:
+ 			time = skill_get_time(skill_id, skill_lv);
+ 			break;
+ 		case WL_EARTHSTRAIN:
+@@ -3059,6 +3063,7 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
+ 			location = EQP_ACC;
+ 			break;
+ 		case ABC_STRIP_SHADOW:
++		case NPC_STRIP_SHADOW:
+ 			location = EQP_SHADOW_GEAR;
+ 			break;
+ 	}
+@@ -9867,7 +9872,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl,
+ 	case ST_FULLSTRIP:
+ 	case GC_WEAPONCRUSH:
+ 	case SC_STRIPACCESSARY:
+-	case ABC_STRIP_SHADOW: {
++	case ABC_STRIP_SHADOW:
++	case NPC_STRIP_SHADOW: {
+ 		bool i;
+ 
+ 		//Special message when trying to use strip on FCP [Jobbie]
+@@ -9877,7 +9883,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl,
+ 			break;
+ 		}
+ 
+-		if( (i = skill_strip_equip(src, bl, skill_id, skill_lv)) || (skill_id != ST_FULLSTRIP && skill_id != GC_WEAPONCRUSH ) )
++		if( (i = skill_strip_equip(src, bl, skill_id, skill_lv)) || (skill_id != ST_FULLSTRIP && skill_id != GC_WEAPONCRUSH && skill_id != NPC_STRIP_SHADOW) )
+ 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,i);
+ 
+ 		//Nothing stripped.

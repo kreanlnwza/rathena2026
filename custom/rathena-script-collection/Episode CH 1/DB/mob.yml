@@ -1,0 +1,2278 @@
+Body:
+  - Id: 21617
+    AegisName: VR_UNKOWN_MAN
+    Name: NPC
+  - Id: 22443
+    AegisName: CH1_YGGRING
+    Name: Yggring
+    Level: 205
+    Hp: 11200900
+    BaseExp: 1
+    JobExp: 1
+    Attack: 3861
+    Attack2: 6518
+    Defense: 300
+    MagicDefense: 161
+    Str: 225
+    Agi: 169
+    Vit: 73
+    Int: 122
+    Dex: 166
+    Luk: 73
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1272
+    AttackMotion: 384
+    ClientAttackMotion: 336
+    DamageMotion: 288
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Rate: 3500 
+      - Item: Ch1_Yggpy
+        Rate: 1500
+      - Item: Yggring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22444
+    AegisName: CH1_LEAFEING
+    Name: Leafing
+    Level: 205
+    Hp: 10788940
+    BaseExp: 1
+    JobExp: 1
+    Attack: 4344
+    Attack2: 6881
+    Defense: 100
+    MagicDefense: 100
+    Str: 194
+    Agi: 151
+    Vit: 150
+    Int: 100
+    Dex: 142
+    Luk: 80
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1272
+    AttackMotion: 384
+    ClientAttackMotion: 336
+    DamageMotion: 288
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Rate: 3500 
+      - Item: Ch1_Yggpy
+        Rate: 1500
+      - Item: Leafring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22445
+    AegisName: CH1_Charcoalring
+    Name: Charcoalring
+    Level: 209
+    Hp: 12028875
+    BaseExp: 1
+    JobExp: 1
+    Attack: 6399
+    Attack2: 9353
+    Defense: 400
+    MagicDefense: 172
+    Resistance: 205
+    MagicResistance: 149
+    Str: 141
+    Agi: 103
+    Vit: 189
+    Int: 54
+    Dex: 148
+    Luk: 109
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 280
+    AttackDelay: 1272
+    AttackMotion: 384
+    ClientAttackMotion: 336
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Coal
+        Rate: 1275
+      - Item: Ch1_Scalet_Hal
+        Rate: 125
+      - Item: Ch1_Red_Ash
+        Rate: 1300
+      - Item: Charcoalring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22446
+    AegisName: CH1_VULRING
+    Name: Vulring
+    Level: 210
+    Hp: 10990750
+    BaseExp: 1
+    JobExp: 1
+    Attack: 5681
+    Attack2: 8372
+    Defense: 336
+    MagicDefense: 128
+    Resistance: 188
+    MagicResistance: 202
+    Str: 128
+    Agi: 143
+    Vit: 88
+    Int: 186
+    Dex: 175
+    Luk: 53
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 280
+    AttackDelay: 1272
+    AttackMotion: 384
+    ClientAttackMotion: 336
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Live_Coal
+        Rate: 1345
+      - Item: Ch1_Light_Green_Hal
+        Rate: 125
+      - Item: Ch1_Lava_Jelly
+        Rate: 750
+      - Item: Vulring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22447
+    AegisName: CH1_FIRELOOP
+    Name: Fireloop
+    Level: 211
+    Hp: 11220870
+    BaseExp: 1
+    JobExp: 1
+    Attack: 5773
+    Attack2: 9135
+    Defense: 344
+    MagicDefense: 219
+    Resistance: 176
+    MagicResistance: 214
+    Str: 129
+    Agi: 86
+    Vit: 122
+    Int: 147
+    Dex: 188
+    Luk: 57
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Insect
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 1056
+    AttackMotion: 1056
+    ClientAttackMotion: 1296
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Ch1_Light_Yellow_Hal
+        Rate: 125
+      - Item: Solid_Shell
+        Rate: 1750
+      - Item: Ch1_Fire_Ring
+        Rate: 1000
+      - Item: Fire_Ring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22448
+    AegisName: CH1_FIRAFFLESIA
+    Name: Firafflesia
+    Level: 210
+    Hp: 12377030
+    BaseExp: 1
+    JobExp: 1
+    Attack: 5329
+    Attack2: 8841
+    Defense: 402
+    MagicDefense: 250
+    Resistance: 156
+    MagicResistance: 224
+    Str: 147
+    Agi: 141
+    Vit: 144
+    Int: 129
+    Dex: 178
+    Luk: 81
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 812
+    AttackMotion: 528
+    ClientAttackMotion: 432
+    DamageMotion: 240
+    Ai: 04
+    Drops:
+      - Item: Ch1_Sky_Blue_Hal
+        Rate: 125
+      - Item: Blossom_Of_Maneater
+        Rate: 1500
+      - Item: Ch1_Huge_Leaf
+        Rate: 850
+      - Item: Firafflesia_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22449
+    AegisName: CH1_VOLIMPET
+    Name: Volcano Clam
+    Level: 209
+    Hp: 11655470
+    BaseExp: 1
+    JobExp: 1
+    Attack: 5714
+    Attack2: 8401
+    Defense: 320
+    MagicDefense: 202
+    Resistance: 204
+    MagicResistance: 168
+    Str: 151
+    Agi: 103
+    Vit: 141
+    Int: 134
+    Dex: 172
+    Luk: 58
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 480
+    AttackMotion: 970
+    ClientAttackMotion: 768
+    DamageMotion: 770
+    Ai: 04
+    Drops:
+      - Item: Ch1_Purple_Hal
+        Rate: 125
+      - Item: Ch1_Lava_Jelly
+        Rate: 750
+      - Item: Flesh_Of_Clam
+        Rate: 1200
+      - Item: Volcano_Clam_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22450
+    AegisName: CH1_FIRE_FLOWER
+    Name: Fire Flower
+    Level: 212
+    Hp: 13358880
+    BaseExp: 1
+    JobExp: 1
+    Attack: 6043
+    Attack2: 8690
+    Defense: 392
+    MagicDefense: 311
+    Resistance: 194
+    MagicResistance: 188
+    Str: 157
+    Agi: 172
+    Vit: 93
+    Int: 163
+    Dex: 162
+    Luk: 76
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 165
+    AttackDelay: 1152
+    AttackMotion: 1152
+    ClientAttackMotion: 576
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Ch1_Black_Hal
+        Rate: 125
+      - Item: Root_Of_Maneater
+        Rate: 1500
+      - Item: Fire_Flower_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22451
+    AegisName: CH1_PEEPING
+    Name: Big Eye
+    Level: 213
+    Hp: 11849250
+    BaseExp: 1
+    JobExp: 1
+    Attack: 4587
+    Attack2: 7443
+    Defense: 336
+    MagicDefense: 213
+    Resistance: 163
+    MagicResistance: 124
+    Str: 102
+    Agi: 85
+    Vit: 81
+    Int: 145
+    Dex: 187
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 220
+    AttackDelay: 1152
+    AttackMotion: 927
+    ClientAttackMotion: 576
+    DamageMotion: 576
+    Ai: 02
+    Drops:
+      - Item: Ch1_Teardrop
+        Rate: 250
+      - Item: Sticky_Poison
+        Rate: 1500
+      - Item: Big_Eye_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22452
+    AegisName: CH1_SILK_FROG
+    Name: Corrupted Silk Frog
+    Level: 212
+    Hp: 13928395
+    BaseExp: 1
+    JobExp: 1
+    Attack: 4885
+    Attack2: 7442
+    Defense: 330
+    MagicDefense: 209
+    Resistance: 188
+    MagicResistance: 146
+    Str: 166
+    Agi: 82
+    Vit: 110
+    Int: 85
+    Dex: 170
+    Luk: 67
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1008
+    AttackMotion: 1008
+    ClientAttackMotion: 504
+    DamageMotion: 936
+    Ai: 04
+    Drops:
+      - Item: Ch1_Teardrop
+        Rate: 250
+      - Item: Sticky_Webfoot
+        Rate: 1500
+      - Item: Corrupted_Silk_Frog_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22453
+    AegisName: CH1_SILK_SNAIL
+    Name: Corrupted Silk Snail
+    Level: 200
+    Hp: 14278820
+    BaseExp: 1
+    JobExp: 1
+    Attack: 5761
+    Attack2: 7849
+    Defense: 412
+    MagicDefense: 257
+    Resistance: 302
+    MagicResistance: 46
+    Str: 160
+    Agi: 120
+    Vit: 210
+    Int: 64
+    Dex: 157
+    Luk: 55
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Insect
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 300
+    AttackDelay: 1548
+    AttackMotion: 648
+    ClientAttackMotion: 312
+    DamageMotion: 648
+    Ai: 04
+    Drops:
+      - Item: Ch1_Teardrop
+        Rate: 250
+      - Item: Snail's_Shell
+        Rate: 1500
+      - Item: Shell
+        Rate: 1500
+      - Item: Corrupted_Silk_Snail_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22454
+    AegisName: CH1_EX_ROBOT
+    Name: Encroached Recon Robot
+    Level: 214
+    Hp: 13601860
+    BaseExp: 1
+    JobExp: 1
+    Attack: 9785
+    Attack2: 5192
+    Defense: 415
+    MagicDefense: 259
+    Resistance: 207
+    MagicResistance: 102
+    Str: 198
+    Agi: 139
+    Vit: 130
+    Int: 135
+    Dex: 195
+    Luk: 95
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 170
+    AttackDelay: 1072
+    AttackMotion: 672
+    ClientAttackMotion: 1344
+    DamageMotion: 384
+    Ai: 04
+    Drops:
+      - Item: Iron
+        Rate: 250
+      - Item: Screw
+        Rate: 1250
+      - Item: Steel
+        Rate: 350
+      - Item: Encroached_Recon_Robot_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22455
+    AegisName: CH1_REPAIR_ROBOT
+    Name: Encroached Repair Robot
+    Level: 215
+    Hp: 12582870
+    BaseExp: 1
+    JobExp: 1
+    Attack: 9989
+    Attack2: 5280
+    Defense: 345
+    MagicDefense: 220
+    Resistance: 186
+    MagicResistance: 144
+    Str: 112
+    Agi: 160
+    Vit: 112
+    Int: 97
+    Dex: 180
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1500
+    AttackMotion: 500
+    ClientAttackMotion: 384
+    DamageMotion: 660
+    Ai: 04
+    Drops:
+      - Item: Iron_Ore
+        Rate: 250
+      - Item: Screw
+        Rate: 250
+      - Item: Old_Steel_Plate
+        Rate: 2000
+      - Item: Encroached_Repair_Robot_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22456
+    AegisName: CH1_DIMIC_1
+    Name: Encroached Dimic
+    Level: 215
+    Hp: 12582870
+    BaseExp: 1
+    JobExp: 1
+    Attack: 6789
+    Attack2: 8124
+    Defense: 345
+    MagicDefense: 220
+    Resistance: 186
+    MagicResistance: 144
+    Str: 152
+    Agi: 179
+    Vit: 172
+    Int: 53
+    Dex: 182
+    Luk: 87
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 576
+    AttackMotion: 720
+    ClientAttackMotion: 336
+    DamageMotion: 432
+    Ai: 04
+    Drops:
+      - Item: Old_Steel_Plate
+        Rate: 1000
+      - Item: Steel
+        Rate: 150
+      - Item: Mystery_Piece
+        Rate: 150
+      - Item: Encroached_Dimic_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22457
+    AegisName: CH1_DIMIC_2
+    Name: Encroached Dimic
+    Level: 215
+    Hp: 12582870
+    BaseExp: 1
+    JobExp: 1
+    Attack: 6789
+    Attack2: 8124
+    Defense: 345
+    MagicDefense: 220
+    Resistance: 186
+    MagicResistance: 144
+    Str: 152
+    Agi: 179
+    Vit: 172
+    Int: 53
+    Dex: 182
+    Luk: 87
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 576
+    AttackMotion: 720
+    ClientAttackMotion: 336
+    DamageMotion: 432
+    Ai: 04
+    Drops:
+      - Item: Old_Steel_Plate
+        Rate: 1000
+      - Item: Steel
+        Rate: 150
+      - Item: Mystery_Piece
+        Rate: 150
+      - Item: Encroached_Dimic_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22458
+    AegisName: CH1_DIMIC_3
+    Name: Encroached Dimic
+    Level: 215
+    Hp: 12582870
+    BaseExp: 1
+    JobExp: 1
+    Attack: 6789
+    Attack2: 8124
+    Defense: 345
+    MagicDefense: 220
+    Resistance: 186
+    MagicResistance: 144
+    Str: 152
+    Agi: 179
+    Vit: 172
+    Int: 53
+    Dex: 182
+    Luk: 87
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 576
+    AttackMotion: 720
+    ClientAttackMotion: 336
+    DamageMotion: 432
+    Ai: 04
+    Drops:
+      - Item: Old_Steel_Plate
+        Rate: 1000
+      - Item: Steel
+        Rate: 150
+      - Item: Mystery_Piece
+        Rate: 150
+      - Item: Encroached_Dimic_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22459
+    AegisName: CH1_DIMIC_4
+    Name: Encroached Dimic
+    Level: 215
+    Hp: 12582870
+    BaseExp: 1
+    JobExp: 1
+    Attack: 6789
+    Attack2: 8124
+    Defense: 345
+    MagicDefense: 220
+    Resistance: 186
+    MagicResistance: 144
+    Str: 152
+    Agi: 179
+    Vit: 172
+    Int: 53
+    Dex: 182
+    Luk: 87
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 576
+    AttackMotion: 720
+    ClientAttackMotion: 336
+    DamageMotion: 432
+    Ai: 04
+    Drops:
+      - Item: Old_Steel_Plate
+        Rate: 1000
+      - Item: Steel
+        Rate: 150
+      - Item: Mystery_Piece
+        Rate: 150
+      - Item: Encroached_Dimic_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22460
+    AegisName: CH1_IMMORTAL_CORPS1
+    Name: Immortal Butcher Soldier
+    Level: 214
+    Hp: 13505500
+    BaseExp: 1
+    JobExp: 1
+    Attack: 9784
+    Attack2: 4944
+    Defense: 331
+    MagicDefense: 210
+    Resistance: 204
+    MagicResistance: 98
+    Str: 184
+    Agi: 175
+    Vit: 70
+    Int: 130
+    Dex: 160
+    Luk: 80
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 500
+    AttackMotion: 840
+    ClientAttackMotion: 600
+    DamageMotion: 300
+    Ai: 21
+    Drops:
+      - Item: Transparent_Cloth
+        Rate: 1000
+      - Item: Coal
+        Rate: 650
+      - Item: Moving_Black_Things
+        Rate: 300
+      - Item: Immortal_Legion_Officer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22461
+    AegisName: CH1_IMMORTAL_CORPS2
+    Name: Immortal Scythe Soldier
+    Level: 214
+    Hp: 13826790
+    BaseExp: 1
+    JobExp: 1
+    Attack: 6784
+    Attack2: 8944
+    Defense: 302
+    MagicDefense: 216
+    Resistance: 221
+    MagicResistance: 54
+    Str: 184
+    Agi: 175
+    Vit: 70
+    Int: 130
+    Dex: 160
+    Luk: 80
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 500
+    AttackMotion: 840
+    ClientAttackMotion: 600
+    DamageMotion: 300
+    Ai: 21
+    Drops:
+      - Item: Transparent_Cloth
+        Rate: 1000
+      - Item: Coal
+        Rate: 650
+      - Item: Moving_Black_Things
+        Rate: 300
+      - Item: Immortal_Legion_Officer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22462
+    AegisName: CH1_IMMORTAL_CORPS3
+    Name: Immortal Plow Soldier
+    Level: 214
+    Hp: 12956880
+    BaseExp: 1
+    JobExp: 1
+    Attack: 8446
+    Attack2: 5546
+    Defense: 217
+    MagicDefense: 172
+    Resistance: 186
+    MagicResistance: 121
+    Str: 184
+    Agi: 175
+    Vit: 70
+    Int: 130
+    Dex: 160
+    Luk: 80
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 500
+    AttackMotion: 840
+    ClientAttackMotion: 600
+    DamageMotion: 300
+    Ai: 21
+    Drops:
+      - Item: Transparent_Cloth
+        Rate: 500
+      - Item: Coal
+        Rate: 650
+      - Item: Moving_Black_Things
+        Rate: 300
+      - Item: Immortal_Legion_Officer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22463
+    AegisName: CH1_NYAISE
+    Name: Nyaise
+    Level: 222
+    Hp: 17785280
+    BaseExp: 1
+    JobExp: 1
+    JobExp: 10692
+    Attack: 8225
+    Defense: 241
+    MagicDefense: 329
+    Resistance: 202
+    MagicResistance: 147
+    Str: 161
+    Agi: 138
+    Vit: 130
+    Int: 120
+    Dex: 206
+    Luk: 89
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1240
+    AttackMotion: 540
+    ClientAttackMotion: 460
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Ch1_Noise
+        Rate: 675
+      - Item: Mystery_Piece
+        Rate: 950
+      - Item: Nyaise_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22464
+    AegisName: CH1_SHADOW_JAILER
+    Name: Shadow Jailer
+    Level: 224
+    Hp: 19075670
+    BaseExp: 1
+    JobExp: 1
+    Attack: 8965
+    Attack2: 11446
+    Defense: 235
+    MagicDefense: 192
+    Resistance: 204
+    MagicResistance: 161
+    Str: 154
+    Agi: 186
+    Vit: 170
+    Int: 165
+    Dex: 192
+    Luk: 70
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 800
+    AttackMotion: 600
+    ClientAttackMotion: 360
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Crimson_Bolt
+        Rate: 50
+      - Item: Ch1_Noise
+        Rate: 675
+      - Item: Mystery_Piece
+        Rate: 950
+      - Item: Shadow_Jailer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22465
+    AegisName: CH1_TULIP
+    Name: Tulip
+    Level: 223
+    Hp: 19479950
+    BaseExp: 1
+    JobExp: 1
+    Attack: 5440
+    Attack2: 7895
+    Defense: 354
+    MagicDefense: 226
+    Resistance: 208
+    MagicResistance: 106
+    Str: 156
+    Agi: 98
+    Vit: 121
+    Int: 183
+    Dex: 177
+    Luk: 63
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 860
+    AttackMotion: 1056
+    ClientAttackMotion: 720
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Boody_Red
+        Rate: 150
+      - Item: Ch1_Noise
+        Rate: 675
+      - Item: Ch1_Gray_Petal
+        Rate: 850
+      - Item: Ch1_Black_Tulip
+        Rate: 1200
+      - Item: Tulip_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22466
+    AegisName: CH1_CALENDULA
+    Name: Calendula
+    Level: 221
+    Hp: 18605900
+    BaseExp: 1
+    JobExp: 1
+    Attack: 6873
+    Attack2: 9987
+    Defense: 353
+    MagicDefense: 226
+    Resistance: 188
+    MagicResistance: 97
+    Str: 144
+    Agi: 188
+    Vit: 121
+    Int: 153
+    Dex: 177
+    Luk: 63
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 860
+    AttackMotion: 1056
+    ClientAttackMotion: 720
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Yellow_Live
+        Rate: 150
+      - Item: Ch1_Noise
+        Rate: 675
+      - Item: Ch1_Gray_Petal
+        Rate: 850
+      - Item: Ch1_Calendula_
+        Rate: 1200
+      - Item: Calendula_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22467
+    AegisName: CH1_SCABIOSA
+    Name: Scabiosa
+    Level: 220
+    Hp: 16939890
+    BaseExp: 1
+    JobExp: 1
+    Attack: 6873
+    Attack2: 9987
+    Defense: 220
+    MagicDefense: 290
+    Resistance: 126
+    MagicResistance: 194
+    Str: 167
+    Agi: 98
+    Vit: 141
+    Int: 153
+    Dex: 187
+    Luk: 63
+    AttackRange: 7
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 860
+    AttackMotion: 1056
+    ClientAttackMotion: 720
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Crystal_Blue
+        Rate: 150
+      - Item: Ch1_Noise
+        Rate: 675
+      - Item: Ch1_Gray_Petal
+        Rate: 850
+      - Item: Ch1_Scabiosa_
+        Rate: 1200
+      - Item: Scabiosa_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22468
+    AegisName: CH1_LOBELIA
+    Name: Lobelia
+    Level: 244
+    Hp: 34034400
+    BaseExp: 1
+    JobExp: 1
+    Attack: 7208
+    Attack2: 9477
+    Defense: 259
+    MagicDefense: 217
+    Resistance: 312
+    MagicResistance: 288
+    Str: 175
+    Agi: 112
+    Vit: 147
+    Int: 208
+    Dex: 243
+    Luk: 88
+    AttackRange: 6
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 860
+    AttackMotion: 1056
+    ClientAttackMotion: 720
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Yellow_Live
+        Rate: 150
+      - Item: Ch1_Noise
+        Rate: 675
+      - Item: Ch1_Gray_Petal
+        Rate: 850
+      - Item: Ch1_Scabiosa_
+        Rate: 1200
+      - Item: Scabiosa_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22469
+    AegisName: CH1_MYOSOTIS
+    Name: Myosotis
+    Level: 245
+    Hp: 32995900
+    BaseExp: 1
+    JobExp: 1
+    Attack: 11843
+    Attack2: 14554
+    Defense: 443
+    MagicDefense: 289
+    Resistance: 346
+    MagicResistance: 246
+    Str: 189
+    Agi: 124
+    Vit: 155
+    Int: 226
+    Dex: 223
+    Luk: 69
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 860
+    AttackMotion: 1056
+    ClientAttackMotion: 720
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Crystal_Blue
+        Rate: 150
+      - Item: Ch1_Noise
+        Rate: 675
+      - Item: Ch1_Gray_Petal
+        Rate: 850
+      - Item: Ch1_Myosotis_
+        Rate: 1200
+      - Item: Myosotis_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22470
+    AegisName: CH1_ANEMONE
+    Name: Anemone
+    Level: 242
+    Hp: 32098750
+    BaseExp: 1
+    JobExp: 1
+    Attack: 12443
+    Attack2: 13887
+    Defense: 388
+    MagicDefense: 289
+    Resistance: 321
+    MagicResistance: 277
+    Str: 156
+    Agi: 124
+    Vit: 141
+    Int: 231
+    Dex: 223
+    Luk: 102
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 860
+    AttackMotion: 1056
+    ClientAttackMotion: 720
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Wind_Of_Verdure
+        Rate: 150
+      - Item: Ch1_Noise
+        Rate: 675
+      - Item: Ch1_Gray_Petal
+        Rate: 850
+      - Item: Ch1_Purple_Anemone
+        Rate: 1200
+      - Item: Anemone_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22471
+    AegisName: CH1_SKOGL
+    Name: Strange Skogul
+    Level: 245
+    Hp: 147241850
+    BaseExp: 1
+    JobExp: 1
+    Attack: 22240
+    Attack2: 27560
+    Defense: 287
+    MagicDefense: 1226
+    Resistance: 620
+    MagicResistance: 786
+    Str: 23
+    Agi: 171
+    Vit: 163
+    Int: 185
+    Dex: 215
+    Luk: 137
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 175
+    AttackDelay: 720
+    AttackMotion: 384
+    ClientAttackMotion: 360
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 1750
+      - Item: Moving_Black_Things
+        Rate: 1250
+      - Item: Ch1_Black_Wing
+        Rate: 750
+      - Item: Rouge
+        Rate: 1250
+      - Item: Strange_Skogul_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22472
+    AegisName: CH1_FRUS
+    Name: Strange Frus
+    Level: 245
+    Hp: 147241850
+    BaseExp: 1
+    JobExp: 1
+    Attack: 23184
+    Attack2: 27188
+    Defense: 465
+    MagicDefense: 695
+    Resistance: 744
+    MagicResistance: 901
+    Str: 214
+    Agi: 177
+    Vit: 166
+    Int: 181
+    Dex: 211
+    Luk: 126
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 480
+    AttackMotion: 576
+    ClientAttackMotion: 192
+    DamageMotion: 432
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 1750
+      - Item: Moving_Black_Things
+        Rate: 1250
+      - Item: Ch1_Black_Wing
+        Rate: 750
+      - Item: Strange_Frus_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22473
+    AegisName: CH1_LISTENER
+    Name: Listener
+    Level: 245
+    Hp: 17109800
+    BaseExp: 1
+    JobExp: 1
+    Attack: 25788
+    Attack2: 28777
+    Defense: 454
+    MagicDefense: 678
+    Resistance: 698
+    MagicResistance: 876
+    Str: 218
+    Agi: 182
+    Vit: 168
+    Int: 173
+    Dex: 248
+    Luk: 205
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Undead
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 175
+    AttackDelay: 576
+    AttackMotion: 678
+    ClientAttackMotion: 576
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 1750
+      - Item: Moving_Black_Things
+        Rate: 1250
+      - Item: Ch1_Sound_Bean
+        Rate: 750
+      - Item: Listener_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22474
+    AegisName: CH1_IMMORTAL_OFFICER1
+    Name: Immortal Legion Officer
+    Level: 244
+    Hp: 168453750
+    BaseExp: 1
+    JobExp: 1
+    Attack: 27889
+    Attack2: 29877
+    Defense: 452
+    MagicDefense: 672
+    Resistance: 702
+    MagicResistance: 901
+    Str: 224
+    Agi: 175
+    Vit: 163
+    Int: 184
+    Dex: 194
+    Luk: 130
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 500
+    AttackMotion: 840
+    ClientAttackMotion: 600
+    DamageMotion: 300
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Moving_Black_Things
+        Rate: 1250
+      - Item: Fruit_Of_Mastela
+        Rate: 200
+      - Item: Immortal_Legion_Officer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22475
+    AegisName: CH1_IMMORTAL_OFFICER2
+    Name: Immortal Officer
+    Level: 245
+    Hp: 163696350
+    BaseExp: 1
+    JobExp: 1
+    Attack: 26889
+    Attack2: 29445
+    Defense: 407
+    MagicDefense: 906
+    Resistance: 702
+    MagicResistance: 901
+    Str: 256
+    Agi: 144
+    Vit: 144
+    Int: 184
+    Dex: 224
+    Luk: 103
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 500
+    AttackMotion: 840
+    ClientAttackMotion: 600
+    DamageMotion: 300
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Moving_Black_Things
+        Rate: 1250
+      - Item: Rusty_Cleaver
+        Rate: 200
+      - Item: Immortal_Legion_Officer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22476
+    AegisName: CH1_TOXIT
+    Name: Toxit
+    Level: 274
+    Hp: 568512900
+    BaseExp: 1
+    JobExp: 1
+    Attack: 34738
+    Attack2: 28796
+    Defense: 753
+    MagicDefense: 1166
+    Resistance: 842
+    MagicResistance: 1096
+    Str: 244
+    Agi: 239
+    Vit: 296
+    Int: 269
+    Dex: 274
+    Luk: 181
+    AttackRange: 6
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 792
+    AttackMotion: 584
+    ClientAttackMotion: 752
+    DamageMotion: 576
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Moving_Black_Things
+        Rate: 1250
+      - Item: Congealed_Poison
+        Rate: 1500
+      - Item: Whittling
+        Rate: 2700
+      - Item: Toxit_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22477
+    AegisName: CP_CH1_TOXIT
+    Name: Toxit
+    Level: 274
+    Hp: 568512900
+    Attack: 34738
+    Attack2: 28796
+    Defense: 753
+    MagicDefense: 1166
+    Resistance: 842
+    MagicResistance: 1096
+    Str: 244
+    Agi: 239
+    Vit: 296
+    Int: 269
+    Dex: 274
+    Luk: 181
+    AttackRange: 6
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 792
+    AttackMotion: 584
+    ClientAttackMotion: 752
+    DamageMotion: 576
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22478
+    AegisName: CH1_LUNARINA
+    Name: Lunarina
+    Level: 275
+    Hp: 207607168
+    BaseExp: 1
+    JobExp: 1
+    Attack: 33449
+    Attack2: 29874
+    Defense: 784
+    MagicDefense: 1214
+    Resistance: 1028
+    MagicResistance: 1214
+    Str: 164
+    Agi: 239
+    Vit: 244
+    Int: 301
+    Dex: 274
+    Luk: 174
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 125
+    AttackDelay: 510
+    AttackMotion: 520
+    ClientAttackMotion: 720
+    DamageMotion: 576
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Moving_Black_Things
+        Rate: 1250
+      - Item: Shining_Crystal
+        Rate: 1500
+      - Item: Striped_Socks
+        Rate: 2700
+      - Item: Lunarina_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22479
+    AegisName: CP_CH1_LUNARINA
+    Name: Lunarina
+    Level: 275
+    Hp: 207607168
+    Attack: 33449
+    Attack2: 29874
+    Defense: 784
+    MagicDefense: 1214
+    Resistance: 1028
+    MagicResistance: 1214
+    Str: 164
+    Agi: 239
+    Vit: 244
+    Int: 301
+    Dex: 274
+    Luk: 174
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 125
+    AttackDelay: 510
+    AttackMotion: 520
+    ClientAttackMotion: 720
+    DamageMotion: 576
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22480
+    AegisName: CH1_BLOODY_SLASHER
+    Name: Bloody Slasher
+    Level: 273
+    Hp: 585701784
+    BaseExp: 1
+    JobExp: 1
+    Attack: 30441
+    Attack2: 35448
+    Defense: 435
+    MagicDefense: 1052
+    Resistance: 1283
+    MagicResistance: 1025
+    Str: 302
+    Agi: 198
+    Vit: 204
+    Int: 188
+    Dex: 287
+    Luk: 153
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 428
+    AttackMotion: 528
+    ClientAttackMotion: 240
+    DamageMotion: 360
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Moving_Black_Things
+        Rate: 1250
+      - Item: Shining_Crystal
+        Rate: 1500
+      - Item: Rusty_Cleaver
+        Rate: 2500
+      - Item: Bloody_Slasher_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22481
+    AegisName: CP_CH1_BLOODY_SLASHER
+    Name: Bloody Slasher
+    Level: 273
+    Hp: 585701784
+    Attack: 30441
+    Attack2: 35448
+    Defense: 435
+    MagicDefense: 1052
+    Resistance: 1283
+    MagicResistance: 1025
+    Str: 302
+    Agi: 198
+    Vit: 204
+    Int: 188
+    Dex: 287
+    Luk: 153
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 428
+    AttackMotion: 528
+    ClientAttackMotion: 240
+    DamageMotion: 360
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22482
+    AegisName: CH1_SHADIEST
+    Name: Shadiest
+    Level: 274
+    Hp: 600796440
+    BaseExp: 1
+    JobExp: 1
+    Attack: 34444
+    Attack2: 34444
+    Defense: 438
+    MagicDefense: 1099
+    Resistance: 901
+    MagicResistance: 1055
+    Str: 284
+    Agi: 198
+    Vit: 204
+    Int: 223
+    Dex: 287
+    Luk: 144
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 110
+    AttackDelay: 441
+    AttackMotion: 636
+    ClientAttackMotion: 540
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Moving_Black_Things
+        Rate: 1250
+      - Item: Needle_Pouch
+        Rate: 1500
+      - Item: Small_Sewing_Box
+        Rate: 2700
+      - Item: Shadiest_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22483
+    AegisName: CP_CH1_SHADIEST
+    Name: Shadiest
+    Level: 274
+    Hp: 600796440
+    Attack: 34444
+    Attack2: 34444
+    Defense: 438
+    MagicDefense: 1099
+    Resistance: 901
+    MagicResistance: 1055
+    Str: 284
+    Agi: 198
+    Vit: 204
+    Int: 223
+    Dex: 287
+    Luk: 144
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 110
+    AttackDelay: 441
+    AttackMotion: 636
+    ClientAttackMotion: 540
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22484
+    AegisName: CH1_SUCCUBUS
+    Name: High Succubus
+    Level: 275
+    Hp: 268237489
+    BaseExp: 1
+    JobExp: 1
+    Attack: 30773
+    Attack2: 34394
+    Defense: 717
+    MagicDefense: 1309
+    Resistance: 1201
+    MagicResistance: 889
+    Str: 280
+    Agi: 164
+    Vit: 185
+    Int: 280
+    Dex: 315
+    Luk: 85
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 155
+    AttackDelay: 506
+    AttackMotion: 706
+    ClientAttackMotion: 576
+    DamageMotion: 288
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Fruit_Of_Mastela
+        Rate: 1500
+      - Item: Aromatic_Flower
+        Rate: 1200
+      - Item: Shining_Crystal
+        Rate: 750
+      - Item: High_Succubus_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22485
+    AegisName: CP_CH1_SUCCUBUS
+    Name: High Succubus
+    Level: 275
+    Hp: 268237489
+    BaseExp: 1
+    JobExp: 1
+    Attack: 30773
+    Attack2: 34394
+    Defense: 717
+    MagicDefense: 1309
+    Resistance: 1201
+    MagicResistance: 889
+    Str: 280
+    Agi: 164
+    Vit: 185
+    Int: 280
+    Dex: 315
+    Luk: 85
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 155
+    AttackDelay: 506
+    AttackMotion: 706
+    ClientAttackMotion: 576
+    DamageMotion: 288
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22486
+    AegisName: CH1_INCCUBUS
+    Name: High Incubus
+    Level: 276
+    Hp: 592310700
+    BaseExp: 1
+    JobExp: 1
+    Attack: 31883
+    Attack2: 37442
+    Defense: 1094
+    MagicDefense: 1248
+    Resistance: 1089
+    MagicResistance: 1244
+    Str: 320
+    Agi: 156
+    Vit: 152
+    Int: 275
+    Dex: 339
+    Luk: 167
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 165
+    AttackDelay: 450
+    AttackMotion: 600
+    ClientAttackMotion: 420
+    DamageMotion: 336
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Fruit_Of_Mastela
+        Rate: 1500
+      - Item: Aromatic_Flower
+        Rate: 1200
+      - Item: Shining_Crystal
+        Rate: 750
+      - Item: High_Incubus_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22487
+    AegisName: CP_CH1_INCCUBUS
+    Name: High Incubus
+    Level: 276
+    Hp: 592310700
+    Attack: 31883
+    Attack2: 37442
+    Defense: 1094
+    MagicDefense: 1248
+    Resistance: 1089
+    MagicResistance: 1244
+    Str: 320
+    Agi: 156
+    Vit: 152
+    Int: 275
+    Dex: 339
+    Luk: 167
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 165
+    AttackDelay: 450
+    AttackMotion: 600
+    ClientAttackMotion: 420
+    DamageMotion: 336
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22488
+    AegisName: CH1_ABYSS_KNIGHT
+    Name: Commander of Abyss
+    Level: 278
+    Hp: 671843520
+    BaseExp: 1
+    JobExp: 1
+    Attack: 29447
+    Attack2: 39041
+    Defense: 781
+    MagicDefense: 1209
+    Resistance: 1386
+    MagicResistance: 907
+    Str: 321
+    Agi: 155
+    Vit: 168
+    Int: 170
+    Dex: 336
+    Luk: 187
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 450
+    AttackMotion: 500
+    ClientAttackMotion: 620
+    DamageMotion: 350
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Moving_Black_Things
+        Rate: 1500
+      - Item: Reins
+        Rate: 2250
+      - Item: Blade_Lost_In_Darkness
+        Rate: 250
+      - Item: Abyss_Commander_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22489
+    AegisName: CP_CH1_ABYSS_KNIGHT
+    Name: Commander of Abyss
+    Level: 278
+    Hp: 671843520
+    BaseExp: 1
+    JobExp: 1
+    Attack: 29447
+    Attack2: 39041
+    Defense: 781
+    MagicDefense: 1209
+    Resistance: 1386
+    MagicResistance: 907
+    Str: 321
+    Agi: 155
+    Vit: 168
+    Int: 170
+    Dex: 336
+    Luk: 187
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 450
+    AttackMotion: 500
+    ClientAttackMotion: 620
+    DamageMotion: 350
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22490
+    AegisName: G_CH1_FIRELOOP
+    Name: Fireloop
+    Level: 211
+    Hp: 11220870
+    Attack: 5773
+    Attack2: 9135
+    Defense: 344
+    MagicDefense: 219
+    Resistance: 176
+    MagicResistance: 214
+    Str: 129
+    Agi: 86
+    Vit: 122
+    Int: 147
+    Dex: 188
+    Luk: 57
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Insect
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 1056
+    AttackMotion: 1056
+    ClientAttackMotion: 1296
+    DamageMotion: 336
+    Ai: 04
+  - Id: 22491
+    AegisName: G_CH1_VOLIMPET
+    Name: Volcano Clam
+    Level: 209
+    Hp: 11655470
+    Attack: 5714
+    Attack2: 8401
+    Defense: 320
+    MagicDefense: 202
+    Resistance: 204
+    MagicResistance: 168
+    Str: 151
+    Agi: 103
+    Vit: 141
+    Int: 134
+    Dex: 172
+    Luk: 58
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 480
+    AttackMotion: 970
+    ClientAttackMotion: 768
+    DamageMotion: 770
+    Ai: 04
+  - Id: 22492
+    AegisName: G_CH1_MYOSOTIS
+    Name: Myosotis
+    Level: 245
+    Hp: 32995900
+    Attack: 11843
+    Attack2: 14554
+    Defense: 443
+    MagicDefense: 289
+    Resistance: 346
+    MagicResistance: 246
+    Str: 189
+    Agi: 124
+    Vit: 155
+    Int: 226
+    Dex: 223
+    Luk: 69
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 860
+    AttackMotion: 1056
+    ClientAttackMotion: 720
+    DamageMotion: 336
+    Ai: 21
+  - Id: 22493
+    AegisName: G_CH1_ANEMONE
+    Name: Anemone
+    Level: 242
+    Hp: 32098750
+    Attack: 12443
+    Attack2: 13887
+    Defense: 388
+    MagicDefense: 289
+    Resistance: 321
+    MagicResistance: 277
+    Str: 156
+    Agi: 124
+    Vit: 141
+    Int: 231
+    Dex: 223
+    Luk: 102
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 860
+    AttackMotion: 1056
+    ClientAttackMotion: 720
+    DamageMotion: 336
+    Ai: 21
+  - Id: 22494
+    AegisName: CH1_BULGASARI
+    Name: Bulgasari
+    Level: 232
+    Hp: 850000000
+    BaseExp: 1
+    JobExp: 1
+    Attack: 32448
+    Attack2: 38997
+    Defense: 1247
+    MagicDefense: 1674
+    Resistance: 1054
+    MagicResistance: 1098
+    Str: 302
+    Agi: 235
+    Vit: 232
+    Int: 402
+    Dex: 370
+    Luk: 263
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1000
+    AttackMotion: 660
+    ClientAttackMotion: 300
+    DamageMotion: 588
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Magic_Card_Album
+        Rate: 5000
+    Drops:
+      - Item: Ch1_Steako
+        Rate: 5000
+      - Item: Etel_Topaz
+        Rate: 1000
+      - Item: Bulgasari_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22495
+    AegisName: CH1_GLUTTO
+    Name: Glutton
+    Level: 290
+    Hp: 1850000000
+    BaseExp: 1
+    JobExp: 1
+    Attack: 42448
+    Attack2: 48997
+    Defense: 1247
+    MagicDefense: 1674
+    Resistance: 1674
+    MagicResistance: 1598
+    Str: 302
+    Agi: 235
+    Vit: 232
+    Int: 402
+    Dex: 370
+    Luk: 263
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 788
+    AttackMotion: 877
+    ClientAttackMotion: 364
+    DamageMotion: 588
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Magic_Card_Album
+        Rate: 5000
+    Drops:
+      - Item: Ch1_Big_Tooth
+        Rate: 5000
+      - Item: Etel_Topaz
+        Rate: 1000
+      - Item: Glutton_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22496
+    AegisName: CH1_MD_HEMEL_N
+    Name: Immortal Monarch
+    Level: 200
+    Hp: 2000000
+    Attack: 3378
+    Attack2: 5098
+    Defense: 514
+    MagicDefense: 292
+    Resistance: 1224
+    MagicResistance: 998
+    Str: 350
+    Agi: 150
+    Vit: 247
+    Int: 232
+    Dex: 334
+    Luk: 208
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 360
+    AttackMotion: 1250
+    ClientAttackMotion: 360
+    DamageMotion: 480
+    Ai: 21
+    DamageTaken: 10
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 22497
+    AegisName: CH1_MD_HEMEL
+    Name: Immortal Monarch
+    Level: 265
+    Hp: 200000000
+    Attack: 10345
+    Attack2: 15408
+    Defense: 514
+    MagicDefense: 292
+    Resistance: 874
+    MagicResistance: 1098
+    Str: 350
+    Agi: 150
+    Vit: 247
+    Int: 232
+    Dex: 334
+    Luk: 208
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 360
+    AttackMotion: 1250
+    ClientAttackMotion: 360
+    DamageMotion: 480
+    Ai: 21
+    DamageTaken: 10
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 22498
+    AegisName: CH1_MD_AMDARAIS
+    Name: Amdarais
+    Level: 200
+    Hp: 150000000
+    BaseExp: 1
+    JobExp: 1
+    Attack: 21447
+    Attack2: 38438
+    Defense: 743
+    MagicDefense: 1082
+    Resistance: 574
+    MagicResistance: 997
+    Str: 250
+    Agi: 250
+    Vit: 250
+    Int: 250
+    Dex: 250
+    Luk: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 1000
+    ClientAttackMotion: 1000
+    DamageMotion: 500
+    Ai: 21
+  - Id: 22499
+    AegisName: CH1_MD_VESSEL
+    Name: Himmelmez's Vessel
+    Level: 200
+    Hp: 200000000
+    BaseExp: 1
+    JobExp: 1
+    Attack: 1000
+    Attack2: 2000
+    Defense: 514
+    MagicDefense: 292
+    Resistance: 674
+    MagicResistance: 898
+    Str: 500
+    Agi: 500
+    Vit: 500
+    Int: 500
+    Dex: 500
+    Luk: 500
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 1000
+    AttackDelay: 1000
+    AttackMotion: 1000
+    ClientAttackMotion: 1000
+    DamageMotion: 1000
+    Ai: 06
+    DamageTaken: 10
+    Class: Boss

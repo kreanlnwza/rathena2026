@@ -1,0 +1,110 @@
+Header:
+  Type: QUEST_DB
+  Version: 3
+
+Body:
+  - Id: 16778
+    Title: Biosphere Abyss Depth
+  - Id: 16779
+    Title: Abyss Depth General Research
+    Targets:
+      - Id: 1
+        Count: 450
+        Location: bl_depth2
+        MapName: Biosphere Abyss Depth
+        MapMobTargets:
+          BIO_DUNEYRR: true
+          BIO_NAGA: true
+          BIO_ANCIENT_TREE: true
+          BIO_DOLLOCARIS: true
+          BIO_ICE_GARGOYLE: true
+          BIO_FLAME_GHOST: true   
+          BIO_ACIDUS_: true
+          BIO_MOROCC_1: true
+          BIO_SALAMANDER: true
+          BIO_MOSKILLO: true
+  - Id: 16780
+    Title: Abyss Depth General Research - Wait
+    TimeLimit: 4h
+  - Id: 16781
+    Title: Abyss Depth Demihuman Research
+    Targets:
+      - Mob: BIO_DUNEYRR
+        Count: 25
+  - Id: 16782
+    Title: Abyss Depth Demihuman Research - Wait
+    TimeLimit: 4h
+  - Id: 16783
+    Title: Abyss Depth Brute Research
+    Targets:
+      - Mob: BIO_NAGA
+        Count: 25
+  - Id: 16784
+    Title: Abyss Depth Brute Research - Wait
+    TimeLimit: 4h
+  - Id: 16785
+    Title: Abyss Depth Plant Research
+    Targets:
+      - Mob: BIO_ANCIENT_TREE
+        Count: 25
+  - Id: 16786
+    Title: Abyss Depth Plant Research - Wait
+    TimeLimit: 4h 
+  - Id: 16787
+    Title: Abyss Depth Fish Research
+    Targets:
+      - Mob: BIO_DOLLOCARIS
+        Count: 25
+  - Id: 16788
+    Title: Abyss Depth Fish Research - Wait
+    TimeLimit: 4h
+  - Id: 16789
+    Title: Abyss Depth Demon Research
+    Targets:
+      - Mob: BIO_ICE_GARGOYLE
+        Count: 25
+  - Id: 16790
+    Title: Abyss Depth Demon Research - Wait
+    TimeLimit: 4h
+  - Id: 16791
+    Title: Abyss Depth Undead Research
+    Targets:
+      - Mob: BIO_FLAME_GHOST
+        Count: 25
+  - Id: 16792
+    Title: Abyss Depth Undead Research - Wait
+    TimeLimit: 4h
+  - Id: 16793
+    Title: Abyss Depth Dragon Research
+    Targets:
+      - Mob: BIO_ACIDUS_
+        Count: 25
+  - Id: 16794
+    Title: Abyss Depth Dragon Research - Wait
+    TimeLimit: 4h
+  - Id: 16795
+    Title: Abyss Depth Angel Research
+    Targets:
+      - Mob: BIO_MOROCC_1
+        Count: 25
+  - Id: 16796
+    Title: Abyss Depth Angel Research - Wait
+    TimeLimit: 4h
+  - Id: 16797
+    Title: Abyss Depth Formless Research
+    Targets:
+      - Mob: BIO_SALAMANDER
+        Count: 25
+  - Id: 16798
+    Title: Abyss Depth Formless Research - Wait
+    TimeLimit: 4h
+  - Id: 16799
+    Title: Abyss Depth Insect Research
+    Targets:
+      - Mob: BIO_MOSKILLO
+        Count: 25
+  - Id: 16800
+    Title: Abyss Depth Insect Research - Wait
+    TimeLimit: 4h
+  - Id: 16801
+    Title: Abyss Researcher

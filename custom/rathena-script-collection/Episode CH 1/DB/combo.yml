@@ -1,0 +1,274 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Combo Database
+###########################################################################
+#
+# Settings
+#
+###########################################################################
+# - Combos:                 List of combo sets.
+#    - Combo:               Sequence of items to define a combo (minimum of 2 items).
+#       - <item name>       AEGIS name of the item
+#   Script                  Script to execute when one of the combos is equipped. (Default: null)
+#   Clear                   Remove the defined combos from database. (Default: false)
+###########################################################################
+
+Header:
+  Type: COMBO_DB
+  Version: 1
+
+Body:
+  - Combos:
+      - Combo:
+          - Encroached_Repair_Robot_Card
+          - Big_Eye_Card
+    Script: |
+      bonus2 bMagicAddEle, Ele_Fire, 8;
+      bonus2 bMagicAddEle, Ele_Water, 8;
+      bonus2 bMagicAddEle, Ele_Holy, 8;
+      bonus2 bMagicAddEle, Ele_Wind, 8;
+      bonus2 bMagicAddEle, Ele_Dark, 8;
+      bonus2 bMagicAddEle, Ele_Ghost, 8;
+      bonus2 bMagicAddEle, Ele_Undead, 8;
+  - Combos:
+      - Combo:
+          - Encroached_Repair_Robot_Card
+          - Corrupted_Silk_Snail_Card
+    Script: |
+      bonus2 bMagicAddEle, Ele_Water, 8;
+      bonus2 bMagicAddEle, Ele_Wind, 8;
+      bonus2 bMagicAddEle, Ele_Earth, 8;
+      bonus2 bMagicAddEle, Ele_Fire, 8;
+      bonus2 bMagicAddEle, Ele_Poison, 8;
+      bonus2 bMagicAddEle, Ele_Dark, 8;
+      bonus2 bMagicAddEle, Ele_Neutral, 8;
+  - Combos:
+      - Combo:
+          - Encroached_Dimic_Card
+          - Encroached_Recon_Robot_Card
+    Script: |
+      bonus bShortAtkRate, 8;
+  - Combos:
+      - Combo:
+          - Encroached_Dimic_Card
+          - Fire_Ring_Card
+    Script: |
+      bonus bLongAtkRate, 8;
+  - Combos:
+      - Combo:
+          - Tulip_Card
+          - Lobelia_Card
+    Script: |
+      bonus bVariableCastrate, -10;
+      bonus bDelayRate, -5;
+  - Combos:
+      - Combo:
+          - Calendula_Card
+          - Myosotis_Card
+    Script: |
+      bonus bCRate, 2;
+      bonus bCritAtkRate, 10;
+  - Combos:
+      - Combo:
+          - Scabiosa_Card
+          - Anemone_Card
+    Script: |
+      bonus bCRate, 2;
+      bonus bCritAtkRate, 10;
+  - Combos:
+      - Combo:
+          - Toxit_Card
+          - Bloody_Slasher_Card
+    Script: |
+      bonus2 bAddClass, Class_Boss, 7;
+      bonus2 bAddClass, Class_Normal, 7;
+  - Combos:
+      - Combo:
+          - Lunarina_Card
+          - Shadiest_Card
+    Script: |
+      bonus2 bMagicAddClass, Class_Boss, 4;
+      bonus2 bMagicAddClass, Class_Normal, 4;
+  - Combos:
+      - Combo:
+          - Abyss_Commander_Card
+          - Toxit_Card
+    Script: |
+      bonus2 bAddSize, Size_All, 8;
+  - Combos:
+      - Combo:
+          - Abyss_Commander_Card
+          - Bloody_Slasher_Card
+    Script: |
+      bonus2 bAddEle, Ele_All, 5;
+  - Combos:
+      - Combo:
+          - Abyss_Commander_Card
+          - Shadiest_Card
+    Script: |
+      bonus2 bMagicAddSize, Size_All, 8;
+  - Combos:
+      - Combo:
+          - Abyss_Commander_Card
+          - Lunarina_Card
+    Script: |
+      bonus2 bMagicAddEle, Ele_All, 5;
+  - Combos:
+      - Combo:
+          - Entwined_Armor
+          - Entwined_Manteau
+    Script: |
+      bonus bDelayRate, -5;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 10;
+  - Combos:
+      - Combo:
+          - Entwined_Armor
+          - Entwined_Boots
+    Script: |
+      bonus bVariableCastrate, -5;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 10;
+  - Combos:
+      - Combo:
+          - Entwined_Manteau
+          - Entwined_Boots
+    Script: |
+      bonus bVariableCastrate, -7;
+      bonus2 bSubRace2, RC2_CH1GEFFENIA, 25;
+  - Combos:
+      - Combo:
+          - Entwined_Armor
+          - Glacier_Ring
+          - Glacier_Pendant
+    Script: |
+      bonus bAtkRate, 10;
+      bonus bShortAtkRate, 10;
+      bonus bLongAtkRate, 10;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 10;
+  - Combos:
+      - Combo:
+          - Entwined_Armor
+          - Venom_Rune_Ring
+          - Venom_M_Ring
+    Script: |
+      bonus bAtkRate, 20;
+      bonus bShortAtkRate, 15;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 20;
+  - Combos:
+      - Combo:
+          - Entwined_Armor
+          - Soul_Rune_Ring
+          - Soul_M_Ring
+    Script: |
+      bonus bAtkRate, 20;
+      bonus bLongAtkRate, 15;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 20;
+  - Combos:
+      - Combo:
+          - Entwined_Robe
+          - Entwined_Muffler
+    Script: |
+      bonus bDelayRate, -5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;
+  - Combos:
+      - Combo:
+          - Entwined_Robe
+          - Entwined_Shoes
+    Script: |
+      bonus bAspdRate, 5;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 5;
+  - Combos:
+      - Combo:
+          - Entwined_Muffler
+          - Entwined_Shoes
+    Script: |
+      bonus bAspdRate, 5;
+      bonus2 bSubRace2, RC2_CH1GEFFENIA, 25;
+  - Combos:
+      - Combo:
+          - Entwined_Robe
+          - Glacier_Necklace
+          - Glacier_Earring
+    Script: |
+      bonus bMatkRate, 7;
+      bonus2 bMagicAtkEle, Ele_All, 10;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 7;
+  - Combos:
+      - Combo:
+          - Entwined_Robe
+          - Temple_Rune_Ring
+          - Temple_M_Ring
+    Script: |
+      bonus bMatkRate, 15;
+      bonus2 bMagicAtkEle, Ele_All, 15;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 15;
+  - Combos:
+      - Combo:
+          - Dimension_B_Greave
+          - Venom_M_Ring
+      - Combo:
+          - Dimension_H_Boots
+          - Soul_M_Ring
+      - Combo:
+          - Dimension_E_Boots
+          - Soul_M_Ring
+      - Combo:
+          - Dimension_E_Boots
+          - Venom_M_Ring
+    Script: |
+      bonus2 bAddSize, Size_All, 10;
+      bonus2 bAddEle, Ele_All, 10;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 20;
+  - Combos:
+      - Combo:
+          - Dimension_B_Greave
+          - Signet_Of_Spring
+      - Combo:
+          - Dimension_H_Boots
+          - Signet_Of_Summer
+    Script: |
+      bonus bPAtk, 7;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 15;
+  - Combos:
+      - Combo:
+          - Dimension_S_Shoes
+          - Temple_M_Ring
+      - Combo:
+          - Dimension_M_Shoes
+          - Temple_M_Ring
+    Script: |
+      bonus2 bMagicAddSize, Size_All, 10;
+      bonus2 bMagicAddEle, Ele_All, 10;
+      bonus2 bMagicAddRace2, RC2_CH1GEFFENIA, 15;
+  - Combos:
+      - Combo:
+          - Dimension_S_Shoes
+          - Signet_Of_Autumn
+      - Combo:
+          - Dimension_M_Shoes
+          - Signet_Of_Autumn
+    Script: |
+      bonus bSMatk, 7;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 10;
+  - Combos:
+      - Combo:
+          - Dimension_E_Boots
+          - Signet_Of_Winter
+    Script: |
+      bonus bCRate, 5;
+      bonus2 bAddRace2, RC2_CH1GEFFENIA, 15;

@@ -1,0 +1,10 @@
+Header:
+  Type: REPUTATION_DB
+  Version: 1
+
+Body:
+  - Id: 9
+    Name: Abyss Depth Research
+    Variable: RepPointsDepth
+    Minimum: -5000
+    Maximum: 5000

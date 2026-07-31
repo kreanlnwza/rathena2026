@@ -1,0 +1,56 @@
+Header:
+  Type: INSTANCE_DB
+  Version: 2
+
+Body:
+  - Id: 147
+    Name: Gimli Infiltration
+    TimeLimit: 3600
+    Enter:
+      Map: 1@mdtem
+      X: 266
+      Y: 174
+    AdditionalMaps:
+      2@mdtem: true
+  - Id: 148
+    Name: Mysterious Ghost Ship
+    TimeLimit: 3600
+    Enter:
+      Map: 1@wtgs
+      X: 86
+      Y: 306
+  - Id: 149
+    Name: Final Battle
+    TimeLimit: 1800
+    Enter:
+      Map: 1@ep21b
+      X: 99
+      Y: 30
+  - Id: 150
+    Name: Secret Altar
+    TimeLimit: 1800
+    Enter:
+      Map: 1@ep21a
+      X: 61
+      Y: 33
+  - Id: 151
+    Name: Silent Sanctuary
+    TimeLimit: 1800
+    Enter:
+      Map: 1@twbs2
+      X: 96
+      Y: 66
+  - Id: 151
+    Name: Final Battle(Normal)
+    TimeLimit: 3600
+    Enter:
+      Map: 1@ep21b
+      X: 73
+      Y: 70
+  - Id: 152
+    Name: Final Battle(Hard)
+    TimeLimit: 3600
+    Enter:
+      Map: 1@ep21b
+      X: 73
+      Y: 70

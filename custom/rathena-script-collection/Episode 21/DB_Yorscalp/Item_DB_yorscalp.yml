@@ -1,0 +1,481 @@
+Body:
+  - Id: 103501
+    AegisName: Jorscalp_Fly_Wing_1
+    Name: Jorscalp 1 Fly Wing
+    Type: Usable
+    Weight: 30
+    Script: |
+      if ( strcharinfo(3) != "jor_sklf1" )
+        specialeffect2 EF_FREEZING;
+        showscript "It seems that I can't use this one in this place.",getcharid(3),SELF;
+      else
+        warp "jor_sklf1",0,0;
+  - Id: 103502
+    AegisName: Jorscalp_Fly_Wing_2
+    Name: Jorscalp 2 Fly Wing
+    Type: Usable
+    Weight: 30
+    Script: |
+      if ( strcharinfo(3) != "jor_sklf2" )
+        specialeffect2 EF_FREEZING;
+        showscript "It seems that I can't use this one in this place.",getcharid(3),SELF;
+      else
+        warp "jor_sklf2",0,0;
+  - Id: 103503
+    AegisName: Yorscalp_Scroll_A
+    Name: Jorscalp 1 Fly Wing
+    Type: Usable
+    Script: |
+      item_reform(103503);
+  - Id: 103512
+    AegisName: Yor_Card_P_Box
+    Name: Past Heroes Box
+    Type: Usable
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_YOR_CARD);
+  - Id: 103523
+    AegisName: Corruped_Fruit
+    Name: Corruped Fruit
+    Type: Usable
+    Weight: 30
+    Delay:
+      Duration: 3000
+    Script: |
+      percentheal 100,100;
+  - Id: 103537
+    AegisName: Tan_Antiquity
+    Name: Tan Antiquity
+    Type: Usable
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_TAN_BOX);
+  - Id: 300585
+    AegisName: Tris_Card
+    Name: Tris Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",.@r;
+      bonus2 bSkillAtk,"DK_STORMSLASH",.@r;
+  - Id: 300586
+    AegisName: Tan_Card
+    Name: Tan Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"IG_IMPERIAL_CROSS",.@r;
+      bonus2 bSkillAtk,"IG_OVERSLASH",.@r;
+  - Id: 300587
+    AegisName: W_Lugenburg_Card
+    Name: Wilhelm Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",.@r;
+      bonus2 bSkillAtk,"IQ_BLAZING_FLAME_BLAST",.@r;
+  - Id: 300588
+    AegisName: R_Lugenburg_Card
+    Name: Reinhardt Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"CD_DIVINUS_FLOS",.@r;
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",.@r;
+      bonus2 bSkillAtk,"CD_ARBITRIUM",.@r;
+  - Id: 300589
+    AegisName: Ivan_Card
+    Name: Ivan Wigner Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"MT_ENERGY_CANNONADE",.@r;
+      bonus2 bSkillAtk,"MT_SPARK_BLASTER",.@r;
+  - Id: 300590
+    AegisName: Lalaila_Card
+    Name: Lalaila Nazar Wigner Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"BO_DUST_EXPLOSION",.@r;
+      bonus2 bSkillAtk,"BO_MYSTERY_POWDER",.@r;
+  - Id: 300591
+    AegisName: Richard_Card
+    Name: Richard Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",.@r;
+      bonus2 bSkillAtk,"SHC_CROSS_SLASH",.@r;
+  - Id: 300592
+    AegisName: Valdaris_Card
+    Name: Laura Valdaris Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",.@r;
+      bonus2 bSkillAtk,"ABC_ABYSS_FLAME",.@r;
+      bonus2 bSkillAtk,"ABC_ABYSS_FLAME_ATK",.@r;
+  - Id: 300593
+    AegisName: Aurelie_Card
+    Name: Aurelie Petit Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"AG_DESTRUCTIVE_HURRICANE",.@r;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM",.@r;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK",.@r;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK2",.@r;
+  - Id: 300594
+    AegisName: Heine_Card
+    Name: Ilse El Heine Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",.@r;
+      bonus2 bSkillAtk,"EM_TERRA_DRIVE",.@r;
+  - Id: 300595
+    AegisName: Epesto_Card
+    Name: Epesto Walther Megas Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",.@r;
+      bonus2 bSkillAtk,"WH_WILD_WALK",.@r;
+  - Id: 300596
+    AegisName: Maristella_Card
+    Name: Maristella Walther Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",.@r;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",.@r;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",.@r;
+  - Id: 300597
+    AegisName: Yohan_Card
+    Name: Yohan Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",.@r;
+      bonus2 bSkillAtk,"SKE_ALL_IN_THE_SKY",.@r;
+  - Id: 300598
+    AegisName: Gunter_Card
+    Name: Gunter Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",.@r;
+      bonus2 bSkillAtk,"NW_WILD_SHOT",.@r;
+  - Id: 300599
+    AegisName: Galaxia_Card
+    Name: Galaxia Nerius Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SS_ANKOKURYUUAKUMU",.@r;
+      bonus2 bSkillAtk,"SS_ANTENPOU",.@r;
+  - Id: 300600
+    AegisName: Iana_Card
+    Name: Iana Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",.@r;
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_RED_PHOENIX",.@r;
+  - Id: 300601
+    AegisName: Lee_Card
+    Name: Lee Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",.@r;
+      bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",.@r;
+  - Id: 300602
+    AegisName: Nadoyo_Card
+    Name: Nadoyo Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",.@r;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",.@r;
+  - Id: 1001834
+    AegisName: Yorscalp_Serpent
+    Name: Shape of Fallen Serpent
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001835
+    AegisName: Yorscalp_Symbol
+    Name: Symbol of Curse
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001836
+    AegisName: Yorscalp_Spirit
+    Name: Spirit of Yorscalp
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001837
+    AegisName: Tris_Card_Fragment
+    Name: Tris Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001838
+    AegisName: Tan_Card_Fragment
+    Name: Tan Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001839
+    AegisName: W_Lugenburg_Card_Fragment
+    Name: Wilheim Lugenburg Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001840
+    AegisName: R_Lugenburg_Card_Fragment
+    Name: Reinhardt Lugenburg Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001841
+    AegisName: Ivan_Card_Fragment
+    Name: Ivan Wigner Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001842
+    AegisName: Lalaila_Card_Fragment
+    Name: Lalaila Nazar Wigner Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001843
+    AegisName: Richard_Card_Fragment
+    Name: Richard Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001844
+    AegisName: Valdaris_Card_Fragment
+    Name: Laura Valdaris Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001845
+    AegisName: Aurelie_Card_Fragment
+    Name: Aurelie Petit Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001846
+    AegisName: Heine_Card_Fragment
+    Name: Ilse El Heine Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001847
+    AegisName: Epesto_Card_Fragment
+    Name: Epesto Walther Megas Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001848
+    AegisName: Maristella_Card_Fragment
+    Name: Maristella Walther Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001849
+    AegisName: Yohan_Card_Fragment
+    Name: Yohan Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001850
+    AegisName: Gunter_Card_Fragment
+    Name: Gunter Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001851
+    AegisName: Galaxia_Card_Fragment
+    Name: Galaxia Nerius Card
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001852
+    AegisName: Iana_Card_Fragment
+    Name: Iana Card
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001853
+    AegisName: Lee_Card_Fragment
+    Name: Lee Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001854
+    AegisName: Nadoyo_Card_Fragment
+    Name: Nadoyo Card Fragment
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT

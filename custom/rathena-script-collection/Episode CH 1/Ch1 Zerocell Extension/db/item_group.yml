@@ -1,0 +1,227 @@
+Body:
+  - Group: IG_AEGIS_105161
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Frontier_Magic_Dust
+            Rate: 1000
+            Amount: 11
+          - Index: 1
+            Item: Frontier_Magic_Dust
+            Rate: 900
+            Amount: 12
+          - Index: 2
+            Item: Frontier_Magic_Dust
+            Rate: 800
+            Amount: 13
+          - Index: 3
+            Item: Frontier_Magic_Dust
+            Rate: 700
+            Amount: 14
+          - Index: 4
+            Item: Frontier_Magic_Dust
+            Rate: 600
+            Amount: 15
+          - Index: 5
+            Item: Frontier_Magic_Dust
+            Rate: 500
+            Amount: 16
+          - Index: 6
+            Item: Frontier_Magic_Dust
+            Rate: 400
+            Amount: 17
+          - Index: 7
+            Item: Frontier_Magic_Dust
+            Rate: 300
+            Amount: 18
+          - Index: 8
+            Item: Frontier_Magic_Dust
+            Rate: 200
+            Amount: 19
+          - Index: 9
+            Item: Frontier_Magic_Dust
+            Rate: 100
+            Amount: 20
+          - Index: 10
+            Item: Chaotic_Rune_Ore
+            Rate: 1000
+            Amount: 11
+          - Index: 11
+            Item: Chaotic_Rune_Ore
+            Rate: 900
+            Amount: 12
+          - Index: 12
+            Item: Chaotic_Rune_Ore
+            Rate: 800
+            Amount: 13
+          - Index: 13
+            Item: Chaotic_Rune_Ore
+            Rate: 700
+            Amount: 14
+          - Index: 14
+            Item: Chaotic_Rune_Ore
+            Rate: 600
+            Amount: 15
+          - Index: 15
+            Item: Chaotic_Rune_Ore
+            Rate: 500
+            Amount: 16
+          - Index: 16
+            Item: Chaotic_Rune_Ore
+            Rate: 400
+            Amount: 17
+          - Index: 17
+            Item: Chaotic_Rune_Ore
+            Rate: 300
+            Amount: 18
+          - Index: 18
+            Item: Chaotic_Rune_Ore
+            Rate: 200
+            Amount: 19
+          - Index: 19
+            Item: Chaotic_Rune_Ore
+            Rate: 100
+            Amount: 20
+          - Index: 20
+            Item: Disparate_Rune_Ore
+            Rate: 1000
+            Amount: 11
+          - Index: 21
+            Item: Disparate_Rune_Ore
+            Rate: 900
+            Amount: 12
+          - Index: 22
+            Item: Disparate_Rune_Ore
+            Rate: 800
+            Amount: 13
+          - Index: 23
+            Item: Disparate_Rune_Ore
+            Rate: 700
+            Amount: 14
+          - Index: 24
+            Item: Disparate_Rune_Ore
+            Rate: 600
+            Amount: 15
+          - Index: 25
+            Item: Disparate_Rune_Ore
+            Rate: 500
+            Amount: 16
+          - Index: 26
+            Item: Disparate_Rune_Ore
+            Rate: 400
+            Amount: 17
+          - Index: 27
+            Item: Disparate_Rune_Ore
+            Rate: 300
+            Amount: 18
+          - Index: 28
+            Item: Disparate_Rune_Ore
+            Rate: 200
+            Amount: 19
+          - Index: 29
+            Item: Disparate_Rune_Ore
+            Rate: 100
+            Amount: 20
+  - Group: IG_AEGIS_105162
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Frontier_Magic_Dust
+            Rate: 1000
+            Amount: 13
+          - Index: 1
+            Item: Frontier_Magic_Dust
+            Rate: 800
+            Amount: 14
+          - Index: 2
+            Item: Frontier_Magic_Dust
+            Rate: 600
+            Amount: 15
+          - Index: 3
+            Item: Frontier_Magic_Dust
+            Rate: 400
+            Amount: 16
+          - Index: 4
+            Item: Frontier_Magic_Dust
+            Rate: 200
+            Amount: 17
+          - Index: 5
+            Item: Chaotic_Rune_Ore
+            Rate: 1000
+            Amount: 13
+          - Index: 6
+            Item: Chaotic_Rune_Ore
+            Rate: 800
+            Amount: 14
+          - Index: 7
+            Item: Chaotic_Rune_Ore
+            Rate: 600
+            Amount: 15
+          - Index: 8
+            Item: Chaotic_Rune_Ore
+            Rate: 400
+            Amount: 16
+          - Index: 9
+            Item: Chaotic_Rune_Ore
+            Rate: 200
+            Amount: 17
+          - Index: 10
+            Item: Disparate_Rune_Ore
+            Rate: 1000
+            Amount: 13
+          - Index: 11
+            Item: Disparate_Rune_Ore
+            Rate: 800
+            Amount: 14
+          - Index: 12
+            Item: Disparate_Rune_Ore
+            Rate: 600
+            Amount: 15
+          - Index: 13
+            Item: Disparate_Rune_Ore
+            Rate: 400
+            Amount: 16
+          - Index: 14
+            Item: Disparate_Rune_Ore
+            Rate: 200
+            Amount: 17
+          - Index: 15
+            Item: Chaotic_Rune
+            Rate: 50
+            Amount: 4
+          - Index: 16
+            Item: Chaotic_Rune
+            Rate: 50
+            Amount: 6
+          - Index: 17
+            Item: Chaotic_Rune
+            Rate: 50
+            Amount: 8
+          - Index: 18
+            Item: Disparate_Rune
+            Rate: 50
+            Amount: 4
+          - Index: 19
+            Item: Disparate_Rune
+            Rate: 50
+            Amount: 6
+          - Index: 20
+            Item: Disparate_Rune
+            Rate: 50
+            Amount: 8
+          - Index: 21
+            Item: Frontier_M_Stone
+            Rate: 50
+            Amount: 4
+          - Index: 22
+            Item: Frontier_M_Stone
+            Rate: 50
+            Amount: 6
+          - Index: 23
+            Item: Frontier_M_Stone
+            Rate: 50
+            Amount: 8
