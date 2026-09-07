@@ -1,0 +1,18 @@
+// GM-only fixture enabled locally through npc/scripts_custom.conf.
+// Author: V!be Coding [kreanlnwza] AI Assistant (Codex)
+// Load: @loadnpc npc/custom/quest_cancel_test.txt
+prontera,156,180,4	script	Quest Cancel Test	4_M_SAGE_C,{
+	if (getgroupid() < 99) end;
+	mes "Choose a quest to test client cancellation.";
+	.@choice = select("Hornet 11114:Condor 11115:Worm Tail 11117:Cancel");
+	if (.@choice == 4) close;
+	setarray .@ids[0],11114,11115,11117;
+	.@id = .@ids[.@choice-1];
+	if (checkquest(.@id,HAVEQUEST) != -1) {
+		mes "That quest is already in your log. Existing progress is preserved.";
+		close;
+	}
+	setquest .@id;
+	mes "Close this dialog, open the quest window, and abandon the quest.";
+	close;
+}

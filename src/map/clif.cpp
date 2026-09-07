@@ -18169,6 +18169,25 @@ void clif_quest_delete( const map_session_data* sd, int32 quest_id )
 }
 
 
+/// Client quest abandonment: 0c3d <quest id>.L; reply 0c3e <quest id>.L <result>.W.
+/// Author: V!be Coding [kreanlnwza] AI Assistant (Codex)
+void clif_parse_questGiveUp( int32 fd, map_session_data* sd )
+{
+#if PACKETVER_MAIN_NUM >= 20260514
+	const int32 quest_id = RFIFOL(fd, 2);
+	int16 result = 1;
+
+	if (!pc_cant_act2(sd) && !sd->npc_id && !pc_hasprogress(sd, WIP_DISABLE_NPC))
+		result = static_cast<int16>(quest_client_cancel(sd, quest_id));
+
+	WFIFOHEAD(fd, 8);
+	WFIFOW(fd, 0) = 0x0c3e;
+	WFIFOL(fd, 2) = quest_id;
+	WFIFOW(fd, 6) = result;
+	WFIFOSET(fd, 8);
+#endif
+}
+
 /// Notification of an update to the hunting mission counter
 /// 02b5 <packet len>.W <mobs>.W { <quest id>.L <mob id>.L <total count>.W <current count>.W }*3 (ZC_UPDATE_MISSION_HUNT)
 /// 09fa <packet len>.W <mobs>.W { <quest id>.L <hunt identification>.L <total count>.W <current count>.W }*3 (ZC_UPDATE_MISSION_HUNT_EX)

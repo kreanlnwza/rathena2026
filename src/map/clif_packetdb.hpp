@@ -2058,4 +2058,10 @@
 	parseable_packet( HEADER_CZ_STORAGE_SELECT_2026, sizeof(PACKET_CZ_STORAGE_SELECT_2026), clif_parse_StorageSelect2026, 0 );
 #endif
 
+// Reported MAIN build boundary; see doc/quest_client_cancel.md for evidence.
+#if PACKETVER_MAIN_NUM >= 20260514
+	parseable_packet(0x0c3d, 6, clif_parse_questGiveUp, 2);
+	packet(0x0c3e, 8);
+#endif
+
 #endif /* CLIF_PACKETDB_HPP */

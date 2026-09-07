@@ -46,6 +46,7 @@ struct s_quest_db {
 	std::vector<std::shared_ptr<s_quest_objective>> objectives;
 	std::vector<std::shared_ptr<s_quest_dropitem>> dropitem;
 	std::string name;
+	bool client_cancel = false; // Explicit permission for cancellation from the client quest UI.
 };
 
 // Questlog check types
@@ -73,7 +74,8 @@ extern QuestDatabase quest_db;
 int32 quest_pc_login(map_session_data *sd);
 
 int32 quest_add(map_session_data *sd, int32 quest_id);
-int32 quest_delete(map_session_data *sd, int32 quest_id);
+int32 quest_delete(map_session_data *sd, int32 quest_id, bool notify_client = true);
+int32 quest_client_cancel(map_session_data *sd, int32 quest_id);
 int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2);
 int32 quest_update_objective_sub(block_list *bl, va_list ap);
 void quest_update_objective(map_session_data *sd, mob_data* md);
