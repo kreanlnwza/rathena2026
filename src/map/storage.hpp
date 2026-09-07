@@ -51,6 +51,8 @@ struct guild_log_entry{
 
 const char *storage_getName(uint8 id);
 bool storage_exists(uint8 id);
+void storage_switch_tab(map_session_data* sd, uint16 tab);
+void storage_switch_saved(map_session_data* sd, uint8 storage_id, bool success);
 
 int32 storage_delitem(map_session_data* sd, struct s_storage *stor, int32 index, int32 amount);
 int32 storage_storageopen(map_session_data *sd);

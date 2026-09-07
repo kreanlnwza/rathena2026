@@ -2027,7 +2027,7 @@
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230705
-	parseable_packet( HEADER_CZ_REQ_EMOTION_EXPANSION, sizeof( struct PACKET_CZ_REQ_EMOTION_EXPANSION ), clif_parse_dull, 0 );
+	parseable_packet( HEADER_CZ_REQ_EMOTION_EXPANSION, sizeof( struct PACKET_CZ_REQ_EMOTION_EXPANSION ), clif_parse_Emotion, 4 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230802
@@ -2044,6 +2044,10 @@
 
 #if PACKETVER_MAIN_NUM >= 20250122
 	parseable_packet( HEADER_CZ_MOVE_ITEM_TO_PERSONAL, sizeof( PACKET_CZ_MOVE_ITEM_TO_PERSONAL ), clif_parse_MoveFromKafraFav, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20260715
+	parseable_packet( HEADER_CZ_STORAGE_SELECT_2026, sizeof(PACKET_CZ_STORAGE_SELECT_2026), clif_parse_StorageSelect2026, 0 );
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

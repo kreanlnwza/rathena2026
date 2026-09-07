@@ -3436,6 +3436,10 @@ static bool intif_parse_StorageReceived(int32 fd)
 	}
 
 	if (!RFIFOB(fd, 9)) {
+		if( type == TABLE_STORAGE && sd->state.storage_flag == 4 ){
+			sd->state.storage_flag = 0;
+			clif_storageclose(*sd);
+		}
 		ShowError("intif_parse_StorageReceived: Failed to load! (AID: %d, type: %d)\n", account_id, type);
 		return false;
 	}
@@ -3559,7 +3563,7 @@ static void intif_parse_StorageSaved(int32 fd)
 					if( RFIFOB( fd, 8 ) ){
 						// ShowInfo("Storage %d has been saved (AID: %d).\n", RFIFOL(fd, 2), RFIFOB(fd, 8) );
 
-						if( sd ){
+						if( sd && sd->premiumStorage.stor_id == RFIFOB(fd, 8) ){
 							stor = &sd->premiumStorage;
 						}
 					}else{
@@ -3590,6 +3594,8 @@ static void intif_parse_StorageSaved(int32 fd)
 		}
 	} else
 		ShowError("Failed to save inventory/cart/storage data (AID: %d, type: %d).\n", RFIFOL(fd, 2), RFIFOB(fd, 7));
+	if( RFIFOB(fd, 7) == TABLE_STORAGE )
+		storage_switch_saved(map_id2sd(RFIFOL(fd, 2)), RFIFOB(fd, 8), RFIFOB(fd, 6) != 0);
 }
 
 /**

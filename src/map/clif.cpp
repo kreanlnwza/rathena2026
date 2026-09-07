@@ -3157,6 +3157,22 @@ void clif_equiplist( map_session_data *sd ){
 }
 
 void clif_storagelist( map_session_data* sd, const struct item* items, int32 items_length, const char *storename ){
+#if PACKETVER_MAIN_NUM >= 20260715
+	// The normal storage window must exist before the inventory-end packet.
+	// Client 0x0b08 no longer opens inventory type 2; 0x00f2 opens it too late.
+	if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 ){
+		// Test tabs are available only to the local administrator group.
+		PACKET_ZC_STORAGE_TABS_2026 tabs{};
+		tabs.packetType = HEADER_ZC_STORAGE_TABS_2026;
+		tabs.normalTabs = sd->group_id == 99 && storage_exists(1) && storage_exists(2) ? 3 : 1;
+		clif_send( &tabs, sizeof(tabs), sd, SELF );
+		PACKET_ZC_STORAGE_OPEN_2026 packet{};
+		packet.packetType = HEADER_ZC_STORAGE_OPEN_2026;
+		packet.storageId = sd->state.storage_flag == 3 ? sd->premiumStorage.stor_id + 1 : 1;
+		packet.result = 0;
+		clif_send( &packet, sizeof(packet), sd, SELF );
+	}
+#endif
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 	e_inventory_type type = INVTYPE_STORAGE;
 
@@ -11627,13 +11643,17 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 		return;
 	}
 
-	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
+	// Modern clients use 0x0be9 with the emotion byte at offset 4.
+	// Keep legacy 0x00bf support and the same validation for both formats.
+	// Protocol reference: rAthena/rathena#10067 [sofiaisha].
+	const uint8 requested_emotion = RFIFOB( fd,
+		RFIFOW( fd, 0 ) == HEADER_CZ_REQ_EMOTION_EXPANSION ? 4 : 2 );
 
-	if( p->emotion_type >= ET_MAX ){
+	if( requested_emotion >= ET_MAX ){
 		return;
 	}
 	
-	emotion_type emoticon = static_cast<emotion_type>( p->emotion_type );
+	emotion_type emoticon = static_cast<emotion_type>( requested_emotion );
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
 		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
@@ -13724,6 +13744,23 @@ void clif_parse_MoveFromKafraToCart(int32 fd, map_session_data *sd){
 
 /// Request to close storage (CZ_CLOSE_STORE).
 /// 00f7
+#if PACKETVER_MAIN_NUM >= 20260715
+/// 0x0c72 selects a 1-based normal storage tab. Test mapping: 1->0, 2->1, 3->2.
+void clif_parse_StorageSelect2026(int32 fd, map_session_data *sd)
+{
+	const auto* packet = reinterpret_cast<const PACKET_CZ_STORAGE_SELECT_2026*>(RFIFOP(fd, 0));
+	const uint16 tab = packet->storageId;
+	if( sd->group_id != 99 || tab < 1 || tab > 3 || !storage_exists(tab - 1) )
+		return;
+	if( sd->state.storage_flag != 1 && sd->state.storage_flag != 3 )
+		return;
+	const uint16 current = sd->state.storage_flag == 1 ? 1 : sd->premiumStorage.stor_id + 1;
+	if( tab == current )
+		return;
+	storage_switch_tab(sd, tab);
+}
+#endif
+
 void clif_parse_CloseKafra(int32 fd, map_session_data *sd)
 {
 	if( sd->state.storage_flag == 1 )

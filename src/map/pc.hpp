@@ -486,6 +486,8 @@ public:
 
 	// Item Storages
 	struct s_storage storage, premiumStorage;
+	uint16 storage_pending_tab = 0;
+	uint8 storage_pending_source = 0;
 	struct s_storage inventory;
 	struct s_storage cart;
 

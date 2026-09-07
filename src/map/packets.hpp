@@ -2036,6 +2036,34 @@ struct PACKET_CZ_REQ_EMOTION_EXPANSION{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_EMOTION_EXPANSION, 0xbe9);
 
+// kRO MAIN storage-tab release: 2026-07-15 (notice seq=8277).
+// Release-date gate; first pre-release executable build is not established.
+// Wire layouts verified against the 2026-09 client.
+// Older clients retain the legacy storage protocol.
+#if PACKETVER_MAIN_NUM >= 20260715
+struct PACKET_ZC_STORAGE_OPEN_2026 {
+	int16 packetType;
+	uint16 storageId;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_STORAGE_OPEN_2026, 0xc73);
+struct PACKET_ZC_STORAGE_TABS_2026 {
+	int16 packetType;
+	uint16 reserved;
+	uint16 normalTabs;
+	uint16 specialTabs;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_STORAGE_TABS_2026, 0xc71);
+struct PACKET_CZ_STORAGE_SELECT_2026 {
+	int16 packetType;
+	uint16 storageId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_STORAGE_SELECT_2026, 0xc72);
+static_assert(sizeof(PACKET_ZC_STORAGE_OPEN_2026) == 5, "Storage open wire size");
+static_assert(sizeof(PACKET_ZC_STORAGE_TABS_2026) == 8, "Storage tabs wire size");
+static_assert(sizeof(PACKET_CZ_STORAGE_SELECT_2026) == 4, "Storage select wire size");
+#endif
+
 struct PACKET_ZC_DISAPPEAR_ENTRY{
 	int16 packetType;
 	int32 GID;
