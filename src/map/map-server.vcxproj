@@ -202,6 +202,7 @@
     <ClInclude Include="battleground.hpp" />
     <ClInclude Include="buyingstore.hpp" />
     <ClInclude Include="cashshop.hpp" />
+    <ClInclude Include="cash_emotion.hpp" />
     <ClInclude Include="channel.hpp" />
     <ClInclude Include="chat.hpp" />
     <ClInclude Include="chrif.hpp" />
@@ -1497,6 +1498,7 @@
     <ClCompile Include="battleground.cpp" />
     <ClCompile Include="buyingstore.cpp" />
     <ClCompile Include="cashshop.cpp" />
+    <ClCompile Include="cash_emotion.cpp" />
     <ClCompile Include="channel.cpp" />
     <ClCompile Include="chat.cpp" />
     <ClCompile Include="chrif.cpp" />
@@ -5231,6 +5233,13 @@
     <ClCompile Include="skills/thief/weaponcrush.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\common\common.vcxproj">
+      <Project>{F8FD7B1E-8E1C-4CC3-9CD1-2E28F77B6559}</Project>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <GlobalPropertiesToRemove>OutDir</GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

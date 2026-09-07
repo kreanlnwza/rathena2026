@@ -1,0 +1,73 @@
+# Cash Emoji catalog for the verified 2026 MAIN client.
+# Author: V!be Coding [kreanlnwza] AI Assistant (Codex)
+# Licensed under GNU GPL; see LICENCE in the main folder.
+#
+# Id: Nonzero uint16 pack ID from the client CashEmotion Lua tables.
+# Currency: Item AegisName (default Nyangvine_Fruit / Catnip).
+#   Numeric item IDs remain supported for existing import overrides.
+# Price: 1..255; must match the client's displayed price.
+# Registry: Unique numeric account variable. Keep existing keys to preserve
+#   purchases; renaming a key does not migrate old entitlements.
+# Emotions: ET_* constants exported from src/map/clif.hpp through
+#   src/map/script_constants.hpp, including variants that reuse basic emotions.
+#   Reserved mute ID 34 is not permitted.
+#
+# Override fields in db/import/cash_emotion_db.yml, then @reloadcashemotiondb.
+# A rejected row rejects the reload and retains the previous active catalog.
+# Names, artwork and displayed prices still come from client Lua files.
+# This database does not advertise a catalog to the client.
+
+Header:
+  Type: CASH_EMOTION_DB
+  Version: 1
+
+Body:
+  - Id: 1
+    Currency: Nyangvine_Fruit
+    Price: 10
+    Registry: "#CashEmotionPack1"
+    Emotions:
+      - ET_CUSTOM_1
+      - ET_CUSTOM_2
+      - ET_CUSTOM_3
+      - ET_CUSTOM_4
+      - ET_CUSTOM_5
+      - ET_KIK
+      - ET_GO
+      - ET_COOL
+      - ET_SPARK
+      - ET_QUESTION
+  - Id: 2
+    Currency: Nyangvine_Fruit
+    Price: 10
+    Registry: "#CashEmotionPack2"
+    Emotions:
+      - ET_THANKS
+      - ET_AHA
+      - ET_OK
+      - ET_HUNGRY
+      - ET_SURPRISE
+      - ET_QUESTION
+      - ET_DELIGHT
+      - ET_SCISSOR
+      - ET_ROCK
+      - ET_WRAP
+  - Id: 3
+    Currency: Nyangvine_Fruit
+    Price: 10
+    Registry: "#CashEmotionPack3"
+    Emotions:
+      - ET_SEXY
+      - ET_MERONG
+      - ET_SHY
+      - ET_COMEON
+      - ET_HUNGRY
+      - ET_SPTIME
+      - ET_HPTIME
+      - ET_BIGTHROB
+      - ET_SWEAT
+      - ET_BLABLA
+
+Footer:
+  Imports:
+    - Path: db/import/cash_emotion_db.yml

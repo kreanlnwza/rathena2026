@@ -38,6 +38,7 @@
 #include "intif.hpp"
 #include "itemdb.hpp" // MAX_ITEMGROUP
 #include "cashshop.hpp"
+#include "cash_emotion.hpp"
 #include "log.hpp"
 #include "mail.hpp"
 #include "map.hpp"
@@ -4356,6 +4357,16 @@ ACMD_FUNC(reloadcashdb){
 	return 0;
 }
 
+ACMD_FUNC(reloadcashemotiondb){
+	nullpo_retr(-1, sd);
+	if (!cash_emotion_db.reload()) {
+		clif_displaymessage(fd, "Cash Emoji database reload failed; previous catalog retained. Check the server log.");
+		return -1;
+	}
+	clif_displaymessage(fd, "Cash Emoji database reloaded.");
+	return 0;
+}
+
 ACMD_FUNC(reloaditemdb){
 	nullpo_retr(-1, sd);
 
@@ -4586,6 +4597,7 @@ ACMD_FUNC( reload ){
 		{ "barterdb", atcommand_reloadbarterdb },
 		{ "battleconf", atcommand_reloadbattleconf },
 		{ "cashdb", atcommand_reloadcashdb },
+		{ "cashemotiondb", atcommand_reloadcashemotiondb },
 		{ "instancedb", atcommand_reloadinstancedb },
 		{ "itemdb", atcommand_reloaditemdb },
 		{ "logconf", atcommand_reloadlogconf },
@@ -11605,6 +11617,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(reload,ATCMD_NOSCRIPT),
 		ACMD_DEF(reloaditemdb),
 		ACMD_DEF(reloadcashdb),
+		ACMD_DEF(reloadcashemotiondb),
 		ACMD_DEF(reloadmobdb),
 		ACMD_DEF(reloadskilldb),
 		ACMD_DEFR(reloadscript, ATCMD_NOSCRIPT),

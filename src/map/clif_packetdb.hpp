@@ -2028,6 +2028,14 @@
 
 #if PACKETVER_MAIN_NUM >= 20230705
 	parseable_packet( HEADER_CZ_REQ_EMOTION_EXPANSION, sizeof( struct PACKET_CZ_REQ_EMOTION_EXPANSION ), clif_parse_Emotion, 4 );
+#if PACKETVER_MAIN_NUM >= 20230920
+	parseable_packet(0x0bec, 7, clif_parse_cash_emotion_buy, 2, 4, 6);
+	packet(0x0bea, 10);
+	packet(0x0beb, 7);
+	packet(0x0bed, 9);
+	packet(0x0bee, 5);
+	packet(0x0bf6, -1);
+#endif
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230802

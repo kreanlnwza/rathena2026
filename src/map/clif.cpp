@@ -30,6 +30,7 @@
 #include "battle.hpp"
 #include "battleground.hpp"
 #include "cashshop.hpp"
+#include "cash_emotion.hpp"
 #include "channel.hpp"
 #include "chat.hpp"
 #include "chrif.hpp"
@@ -10759,6 +10760,8 @@ void clif_parse_WantToConnection(int32 fd, map_session_data* sd)
 }
 
 
+#include "cash_emotion.inc"
+
 /// Notification from the client, that it has finished map loading and is about to display player's character (CZ_NOTIFY_ACTORINIT).
 /// 007d
 void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
@@ -10798,6 +10801,9 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	clif_inventorylist(sd);  // inventory list first, otherwise deleted items in pc_checkitem show up as 'unknown item'
 	pc_checkitem(sd);
 	clif_equipswitch_list(sd);
+	#if PACKETVER_MAIN_NUM >= 20230920
+	cash_emotion::initialize(*sd);
+	#endif
 
 	// cart
 	if(pc_iscarton(sd)) {
@@ -11642,6 +11648,15 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 	if( sd == nullptr ){
 		return;
 	}
+	#if PACKETVER_MAIN_NUM >= 20230920
+	if (RFIFOW(fd, 0) == HEADER_CZ_REQ_EMOTION_EXPANSION && RFIFOW(fd, 2) != 0) {
+		clif_parse_cash_emotion_use(fd, sd);
+		return;
+	}
+	// Do not truncate a malformed modern 16-bit emotion into a valid byte.
+	if (RFIFOW(fd, 0) == HEADER_CZ_REQ_EMOTION_EXPANSION && RFIFOW(fd, 4) > 92)
+		return;
+	#endif
 
 	// Modern clients use 0x0be9 with the emotion byte at offset 4.
 	// Keep legacy 0x00bf support and the same validation for both formats.
@@ -11649,7 +11664,14 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 	const uint8 requested_emotion = RFIFOB( fd,
 		RFIFOW( fd, 0 ) == HEADER_CZ_REQ_EMOTION_EXPANSION ? 4 : 2 );
 
-	if( requested_emotion >= ET_MAX ){
+	// Custom ET_* constants are also exported for scripts and YAML. A legacy
+	// request has no pack field and must not bypass paid-pack ownership.
+	#if PACKETVER_MAIN_NUM >= 20230920
+	const uint16 emotion_limit = RFIFOW(fd, 0) == HEADER_CZ_REQ_EMOTION_EXPANSION ? ET_CUSTOM_1 : ET_CLICK_ME;
+	#else
+	const uint16 emotion_limit = ET_CLICK_ME;
+	#endif
+	if( requested_emotion >= emotion_limit ){
 		return;
 	}
 	

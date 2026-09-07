@@ -349,8 +349,29 @@ enum emotion_type {
 	ET_YUT5,
 	ET_YUT6,
 	ET_YUT7,
-	//
-	ET_MAX
+	// Verified CashEmotionListDefine.lua IDs; keep existing values unchanged.
+	ET_CLICK_ME = 88,
+	ET_DAILY_QUEST = 89,
+	ET_EVENT = 90,
+	ET_JOB_QUEST = 91,
+	ET_TRAFFIC_LINE_QUEST = 92,
+	ET_CUSTOM_1 = 93,
+	ET_CUSTOM_2 = 94,
+	ET_CUSTOM_3 = 95,
+	ET_CUSTOM_4 = 96,
+	ET_CUSTOM_5 = 97,
+	ET_CUSTOM_6 = 98,
+	ET_CUSTOM_7 = 99,
+	ET_CUSTOM_8 = 100,
+	ET_CUSTOM_9 = 101,
+	ET_CUSTOM_10 = 102,
+	ET_CUSTOM_11 = 103,
+	ET_CUSTOM_12 = 104,
+	ET_CUSTOM_13 = 105,
+	ET_CUSTOM_14 = 106,
+	ET_CUSTOM_15 = 107,
+	// Legacy script/monster emotion paths have no Cash Emoji pack field.
+	ET_MAX = 88
 };
 
 enum clr_type : uint8_t 

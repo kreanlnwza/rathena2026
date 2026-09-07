@@ -1158,6 +1158,10 @@ Body:
       - reloadcashshop
     Help: |
       Reload cash shop database.
+  - Command: reloadcashemotiondb
+    Help: |
+      Reload Cash Emoji prices, currency and allowed emotion IDs from cash_emotion_db.yml.
+      Rejected rows retain the previous active catalog. Client Lua data must match.
   - Command: reloadinstancedb
     Help: |
       Reload instance database.
