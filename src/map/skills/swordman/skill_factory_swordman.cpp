@@ -65,12 +65,14 @@
 #include "sacrifice.cpp"
 #include "selfprovoke.cpp"
 #include "servantweapon.cpp"
+#include "servantweaponcleave.cpp"
 #include "servantweapondemolition.cpp"
 #include "servantweaponphantom.cpp"
 #include "servantweaponsign.cpp"
 #include "shieldboomerang.cpp"
 #include "shieldchain.cpp"
 #include "shieldpress.cpp"
+#include "shieldslam.cpp"
 #include "shieldreflect.cpp"
 #include "shieldshooting.cpp"
 #include "shieldspell.cpp"
@@ -131,6 +133,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillServantWeapon>();
 		case DK_SERVANTWEAPON_ATK:
 			return std::make_unique<SkillServantWeaponAttack>();
+		case DK_SERVANT_W_CLEAVE:
+			return std::make_unique<SkillServantWeaponCleave>();
 		case DK_SERVANT_W_DEMOL:
 			return std::make_unique<SkillServantWeaponDemolition>();
 		case DK_SERVANT_W_PHANTOM:
@@ -167,6 +171,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_SHIELD_SHOOTING:
 			return std::make_unique<SkillShieldShooting>();
+		case IG_SHIELD_SLAM:
+			return std::make_unique<SkillShieldSlam>();
 		case IG_ULTIMATE_SACRIFICE:
 			return std::make_unique<SkillUltimateSacrifice>();
 		case KN_AUTOCOUNTER:

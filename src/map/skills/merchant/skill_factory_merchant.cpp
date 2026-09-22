@@ -80,12 +80,14 @@
 #include "mixcooking.cpp"
 #include "mysterypowder.cpp"
 #include "neutralbarrier.cpp"
+#include "overdriveprotocol.cpp"
 #include "pilebunker.cpp"
 #include "plantcultivation.cpp"
 #include "powerfulswing.cpp"
 #include "powerswing.cpp"
 #include "powerthrust.cpp"
 #include "preparepotion.cpp"
+#include "rampantvine.cpp"
 #include "repair.cpp"
 #include "rushquake.cpp"
 #include "rushstrike.cpp"
@@ -183,6 +185,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillMayhemicThorns>();
 		case BO_MYSTERY_POWDER:
 			return std::make_unique<SkillMysteryPowder>();
+		case BO_RAMPANT_VINE:
+			return std::make_unique<SkillRampantVine>();
 		case BO_RESEARCHREPORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case BO_THE_WHOLE_PROTECTION:
@@ -289,6 +293,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillMightySmash>();
 		case MT_M_MACHINE:
 			return std::make_unique<SkillManufactureMachine>();
+		case MT_OVERDRIVE_PROTOCAL:
+			return std::make_unique<SkillOverdriveProtocol>();
 		case MT_POWERFUL_SWING:
 			return std::make_unique<SkillPowerfulSwing>();
 		case MT_RUSH_QUAKE:
