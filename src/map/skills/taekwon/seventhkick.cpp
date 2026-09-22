@@ -6,6 +6,7 @@
 
 #include <config/core.hpp>
 
+#include "map/clif.hpp"
 #include "map/status.hpp"
 
 SkillSeventhKick::SkillSeventhKick() : WeaponSkillImpl(SKE_SEVENTH_KICK) {
@@ -19,10 +20,12 @@ void SkillSeventhKick::castendDamageId(block_list* src, block_list* target, uint
 		// cast starts. Consuming it here also prevents a miss from retaining it.
 		status_change_end(src, SC_SEVENTH_KICK_MAX);
 		status_change_end(src, SC_SEVENTH_KICK_SKILLORB);
+		clif_skill_nodamage(src, *target, SKE_SEVENTH_KICK_S, skill_lv);
 		skill_attack(skill_get_type(SKE_SEVENTH_KICK_S), src, src, target, SKE_SEVENTH_KICK_S, skill_lv, tick, flag);
 		return;
 	}
 
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
 
@@ -56,6 +59,11 @@ void SkillSeventhKick::applyCounterAdditionalEffects(block_list* src, block_list
 }
 
 SkillSeventhKickS::SkillSeventhKickS() : WeaponSkillImpl(SKE_SEVENTH_KICK_S) {
+}
+
+void SkillSeventhKickS::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
 
 void SkillSeventhKickS::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32 mflag) const {
