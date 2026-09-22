@@ -75,7 +75,7 @@ void SkillInfiltrate::castendDamageId(block_list *src, block_list *target, uint1
 			dy += rnd() % 3 - 1;
 		}
 
-		if (sug->skill_id == SS_SHINKIROU)
+		if (sug->skill_id == SS_SHINKIROU || sug->skill_id == SS_SHINKIROU_GUNSHU)
 			skill_unit_move_unit_group(sg, src->m, dx,dy);
 	}
 

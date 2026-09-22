@@ -6,17 +6,10 @@
 
 #include <config/core.hpp>
 
-#include "map/clif.hpp"
-#include "map/map.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillFieldOfKirin::SkillFieldOfKirin() : SkillImplRecursiveDamageSplash(SOA_FIELD_OF_KIRIN) {
-}
-
-void SkillFieldOfKirin::castendNoDamageId(block_list* src, block_list*, uint16 skill_lv, t_tick tick, int32& flag) const {
-	clif_skill_nodamage(src, *src, getSkillId(), skill_lv);
-	map_foreachinrange(skill_area_sub, src, skill_get_splash(getSkillId(), skill_lv), BL_CHAR, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 }
 
 void SkillFieldOfKirin::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32 mflag) const {
