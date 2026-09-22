@@ -1,6 +1,6 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-// Author: OpenAI Codex
+// Author: V!be Coding [kreanlnwza] AI Assistant (GPT-6)
 
 #include "rampantvine.hpp"
 
