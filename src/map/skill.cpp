@@ -4210,7 +4210,7 @@ void skill_reveal_trap_inarea(block_list *src, int32 range, int32 x, int32 y) {
 }
 
 /** Count living mirages from either summon skill.
- * @author V!be Coding [kreanlnwza] AI Assistant (GPT-6)
+ * @author kreanlnwza Ai assistant Code [Astra].
  */
 int32 skill_count_mirages(const block_list& src) {
 	const unit_data* ud = unit_bl2ud(&src);
@@ -4226,7 +4226,7 @@ int32 skill_count_mirages(const block_list& src) {
 }
 
 /** Use the same inferred three-cell layout for validation and placement.
- * @author V!be Coding [kreanlnwza] AI Assistant (GPT-6)
+ * @author kreanlnwza Ai assistant Code [Astra].
  */
 bool skill_get_mirage_swarm_position(const block_list& src, uint8 index, int16& x, int16& y) {
 	static constexpr std::array<uint8, 3> offsets = { 4, 2, 6 };
@@ -8402,7 +8402,7 @@ int32 skill_check_bl_sc(block_list *target, va_list ap) {
 }
 
 /** Recheck transient prerequisites at both cast boundaries, before paying resources.
- * @author V!be Coding [kreanlnwza] AI Assistant (GPT-6)
+ * @author kreanlnwza Ai assistant Code [Astra].
  */
 static bool skill_check_2026_condition(map_session_data& sd, uint16 skill_id) {
 	const status_change& sc = sd.sc;
