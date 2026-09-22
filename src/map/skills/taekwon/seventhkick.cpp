@@ -15,6 +15,10 @@ void SkillSeventhKick::castendDamageId(block_list* src, block_list* target, uint
 	const status_change* sc = status_get_sc(src);
 
 	if (sc != nullptr && sc->hasSCE(SC_SEVENTH_KICK_MAX)) {
+		// The official demonstration clears the completed orbit as the enhanced
+		// cast starts. Consuming it here also prevents a miss from retaining it.
+		status_change_end(src, SC_SEVENTH_KICK_MAX);
+		status_change_end(src, SC_SEVENTH_KICK_SKILLORB);
 		skill_attack(skill_get_type(SKE_SEVENTH_KICK_S), src, src, target, SKE_SEVENTH_KICK_S, skill_lv, tick, flag);
 		return;
 	}
@@ -34,9 +38,16 @@ void SkillSeventhKick::applyAdditionalEffects(block_list* src, block_list*, uint
 	if (dmg_lv == ATK_FLEE)
 		return;
 
-	// Primary client data exposes the timed satellite state, but not the
-	// server-side transition that promotes it to SC_SEVENTH_KICK_MAX.
-	sc_start(src, src, SC_SEVENTH_KICK_SKILLORB, 100, 1, skill_get_time(getSkillId(), skill_lv));
+	const status_change* sc = status_get_sc(src);
+	const status_change_entry* sce = sc != nullptr ? sc->getSCE(SC_SEVENTH_KICK_SKILLORB) : nullptr;
+	const int32 satellites = min(7, (sce != nullptr ? sce->val1 : 0) + 1);
+	const t_tick duration = skill_get_time(getSkillId(), skill_lv);
+
+	// The official demonstration shows each successful normal hit lighting one
+	// satellite and promoting the seventh to the completed-orbit state.
+	sc_start(src, src, SC_SEVENTH_KICK_SKILLORB, 100, satellites, duration);
+	if (satellites == 7)
+		sc_start(src, src, SC_SEVENTH_KICK_MAX, 100, 1, duration);
 }
 
 SkillSeventhKickS::SkillSeventhKickS() : WeaponSkillImpl(SKE_SEVENTH_KICK_S) {
