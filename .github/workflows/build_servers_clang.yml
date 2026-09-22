@@ -26,6 +26,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'ci-skip')"
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
           # The ubuntu-latest label currently points to ubuntu-24.04.
           # Available: ubuntu-24.04, ubuntu-22.04
@@ -35,6 +36,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up swap space
+        run: |
+          sudo fallocate -l 8G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=8192
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
 
       - name: Set up Clang
         uses: egor-tensin/setup-clang@v1
@@ -51,4 +59,4 @@ jobs:
         run: make clean
 
       - name: Command - make all
-        run: make all
+        run: make -j$(nproc) all
