@@ -27,4 +27,5 @@ set MYSQL_PWD=%DB_ROOTPW%
 %MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\mob_skill_db_re.sql"
 %MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\mob_skill_db2_re.sql"
 %MYSQL% -u %DB_ROOT% %DB_NAME% -e "source sql-files\roulette_default_data.sql"
-%MYSQL% -u %DB_ROOT% -e "GRANT SELECT,INSERT,UPDATE,DELETE ON %DB_NAME%.* TO '%DB_USER%'@'%DB_HOST%' IDENTIFIED BY '%DB_USERPW%';"
+%MYSQL% -u %DB_ROOT% -e "CREATE USER IF NOT EXISTS '%DB_USER%'@'%DB_HOST%' IDENTIFIED BY '%DB_USERPW%';"
+%MYSQL% -u %DB_ROOT% -e "GRANT SELECT,INSERT,UPDATE,DELETE ON %DB_NAME%.* TO '%DB_USER%'@'%DB_HOST%';"
