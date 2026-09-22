@@ -41,6 +41,8 @@ the primary client has Elemental Integration duration 240 seconds and cooldown
 - Mirage Swarm reuses the `SHINKIROU` unit with three active instances.
 - Nature Harmony requires Truth of Ice, Truth of Wind, and Truth of Earth at
   level 1.
+- Field of Kirin is a range-9 single-target cast whose damage is centered on
+  the caster; the Korean description contains both facts explicitly.
 - Breaking Limit raises Wind Cutter Turbo damage by 120% and High Magnum Break
   damage by 100%; the existing status lasts 300 seconds.
 - The current rebalance changes Servant Weapon Sign into a critical weapon hit
@@ -49,18 +51,27 @@ the primary client has Elemental Integration duration 240 seconds and cooldown
 ## Unknown or server-derived behavior
 
 The client descriptions name Base Level and trait-stat scaling but do not encode
-their numeric coefficients or Base Level normalization. Those coefficients must
-come from an official server formula or a verified packet/runtime observation;
-they are not invented here.
+their numeric coefficients or Base Level normalization. The main-class handlers
+retain independently supported ratio/mastery terms and omit an unsupported
+trait coefficient. The expanded-class handlers currently use the rAthena-style
+inference `ratio += 5 * POW/CON/SPL` followed by `BaseLevel / 100`; that choice
+is implementation-derived and was not recovered from this GRF.
 
 The GRF also does not define:
 
 - the satellite count or transition rule between `EFST_SEVENTH_KICK_SKILLORB`
-  and `EFST_SEVENTH_KICK_MAX`;
+  and `EFST_SEVENTH_KICK_MAX`. At this commit the enhanced transition is not
+  implemented and is unreachable in ordinary play, pending stronger external
+  evidence from the separately requested research;
 - Mirage Swarm placement offsets, collision rules, or obstacle handling;
 - a mapping from the four Primed attack levels to the four older trap levels;
 - a duration for the Thundering charge added by Nature Rage under Truth of Wind;
 - numeric POW, CON, or SPL coefficients mentioned only qualitatively.
+
+Broken Heaven says to heal 10% of final damage, capped at 50,000, but does not
+state whether an area hit shares one cap or applies it per damaged target. The
+current per-target callback applies the cap to each damaged target; this remains
+a server-behavior ambiguity rather than a client-proven aggregation rule.
 
 `skilltreeview` and `skillinfolist` show the four Primed attacks as level-5
 learnable skills gated by Primed Trap level 1. Granting temporary levels copied
@@ -79,4 +90,13 @@ Example manifest rebuild after extraction:
 ```powershell
 python tools/skill_2026/build_manifest.py `
   "Z:\New folder\skill2026-primary-out"
+```
+
+After source integration, validate DB uniqueness, all 38 enum mappings,
+`MAX_SKILL` capacity, the eight SC/EFST exports, every new skill status
+reference, client arrays, and tree prerequisites:
+
+```powershell
+python tools/skill_2026/validate_manifest.py --source-root .
+python -m unittest tools/skill_2026/test_validate_manifest.py
 ```

@@ -49370,6 +49370,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
+      Critical: true
     Range: 7
     Hit: Multi_Hit
     HitCount: 2
@@ -49538,7 +49539,7 @@ Body:
     Requires:
       SpCost: 200
       ApCost: 20
-    Status: ElementalIntegration
+    Status: Elemental_Integration
   - Id: 6616
     Name: EM_BURNING_FLAME
     Description: Burning Flame
@@ -49746,6 +49747,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
+      Critical: true
     Range: 2
     Hit: Multi_Hit
     HitCount: 3
@@ -49765,7 +49767,7 @@ Body:
           Amount: 50
         - Level: 5
           Amount: 60
-    Status: SecondBrand
+    Status: Second_Brand
   - Id: 6624
     Name: WH_FRAGMENT_BOLT
     Description: Fragment Bolt
@@ -50220,7 +50222,7 @@ Body:
         - Level: 5
           Amount: 85
       ApCost: 10
-    Status: Seventh_Kick_Skillorb
+    Status: Seventh_Kick_SkillOrb
   - Id: 6636
     Name: SKE_SEVENTH_KICK_S
     Description: Seventh Kick (All Satellites)
