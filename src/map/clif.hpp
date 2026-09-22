@@ -374,6 +374,14 @@ enum emotion_type {
 	ET_MAX = 88
 };
 
+enum emotion_pack_type : uint16 {
+	EPT_BASIC = 0,
+	EPT_21ST_ANNIVERSARY = 1,
+	EPT_2023CHUSEOK = 2,
+	EPT_2023THXGIVING = 3,
+	EPT_MAX,
+};
+
 enum clr_type : uint8_t 
 {
 	CLR_OUTSIGHT = 0,

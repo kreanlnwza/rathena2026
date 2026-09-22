@@ -18,9 +18,11 @@ are 2023-08-29 and 2023-11-01; both precede this local 2026 client deployment.
 
 ## Behavior
 
-Catalog entries are loaded from `db/cash_emotion_db.yml` and optional
-`db/import/cash_emotion_db.yml`. Edit `Id`, `Currency`, `Price`, `Registry`
+Catalog entries are routed by `db/cash_emotion_db.yml` to
+`db/re/cash_emotion_db.yml` or `db/pre-re/cash_emotion_db.yml`, followed by
+the optional `db/import/cash_emotion_db.yml`. Edit `Id`, `Currency`, `Price`, `Registry`
 and `Emotions`, then run `@reloadcashemotiondb`; catalog edits need no rebuild.
+The default Pre-Renewal catalog is empty because `Nyangvine_Fruit` is Renewal-only.
 `Currency` accepts an item AegisName such as `Nyangvine_Fruit`; numeric IDs
 remain compatible with existing overrides. When omitted on a new pack, the
 default is `ITEMID_NYANGVINE_FRUIT` from `itemdb.hpp` (6909). Unknown names

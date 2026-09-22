@@ -1,0 +1,54 @@
+# Cash Emoji catalog for Renewal mode.
+# Author: V!be Coding [kreanlnwza] AI Assistant (Codex)
+# Licensed under GNU GPL; see LICENCE in the main folder.
+
+Header:
+  Type: CASH_EMOTION_DB
+  Version: 1
+
+Body:
+  - Id: 1 # EPT_21ST_ANNIVERSARY
+    Currency: Nyangvine_Fruit
+    Price: 10
+    Registry: "#CashEmotionPack1"
+    Emotions:
+      - ET_CUSTOM_1
+      - ET_CUSTOM_2
+      - ET_CUSTOM_3
+      - ET_CUSTOM_4
+      - ET_CUSTOM_5
+      - ET_KIK
+      - ET_GO
+      - ET_COOL
+      - ET_SPARK
+      - ET_QUESTION
+  - Id: 2 # EPT_2023CHUSEOK
+    Currency: Nyangvine_Fruit
+    Price: 10
+    Registry: "#CashEmotionPack2"
+    Emotions:
+      - ET_THANKS
+      - ET_AHA
+      - ET_OK
+      - ET_HUNGRY
+      - ET_SURPRISE
+      - ET_QUESTION
+      - ET_DELIGHT
+      - ET_SCISSOR
+      - ET_ROCK
+      - ET_WRAP
+  - Id: 3 # EPT_2023THXGIVING
+    Currency: Nyangvine_Fruit
+    Price: 10
+    Registry: "#CashEmotionPack3"
+    Emotions:
+      - ET_SEXY
+      - ET_MERONG
+      - ET_SHY
+      - ET_COMEON
+      - ET_HUNGRY
+      - ET_SPTIME
+      - ET_HPTIME
+      - ET_BIGTHROB
+      - ET_SWEAT
+      - ET_BLABLA

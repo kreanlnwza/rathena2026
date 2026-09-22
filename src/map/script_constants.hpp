@@ -3841,6 +3841,12 @@
 	export_constant(ET_CUSTOM_14);
 	export_constant(ET_CUSTOM_15);
 
+	/* emotion pack types (cash emotions) */
+	export_constant(EPT_BASIC);
+	export_constant(EPT_21ST_ANNIVERSARY);
+	export_constant(EPT_2023CHUSEOK);
+	export_constant(EPT_2023THXGIVING);
+
 	/* send targets */
 	export_constant(ALL_CLIENT);
 	export_constant(ALL_SAMEMAP);

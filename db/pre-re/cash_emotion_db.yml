@@ -1,0 +1,11 @@
+# Cash Emoji catalog for Pre-Renewal mode.
+# Nyangvine_Fruit is Renewal-only, so no packs are enabled by default.
+# Add mode-appropriate packs here or override them in db/import/cash_emotion_db.yml.
+# Author: V!be Coding [kreanlnwza] AI Assistant (Codex)
+# Licensed under GNU GPL; see LICENCE in the main folder.
+
+Header:
+  Type: CASH_EMOTION_DB
+  Version: 1
+
+Body: []

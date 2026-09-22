@@ -11,6 +11,10 @@
 // Author: V!be Coding [kreanlnwza] AI Assistant (Codex)
 CashEmotionDatabase cash_emotion_db;
 
+bool CashEmotionDatabase::isOptionalFile(const std::string& path) const {
+	return path == std::string(db_path) + "/import/cash_emotion_db.yml";
+}
+
 const std::string CashEmotionDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/cash_emotion_db.yml";
 }

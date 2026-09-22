@@ -62,6 +62,7 @@ protected:
 	virtual void loadingFinished();
 	// Optional observer for strict, staged databases; legacy load behavior stays unchanged.
 	virtual void onLoadFailure() {}
+	virtual bool isOptionalFile(const std::string& path) const { return false; }
 
 public:
 	YamlDatabase( const std::string& type_, uint16 version_, uint16 minimumVersion_ ){

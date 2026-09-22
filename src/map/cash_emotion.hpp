@@ -18,6 +18,7 @@ private:
 	bool invalid_rows = false;
 	uint64 parsePack(const ryml::NodeRef& node);
 	void onLoadFailure() override { this->invalid_rows = true; }
+	bool isOptionalFile(const std::string& path) const override;
 public:
 	CashEmotionDatabase() : TypesafeYamlDatabase("CASH_EMOTION_DB", 1) {}
 	const std::string getDefaultLocation() override;
