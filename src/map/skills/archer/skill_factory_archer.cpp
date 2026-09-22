@@ -46,8 +46,10 @@
 #include "flasher.cpp"
 #include "focusballet.cpp"
 #include "focusedarrowstrike.cpp"
+#include "fragmentbolt.cpp"
 #include "freezingtrap.cpp"
 #include "friggssong.cpp"
+#include "fuguedesfleches.cpp"
 #include "galestorm.cpp"
 #include "geffenianocturn.cpp"
 #include "gloomyday.cpp"
@@ -86,6 +88,7 @@
 #include "phantasmicarrow.cpp"
 #include "poemofthenetherworld.cpp"
 #include "powerchord.cpp"
+#include "primedelementaltrap.cpp"
 #include "pronmarch.cpp"
 #include "removetrap.cpp"
 #include "retrospection.cpp"
@@ -300,6 +303,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillWindWalker>();
 		case TR_AIN_RHAPSODY:
 			return std::make_unique<SkillAinRhapsody>();
+		case TR_FUGUE_DES_FLECHES:
+			return std::make_unique<SkillFugueDesFleches>();
 		case TR_GEF_NOCTURN:
 			return std::make_unique<SkillGeffeniaNocturn>();
 		case TR_JAWAII_SERENADE:
@@ -344,6 +349,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillDeepBlindTrap>();
 		case WH_FLAMETRAP:
 			return std::make_unique<SkillFlameTrap>();
+		case WH_FRAGMENT_BOLT:
+			return std::make_unique<SkillFragmentBolt>();
 		case WH_GALESTORM:
 			return std::make_unique<SkillGaleStorm>();
 		case WH_HAWKBOOMERANG:
@@ -352,6 +359,13 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillHawkRush>();
 		case WH_HAWK_M:
 			return std::make_unique<SkillHawkMastery>();
+		case WH_PRIMED_TRAP:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WH_SOLIDTRAP_ATK:
+		case WH_DEEPBLINDTRAP_ATK:
+		case WH_SWIFTTRAP_ATK:
+		case WH_FLAMETRAP_ATK:
+			return std::make_unique<SkillPrimedElementalTrap>(skill_id);
 		case WH_SOLIDTRAP:
 			return std::make_unique<SkillSolidTrap>();
 		case WH_SWIFTTRAP:

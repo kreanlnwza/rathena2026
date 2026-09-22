@@ -29,6 +29,7 @@
 #include "falconssoul.cpp"
 #include "fallingstar.cpp"
 #include "feelingthesunmoonandstars.cpp"
+#include "fieldofkirin.cpp"
 #include "flashkick.cpp"
 #include "fullmoonkick.cpp"
 #include "golemssoul.cpp"
@@ -50,6 +51,7 @@
 #include "risingmoon.cpp"
 #include "risingsun.cpp"
 #include "run.cpp"
+#include "seventhkick.cpp"
 #include "sevenwind.cpp"
 #include "shadowssoul.cpp"
 #include "skymoon.cpp"
@@ -178,6 +180,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillRisingMoon>();
 		case SKE_RISING_SUN:
 			return std::make_unique<SkillRisingSun>();
+		case SKE_SEVENTH_KICK:
+			return std::make_unique<SkillSeventhKick>();
+		case SKE_SEVENTH_KICK_S:
+			return std::make_unique<SkillSeventhKickS>();
 		case SKE_SKY_MOON:
 			return std::make_unique<SkillSkyMoon>();
 		case SKE_SKY_SUN:
@@ -248,6 +254,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillCircleOfDirectionsAndElementals>();
 		case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 			return std::make_unique<SkillExorcismOfMaliciousSoul>();
+		case SOA_FIELD_OF_KIRIN:
+			return std::make_unique<SkillFieldOfKirin>();
 		case SOA_SOUL_GATHERING:
 			return std::make_unique<SkillSoulGathering>();
 		case SOA_SOUL_OF_HEAVEN_AND_EARTH:

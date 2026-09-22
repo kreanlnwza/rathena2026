@@ -50,9 +50,11 @@
 #include "icetotem.cpp"
 #include "lowflight.cpp"
 #include "nastyslash.cpp"
+#include "naturerage.cpp"
 #include "natureprotection.cpp"
 #include "nomercyclaw.cpp"
 #include "pinionshot.cpp"
+#include "plumepiercer.cpp"
 #include "primalclaw.cpp"
 #include "pulseofmadness.cpp"
 #include "quillspear.cpp"
@@ -234,8 +236,12 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 			return std::make_unique<SkillGravityHole>();
 		case AT_NATURE_HARMONY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case AT_NATURE_RAGE:
+			return std::make_unique<SkillNatureRage>();
 		case AT_PINION_SHOT:
 			return std::make_unique<SkillPinionShot>();
+		case AT_PLUME_PIERCER:
+			return std::make_unique<SkillPlumePiercer>();
 		case AT_PRIMAL_CLAW:
 			return std::make_unique<SkillPrimalClaw>();
 		case AT_PULSE_OF_MADNESS:
