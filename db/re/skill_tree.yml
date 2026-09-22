@@ -6725,6 +6725,11 @@ Body:
         Requires:
           - Name: DK_HACKANDSLASHER
             Level: 7
+      - Name: DK_SERVANT_W_CLEAVE
+        MaxLevel: 5
+        Requires:
+          - Name: DK_SERVANTWEAPON
+            Level: 3
   - Job: Meister
     Inherit:
       Novice: true
@@ -6827,6 +6832,13 @@ Body:
         Requires:
           - Name: MT_TRIPLE_LASER
             Level: 3
+      - Name: MT_OVERDRIVE_PROTOCAL
+        MaxLevel: 4
+        Requires:
+          - Name: MT_A_MACHINE
+            Level: 3
+          - Name: MT_ABR_M
+            Level: 1
   - Job: Shadow_Cross
     Inherit:
       Novice: true
@@ -6917,6 +6929,11 @@ Body:
           - Name: GC_WEAPONBLOCKING
             Level: 3
           - Name: SHC_DANCING_KNIFE
+            Level: 3
+      - Name: SHC_VENOMIGNITION
+        MaxLevel: 5
+        Requires:
+          - Name: SHC_SHADOW_SENSE
             Level: 3
   - Job: Arch_Mage
     Inherit:
@@ -7031,6 +7048,11 @@ Body:
             Level: 2
           - Name: AG_CLIMAX
             Level: 1
+      - Name: AG_WRAITH_DASH
+        MaxLevel: 3
+        Requires:
+          - Name: AG_ENERGY_CONVERSION
+            Level: 5
   - Job: Cardinal
     Inherit:
       Novice: true
@@ -7147,6 +7169,16 @@ Body:
             Level: 5
           - Name: CD_FRAMEN
             Level: 5
+      - Name: CD_PUNITIO
+        MaxLevel: 5
+        Requires:
+          - Name: CD_MACE_BOOK_M
+            Level: 1
+      - Name: CD_LEX_EXPIATRIX
+        MaxLevel: 5
+        Requires:
+          - Name: CD_FRAMEN
+            Level: 5
   - Job: Windhawk
     Inherit:
       Novice: true
@@ -7227,6 +7259,42 @@ Body:
             Level: 3
           - Name: WH_HAWKRUSH
             Level: 3
+      - Name: WH_FRAGMENT_BOLT
+        MaxLevel: 5
+        Requires:
+          - Name: WH_CRESCIVE_BOLT
+            Level: 3
+      - Name: WH_PRIMED_TRAP
+        MaxLevel: 1
+        Requires:
+          - Name: WH_DEEPBLINDTRAP
+            Level: 3
+          - Name: WH_SWIFTTRAP
+            Level: 3
+          - Name: WH_SOLIDTRAP
+            Level: 3
+          - Name: WH_FLAMETRAP
+            Level: 3
+      - Name: WH_SOLIDTRAP_ATK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_PRIMED_TRAP
+            Level: 1
+      - Name: WH_DEEPBLINDTRAP_ATK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_PRIMED_TRAP
+            Level: 1
+      - Name: WH_SWIFTTRAP_ATK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_PRIMED_TRAP
+            Level: 1
+      - Name: WH_FLAMETRAP_ATK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_PRIMED_TRAP
+            Level: 1
   - Job: Imperial_Guard
     Inherit:
       Novice: true
@@ -7323,6 +7391,11 @@ Body:
           - Name: IG_SPEAR_SWORD_M
             Level: 7
           - Name: IG_GUARD_STANCE
+            Level: 3
+      - Name: IG_SHIELD_SLAM
+        MaxLevel: 5
+        Requires:
+          - Name: IG_ATTACK_STANCE
             Level: 3
   - Job: Biolo
     Inherit:
@@ -7424,6 +7497,11 @@ Body:
         MaxLevel: 5
         Requires:
           - Name: BO_MYSTERY_POWDER
+            Level: 3
+      - Name: BO_RAMPANT_VINE
+        MaxLevel: 5
+        Requires:
+          - Name: BO_BIONICS_M
             Level: 3
   - Job: Abyss_Chaser
     Inherit:
@@ -7532,6 +7610,13 @@ Body:
           - Name: ABC_MAGIC_SWORD_M
             Level: 5
           - Name: ABC_FROM_THE_ABYSS
+            Level: 3
+      - Name: ABC_PHANTOM_DAGGER
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 5
+          - Name: ABC_ABYSS_DAGGER
             Level: 3
   - Job: Elemental_Master
     Inherit:
@@ -7675,6 +7760,19 @@ Body:
             Level: 3
           - Name: EM_VENOM_SWAMP
             Level: 3
+      - Name: EM_ELEMENTAL_INTEGRATION
+        MaxLevel: 5
+        Requires:
+          - Name: EM_SUMMON_ELEMENTAL_SERPENS
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_TERREMOTUS
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_PROCELLA
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_DILUVIO
+            Level: 1
+          - Name: EM_SUMMON_ELEMENTAL_ARDOR
+            Level: 1
   - Job: Inquisitor
     Inherit:
       Novice: true
@@ -7779,6 +7877,15 @@ Body:
         Requires:
           - Name: IQ_MASSIVE_F_BLASTER
             Level: 7
+      - Name: IQ_BROKENHEAVEN
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_THIRD_PUNISH
+            Level: 1
+          - Name: IQ_THIRD_CONSECRATION
+            Level: 1
+          - Name: IQ_THIRD_FLAME_BOMB
+            Level: 1
   - Job: Troubadour
     Inherit:
       Novice: true
@@ -7868,6 +7975,11 @@ Body:
         Requires:
           - Name: TR_METALIC_FURY
             Level: 3
+      - Name: TR_FUGUE_DES_FLECHES
+        MaxLevel: 5
+        Requires:
+          - Name: TR_RHYTHMSHOOTING
+            Level: 3
   - Job: Trouvere
     Inherit:
       Novice: true
@@ -7956,6 +8068,11 @@ Body:
         MaxLevel: 5
         Requires:
           - Name: TR_METALIC_FURY
+            Level: 3
+      - Name: TR_FUGUE_DES_FLECHES
+        MaxLevel: 5
+        Requires:
+          - Name: TR_RHYTHMSHOOTING
             Level: 3
   - Job: Windhawk2
     Inherit:
@@ -8103,6 +8220,17 @@ Body:
             Level: 5
           - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
             Level: 5
+      - Name: SOA_FIELD_OF_KIRIN
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+            Level: 1
+          - Name: SOA_TALISMAN_OF_WHITE_TIGER
+            Level: 1
+          - Name: SOA_TALISMAN_OF_RED_PHOENIX
+            Level: 1
+          - Name: SOA_TALISMAN_OF_BLACK_TORTOISE
+            Level: 1
   - Job: Night_Watch
     Inherit:
       Novice: true
@@ -8210,6 +8338,11 @@ Body:
             Level: 3
           - Name: NW_WILD_FIRE
             Level: 3
+      - Name: NW_TACTICAL_REPOSITIONING
+        MaxLevel: 1
+        Requires:
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
   - Job: Hyper_Novice
     Inherit:
       Novice: true
@@ -8303,6 +8436,16 @@ Body:
             Level: 5
           - Name: HN_SELFSTUDY_SOCERY
             Level: 5
+      - Name: HN_WIND_CUTTER_TURBO
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SHIELD_CHAIN_RUSH
+            Level: 7
+      - Name: HN_HIGH_MAGNUM_BREAK
+        MaxLevel: 10
+        Requires:
+          - Name: HN_DOUBLEBOWLINGBASH
+            Level: 7
   - Job: Spirit_Handler
     Inherit:
       Summoner: true
@@ -8422,6 +8565,20 @@ Body:
             Level: 7
           - Name: SH_HYUN_ROKS_BREEZE
             Level: 5
+      - Name: SH_KI_SUL_AND_CHUL_HO
+        MaxLevel: 1
+        Requires:
+          - Name: SH_COMMUNE_WITH_KI_SUL
+            Level: 1
+          - Name: SH_COMMUNE_WITH_CHUL_HO
+            Level: 1
+      - Name: SH_KI_SUL_AND_HYUN_ROK
+        MaxLevel: 1
+        Requires:
+          - Name: SH_COMMUNE_WITH_KI_SUL
+            Level: 1
+          - Name: SH_COMMUNE_WITH_HYUN_ROK
+            Level: 1
   - Job: Sky_Emperor
     Inherit:
       Novice: true
@@ -8529,6 +8686,11 @@ Body:
             Level: 3
           - Name: SKE_STAR_CANNON
             Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
+      - Name: SKE_SEVENTH_KICK
+        MaxLevel: 5
+        Requires:
           - Name: SKE_ENCHANTING_SKY
             Level: 7
   - Job: Sky_Emperor2
@@ -8648,6 +8810,21 @@ Body:
             Level: 1
           - Name: SS_SHINKIROU
             Level: 1
+      - Name: SS_SHINKIROU_GUNSHU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_NOBORU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGEKIRYU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
   - Job: Shiranui
     Inherit:
       Novice: true
@@ -8758,6 +8935,21 @@ Body:
             Level: 1
           - Name: SS_SHINKIROU
             Level: 1
+      - Name: SS_SHINKIROU_GUNSHU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_NOBORU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGEKIRYU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
   - Job: Druid
     Inherit:
       Novice: true
@@ -9075,6 +9267,10 @@ Body:
         Requires:
           - Name: DR_TRUTH_OF_ICE
             Level: 1
+          - Name: DR_TRUTH_OF_WIND
+            Level: 1
+          - Name: DR_TRUTH_OF_EARTH
+            Level: 1
       - Name: AT_TERRA_HARVEST
         MaxLevel: 10
         Requires:
@@ -9095,6 +9291,16 @@ Body:
         Requires:
           - Name: AT_NATURE_HARMONY
             Level: 5
+      - Name: AT_PLUME_PIERCER
+        MaxLevel: 5
+        Requires:
+          - Name: AT_QUILL_SPEAR
+            Level: 3
+      - Name: AT_NATURE_RAGE
+        MaxLevel: 5
+        Requires:
+          - Name: AT_NATURE_AID
+            Level: 3
   - Job: Baby_Druid
     Inherit:
       Baby: true
