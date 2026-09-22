@@ -20,6 +20,7 @@
 #include "asurastrike.cpp"
 #include "basilica.cpp"
 #include "blazingflameblast.cpp"
+#include "brokenheaven.cpp"
 #include "blessing.cpp"
 #include "bssacramenti.cpp"
 #include "cantocandidus.cpp"
@@ -65,6 +66,7 @@
 #include "laudaagnus.cpp"
 #include "laudaramus.cpp"
 #include "lexdivina.cpp"
+#include "lexexpiatrix.cpp"
 #include "magnificat.cpp"
 #include "magnusexorcismus.cpp"
 #include "massiveflameblaster.cpp"
@@ -73,6 +75,7 @@
 #include "oleumsanctum.cpp"
 #include "oratio.cpp"
 #include "petitio.cpp"
+#include "punitio.cpp"
 #include "pneuma.cpp"
 #include "pneumaticusprocella.cpp"
 #include "powervelocity.cpp"
@@ -207,10 +210,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillEffligo>();
 		case CD_FRAMEN:
 			return std::make_unique<SkillFramen>();
+		case CD_LEX_EXPIATRIX:
+			return std::make_unique<SkillLexExpiatrix>();
 		case CD_MEDIALE_VOTUM:
 			return std::make_unique<SkillMedialeVotum>();
 		case CD_PETITIO:
 			return std::make_unique<SkillPetitio>();
+		case CD_PUNITIO:
+			return std::make_unique<SkillPunitio>();
 		case CD_PNEUMATICUS_PROCELLA:
 			return std::make_unique<SkillPneumaticusProcella>();
 		case CD_PRESENS_ACIES:
@@ -233,6 +240,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillBasilica>();
 		case IQ_BLAZING_FLAME_BLAST:
 			return std::make_unique<SkillBlazingFlameBlast>();
+		case IQ_BROKENHEAVEN:
+			return std::make_unique<SkillBrokenHeaven>();
 		case IQ_EXPOSION_BLASTER:
 			return std::make_unique<SkillExplosionBlaster>();
 		case IQ_FIRM_FAITH:

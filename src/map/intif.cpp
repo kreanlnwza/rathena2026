@@ -1308,7 +1308,7 @@ int32 intif_parse_WisMessage(int32 fd)
 		return 0;
 	}
 	//Success to send whisper.
-	clif_wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-12+2*NAME_LENGTH, gmlvl);
+	clif_wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-(12+2*NAME_LENGTH), gmlvl);
 	intif_wis_reply(id,0);   // success
 	return 1;
 }
@@ -1371,7 +1371,7 @@ int32 mapif_parse_WisToGM(int32 fd)
 	char Wisp_name[NAME_LENGTH];
 	char *message;
 
-	mes_len =  RFIFOW(fd,2) - 8+NAME_LENGTH;
+	mes_len =  RFIFOW(fd,2) - (8+NAME_LENGTH);
 	message = (char *) aMalloc(mes_len+1);
 
 	safestrncpy(Wisp_name, RFIFOCP(fd,4), NAME_LENGTH);
@@ -3436,6 +3436,10 @@ static bool intif_parse_StorageReceived(int32 fd)
 	}
 
 	if (!RFIFOB(fd, 9)) {
+		if( type == TABLE_STORAGE && sd->state.storage_flag == 4 ){
+			sd->state.storage_flag = 0;
+			clif_storageclose(*sd);
+		}
 		ShowError("intif_parse_StorageReceived: Failed to load! (AID: %d, type: %d)\n", account_id, type);
 		return false;
 	}
@@ -3559,7 +3563,7 @@ static void intif_parse_StorageSaved(int32 fd)
 					if( RFIFOB( fd, 8 ) ){
 						// ShowInfo("Storage %d has been saved (AID: %d).\n", RFIFOL(fd, 2), RFIFOB(fd, 8) );
 
-						if( sd ){
+						if( sd && sd->premiumStorage.stor_id == RFIFOB(fd, 8) ){
 							stor = &sd->premiumStorage;
 						}
 					}else{
@@ -3590,6 +3594,8 @@ static void intif_parse_StorageSaved(int32 fd)
 		}
 	} else
 		ShowError("Failed to save inventory/cart/storage data (AID: %d, type: %d).\n", RFIFOL(fd, 2), RFIFOB(fd, 7));
+	if( RFIFOB(fd, 7) == TABLE_STORAGE )
+		storage_switch_saved(map_id2sd(RFIFOL(fd, 2)), RFIFOB(fd, 8), RFIFOB(fd, 6) != 0);
 }
 
 /**

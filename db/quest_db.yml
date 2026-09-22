@@ -23,6 +23,7 @@
 #
 ###########################################################################
 # - Id                     Quest ID.
+#   ClientCancel           Allow client quest abandonment after reviewing NPC dependencies. (Default: false)
 #   Title                  Quest title.
 #   TimeLimit              Amount of time before the quest expires. (Default: 0)
 #   Targets:               Quest objective target. (Default: null)

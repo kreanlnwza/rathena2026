@@ -1,0 +1,7 @@
+# Cash Emoji overrides. Keep Registry keys unchanged to preserve purchases.
+# Edit client Lua prices too if Price or Currency changes, then @reloadcashemotiondb.
+Header:
+  Type: CASH_EMOTION_DB
+  Version: 1
+
+Body: []

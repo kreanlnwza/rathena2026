@@ -56,6 +56,11 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		quest->id = quest_id;
 	}
 
+	// Preserve omitted import fields and publish permission only after the row parses.
+	bool client_cancel = quest->client_cancel;
+	if (this->nodeExists(node, "ClientCancel") && !this->asBool(node, "ClientCancel", client_cancel))
+		return 0;
+
 	if (this->nodeExists(node, "Title")) {
 		std::string name;
 
@@ -439,6 +444,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 	}
 
+	quest->client_cancel = client_cancel;
 	if (!exists)
 		this->put(quest_id, quest);
 
@@ -682,7 +688,7 @@ int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2)
  * @param quest_id : ID of the quest to remove
  * @return 0 in case of success, nonzero otherwise
  */
-int32 quest_delete(map_session_data *sd, int32 quest_id)
+int32 quest_delete(map_session_data *sd, int32 quest_id, bool notify_client)
 {
 	int32 i;
 
@@ -707,12 +713,42 @@ int32 quest_delete(map_session_data *sd, int32 quest_id)
 
 	sd->save_quest = true;
 
-	clif_quest_delete(sd, quest_id);
+	if (notify_client)
+		clif_quest_delete(sd, quest_id);
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
+}
+
+/**
+ * Cancel an explicitly permitted, unfinished quest from the client UI.
+ * Author: V!be Coding [kreanlnwza] AI Assistant (Codex)
+ * Does not reset NPC variables, linked quests, items, or reward history.
+ * @return 0 on success, 1 when denied or deletion fails.
+ */
+int32 quest_client_cancel(map_session_data *sd, int32 quest_id)
+{
+	if (sd == nullptr || quest_id <= 0)
+		return 1;
+
+	const auto definition = quest_db.find(quest_id);
+	if (definition == nullptr || !definition->client_cancel)
+		return 1;
+
+	int32 index;
+	ARR_FIND(0, sd->num_quests, index, sd->quest_log[index].quest_id == quest_id);
+	if (index == sd->num_quests)
+		return 1;
+
+	const auto state = sd->quest_log[index].state;
+	if (state != Q_ACTIVE && state != Q_INACTIVE)
+		return 1;
+
+	// The native cancellation ACK removes the client entry after looking up its name.
+	// Sending the legacy delete notification first would remove it twice.
+	return quest_delete(sd, quest_id, false) == 0 ? 0 : 1;
 }
 
 /**

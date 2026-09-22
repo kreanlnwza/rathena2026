@@ -3,6 +3,8 @@
 
 #include "groundbloom.hpp"
 
+#include <algorithm>
+
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
@@ -39,12 +41,16 @@ void SkillGroundBloom::castendNoDamageId(block_list* src, block_list* target, ui
 }
 
 void SkillGroundBloom::castGroundBloom(block_list *src, t_tick tick, int32 stacks) {
+	addGrowth(src, tick, stacks, true, true);
+}
+
+void SkillGroundBloom::addGrowth(block_list* src, t_tick tick, int32 stacks, bool trigger_ground_bloom, bool require_earth_bud) {
 	if (stacks <= 0)
 		return;
 
 	uint16 skill_lv = pc_checkskill(BL_CAST(BL_PC, src), KR_EARTH_BUD);
 
-	if (skill_lv <= 0)
+	if (require_earth_bud && skill_lv <= 0)
 		return;
 
 	status_change *sc = status_get_sc(src);
@@ -56,9 +62,9 @@ void SkillGroundBloom::castGroundBloom(block_list *src, t_tick tick, int32 stack
 		stacks += sc->getSCE(SC_GROUND_GROW)->val3;
 	}
 
-	if (stacks < 13) {
+	if (stacks < 13 || !trigger_ground_bloom) {
 		// Note: official gives the status change regardless of the stacks amount then casts the skill and removes the sc when the conditions are met (same result)
-		status_change_start(src, src, SC_GROUND_GROW, 10000, 0, 0, stacks, 0, 10000, SCSTART_NOAVOID);
+		status_change_start(src, src, SC_GROUND_GROW, 10000, 0, 0, std::min(stacks, 13), 0, 10000, SCSTART_NOAVOID);
 		return;
 	}
 

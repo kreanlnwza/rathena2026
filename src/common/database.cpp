@@ -93,7 +93,10 @@ bool YamlDatabase::load(const std::string& path) {
 	ShowStatus("Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str());
 	FILE* f = fopen(path.c_str(), "r");
 	if (f == nullptr) {
+		if (this->isOptionalFile(path))
+			return true;
 		ShowError("Failed to open %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
+		this->onLoadFailure();
 		return false;
 	}
 	fseek(f, 0, SEEK_END);
@@ -115,6 +118,7 @@ bool YamlDatabase::load(const std::string& path) {
 		ShowError( "There is likely a syntax error in the file.\n" );
 		ShowError( "Error message: %s\n", e.what() );
 		aFree(buf);
+		this->onLoadFailure();
 		return false;
 	}
 
@@ -124,6 +128,7 @@ bool YamlDatabase::load(const std::string& path) {
 	if (!this->verifyCompatibility(tree)){
 		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), this->currentFile.c_str());
 		aFree(buf);
+		this->onLoadFailure();
 		return false;
 	}
 
@@ -154,6 +159,8 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 
 	if( this->nodeExists( tree.rootref(), "Body" ) ){
 		const ryml::NodeRef& bodyNode = tree["Body"];
+		if (!bodyNode.is_seq())
+			this->onLoadFailure();
 		size_t childNodesCount = bodyNode.num_children();
 		const char* fileName = this->currentFile.c_str();
 #ifdef DEBUG
@@ -179,11 +186,14 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 
 		if( this->nodeExists( footerNode, "Imports") ){
 			const ryml::NodeRef& importsNode = footerNode["Imports"];
+			if (!importsNode.is_seq())
+				this->onLoadFailure();
 
 			for( const ryml::NodeRef &node : importsNode ){
 				std::string importFile;
 
 				if( !this->asString( node, "Path", importFile ) ){
+					this->onLoadFailure();
 					continue;
 				}
 
@@ -191,6 +201,7 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 					std::string mode;
 
 					if( !this->asString( node, "Mode", mode ) ){
+						this->onLoadFailure();
 						continue;
 					}
 
@@ -215,6 +226,7 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 				if (this->nodeExists(node, "Generator")) {
 					bool isGenerator;
 					if (!this->asBool(node, "Generator", isGenerator)) {
+						this->onLoadFailure();
 						continue;
 					}
 					if (!(shouldLoadGenerator && isGenerator))

@@ -38,6 +38,7 @@
 #include "intif.hpp"
 #include "itemdb.hpp" // MAX_ITEMGROUP
 #include "cashshop.hpp"
+#include "cash_emotion.hpp"
 #include "log.hpp"
 #include "mail.hpp"
 #include "map.hpp"
@@ -245,6 +246,13 @@ static const char* atcommand_help_string( const char* command ){
 	return info->help.c_str();
 }
 
+/// Normalize path separators so Windows-style paths work on all platforms.
+static void atcommand_normalize_npc_path(char* dst, const char* src, size_t size) {
+	safestrncpy(dst, src, size);
+	for (char* p = dst; *p; ++p)
+		if (*p == '\\')
+			*p = '/';
+}
 
 /*==========================================
  * @send (used for testing packet sends from the client)
@@ -4350,6 +4358,16 @@ ACMD_FUNC(reloadcashdb){
 	return 0;
 }
 
+ACMD_FUNC(reloadcashemotiondb){
+	nullpo_retr(-1, sd);
+	if (!cash_emotion_db.reload()) {
+		clif_displaymessage(fd, "Cash Emoji database reload failed; previous catalog retained. Check the server log.");
+		return -1;
+	}
+	clif_displaymessage(fd, "Cash Emoji database reloaded.");
+	return 0;
+}
+
 ACMD_FUNC(reloaditemdb){
 	nullpo_retr(-1, sd);
 
@@ -4580,6 +4598,7 @@ ACMD_FUNC( reload ){
 		{ "barterdb", atcommand_reloadbarterdb },
 		{ "battleconf", atcommand_reloadbattleconf },
 		{ "cashdb", atcommand_reloadcashdb },
+		{ "cashemotiondb", atcommand_reloadcashemotiondb },
 		{ "instancedb", atcommand_reloadinstancedb },
 		{ "itemdb", atcommand_reloaditemdb },
 		{ "logconf", atcommand_reloadlogconf },
@@ -5351,16 +5370,19 @@ ACMD_FUNC(loadnpc)
 		clif_displaymessage(fd, msg_txt(sd,1132)); // Please enter a script file name (usage: @loadnpc <file name>).
 		return -1;
 	}
-	
-	if (!npc_addsrcfile(message, true)) {
+
+	char path[1024];
+	atcommand_normalize_npc_path(path, message, sizeof(path));
+
+	if (!npc_addsrcfile(path, true)) {
 		clif_displaymessage(fd, msg_txt(sd,261)); // Script could not be loaded.
 		return -1;
 	}
 
 	npc_read_event_script();
 
-	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was loaded.\n", message );
-	npc_event_doall_path( script_config.init_event_name, message );
+	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was loaded.\n", path );
+	npc_event_doall_path( script_config.init_event_name, path );
 
 	clif_displaymessage(fd, msg_txt(sd,262)); // Script loaded.
 	return 0;
@@ -5397,18 +5419,21 @@ ACMD_FUNC(reloadnpcfile) {
 		return -1;
 	}
 
-	if (npc_unloadfile(message))
+	char path[1024];
+	atcommand_normalize_npc_path(path, message, sizeof(path));
+
+	if (npc_unloadfile(path))
 		clif_displaymessage(fd, msg_txt(sd,1386)); // File unloaded. Be aware that mapflags and monsters spawned directly are not removed.
 
-	if (!npc_addsrcfile(message, true)) {
+	if (!npc_addsrcfile(path, true)) {
 		clif_displaymessage(fd, msg_txt(sd,261)); // Script could not be loaded.
 		return -1;
 	}
 
 	npc_read_event_script();
 
-	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was reloaded.\n", message );
-	npc_event_doall_path( script_config.init_event_name, message );
+	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was reloaded.\n", path );
+	npc_event_doall_path( script_config.init_event_name, path );
 
 	clif_displaymessage(fd, msg_txt(sd,262)); // Script loaded.
 	return 0;
@@ -10359,12 +10384,18 @@ ACMD_FUNC(unloadnpcfile) {
 		return -1;
 	}
 
-	if( npc_unloadfile(message) )
+	char path[1024];
+	atcommand_normalize_npc_path(path, message, sizeof(path));
+
+	if( npc_unloadfile(path) ) {
 		clif_displaymessage(fd, msg_txt(sd,1386)); // File unloaded. Be aware that mapflags and monsters spawned directly are not removed.
+		ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was unloaded.\n", path );
+	}
 	else {
 		clif_displaymessage(fd, msg_txt(sd,1387)); // File not found.
 		return -1;
 	}
+
 	return 0;
 }
 ACMD_FUNC(cart) {
@@ -11605,6 +11636,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(reload,ATCMD_NOSCRIPT),
 		ACMD_DEF(reloaditemdb),
 		ACMD_DEF(reloadcashdb),
+		ACMD_DEF(reloadcashemotiondb),
 		ACMD_DEF(reloadmobdb),
 		ACMD_DEF(reloadskilldb),
 		ACMD_DEFR(reloadscript, ATCMD_NOSCRIPT),

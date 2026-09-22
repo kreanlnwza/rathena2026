@@ -501,6 +501,8 @@ public:
 
 	// Item Storages
 	struct s_storage storage, premiumStorage;
+	uint16 storage_pending_tab = 0;
+	uint8 storage_pending_source = 0;
 	struct s_storage inventory;
 	struct s_storage cart;
 
@@ -1780,7 +1782,8 @@ bool pc_is_same_equip_index(enum equip_index eqi, const int16* equip_index, int1
 #define pc_is_upper_expanded_second(class_) (\
 	(class_&MAPID_FOURTHMASK) == MAPID_HYPER_NOVICE || (class_&MAPID_FOURTHMASK) == MAPID_SKY_EMPEROR || \
 	(class_&MAPID_FOURTHMASK) == MAPID_SOUL_ASCETIC || (class_&MAPID_THIRDMASK) == MAPID_NIGHT_WATCH || \
-	(class_&MAPID_THIRDMASK) == MAPID_SHINKIROSHIRANUI || (class_&MAPID_SECONDMASK) == MAPID_SPIRIT_HANDLER)
+	(class_&MAPID_THIRDMASK) == MAPID_SHINKIROSHIRANUI || (class_&MAPID_SECONDMASK) == MAPID_SPIRIT_HANDLER || \
+	(class_&MAPID_THIRDMASK) == MAPID_ALITEA)
 
 /// Checks if the player is a renewal era job or higher. (Primary 3rd / 1st Upper Expanded)
 #define pc_is_renewal_job (class_) (pc_is_primary_third(class_) || pc_is_upper_expanded_first(class_))

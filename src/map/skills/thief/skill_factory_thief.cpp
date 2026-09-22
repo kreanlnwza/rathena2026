@@ -70,6 +70,7 @@
 #include "meteorassault.cpp"
 #include "mug.cpp"
 #include "omegaabyssstrike.cpp"
+#include "phantomdagger.cpp"
 #include "phantommenace.cpp"
 #include "poisoningweapon.cpp"
 #include "poisonsmoke.cpp"
@@ -94,6 +95,7 @@
 #include "triangleshot.cpp"
 #include "unluckyrush.cpp"
 #include "venomdust.cpp"
+#include "venomignition.cpp"
 #include "venompressure.cpp"
 #include "venomsplasher.cpp"
 #include "weaponcrush.cpp"
@@ -130,6 +132,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillFromTheAbyssAttack>();
 		case ABC_HIT_AND_SLIDING:
 			return std::make_unique<SkillHitAndSliding>();
+		case ABC_PHANTOM_DAGGER:
+			return std::make_unique<SkillPhantomDagger>();
 		case ABC_STRIP_SHADOW:
 			return std::make_unique<SkillStripShadow>();
 		case ABC_UNLUCKY_RUSH:
@@ -278,6 +282,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SHC_SHADOW_STAB:
 			return std::make_unique<SkillShadowStab>();
+		case SHC_VENOMIGNITION:
+			return std::make_unique<SkillVenomIgnition>();
 		case ST_CHASEWALK:
 			return std::make_unique<SkillStealth>();
 		case ST_FULLSTRIP:

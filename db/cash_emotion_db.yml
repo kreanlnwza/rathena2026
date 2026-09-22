@@ -1,0 +1,30 @@
+# Cash Emoji catalog routing for the verified 2026 MAIN client.
+# Author: V!be Coding [kreanlnwza] AI Assistant (Codex)
+# Licensed under GNU GPL; see LICENCE in the main folder.
+#
+# Id: Nonzero uint16 pack ID from the client CashEmotion Lua tables.
+# Currency: Item AegisName (default Nyangvine_Fruit / Catnip).
+#   Numeric item IDs remain supported for existing import overrides.
+# Price: 1..255; must match the client's displayed price.
+# Registry: Unique numeric account variable. Keep existing keys to preserve
+#   purchases; renaming a key does not migrate old entitlements.
+# Emotions: ET_* constants exported from src/map/clif.hpp through
+#   src/map/script_constants.hpp, including variants that reuse basic emotions.
+#   Reserved mute ID 34 is not permitted.
+#
+# Override fields in db/import/cash_emotion_db.yml, then @reloadcashemotiondb.
+# A rejected row rejects the reload and retains the previous active catalog.
+# Names, artwork and displayed prices still come from client Lua files.
+# This database does not advertise a catalog to the client.
+
+Header:
+  Type: CASH_EMOTION_DB
+  Version: 1
+
+Footer:
+  Imports:
+    - Path: db/re/cash_emotion_db.yml
+      Mode: Renewal
+    - Path: db/pre-re/cash_emotion_db.yml
+      Mode: Prerenewal
+    - Path: db/import/cash_emotion_db.yml

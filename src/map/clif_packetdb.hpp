@@ -2036,7 +2036,15 @@
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230705
-	parseable_packet( HEADER_CZ_REQ_EMOTION_EXPANSION, sizeof( struct PACKET_CZ_REQ_EMOTION_EXPANSION ), clif_parse_dull, 0 );
+	parseable_packet( HEADER_CZ_REQ_EMOTION_EXPANSION, sizeof( struct PACKET_CZ_REQ_EMOTION_EXPANSION ), clif_parse_Emotion, 4 );
+#if PACKETVER_MAIN_NUM >= 20230920
+	parseable_packet(0x0bec, 7, clif_parse_cash_emotion_buy, 2, 4, 6);
+	packet(0x0bea, 10);
+	packet(0x0beb, 7);
+	packet(0x0bed, 9);
+	packet(0x0bee, 5);
+	packet(0x0bf6, -1);
+#endif
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20230802
@@ -2089,6 +2097,16 @@
 	parseable_packet(HEADER_CZ_CLOSE_ACCOUNT_LIMTIED_SALE_TOOL, sizeof(struct PACKET_CZ_CLOSE_ACCOUNT_LIMTIED_SALE_TOOL), clif_parse_close_account_limited_sale_tool, 0);
 	parseable_packet(HEADER_CZ_SEARCH_ACCOUNT_LIMTIED_SALE_ITEM, sizeof(struct PACKET_CZ_SEARCH_ACCOUNT_LIMTIED_SALE_ITEM), clif_parse_search_account_limited_sale_item, 0);
 	parseable_packet(HEADER_CZ_ADD_ACCOUNT_LIMTIED_SALE_ITEM2, sizeof(struct PACKET_CZ_ADD_ACCOUNT_LIMTIED_SALE_ITEM2), clif_parse_add_account_limited_sale_item2, 0);
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20260715
+	parseable_packet( HEADER_CZ_STORAGE_SELECT_2026, sizeof(PACKET_CZ_STORAGE_SELECT_2026), clif_parse_StorageSelect2026, 0 );
+#endif
+
+// Reported MAIN build boundary; see doc/quest_client_cancel.md for evidence.
+#if PACKETVER_MAIN_NUM >= 20260514
+	parseable_packet(0x0c3d, 6, clif_parse_questGiveUp, 2);
+	packet(0x0c3e, 8);
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

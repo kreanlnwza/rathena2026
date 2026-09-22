@@ -1781,7 +1781,6 @@
 	export_constant(SC_RELIGIO);
 	export_constant(SC_BENEDICTUM);
 	export_constant(SC_AXE_STOMP);
-	export_constant(SC_A_MACHINE);
 	export_constant(SC_D_MACHINE);
 	export_constant(SC_ABR_BATTLE_WARIOR);
 	export_constant(SC_ABR_DUAL_CANNON);
@@ -2049,6 +2048,22 @@
 	export_constant(SC_PULSE_OF_MADNESS);
 	export_constant(SC_PRIMAL_CLAW);
 	export_constant(SC_FERAL_CLAW);
+	export_constant(SC_VENOMIGNITION);
+	export_constant(SC_ELEMENTAL_INTEGRATION);
+	export_constant(SC_SEVENTH_KICK_SKILLORB);
+	export_constant(SC_SEVENTH_KICK_MAX);
+	export_constant(SC_KI_SUL_AND_CHUL_HO);
+	export_constant(SC_KI_SUL_AND_HYUN_ROK);
+	export_constant(SC_NOBORU);
+	export_constant(SC_PRIMED_TRAP);
+	export_constant(EFST_VENOMIGNITION);
+	export_constant(EFST_ELEMENTAL_INTEGRATION);
+	export_constant(EFST_SEVENTH_KICK_SKILLORB);
+	export_constant(EFST_SEVENTH_KICK_MAX);
+	export_constant(EFST_KI_SUL_AND_CHUL_HO);
+	export_constant(EFST_KI_SUL_AND_HYUN_ROK);
+	export_constant(EFST_NOBORU);
+	export_constant(EFST_PRIMED_TRAP);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -3806,6 +3821,32 @@
 	export_constant(ET_YUT5);
 	export_constant(ET_YUT6);
 	export_constant(ET_YUT7);
+	export_constant(ET_CLICK_ME);
+	export_constant(ET_DAILY_QUEST);
+	export_constant(ET_EVENT);
+	export_constant(ET_JOB_QUEST);
+	export_constant(ET_TRAFFIC_LINE_QUEST);
+	export_constant(ET_CUSTOM_1);
+	export_constant(ET_CUSTOM_2);
+	export_constant(ET_CUSTOM_3);
+	export_constant(ET_CUSTOM_4);
+	export_constant(ET_CUSTOM_5);
+	export_constant(ET_CUSTOM_6);
+	export_constant(ET_CUSTOM_7);
+	export_constant(ET_CUSTOM_8);
+	export_constant(ET_CUSTOM_9);
+	export_constant(ET_CUSTOM_10);
+	export_constant(ET_CUSTOM_11);
+	export_constant(ET_CUSTOM_12);
+	export_constant(ET_CUSTOM_13);
+	export_constant(ET_CUSTOM_14);
+	export_constant(ET_CUSTOM_15);
+
+	/* emotion pack types (cash emotions) */
+	export_constant(EPT_BASIC);
+	export_constant(EPT_21ST_ANNIVERSARY);
+	export_constant(EPT_2023CHUSEOK);
+	export_constant(EPT_2023THXGIVING);
 
 	/* send targets */
 	export_constant(ALL_CLIENT);

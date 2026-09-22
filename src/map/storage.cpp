@@ -1164,6 +1164,52 @@ bool storage_premiumStorage_load(map_session_data *sd, uint8 num, uint8 mode) {
  * @param sd Player who has the storage
  * @author [Cydh]
  **/
+static void storage_open_selected_tab(map_session_data* sd, uint16 tab) {
+	if( tab == 1 ){
+		storage_storageopen(sd);
+	}else if( storage_premiumStorage_load(sd, static_cast<uint8>(tab - 1), STOR_MODE_ALL) && sd->state.storage_flag == 0 ){
+		sd->state.storage_flag = 4; // Block item operations until the load reply.
+	}
+}
+
+/// Save the previous tab before replacing its cache. Repeated clicks are ignored while busy.
+void storage_switch_tab(map_session_data* sd, uint16 tab) {
+	if( !sd || sd->storage_pending_tab || (sd->state.storage_flag != 1 && sd->state.storage_flag != 3) )
+		return;
+	if( tab < 1 || tab > 3 || !storage_exists(static_cast<uint8>(tab - 1)) )
+		return;
+	const bool normal = sd->state.storage_flag == 1;
+	const auto& old_storage = normal ? sd->storage : sd->premiumStorage;
+	const bool needs_save = old_storage.dirty;
+	if( needs_save ){
+		sd->storage_pending_tab = tab;
+		sd->storage_pending_source = old_storage.stor_id;
+	}
+	// Preserve the existing inventory/cart/storage save path.
+	if( normal ) storage_storageclose(sd);
+	else storage_premiumStorage_close(sd);
+	if( needs_save ) sd->state.storage_flag = 4;
+	else storage_open_selected_tab(sd, tab);
+}
+
+/// Continue only after the matching char-server save acknowledgement.
+void storage_switch_saved(map_session_data* sd, uint8 storage_id, bool success) {
+	if( !sd || !sd->storage_pending_tab || sd->storage_pending_source != storage_id || sd->state.storage_flag != 4 )
+		return;
+	const uint16 tab = sd->storage_pending_tab;
+	sd->storage_pending_tab = 0;
+	sd->storage_pending_source = 0;
+	sd->state.storage_flag = 0;
+	if( success ){
+		storage_open_selected_tab(sd, tab);
+	}else{
+		// Retain dirty items and reopen the old cache so the player can retry.
+		if( storage_id == 0 ) storage_storageopen(sd);
+		else storage_premiumStorage_open(sd);
+		clif_displaymessage(sd->fd, "Storage save failed. Your previous storage remains open; please retry.");
+	}
+}
+
 void storage_premiumStorage_save(map_session_data *sd) {
 	nullpo_retv(sd);
 

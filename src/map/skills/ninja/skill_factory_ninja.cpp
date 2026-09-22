@@ -44,6 +44,7 @@
 #include "makibishi.cpp"
 #include "meltaway.cpp"
 #include "mirage.cpp"
+#include "mirageswarm.cpp"
 #include "mirrorimage.cpp"
 #include "moonlightfantasy.cpp"
 #include "nightmareerasion.cpp"
@@ -60,6 +61,7 @@
 #include "shadownightmare.cpp"
 #include "shadowslash.cpp"
 #include "shadowtrampling.cpp"
+#include "shadowtorrent.cpp"
 #include "shadowwarrior.cpp"
 #include "soulcutter.cpp"
 #include "spearofice.cpp"
@@ -191,6 +193,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 			return std::make_unique<SkillShadowFlash>();
 		case SS_KAGENOMAI:
 			return std::make_unique<SkillShadowDance>();
+		case SS_KAGEGEKIRYU:
+			return std::make_unique<SkillShadowTorrent>();
 		case SS_KINRYUUHOU:
 			return std::make_unique<SkillGoldenDragonCannon>();
 		case SS_KUNAIKAITEN:
@@ -209,6 +213,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 			return std::make_unique<SkillInfiltrate>();
 		case SS_SHINKIROU:
 			return std::make_unique<SkillMirage>();
+		case SS_SHINKIROU_GUNSHU:
+			return std::make_unique<SkillMirageSwarm>();
+		case SS_NOBORU:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SS_TOKEDASU:
 			return std::make_unique<SkillMeltAway>();
 

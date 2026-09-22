@@ -4353,7 +4353,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 #endif
 
 	// Druid/Karnos passive bonuses affecting max HP/SP and SP recovery.
-	if (!(sc->hasSCE(SC_WEREWOLF) || sc->hasSCE(SC_WERERAPTOR)) && (skill = pc_checkskill(sd, KR_EARTH_BUD)) > 0)
+	if ((skill = pc_checkskill(sd, KR_EARTH_BUD)) > 0)
 		sd->hprate += skill * 2;
 	if ((skill = pc_checkskill(sd, KR_NATURE_VIGOUR)) > 0) {
 		sd->sprate += skill * 2;
@@ -12929,10 +12929,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 		case SC_POTENT_VENOM:
 			val2 = 2 * val1;// Res Pierce Percentage
-			break;
-		case SC_A_MACHINE:
-			val4 = tick / 1000;
-			tick_time = 1000;
 			break;
 		case SC_D_MACHINE:
 			val2 = 200 + 50 * val1;// DEF Increase

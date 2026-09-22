@@ -351,8 +351,37 @@ enum emotion_type {
 	ET_YUT5,
 	ET_YUT6,
 	ET_YUT7,
-	//
-	ET_MAX
+	// Verified CashEmotionListDefine.lua IDs; keep existing values unchanged.
+	ET_CLICK_ME = 88,
+	ET_DAILY_QUEST = 89,
+	ET_EVENT = 90,
+	ET_JOB_QUEST = 91,
+	ET_TRAFFIC_LINE_QUEST = 92,
+	ET_CUSTOM_1 = 93,
+	ET_CUSTOM_2 = 94,
+	ET_CUSTOM_3 = 95,
+	ET_CUSTOM_4 = 96,
+	ET_CUSTOM_5 = 97,
+	ET_CUSTOM_6 = 98,
+	ET_CUSTOM_7 = 99,
+	ET_CUSTOM_8 = 100,
+	ET_CUSTOM_9 = 101,
+	ET_CUSTOM_10 = 102,
+	ET_CUSTOM_11 = 103,
+	ET_CUSTOM_12 = 104,
+	ET_CUSTOM_13 = 105,
+	ET_CUSTOM_14 = 106,
+	ET_CUSTOM_15 = 107,
+	// Legacy script/monster emotion paths have no Cash Emoji pack field.
+	ET_MAX = 88
+};
+
+enum emotion_pack_type : uint16 {
+	EPT_BASIC = 0,
+	EPT_21ST_ANNIVERSARY = 1,
+	EPT_2023CHUSEOK = 2,
+	EPT_2023THXGIVING = 3,
+	EPT_MAX,
 };
 
 enum clr_type : uint8_t 
@@ -1230,6 +1259,7 @@ void clif_quest_send_list( const map_session_data* sd );
 void clif_quest_send_mission( const map_session_data* sd );
 void clif_quest_add( const map_session_data* sd, const quest* qd );
 void clif_quest_delete( const map_session_data* sd, int32 quest_id );
+void clif_parse_questGiveUp( int32 fd, map_session_data* sd );
 void clif_quest_update_status( const map_session_data* sd, int32 quest_id, bool active );
 void clif_quest_update_objective( const map_session_data* sd, const quest* qd );
 void clif_quest_show_event( const map_session_data* sd, const block_list* bl, e_questinfo_types effect, e_questinfo_markcolor color );

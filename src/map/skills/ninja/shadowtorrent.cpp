@@ -1,0 +1,26 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+// Author: kreanlnwza Ai assistant Code [Astra].
+
+#include "shadowtorrent.hpp"
+
+#include "map/clif.hpp"
+#include "map/pc.hpp"
+#include "map/status.hpp"
+
+SkillShadowTorrent::SkillShadowTorrent() : SkillImplRecursiveDamageSplash(SS_KAGEGEKIRYU) {
+}
+
+void SkillShadowTorrent::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
+}
+
+void SkillShadowTorrent::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32) const {
+	const map_session_data* sd = BL_CAST(BL_PC, src);
+	const status_change* sc = status_get_sc(src);
+	const int32 level_ratio = sc != nullptr && sc->hasSCE(SC_NOBORU) ? 850 : 650;
+
+	skillratio += -100 + level_ratio * skill_lv;
+	skillratio += 120 * pc_checkskill(sd, SS_KAGENOMAI);
+}

@@ -30,6 +30,7 @@
 #include "battle.hpp"
 #include "battleground.hpp"
 #include "cashshop.hpp"
+#include "cash_emotion.hpp"
 #include "channel.hpp"
 #include "chat.hpp"
 #include "chrif.hpp"
@@ -1653,7 +1654,7 @@ static inline bool clif_npc_mayapurple( const block_list& bl ){
 }
 
 /// For the stupid cloth-dye bug. Resends the given view data to the area specified by bl.
-void clif_refresh_clothcolor( const block_list& bl, enum send_target target, block_list* tbl = nullptr ){
+void clif_refresh_clothcolor( const block_list& bl, enum send_target target, const block_list* tbl = nullptr ){
 // Unconfirmed when this was fixed, if you encounter any problems, feel free to report them
 #if PACKETVER < 20091103
 	const view_data* vd = status_get_viewdata( &bl );
@@ -1767,10 +1768,10 @@ int32 clif_spawn( const block_list* bl, bool walking ){
 /// 0x7db <type>.W <value>.L (ZC_HO_PAR_CHANGE)
 /// 0xba5 <type>.W <value>.Q (ZC_HO_PAR_CHANGE2)
 void clif_homunculus_updatestatus( const map_session_data& sd, _sp type ) {
-#if PACKETVER >= 20090610
 	if( !hom_is_active(sd.hd) )
 		return;
 
+#if PACKETVER >= 20090610
 	PACKET_ZC_HO_PAR_CHANGE p = {};
 
 	p.packetType = HEADER_ZC_HO_PAR_CHANGE;
@@ -1817,6 +1818,8 @@ void clif_homunculus_updatestatus( const map_session_data& sd, _sp type ) {
 	}
 
 	clif_send(&p, sizeof(p), &sd, SELF);
+#else
+	clif_hominfo(&sd, sd.hd, 0);
 #endif
 }
 
@@ -1824,7 +1827,7 @@ void clif_homunculus_updatestatus( const map_session_data& sd, _sp type ) {
 /// 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
 /// 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
 void clif_hominfo( const map_session_data* sd, const homun_data *hd, int32 flag ){
-#if PACKETVER_MAIN_NUM >= 20101005 || PACKETVER_RE_NUM >= 20080827 || defined(PACKETVER_ZERO)
+#if PACKETVER_MAIN_NUM >= 20101005 || PACKETVER_RE_NUM >= 20080827 || PACKETVER_SAK_NUM >= 20080618 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 	nullpo_retv( hd );
 
@@ -3155,6 +3158,22 @@ void clif_equiplist( map_session_data *sd ){
 }
 
 void clif_storagelist( map_session_data* sd, const struct item* items, int32 items_length, const char *storename ){
+#if PACKETVER_MAIN_NUM >= 20260715
+	// The normal storage window must exist before the inventory-end packet.
+	// Client 0x0b08 no longer opens inventory type 2; 0x00f2 opens it too late.
+	if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 ){
+		// Test tabs are available only to the local administrator group.
+		PACKET_ZC_STORAGE_TABS_2026 tabs{};
+		tabs.packetType = HEADER_ZC_STORAGE_TABS_2026;
+		tabs.normalTabs = sd->group_id == 99 && storage_exists(1) && storage_exists(2) ? 3 : 1;
+		clif_send( &tabs, sizeof(tabs), sd, SELF );
+		PACKET_ZC_STORAGE_OPEN_2026 packet{};
+		packet.packetType = HEADER_ZC_STORAGE_OPEN_2026;
+		packet.storageId = sd->state.storage_flag == 3 ? sd->premiumStorage.stor_id + 1 : 1;
+		packet.result = 0;
+		clif_send( &packet, sizeof(packet), sd, SELF );
+	}
+#endif
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 	e_inventory_type type = INVTYPE_STORAGE;
 
@@ -10756,6 +10775,8 @@ void clif_parse_WantToConnection(int32 fd, map_session_data* sd)
 }
 
 
+#include "cash_emotion.inc"
+
 /// Notification from the client, that it has finished map loading and is about to display player's character (CZ_NOTIFY_ACTORINIT).
 /// 007d
 void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
@@ -10795,6 +10816,9 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	clif_inventorylist(sd);  // inventory list first, otherwise deleted items in pc_checkitem show up as 'unknown item'
 	pc_checkitem(sd);
 	clif_equipswitch_list(sd);
+	#if PACKETVER_MAIN_NUM >= 20230920
+	cash_emotion::initialize(*sd);
+	#endif
 
 	// cart
 	if(pc_iscarton(sd)) {
@@ -11639,14 +11663,34 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 	if( sd == nullptr ){
 		return;
 	}
+	#if PACKETVER_MAIN_NUM >= 20230920
+	if (RFIFOW(fd, 0) == HEADER_CZ_REQ_EMOTION_EXPANSION && RFIFOW(fd, 2) != 0) {
+		clif_parse_cash_emotion_use(fd, sd);
+		return;
+	}
+	// Do not truncate a malformed modern 16-bit emotion into a valid byte.
+	if (RFIFOW(fd, 0) == HEADER_CZ_REQ_EMOTION_EXPANSION && RFIFOW(fd, 4) > 92)
+		return;
+	#endif
 
-	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
+	// Modern clients use 0x0be9 with the emotion byte at offset 4.
+	// Keep legacy 0x00bf support and the same validation for both formats.
+	// Protocol reference: rAthena/rathena#10067 [sofiaisha].
+	const uint8 requested_emotion = RFIFOB( fd,
+		RFIFOW( fd, 0 ) == HEADER_CZ_REQ_EMOTION_EXPANSION ? 4 : 2 );
 
-	if( p->emotion_type >= ET_MAX ){
+	// Custom ET_* constants are also exported for scripts and YAML. A legacy
+	// request has no pack field and must not bypass paid-pack ownership.
+	#if PACKETVER_MAIN_NUM >= 20230920
+	const uint16 emotion_limit = RFIFOW(fd, 0) == HEADER_CZ_REQ_EMOTION_EXPANSION ? ET_CUSTOM_1 : ET_CLICK_ME;
+	#else
+	const uint16 emotion_limit = ET_CLICK_ME;
+	#endif
+	if( requested_emotion >= emotion_limit ){
 		return;
 	}
 	
-	emotion_type emoticon = static_cast<emotion_type>( p->emotion_type );
+	emotion_type emoticon = static_cast<emotion_type>( requested_emotion );
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
 		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
@@ -13737,6 +13781,23 @@ void clif_parse_MoveFromKafraToCart(int32 fd, map_session_data *sd){
 
 /// Request to close storage (CZ_CLOSE_STORE).
 /// 00f7
+#if PACKETVER_MAIN_NUM >= 20260715
+/// 0x0c72 selects a 1-based normal storage tab. Test mapping: 1->0, 2->1, 3->2.
+void clif_parse_StorageSelect2026(int32 fd, map_session_data *sd)
+{
+	const auto* packet = reinterpret_cast<const PACKET_CZ_STORAGE_SELECT_2026*>(RFIFOP(fd, 0));
+	const uint16 tab = packet->storageId;
+	if( sd->group_id != 99 || tab < 1 || tab > 3 || !storage_exists(tab - 1) )
+		return;
+	if( sd->state.storage_flag != 1 && sd->state.storage_flag != 3 )
+		return;
+	const uint16 current = sd->state.storage_flag == 1 ? 1 : sd->premiumStorage.stor_id + 1;
+	if( tab == current )
+		return;
+	storage_switch_tab(sd, tab);
+}
+#endif
+
 void clif_parse_CloseKafra(int32 fd, map_session_data *sd)
 {
 	if( sd->state.storage_flag == 1 )
@@ -16848,8 +16909,13 @@ void clif_parse_Mail_send(int32 fd, map_session_data *sd){
 	mail_send(sd, RFIFOCP(fd,info->pos[1]), RFIFOCP(fd,info->pos[2]), RFIFOCP(fd,info->pos[4]), RFIFOB(fd,info->pos[3]));
 #else
 	uint16 length = RFIFOW(fd, 2);
+#if PACKETVER <= 20160330
+	constexpr uint16 headerLength = 64;
+#else
+	constexpr uint16 headerLength = 68;
+#endif
 
-	if( length < 0x3e ){
+	if( length < headerLength ){
 		ShowWarning("Too short...\n");
 		clif_Mail_send(sd, WRITE_MAIL_FAILED);
 		return;
@@ -16875,20 +16941,21 @@ void clif_parse_Mail_send(int32 fd, map_session_data *sd){
 	uint64 zeny = RFIFOQ(fd, 52);
 	uint16 titleLength = RFIFOW(fd, 60);
 	uint16 textLength = RFIFOW(fd, 62);
+
+	if( titleLength > length - headerLength || textLength > length - headerLength - titleLength ){
+		ShowWarning("Invalid Rodex mail content length from account %d.\n", sd->status.account_id);
+		clif_Mail_send(sd, WRITE_MAIL_FAILED);
+		return;
+	}
+
 	uint16 realTitleLength = min(titleLength, MAIL_TITLE_LENGTH);
 	uint16 realTextLength = min(textLength, MAIL_BODY_LENGTH);
 
 	char title[MAIL_TITLE_LENGTH];
 	char text[MAIL_BODY_LENGTH];
 
-#if PACKETVER <= 20160330
-	safestrncpy(title, RFIFOCP(fd, 64), realTitleLength);
-	safestrncpy(text, RFIFOCP(fd, 64 + titleLength), realTextLength);
-#else
-	// 64 = <char id>.L
-	safestrncpy(title, RFIFOCP(fd, 68), realTitleLength);
-	safestrncpy(text, RFIFOCP(fd, 68 + titleLength), realTextLength);
-#endif
+	safestrncpy(title, RFIFOCP(fd, headerLength), realTitleLength);
+	safestrncpy(text, RFIFOCP(fd, headerLength + titleLength), realTextLength);
 
 	if( zeny > 0 ){
 		if( mail_setitem(sd,0,(uint32)zeny) != MAIL_ATTACH_SUCCESS ){
@@ -18127,6 +18194,25 @@ void clif_quest_delete( const map_session_data* sd, int32 quest_id )
 }
 
 
+/// Client quest abandonment: 0c3d <quest id>.L; reply 0c3e <quest id>.L <result>.W.
+/// Author: V!be Coding [kreanlnwza] AI Assistant (Codex)
+void clif_parse_questGiveUp( int32 fd, map_session_data* sd )
+{
+#if PACKETVER_MAIN_NUM >= 20260514
+	const int32 quest_id = RFIFOL(fd, 2);
+	int16 result = 1;
+
+	if (!pc_cant_act2(sd) && !sd->npc_id && !pc_hasprogress(sd, WIP_DISABLE_NPC))
+		result = static_cast<int16>(quest_client_cancel(sd, quest_id));
+
+	WFIFOHEAD(fd, 8);
+	WFIFOW(fd, 0) = 0x0c3e;
+	WFIFOL(fd, 2) = quest_id;
+	WFIFOW(fd, 6) = result;
+	WFIFOSET(fd, 8);
+#endif
+}
+
 /// Notification of an update to the hunting mission counter
 /// 02b5 <packet len>.W <mobs>.W { <quest id>.L <mob id>.L <total count>.W <current count>.W }*3 (ZC_UPDATE_MISSION_HUNT)
 /// 09fa <packet len>.W <mobs>.W { <quest id>.L <hunt identification>.L <total count>.W <current count>.W }*3 (ZC_UPDATE_MISSION_HUNT_EX)
@@ -18993,6 +19079,7 @@ void clif_party_show_picker( const map_session_data* sd, const item* item_data )
  */
 void clif_displayexp( const map_session_data* sd, t_exp exp, char type, bool quest, bool lost )
 {
+#if PACKETVER >= 20091027
 	int32 fd;
 	int32 offset;
 #if PACKETVER >= 20170830
@@ -19018,6 +19105,7 @@ void clif_displayexp( const map_session_data* sd, t_exp exp, char type, bool que
 	WFIFOW(fd,10+offset) = type;
 	WFIFOW(fd,12+offset) = (quest && type != SP_JOBEXP) ? 1 : 0; // NOTE: Somehow JobEXP always in yellow color
 	WFIFOSET(fd,packet_len(cmd));
+#endif
 }
 
 

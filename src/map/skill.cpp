@@ -46,9 +46,9 @@
 #include "status.hpp"
 #include "unit.hpp"
 
-// Include .cpp files into the TU to optimize compile time
-// For reference see unity builds or amalgamated builds
-#include "skills/skill_factory.cpp"
+// Skill factory is compiled as separate translation units per job category
+// to reduce peak memory usage during compilation
+#include "skills/skill_factory.hpp"
 
 using namespace rathena;
 
@@ -2116,6 +2116,11 @@ bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uin
 	nullpo_retr(false, src);
 	nullpo_retr(false, target);
 
+	status_change *tsc = status_get_sc(target);
+
+	if (tsc == nullptr)
+		return false;
+
 	const int32 pos[6]             = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HELM, EQP_ACC, EQP_SHADOW_GEAR };
 	const enum sc_type sc_atk[6] = { SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC__STRIPACCESSORY, SC_SHADOW_STRIP };
 	const enum sc_type sc_def[6] = { SC_CP_WEAPON, SC_CP_SHIELD, SC_CP_ARMOR, SC_CP_HELM, SC_NONE, SC_PROTECTSHADOWEQUIP };
@@ -2227,7 +2232,6 @@ bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uin
 	}
 	if (!location)
 		return false;
-
 	for (uint8 i = 0; i < ARRAYLENGTH(pos); i++) {
 		if (location&pos[i] && !sc_start(src, target, sc_atk[i], 100, skill_lv, time))
 			location &=~ pos[i];
@@ -4207,6 +4211,37 @@ void skill_reveal_trap_inarea(block_list *src, int32 range, int32 x, int32 y) {
 	map_foreachinallarea(skill_reveal_trap, src->m, x-range, y-range, x+range, y+range, BL_SKILL);
 }
 
+/** Count living mirages from either summon skill.
+ * @author kreanlnwza Ai assistant Code [Astra].
+ */
+int32 skill_count_mirages(const block_list& src) {
+	const unit_data* ud = unit_bl2ud(&src);
+	if (ud == nullptr)
+		return 0;
+
+	int32 count = 0;
+	for (const auto& group : ud->skillunits) {
+		if (group && group->map == src.m && (group->skill_id == SS_SHINKIROU || group->skill_id == SS_SHINKIROU_GUNSHU))
+			count += group->alive_count;
+	}
+	return count;
+}
+
+/** Use the same inferred three-cell layout for validation and placement.
+ * @author kreanlnwza Ai assistant Code [Astra].
+ */
+bool skill_get_mirage_swarm_position(const block_list& src, uint8 index, int16& x, int16& y) {
+	static constexpr std::array<uint8, 3> offsets = { 4, 2, 6 };
+	if (index >= offsets.size())
+		return false;
+
+	const uint8 direction = (unit_getdir(&src) + offsets[index]) % DIR_MAX;
+	x = src.x + dirx[direction];
+	y = src.y + diry[direction];
+	const map_data* md = map_getmapdata(src.m);
+	return md && x >= 0 && y >= 0 && x < md->xs && y < md->ys && map_getcell(src.m, x, y, CELL_CHKREACH);
+}
+
 bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, t_tick tick, int32 flag ){
 	unit_data* ud = unit_bl2ud( &src );
 
@@ -4215,7 +4250,7 @@ bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16
 	}
 
 	for( const std::shared_ptr<s_skill_unit_group>& sug : ud->skillunits ){
-		if( sug->skill_id != SS_SHINKIROU ){
+		if( sug->skill_id != SS_SHINKIROU && sug->skill_id != SS_SHINKIROU_GUNSHU ){
 			continue;
 		}
 
@@ -4261,7 +4296,7 @@ int32 skill_shimiru_check_cell( block_list* target, va_list ap ){
 	if( target != nullptr && target->type == BL_SKILL ){
 		skill_unit* su = reinterpret_cast<skill_unit*>( target );
 
-		if( su->group != nullptr && su->group->skill_id == SS_SHINKIROU ){
+		if( su->group != nullptr && (su->group->skill_id == SS_SHINKIROU || su->group->skill_id == SS_SHINKIROU_GUNSHU) ){
 			return 1;
 		}
 
@@ -5143,6 +5178,13 @@ TIMER_FUNC(skill_castend_id){
 							if (sc && sc->getSCE(SC_CRESCIVEBOLT) && sc->getSCE(SC_CRESCIVEBOLT)->val1 >= 3) {
 								add_ap += 2;
 							}
+							break;
+						case WH_SOLIDTRAP_ATK:
+						case WH_DEEPBLINDTRAP_ATK:
+						case WH_SWIFTTRAP_ATK:
+						case WH_FLAMETRAP_ATK:
+							if (pc_checkskill(sd, WH_ADVANCED_TRAP) > 0)
+								++add_ap;
 							break;
 						case SH_HYUN_ROK_CANNON:
 							if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
@@ -8361,18 +8403,66 @@ int32 skill_check_bl_sc(block_list *target, va_list ap) {
 
 }
 
-/** 
- * Check skill condition when cast begin
- * For ammo, only check if the skill need ammo
- * For checking ammo requirement (type and amount) will be skill_check_condition_castend
+/** Recheck transient prerequisites at both cast boundaries, before paying resources.
+ * @author kreanlnwza Ai assistant Code [Astra].
+ */
+static bool skill_check_2026_condition(map_session_data& sd, uint16 skill_id) {
+	const status_change& sc = sd.sc;
+	bool allowed = true;
+	switch (skill_id) {
+		case IQ_BROKENHEAVEN:
+			allowed = sc.hasSCE(SC_FIRST_FAITH_POWER) || sc.hasSCE(SC_SECOND_JUDGE) || sc.hasSCE(SC_THIRD_EXOR_FLAME);
+			break;
+		case SS_NOBORU:
+			allowed = skill_count_mirages(sd) >= 3;
+			break;
+		case SS_SHINKIROU_GUNSHU: {
+			int16 x, y;
+			for (uint8 i = 0; i < 3 && allowed; ++i)
+				allowed = skill_get_mirage_swarm_position(sd, i, x, y);
+			break;
+		}
+		case NW_TACTICAL_REPOSITIONING:
+			allowed = sc.hasSCE(SC_INTENSIVE_AIM) && sc.hasSCE(SC_INTENSIVE_AIM_COUNT) && sc.getSCE(SC_INTENSIVE_AIM_COUNT)->val1 > 0;
+			break;
+		case SKE_SEVENTH_KICK:
+			allowed = sc.hasSCE(SC_SKY_ENCHANT);
+			break;
+		case SKE_SEVENTH_KICK_S:
+			allowed = sc.hasSCE(SC_SKY_ENCHANT) && sc.hasSCE(SC_SEVENTH_KICK_MAX);
+			break;
+		case SOA_FIELD_OF_KIRIN:
+			allowed = sc.hasSCE(SC_T_FOURTH_GOD) || sc.hasSCE(SC_T_FIFTH_GOD);
+			break;
+		case AT_PLUME_PIERCER:
+			allowed = sc.hasSCE(SC_WERERAPTOR);
+			break;
+		case WH_SOLIDTRAP_ATK:
+		case WH_DEEPBLINDTRAP_ATK:
+		case WH_SWIFTTRAP_ATK:
+		case WH_FLAMETRAP_ATK:
+			allowed = sc.hasSCE(SC_PRIMED_TRAP) && !pc_isridingwug(&sd);
+			break;
+	}
+	if (!allowed)
+		clif_skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION);
+	return allowed;
+}
+
+/**
+ * Check skill condition when cast begin.
+ * Ammo quantity is checked by skill_check_condition_castend.
  * @param sd Player who uses skill
  * @param skill_id ID of used skill
  * @param skill_lv Level of used skill
- * @return true: All condition passed, false: Failed
+ * @return true if all conditions passed
  */
 bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uint16 skill_lv ){
 	struct s_skill_condition require;
 	int32 i;
+
+	if (!skill_check_2026_condition(sd, skill_id))
+		return false;
 
 	if (sd.chatID)
 		return false;
@@ -9461,6 +9551,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			case SP_SOULEXPLOSION:
 			case SP_KAUTE:
 			case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+			case SOA_FIELD_OF_KIRIN:
 				if (sd.soulball < require.spiritball) {
 					clif_skill_fail( sd, skill_id, USESKILL_FAIL_SPIRITS );
 					return false;
@@ -9468,6 +9559,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				break;
 
 			// Skills that requires servants.
+			case DK_SERVANT_W_CLEAVE:
 			case DK_SERVANT_W_SIGN:
 			case DK_SERVANT_W_DEMOL:
 				if (sd.servantball < require.spiritball) {
@@ -9507,6 +9599,9 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 	struct status_data *status;
 	int32 i;
 	int16 index[MAX_SKILL_ITEM_REQUIRE];
+
+	if (!skill_check_2026_condition(sd, skill_id))
+		return false;
 
 	if( sd.chatID )
 		return false;
@@ -9821,6 +9916,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 				case SP_SOULREAPER:
 				case SP_SOULEXPLOSION:
 				case SP_KAUTE:
+				case SOA_FIELD_OF_KIRIN:
 					pc_delsoulball( *sd, require.spiritball );
 					break;
 
@@ -9829,6 +9925,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 				// since using these skills auto trigger an animation
 				// with them in unique ways that makes them vanish.
 				case DK_SERVANT_W_SIGN:
+				case DK_SERVANT_W_CLEAVE:
 				case DK_SERVANT_W_PHANTOM:
 				case DK_SERVANT_W_DEMOL:
 					pc_delservantball( *sd, require.spiritball );
