@@ -132,6 +132,9 @@ python -X utf8 -B -m unittest discover -s tools/skill_2026 -p test_validate_mani
 
 ## Validation
 
+The reported missing visual effects and their follow-up checks are recorded in
+[effect_debugging.md](effect_debugging.md).
+
 - The manifest validator passed for all 38 records: 32 tree-visible and six
   internal triggers. The three negative validator tests also passed.
 - MSBuild `Release|x64` builds of `map-server.vcxproj` and
