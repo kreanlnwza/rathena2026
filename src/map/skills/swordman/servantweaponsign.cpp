@@ -66,6 +66,11 @@ void SkillServantWeaponSign::applyAdditionalEffects(block_list* src, block_list*
 	map_session_data* sd = BL_CAST(BL_PC, src);
 	mob_data* md = BL_CAST(BL_MOB, src);
 	const sc_type type = skill_get_sc(getSkillId());
+	status_change* tsc = status_get_sc(target);
+
+	// The target may have been marked by another source after the cast check.
+	if (tsc != nullptr && tsc->getSCE(type) != nullptr && tsc->getSCE(type)->val1 != src->id)
+		return;
 
 	if (sd != nullptr) {
 		int8 i;
