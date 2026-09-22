@@ -6,6 +6,7 @@
 
 #include <config/core.hpp>
 
+#include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
@@ -13,6 +14,7 @@ SkillLexExpiatrix::SkillLexExpiatrix() : SkillImpl(CD_LEX_EXPIATRIX) {
 }
 
 void SkillLexExpiatrix::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
 }
 

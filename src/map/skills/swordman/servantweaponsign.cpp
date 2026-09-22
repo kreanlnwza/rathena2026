@@ -53,6 +53,7 @@ void SkillServantWeaponSign::castendDamageId(block_list* src, block_list* target
 		}
 	}
 
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
 

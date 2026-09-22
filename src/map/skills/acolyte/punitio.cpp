@@ -20,6 +20,7 @@ void SkillPunitio::castendDamageId(block_list* src, block_list* target, uint16 s
 	if (skill_check_unit_movepos(5, src, target->x + dirx[dir], target->y + diry[dir], 0, true))
 		clif_blown(src);
 
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
 

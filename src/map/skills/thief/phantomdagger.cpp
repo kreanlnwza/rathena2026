@@ -7,8 +7,14 @@
 #include <config/core.hpp>
 
 #include "common/random.hpp"
+#include "map/clif.hpp"
 
 SkillPhantomDagger::SkillPhantomDagger() : WeaponSkillImpl(ABC_PHANTOM_DAGGER) {
+}
+
+void SkillPhantomDagger::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
 
 void SkillPhantomDagger::modifyDamageData(Damage& dmg, const block_list& src, const block_list& target, uint16 skill_lv) const {
