@@ -34,8 +34,13 @@ void SkillSeventhKick::calculateSkillRatio(const Damage*, const block_list* src,
 	RE_LVL_DMOD(100);
 }
 
-void SkillSeventhKick::applyCounterAdditionalEffects(block_list* src, block_list*, uint16 skill_lv, t_tick, int32&) const {
+void SkillSeventhKick::applyCounterAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick, int32&) const {
 	if (status_isdead(*src))
+		return;
+
+	// These defensive statuses invoke counter effects before blocking the hit.
+	const status_change* target_sc = status_get_sc(target);
+	if (target_sc != nullptr && (target_sc->hasSCE(SC_UTSUSEMI) || target_sc->hasSCE(SC_BUNSINJYUTSU)))
 		return;
 
 	const status_change* sc = status_get_sc(src);

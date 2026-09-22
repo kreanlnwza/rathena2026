@@ -17,8 +17,10 @@ server behavior that cannot be recovered from those files.
 
 ## Sources and priority
 
-Primary evidence is `data.grf` from the 2026-09-16 kRO client. The archive is
-read-only and was decoded with the local GPakEx 0x80 capable GRF tooling. Exact
+Primary evidence is the supplied `Z:\KR_RO1_Live_20260401_155632\data.grf`.
+Its filesystem modification time is 2026-09-16; that timestamp is not an
+independently verified client release date. The archive is read-only and was
+decoded with the local GPakEx 0x80 capable GRF tooling. Exact
 archive metadata, extracted member sizes, SHA-256 hashes, client costs, ranges,
 prerequisites, delays, and EFST IDs are in [manifest.json](manifest.json).
 
@@ -26,7 +28,7 @@ The public design note is supporting evidence:
 
 - <https://ro.gnjoy.com/news/devnote/View.asp?category=1&seq=4200579&curpage=1>
 
-When the design note and the September client differ, the current client wins
+When the design note and the supplied client differ, the supplied client wins
 for IDs, SP/AP, ranges, cast delays, cooldowns, and prerequisites. For example,
 the primary client has Elemental Integration duration 240 seconds and cooldown
 3 seconds, and Mirage Swarm consumes 30 AP.
@@ -48,6 +50,32 @@ the primary client has Elemental Integration duration 240 seconds and cooldown
 - The current rebalance changes Servant Weapon Sign into a critical weapon hit
   and reduces each Acidified Zone bottle cost from two to one.
 
+## Seventh Kick external evidence
+
+The [official demonstration](https://imgc.gnjoy.com/Bbs/Editor/2026/06/30/7f4a74eb1a5a41eebe7b75f875ef4cbf104239.gif)
+in the design note shows five lit satellites, then six and seven after successive
+normal Seventh Kick hits. The following cast displays the enhanced skill name
+and clears the orbit. Frames 0, 8, 80, and 144 show those states respectively.
+The GIF SHA-256 is
+`fee66193d283666fefee5d8cef20ffcd5d5a6fcf7446639aee5a6b331ce8b86f`.
+
+A [first-hand player demonstration at 23:10](https://www.youtube.com/watch?v=ZPWKxHcLaqA&t=1390s)
+describes the satellites as lasting 10 seconds with refresh. This supports the
+GRF's 10-second duration and a refreshed timer on each successful normal hit.
+[Divine Pride 6635](https://www.divine-pride.net/database/skill/6635) and
+[6636](https://www.divine-pride.net/database/skill/6636) corroborate the normal
+and enhanced descriptions and ratios, but do not document further state rules.
+Their incomplete metadata does not override the primary client arrays.
+
+The implementation counts successful normal hits up to seven, including
+killing blows but excluding Cicada/Soul Shadow blocks, refreshes the 10-second
+timer, and invokes skill 6636 on the next
+cast after reaching seven. Expiry clears the ready state. Consuming the orbit
+at cast time even on a miss, using the same duration for the ready state, and
+sending the count in status `val1` remain implementation choices; no packet
+capture or dedicated miss test establishes those details. Dispel behavior and
+direct scripted casts of the hidden skill have not been verified against kRO.
+
 ## Unknown or server-derived behavior
 
 The client descriptions name Base Level and trait-stat scaling but do not encode
@@ -60,15 +88,16 @@ is implementation-derived and was not recovered from this GRF.
 The GRF also does not define:
 
 - the satellite count or transition rule between `EFST_SEVENTH_KICK_SKILLORB`
-  and `EFST_SEVENTH_KICK_MAX`. At this commit the enhanced transition is not
-  implemented and is unreachable in ordinary play, pending stronger external
-  evidence from the separately requested research;
-- Mirage Swarm placement offsets, collision rules, or obstacle handling;
+  and `EFST_SEVENTH_KICK_MAX`; the external observations above supply these;
+- the exact Mirage Swarm placement offsets. Its description does explicitly
+  require failure when a placement cell is blocked. The implementation checks
+  three fixed positions relative to the caster before replacing existing mirages;
 - a mapping from the four Primed attack levels to the four older trap levels;
 - a duration for the Thundering charge added by Nature Rage under Truth of Wind;
 - numeric POW, CON, or SPL coefficients mentioned only qualitatively.
 
-Broken Heaven says to heal 10% of final damage, capped at 50,000, but does not
+Broken Heaven says to heal `3 * skill level` percent of final damage (3-15%),
+capped at 50,000, but does not
 state whether an area hit shares one cap or applies it per damaged target. The
 current per-target callback applies the cap to each damaged target; this remains
 a server-behavior ambiguity rather than a client-proven aggregation rule.
@@ -97,6 +126,20 @@ After source integration, validate DB uniqueness, all 38 enum mappings,
 reference, client arrays, and tree prerequisites:
 
 ```powershell
-python tools/skill_2026/validate_manifest.py --source-root .
-python -m unittest tools/skill_2026/test_validate_manifest.py
+python -X utf8 -B tools/skill_2026/validate_manifest.py --source-root .
+python -X utf8 -B -m unittest discover -s tools/skill_2026 -p test_validate_manifest.py
 ```
+
+## Validation
+
+- The manifest validator passed for all 38 records: 32 tree-visible and six
+  internal triggers. The three negative validator tests also passed.
+- MSBuild `Release|x64` builds of `map-server.vcxproj` and
+  `map-server-generator.vcxproj` passed with zero warnings and zero errors.
+  Outputs and logs are kept in the ignored `.vs` directory.
+- A focused lifecycle review covered Seven Kick hit/miss handling, killing
+  blows, defensive blocks, refresh, enhanced dispatch, and expiry. This is
+  source review, not a live gameplay test.
+- No live SQL startup or in-game verification was performed. Damage
+  coefficients and state details identified above still need comparison with
+  measured kRO behavior.

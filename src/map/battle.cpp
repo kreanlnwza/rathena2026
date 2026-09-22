@@ -332,10 +332,19 @@ int32 battle_damage(block_list *src, block_list *target, int64 damage, int16 div
 	if (src)
 		sd = BL_CAST(BL_PC, src);
 	FreeBlockLock freeLock;
+	const uint32 hp_before_damage = skill_id == IQ_BROKENHEAVEN ? status_get_hp(target) : 0;
 	if (sd && battle_check_coma(*sd, *target, (e_battle_flag)attack_type))
 		dmg_change = status_damage(src, target, damage, 0, delay, 16, skill_id); // Coma attack
 	else if (dmg_lv > ATK_BLOCK)
 		dmg_change = status_fix_damage(src, target, damage, delay, skill_id);
+	// Broken Heaven's third chapter heals from HP actually removed, after blocks and overkill.
+	if (skill_id == IQ_BROKENHEAVEN && src && !status_isdead(*src) && dmg_change > 0) {
+		const status_change* sc = status_get_sc(src);
+		if (sc && sc->hasSCE(SC_THIRD_EXOR_FLAME)) {
+			const int64 dealt = std::min<int64>(dmg_change, hp_before_damage);
+			status_heal(src, static_cast<int32>(std::min<int64>(50000, dealt * 3 * skill_lv / 100)), 0, 1);
+		}
+	}
 	if (attack_type && !status_isdead(*target) && additional_effects)
 		skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, tick);
 	if (dmg_lv > ATK_BLOCK && attack_type && additional_effects)
@@ -1966,9 +1975,11 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 			switch (skill_id) {
 				case HN_SHIELD_CHAIN_RUSH:
 				case HN_DOUBLEBOWLINGBASH:
+				case HN_WIND_CUTTER_TURBO:
 					damage += damage * 120 / 100; 
 					break;
 				case HN_MEGA_SONIC_BLOW:
+				case HN_HIGH_MAGNUM_BREAK:
 					damage *= 2;
 					break;
 				case HN_SPIRAL_PIERCE_MAX:
@@ -3024,6 +3035,16 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 {
 	if (!first_call)
 		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
+
+	const status_change* critical_sc = status_get_sc(src);
+	if (critical_sc && critical_sc->hasSCE(SC_VENOMIGNITION))
+		return false;
+	if (skill_id == MT_OVERDRIVE_PROTOCAL && (!critical_sc || !critical_sc->hasSCE(SC_ABR_INFINITY)))
+		return false;
+	if (skill_id == IQ_BROKENHEAVEN && (!critical_sc || !critical_sc->hasSCE(SC_FIRST_FAITH_POWER)))
+		return false;
+	if (skill_id == AT_PLUME_PIERCER && (!critical_sc || !critical_sc->hasSCE(SC_APEX_PHASE)))
+		return false;
 
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
@@ -7651,6 +7672,16 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 				skill_castend_damage_id( src, target, skill_id, skill_lv, tick, flag );
 				battle_autocast_aftercast( src, skill_id, skill_lv, tick );
 				sd->state.autocast = 0;
+			}
+
+			if (sc->hasSCE(SC_ELEMENTAL_INTEGRATION) && rnd_chance(25, 100)) {
+				const uint16 integration_lv = cap_value(sc->getSCE(SC_ELEMENTAL_INTEGRATION)->val1, 1, 5);
+				const uint16 integration_skill = EM_BURNING_FLAME + integration_lv - 1;
+				const auto previous_autocast = sd->state.autocast;
+				sd->state.autocast = 1;
+				skill_castend_damage_id(src, target, integration_skill, integration_lv, tick, flag);
+				battle_autocast_aftercast(src, integration_skill, integration_lv, tick);
+				sd->state.autocast = previous_autocast;
 			}
 
 			// It has a success chance of triggering even tho the description says nothing about it.

@@ -10257,3 +10257,47 @@ Body:
     Icon: EFST_FERAL_CLAW
     EndOnStart:
       Primal_Claw: true
+  - Status: VenomIgnition
+    Icon: EFST_VENOMIGNITION
+    Script: |
+      .@lv = getstatus(SC_VENOMIGNITION, 1);
+      bonus bHit, 50 + 20 * .@lv;
+      bonus bNonCritAtkRate, 25 + 15 * .@lv;
+  - Status: Elemental_Integration
+    Icon: EFST_ELEMENTAL_INTEGRATION
+  - Status: Seventh_Kick_SkillOrb
+    Icon: EFST_SEVENTH_KICK_SKILLORB
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendVal1: true
+    EndOnEnd:
+      Seventh_Kick_Max: true
+  - Status: Seventh_Kick_Max
+    Icon: EFST_SEVENTH_KICK_MAX
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Ki_Sul_And_Chul_Ho
+    Icon: EFST_KI_SUL_AND_CHUL_HO
+    Script: |
+      bonus2 bSkillAtk, "SH_CHUL_HO_SONIC_CLAW", 50;
+      bonus2 bSkillAtk, "SH_HOWLING_OF_CHUL_HO", 30;
+      bonus2 bSkillAtk, "SH_HOGOGONG_STRIKE", 60;
+      bonus2 bSkillAtk, "SH_CHUL_HO_BATTERING", 50;
+  - Status: Ki_Sul_And_Hyun_Rok
+    Icon: EFST_KI_SUL_AND_HYUN_ROK
+    Script: |
+      bonus2 bSkillAtk, "SH_HYUN_ROKS_BREEZE", 50;
+      bonus2 bSkillAtk, "SH_HYUN_ROK_CANNON", 30;
+      bonus2 bSkillAtk, "SH_HYUN_ROK_SPIRIT_POWER", 60;
+  - Status: Noboru
+    Icon: EFST_NOBORU
+    Script: |
+      .@lv = getstatus(SC_NOBORU, 1);
+      bonus bNonCritAtkRate, 10 * .@lv;
+      bonus bCritAtkRate, 10 * .@lv;
+      bonus bShortAtkRate, 30 * .@lv;
+      bonus bLongAtkRate, 30 * .@lv;
+  - Status: Primed_Trap
+    Icon: EFST_PRIMED_TRAP

@@ -2047,6 +2047,22 @@
 	export_constant(SC_PULSE_OF_MADNESS);
 	export_constant(SC_PRIMAL_CLAW);
 	export_constant(SC_FERAL_CLAW);
+	export_constant(SC_VENOMIGNITION);
+	export_constant(SC_ELEMENTAL_INTEGRATION);
+	export_constant(SC_SEVENTH_KICK_SKILLORB);
+	export_constant(SC_SEVENTH_KICK_MAX);
+	export_constant(SC_KI_SUL_AND_CHUL_HO);
+	export_constant(SC_KI_SUL_AND_HYUN_ROK);
+	export_constant(SC_NOBORU);
+	export_constant(SC_PRIMED_TRAP);
+	export_constant(EFST_VENOMIGNITION);
+	export_constant(EFST_ELEMENTAL_INTEGRATION);
+	export_constant(EFST_SEVENTH_KICK_SKILLORB);
+	export_constant(EFST_SEVENTH_KICK_MAX);
+	export_constant(EFST_KI_SUL_AND_CHUL_HO);
+	export_constant(EFST_KI_SUL_AND_HYUN_ROK);
+	export_constant(EFST_NOBORU);
+	export_constant(EFST_PRIMED_TRAP);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)

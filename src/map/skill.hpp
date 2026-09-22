@@ -2526,6 +2526,42 @@ enum e_skill {
 	AT_GRAVITY_HOLE,
 	AT_NATURE_AID,
 	AT_NATURE_HARMONY,
+	DK_SERVANT_W_CLEAVE = 6608,
+	IG_SHIELD_SLAM,
+	MT_OVERDRIVE_PROTOCAL,
+	BO_RAMPANT_VINE,
+	SHC_VENOMIGNITION,
+	ABC_PHANTOM_DAGGER,
+	AG_WRAITH_DASH,
+	EM_ELEMENTAL_INTEGRATION,
+	EM_BURNING_FLAME,
+	EM_FROZEN_HAIL,
+	EM_STORM_RISE,
+	EM_TERRA_BURST,
+	EM_VENOM_BOMBARD,
+	CD_PUNITIO,
+	CD_LEX_EXPIATRIX,
+	IQ_BROKENHEAVEN,
+	WH_FRAGMENT_BOLT,
+	WH_PRIMED_TRAP,
+	WH_SOLIDTRAP_ATK,
+	WH_DEEPBLINDTRAP_ATK,
+	WH_SWIFTTRAP_ATK,
+	WH_FLAMETRAP_ATK,
+	TR_FUGUE_DES_FLECHES,
+	SS_SHINKIROU_GUNSHU,
+	SS_NOBORU,
+	SS_KAGEGEKIRYU,
+	NW_TACTICAL_REPOSITIONING,
+	SKE_SEVENTH_KICK,
+	SKE_SEVENTH_KICK_S,
+	SOA_FIELD_OF_KIRIN,
+	HN_WIND_CUTTER_TURBO,
+	HN_HIGH_MAGNUM_BREAK,
+	SH_KI_SUL_AND_CHUL_HO,
+	SH_KI_SUL_AND_HYUN_ROK,
+	AT_PLUME_PIERCER,
+	AT_NATURE_RAGE,
 
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,
@@ -2994,6 +3030,8 @@ enum sc_type skill_get_sc(int16 skill_id);
 void skill_reveal_trap_inarea(block_list *src, int32 range, int32 x, int32 y);
 int32 skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);
 
+int32 skill_count_mirages(const block_list& src);
+bool skill_get_mirage_swarm_position(const block_list& src, uint8 index, int16& x, int16& y);
 bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, t_tick tick, int32 flag );
 int32 skill_shimiru_check_cell( block_list* target, va_list ap );
 
