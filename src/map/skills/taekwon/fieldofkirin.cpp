@@ -12,6 +12,15 @@
 SkillFieldOfKirin::SkillFieldOfKirin() : SkillImplRecursiveDamageSplash(SOA_FIELD_OF_KIRIN) {
 }
 
+void SkillFieldOfKirin::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	// The client selects one target, while the damage area is centered on the
+	// caster. Keep recursive invocations aimed at each enemy found in that area.
+	if (!(flag & 1))
+		target = src;
+
+	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
+}
+
 void SkillFieldOfKirin::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_change* sc = status_get_sc(src);

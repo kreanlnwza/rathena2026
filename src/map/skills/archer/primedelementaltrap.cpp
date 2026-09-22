@@ -12,6 +12,12 @@
 SkillPrimedElementalTrap::SkillPrimedElementalTrap(e_skill skill_id) : SkillImplRecursiveDamageSplash(skill_id) {
 }
 
+void SkillPrimedElementalTrap::modifyDamageData(Damage& dmg, const block_list&, const block_list&, uint16) const {
+	// These attacks can be cast from range, but the primary description
+	// explicitly classifies their damage as melee physical.
+	dmg.flag = (dmg.flag & ~BF_RANGEMASK) | BF_SHORT;
+}
+
 void SkillPrimedElementalTrap::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_data* sstatus = status_get_status_data(*src);
