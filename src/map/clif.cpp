@@ -23209,6 +23209,63 @@ void clif_barter_open( map_session_data& sd, npc_data& nd ){
 
 	sd.state.barter_open = true;
 
+	// Display craft info (recipe list with success rates) when opening a craft barter shop
+	if( barter->craft ){
+		char msg[512];
+
+		clif_messagecolor( &sd, color_table[COLOR_CYAN], "=== Craft Shop ===", false, SELF );
+
+		for( const auto& itemPair : barter->items ){
+			std::shared_ptr<item_data> id = item_db.find( itemPair.second->nameid );
+
+			if( id == nullptr ){
+				continue;
+			}
+
+			std::string itemLink = item_db.create_item_link( id );
+			double successPct = itemPair.second->successRate / 100.0;
+
+			snprintf( msg, sizeof(msg), "%s ~ %.2f%%", itemLink.c_str(), successPct );
+			clif_messagecolor( &sd, color_table[COLOR_YELLOW], msg, false, SELF );
+
+			for( const auto& reqPair : itemPair.second->requirements ){
+				std::shared_ptr<item_data> reqId = item_db.find( reqPair.second->nameid );
+
+				if( reqId == nullptr ){
+					continue;
+				}
+
+				std::string reqLink;
+
+				if( reqPair.second->refine > 0 ){
+					struct item linkItem = {};
+
+					linkItem.nameid = reqPair.second->nameid;
+					linkItem.identify = true;
+					linkItem.refine = reqPair.second->refine;
+
+					reqLink = item_db.create_item_link( linkItem, reqId );
+				}else{
+					reqLink = item_db.create_item_link( reqId );
+				}
+
+				snprintf( msg, sizeof(msg), "  - %s x%u", reqLink.c_str(), reqPair.second->amount );
+				clif_messagecolor( &sd, color_table[COLOR_WHITE], msg, false, SELF );
+			}
+
+			if( itemPair.second->protectionId != 0 ){
+				std::shared_ptr<item_data> protId = item_db.find( itemPair.second->protectionId );
+
+				if( protId != nullptr ){
+					std::string protLink = item_db.create_item_link( protId );
+
+					snprintf( msg, sizeof(msg), "  - %s x%u (protection)", protLink.c_str(), itemPair.second->protectionAmount );
+					clif_messagecolor( &sd, color_table[COLOR_WHITE], msg, false, SELF );
+				}
+			}
+		}
+	}
+
 	PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO* p = reinterpret_cast<PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_NPC_BARTER_MARKET_ITEMINFO;
