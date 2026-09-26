@@ -60,6 +60,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "custom_msg.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
 
