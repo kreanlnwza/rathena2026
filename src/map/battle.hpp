@@ -446,6 +446,7 @@ struct Battle_Config
 	int32 party_even_share_bonus;
 	int32 delay_battle_damage;
 	int32 hide_woe_damage;
+	int32 damage64_display_sidecar;
 	int32 display_version;
 
 	int32 display_hallucination;	// [Skotlex]

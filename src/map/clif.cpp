@@ -4,6 +4,7 @@
 
 #include "clif.hpp"
 
+#include <cstddef>
 #include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
@@ -5233,14 +5234,105 @@ static int64 clif_hallucination_damage( const block_list& bl, int64 damage ){
 ///     11 = lucky dodge
 ///     12 = (touch skill?)
 ///     13 = multi-hit critical
+#if PACKETVER >= 20131223
+// An opt-in display extension. The stock action packet still follows this
+// sidecar, so its animation, timing and packet length remain unchanged.
+#pragma pack(push, 1)
+struct PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR {
+	uint16 packetType;
+	int32 srcID;
+	int32 targetID;
+	uint32 serverTick;
+	uint32 magic;
+	uint32 followingOpcode;
+	uint32 damageLow;
+	uint8 lane;
+	uint16 version;
+	uint8 type;
+	uint32 damageHigh;
+};
+#pragma pack(pop)
+
+static_assert(sizeof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR) == 34, "damage64 sidecar must match 0x08C8 length");
+static_assert(sizeof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR) == sizeof(PACKET_ZC_NOTIFY_ACT), "damage64 sidecar must match action packet size");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, srcID) == 2, "damage64 source offset changed");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, targetID) == 6, "damage64 target offset changed");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, serverTick) == 10, "damage64 tick offset changed");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, magic) == 14, "damage64 magic offset changed");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, followingOpcode) == 18, "damage64 opcode offset changed");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, damageLow) == 22, "damage64 low word offset changed");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, lane) == 26, "damage64 lane offset changed");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, version) == 27, "damage64 version offset changed");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, type) == 29, "damage64 marker offset changed");
+static_assert(offsetof(PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR, damageHigh) == 30, "damage64 high word offset changed");
+
+static int32 clif_damage64_popup_count(int32 count, bool divide)
+{
+	// The client accepts only 1..36 hits. Normal actions other than 8/9/13
+	// display the entire main hit; skill actions always use the valid count.
+	return divide && count >= 1 && count <= 36 ? count : 1;
+}
+
+static int64 clif_damage64_saturating_add(int64 left, int64 right)
+{
+	if (right > 0 && left > std::numeric_limits<int64>::max() - right)
+		return std::numeric_limits<int64>::max();
+	if (right < 0 && left < std::numeric_limits<int64>::min() - right)
+		return std::numeric_limits<int64>::min();
+	return left + right;
+}
+
+static void clif_send_damage64_sidecar(const block_list& center, int32 srcID, int32 targetID,
+	uint32 serverTick, uint16 followingOpcode, uint8 lane, int64 popup, bool emit, enum send_target target)
+{
+	if (!battle_config.damage64_display_sidecar || !emit)
+		return;
+
+	const uint64 bits = static_cast<uint64>(popup);
+	PACKET_ZC_DAMAGE64_DISPLAY_SIDECAR p{};
+	p.packetType = HEADER_ZC_NOTIFY_ACT;
+	p.srcID = srcID;
+	p.targetID = targetID;
+	p.serverTick = serverTick;
+	p.magic = 0x34364449; // "ID64" on the wire
+	p.followingOpcode = followingOpcode;
+	p.damageLow = static_cast<uint32>(bits);
+	p.lane = lane; // 0: main, 1: offhand, 2: skill, 3: main cumulative + offhand
+	p.version = 1;
+	p.type = 0xFE;
+	p.damageHigh = static_cast<uint32>(bits >> 32);
+	clif_send(&p, sizeof(p), &center, target);
+}
+#endif
+
 void clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int16 div, enum e_damage_type type, int64 sdamage2, bool spdamage){
 	int32 damage = (int32)cap_value(sdamage,INT_MIN,INT_MAX);
 	int32 damage2 = (int32)cap_value(sdamage2,INT_MIN,INT_MAX);
 
-	type = clif_calc_delay(dst, type, div, damage+damage2, ddelay, tick);
+#if PACKETVER >= 20131223
+	if (battle_config.damage64_display_sidecar)
+		type = clif_calc_delay(dst, type, div, static_cast<int64>(damage)+damage2, ddelay, tick);
+	else
+#endif
+		type = clif_calc_delay(dst, type, div, damage+damage2, ddelay, tick);
 
-	damage = static_cast<decltype(damage)>(clif_hallucination_damage(dst, damage));
-	damage2 = static_cast<decltype(damage2)>(clif_hallucination_damage(dst, damage2));
+	int64 displayDamage, displayDamage2;
+#if PACKETVER >= 20131223
+	if (battle_config.damage64_display_sidecar) {
+		// Preserve the wide display values until after hallucination is applied.
+		displayDamage = clif_hallucination_damage(dst, sdamage);
+		displayDamage2 = clif_hallucination_damage(dst, sdamage2);
+		damage = static_cast<decltype(damage)>(cap_value(displayDamage, INT_MIN, INT_MAX));
+		damage2 = static_cast<decltype(damage2)>(cap_value(displayDamage2, INT_MIN, INT_MAX));
+	} else
+#endif
+	{
+		// Keep the stock clamp-then-hallucination path when the extension is off.
+		damage = static_cast<decltype(damage)>(clif_hallucination_damage(dst, damage));
+		damage2 = static_cast<decltype(damage2)>(clif_hallucination_damage(dst, damage2));
+		displayDamage = damage;
+		displayDamage2 = damage2;
+	}
 
 	// Calculate what sdelay to send to the client so it applies damage at the same time as the server
 	if (battle_config.synchronize_damage && src.type == BL_MOB) {
@@ -5274,7 +5366,8 @@ void clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, in
 	p.srcSpeed = sdelay;
 	p.dmgSpeed = ddelay;
 
-	if (battle_config.hide_woe_damage && map_flag_gvg(src.m)) {
+	const bool hideDamage = battle_config.hide_woe_damage && map_flag_gvg(src.m);
+	if (hideDamage) {
 		p.damage = damage ? div : 0;
 		p.damage2 = damage2 ? div : 0;
 	} else {
@@ -5288,15 +5381,41 @@ void clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, in
 
 	p.div = div;
 	p.type = type;
+	const bool sourceDisguised = disguised(&src);
+
+	const auto sendDamage = [&](enum send_target target) {
+#if PACKETVER >= 20131223
+		if (!hideDamage && !sourceDisguised) {
+			const bool divideMain = p.type == DMG_MULTI_HIT || p.type == DMG_MULTI_HIT_ENDURE || p.type == DMG_MULTI_HIT_CRITICAL;
+			const int32 popupCount = clif_damage64_popup_count(p.div, divideMain);
+			const int64 mainPopup = displayDamage / popupCount;
+			const bool mainWide = displayDamage > INT_MAX;
+			const bool offhandWide = displayDamage2 > INT_MAX;
+			clif_send_damage64_sidecar(dst, p.srcID, p.targetID, p.serverTick,
+				HEADER_ZC_NOTIFY_ACT, 0, mainPopup, mainWide, target);
+			clif_send_damage64_sidecar(dst, p.srcID, p.targetID, p.serverTick,
+				HEADER_ZC_NOTIFY_ACT, 1, displayDamage2, offhandWide, target);
+			if (popupCount > 1 && p.damage2 != 0) {
+				// The client accumulates the truncated main hit before the offhand popup.
+				// mainPopup * popupCount cannot overflow because it is derived from displayDamage.
+				const int64 combined = clif_damage64_saturating_add(mainPopup * popupCount, displayDamage2);
+				const bool combinedWide = combined > INT_MAX || combined < INT_MIN;
+				clif_send_damage64_sidecar(dst, p.srcID, p.targetID, p.serverTick,
+					HEADER_ZC_NOTIFY_ACT, 3, combined, combinedWide || mainWide || offhandWide, target);
+			}
+		}
+#endif
+		clif_send(&p, sizeof(p), &dst, target);
+	};
 
 	if(disguised(&dst)) {
-		clif_send( &p, sizeof(p), &dst, AREA_WOS);
+		sendDamage(AREA_WOS);
 		p.targetID = disguised_bl_id( dst.id );
-		clif_send( &p, sizeof(p), &dst, SELF);
+		sendDamage(SELF);
 	} else
-		clif_send(&p, sizeof(p), &dst, AREA);
+		sendDamage(AREA);
 
-	if(disguised(&src)) {
+	if(sourceDisguised) {
 		p.srcID = disguised_bl_id( src.id );
 		if(damage > 0)
 			p.damage = -1;
@@ -6062,9 +6181,22 @@ void clif_skill_damage( const block_list& src, const block_list& dst, t_tick tic
 	packet.attackMT = sdelay;
 	packet.attackedMT = ddelay;
 
-	auto damage = std::min( static_cast<decltype(packet.damage)>( sdamage ), std::numeric_limits<decltype(packet.damage)>::max() );
+	using PacketDamage = decltype(packet.damage);
+	PacketDamage damage;
+#if PACKETVER >= 20131223
+	if (battle_config.damage64_display_sidecar) {
+		const int64 packetDamageMin = std::numeric_limits<PacketDamage>::min();
+		const int64 packetDamageMax = std::numeric_limits<PacketDamage>::max();
+		damage = static_cast<PacketDamage>(cap_value(sdamage, packetDamageMin, packetDamageMax));
+	} else
+#endif
+	{
+		// Preserve the original cast before min when the extension is disabled.
+		damage = std::min(static_cast<PacketDamage>(sdamage), std::numeric_limits<PacketDamage>::max());
+	}
 
-	if (battle_config.hide_woe_damage && map_flag_gvg(src.m)) {
+	const bool hideDamage = battle_config.hide_woe_damage && map_flag_gvg(src.m);
+	if (hideDamage) {
 		packet.damage = static_cast<decltype(packet.damage)>(damage ? div : 0);
 	} else {
 		packet.damage = damage;
@@ -6081,16 +6213,27 @@ void clif_skill_damage( const block_list& src, const block_list& dst, t_tick tic
 		type = DMG_MULTI_HIT;
 #endif
 	packet.action = static_cast<decltype(packet.action)>(type);
+	const bool sourceDisguised = disguised(&src);
+
+	const auto sendSkillDamage = [&](enum send_target target) {
+#if PACKETVER >= 20131223
+		if (!hideDamage && !sourceDisguised)
+			clif_send_damage64_sidecar(dst, packet.AID, packet.targetID, packet.startTime,
+				HEADER_ZC_NOTIFY_SKILL, 2,
+				sdamage / clif_damage64_popup_count(packet.count, true), sdamage > INT_MAX, target);
+#endif
+		clif_send(&packet, sizeof(packet), &dst, target);
+	};
 
 	if (disguised(&dst)) {
-		clif_send( &packet, sizeof( packet ), &dst, AREA_WOS );
+		sendSkillDamage(AREA_WOS);
 		packet.targetID = disguised_bl_id( dst.id );
-		clif_send( &packet, sizeof( packet ), &dst, SELF );
+		sendSkillDamage(SELF);
 	} else {
-		clif_send( &packet, sizeof( packet ), &dst, AREA );
+		sendSkillDamage(AREA);
 	}
 	
-	if (disguised(&src)) {
+	if (sourceDisguised) {
 		packet.AID = disguised_bl_id( src.id );
 		if (disguised(&dst)) {
 			packet.targetID = dst.id;

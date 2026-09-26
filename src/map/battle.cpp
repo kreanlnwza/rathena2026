@@ -8573,6 +8573,7 @@ static const struct _battle_data {
 	{ "party_even_share_bonus",             &battle_config.party_even_share_bonus,          0,      0,      INT_MAX,        },
 	{ "delay_battle_damage",                &battle_config.delay_battle_damage,             1,      0,      1,              },
 	{ "hide_woe_damage",                    &battle_config.hide_woe_damage,                 0,      0,      1,              },
+	{ "damage64_display_sidecar",           &battle_config.damage64_display_sidecar,        0,      0,      1,              },
 	{ "display_version",                    &battle_config.display_version,                 1,      0,      1,              },
 	{ "display_hallucination",              &battle_config.display_hallucination,           1,      0,      1,              },
 	{ "use_statpoint_table",                &battle_config.use_statpoint_table,             1,      0,      1,              },
