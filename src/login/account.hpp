@@ -36,6 +36,7 @@ struct mmo_account {
 #ifdef VIP_ENABLE
 	int32 old_group;
 	time_t vip_time;
+	uint8 vip_level;
 #endif
 };
 

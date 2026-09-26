@@ -826,9 +826,12 @@ int32 chmapif_parse_fwlog_changestatus(int32 fd){
 						WFIFOSET(login_fd,6);
 						break;
 					case CHRIF_OP_LOGIN_VIP: // vip
+					{
 						answer = (val1&4); // vip_req val1=type, &1 login send return, &2 update timestamp, &4 map send answer
-						chlogif_reqvipdata(t_aid, val1, timediff, fd);
+						uint8 req_vip_level = (uint8)RFIFOL(fd, 40); // val2 carries vip_level
+						chlogif_reqvipdata(t_aid, val1, timediff, fd, req_vip_level);
 						break;
+					}
 					case CHRIF_OP_CHANGECHARSEX: // changecharsex
 						answer = false;
 						chlogif_parse_ackchangecharsex(t_cid, sex);
@@ -1167,15 +1170,16 @@ int32 chmapif_parse_updfamelist(int32 fd){
  * HZ 0x2b2b
  * Transmist vip data to mapserv
  */
-int32 chmapif_vipack(int32 mapfd, uint32 aid, uint32 vip_time, uint32 groupid, uint8 flag) {
+int32 chmapif_vipack(int32 mapfd, uint32 aid, uint32 vip_time, uint32 groupid, uint8 flag, uint8 vip_level) {
 #ifdef VIP_ENABLE
-	uint8 buf[15];
+	uint8 buf[16];
 	WBUFW(buf,0) = 0x2b2b;
 	WBUFL(buf,2) = aid;
 	WBUFL(buf,6) = vip_time;
 	WBUFL(buf,10) = groupid;
 	WBUFB(buf,14) = flag;
-	chmapif_send(mapfd,buf,15);  // inform the mapserv back
+	WBUFB(buf,15) = vip_level;
+	chmapif_send(mapfd,buf,16);  // inform the mapserv back
 #endif
 	return 0;
 }

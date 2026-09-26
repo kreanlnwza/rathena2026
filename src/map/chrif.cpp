@@ -46,7 +46,7 @@ static const int32 packet_len_table[0x3d] = { // U - used, F - free
 	11,10,10, 0,11, -1, 0,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, F->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,19,19,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, U->2b26, U->2b27
-	-1, 0, 6,15, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, F->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
+	-1, 0, 6,16, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, F->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
  };
 
 //Used Packets:
@@ -1554,6 +1554,7 @@ void chrif_parse_ack_vipActive(int32 fd) {
 	uint32 vip_time = RFIFOL(fd,6);
 	uint32 groupid = RFIFOL(fd,10);
 	uint8 flag = RFIFOB(fd,14);
+	uint8 vip_level = RFIFOB(fd,15);
 	map_session_data* sd = map_id2sd(aid);
 	bool changed = false;
 
@@ -1566,19 +1567,25 @@ void chrif_parse_ack_vipActive(int32 fd) {
 		changed = (sd->vip.enabled != (flag&0x1));
 		if((flag&0x1)) { //isvip
 			sd->vip.enabled = 1;
+			sd->vip.level = (vip_level > 0 && vip_level <= (uint8)battle_config.vip_max_level) ? vip_level : 1;
 			sd->vip.time = vip_time;
-			// Increase storage size for VIP.
-			sd->storage.max_amount = battle_config.vip_storage_increase + MIN_STORAGE;
+			sd->storage.max_amount = (battle_config.vip_storage_per_level * sd->vip.level) + MIN_STORAGE;
 			if (sd->storage.max_amount > MAX_STORAGE) {
 				ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
 				sd->storage.max_amount = MAX_STORAGE;
 			}
-			sd->special_state.no_gemstone = battle_config.vip_gemstone;
+			if (sd->vip.level >= battle_config.vip_max_level)
+				sd->special_state.no_gemstone = 2; // full bypass
+			else
+				sd->special_state.no_gemstone = 0;
+			sc_start(nullptr, &sd->bl, SC_VIP, 100, sd->vip.level, INFINITE_TICK);
 		} else if (sd->vip.enabled) {
 			sd->vip.enabled = 0;
+			sd->vip.level = 0;
 			sd->vip.time = 0;
 			sd->storage.max_amount = MIN_STORAGE;
 			sd->special_state.no_gemstone = 0;
+			status_change_end(&sd->bl, SC_VIP);
 			clif_displaymessage(sd->fd,msg_txt(sd,438)); // You are no longer VIP.
 		}
 	}

@@ -2476,6 +2476,7 @@ void pc_reg_received(map_session_data *sd)
 #ifdef VIP_ENABLE
 	sd->vip.time = 0;
 	sd->vip.enabled = 0;
+	sd->vip.level = 0;
 	chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_VIP, 0, 1|8, 0);  // request VIP information
 #endif
 	intif_Mail_requestinbox(sd->status.char_id, 0, MAIL_INBOX_NORMAL); // MAIL SYSTEM - Request Mail Inbox
@@ -8383,9 +8384,9 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, bl
 			(int32)(status_get_lv(src) - sd->status.base_level) >= 20)
 			bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]
 
-		if (src && src->type == BL_MOB && pc_isvip(sd)) { // EXP bonus for VIP player
-			vip_bonus_base = battle_config.vip_base_exp_increase;
-			vip_bonus_job = battle_config.vip_job_exp_increase;
+		if (src && src->type == BL_MOB && pc_isvip(sd)) {
+			vip_bonus_base = sd->vip.level * battle_config.vip_base_exp_per_level;
+			vip_bonus_job = sd->vip.level * battle_config.vip_job_exp_per_level;
 		}
 	}
 

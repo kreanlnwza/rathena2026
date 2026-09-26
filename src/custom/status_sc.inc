@@ -15,3 +15,4 @@
  **/
 
 //SC_EXAMPLE,
+SC_VIP,  // VIP status icon display (level stored in val1)

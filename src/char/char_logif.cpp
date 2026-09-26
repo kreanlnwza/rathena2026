@@ -653,7 +653,7 @@ int32 chlogif_parse_updip(int32 fd){
  */
 int32 chlogif_parse_vipack(int32 fd) {
 #ifdef VIP_ENABLE
-	if (RFIFOREST(fd) < 19)
+	if (RFIFOREST(fd) < 20)
 		return 0;
 	else {
 		uint32 aid = RFIFOL(fd,2); //aid
@@ -661,7 +661,8 @@ int32 chlogif_parse_vipack(int32 fd) {
 		uint8 flag = RFIFOB(fd,10);
 		uint32 groupid = RFIFOL(fd,11); //new group id
 		int32 mapfd = RFIFOL(fd,15); //link to mapserv for ack
-		RFIFOSKIP(fd,19);
+		uint8 vip_level = RFIFOB(fd,19); //vip level
+		RFIFOSKIP(fd,20);
 
 		// If it was triggered from login-server and not requested from a specific map-server
 		if( mapfd < 0 ){
@@ -678,7 +679,7 @@ int32 chlogif_parse_vipack(int32 fd) {
 			mapfd = map_server[character->server].fd;
 		}
 
-		chmapif_vipack(mapfd,aid,vip_time,groupid,flag);
+		chmapif_vipack(mapfd,aid,vip_time,groupid,flag,vip_level);
 	}
 #endif
 	return 1;
@@ -693,16 +694,17 @@ int32 chlogif_parse_vipack(int32 fd) {
  * @param mapfd: link to mapserv for ack
  * @return 0 if success
  */
-int32 chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int32 mapfd) {
+int32 chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int32 mapfd, uint8 vip_level) {
 	loginif_check(-1);
 #ifdef VIP_ENABLE
-	WFIFOHEAD(login_fd,15);
+	WFIFOHEAD(login_fd,16);
 	WFIFOW(login_fd,0) = 0x2742;
 	WFIFOL(login_fd,2) = aid; //aid
 	WFIFOB(login_fd,6) = flag; //flag
 	WFIFOL(login_fd,7) = timediff; //req_inc_duration
-	WFIFOL(login_fd,11) = mapfd; //req_inc_duration
-	WFIFOSET(login_fd,15);
+	WFIFOL(login_fd,11) = mapfd; //mapfd link
+	WFIFOB(login_fd,15) = vip_level; //vip level (1-10, 0=no change)
+	WFIFOSET(login_fd,16);
 #endif
 	return 0;
 }

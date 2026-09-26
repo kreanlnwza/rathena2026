@@ -10650,25 +10650,37 @@ ACMD_FUNC(vip) {
 	map_session_data* pl_sd = nullptr;
 	char * modif_p;
 	int32 vipdifftime = 0;
+	int32 vip_level = 0;
+	char time_str[256] = "";
+	char level_and_name[256] = "";
 	time_t now=time(nullptr);
-	
+
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	
-	if (!message || !*message || sscanf(message, "%255s %23[^\n]",atcmd_output,atcmd_player_name) < 2) {
+
+	// Parse: @vip <time> <level> <name>  OR  @vip <time> <name>
+	if (!message || !*message || sscanf(message, "%255s %255[^\n]", time_str, level_and_name) < 2) {
 		clif_displaymessage(fd, msg_txt(sd,700));	//Usage: @vip <timef> <character name>
+		clif_displaymessage(fd, "Usage: @vip <time> <level 1-10> <character name>  (level optional)");
 		return -1;
 	}
 
-	atcmd_output[sizeof(atcmd_output)-1] = '\0';
-
-	modif_p = atcmd_output;
+	modif_p = time_str;
 	vipdifftime = (int32)solve_time(modif_p);
 	if (vipdifftime == 0) {
 		clif_displaymessage(fd, msg_txt(sd,701)); // Invalid time for vip command.
-		clif_displaymessage(fd, msg_txt(sd,702)); // Time parameter format is +/-<value> to alter. y/a = Year, m = Month, d/j = Day, h = Hour, n/mn = Minute, s = Second.
+		clif_displaymessage(fd, msg_txt(sd,702)); // Time parameter format is +/-<value> to alter.
 		return -1;
+	}
+
+	// Try parsing level + name, fallback to just name
+	char tmp_name[NAME_LENGTH+1] = "";
+	if (sscanf(level_and_name, "%d %23[^\n]", &vip_level, tmp_name) == 2 && vip_level >= 1 && vip_level <= battle_config.vip_max_level) {
+		safestrncpy(atcmd_player_name, tmp_name, NAME_LENGTH);
+	} else {
+		vip_level = 0; // will keep existing level or default to 1
+		safestrncpy(atcmd_player_name, level_and_name, NAME_LENGTH);
 	}
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name,false)) == nullptr) {
@@ -10688,7 +10700,7 @@ ACMD_FUNC(vip) {
 
 	if(pl_sd->vip.time==0) pl_sd->vip.time=now;
 	pl_sd->vip.time += vipdifftime; //increase or reduce VIP duration
-	
+
 	if (pl_sd->vip.time <= now) {
 		clif_displaymessage(pl_sd->fd, msg_txt(pl_sd,703)); // GM has removed your VIP time.
 
@@ -10699,8 +10711,14 @@ ACMD_FUNC(vip) {
 	} else {
 		int32 year,month,day,hour,minute,second;
 		char timestr[21];
-		
+
 		split_time((int32)(pl_sd->vip.time-now),&year,&month,&day,&hour,&minute,&second);
+
+		// Show VIP level info
+		int32 display_level = (vip_level > 0) ? vip_level : (pl_sd->vip.level > 0 ? pl_sd->vip.level : 1);
+		sprintf(atcmd_output, "VIP Level: %d", display_level);
+		clif_displaymessage(pl_sd->fd, atcmd_output);
+
 		sprintf(atcmd_output,msg_txt(pl_sd,705),year,month,day,hour,minute,second); // Your VIP status is valid for %d years, %d months, %d days, %d hours, %d minutes and %d seconds.
 		clif_displaymessage(pl_sd->fd,atcmd_output);
 		timestamp2string(timestr,20,pl_sd->vip.time,"%Y-%m-%d %H:%M:%S");
@@ -10708,13 +10726,14 @@ ACMD_FUNC(vip) {
 		clif_displaymessage(pl_sd->fd,atcmd_output);
 
 		if (pl_sd != sd) {
-			sprintf(atcmd_output,msg_txt(sd,706),pl_sd->status.name,year,month,day,hour,minute,second); // Player '%s' is now VIP for %d years, %d months, %d days, %d hours, %d minutes and %d seconds.
+			sprintf(atcmd_output, "Player '%s' is now VIP Level %d for %d years, %d months, %d days, %d hours, %d minutes and %d seconds.",
+				pl_sd->status.name, display_level, year, month, day, hour, minute, second);
 			clif_displaymessage(fd,atcmd_output);
 			sprintf(atcmd_output,msg_txt(sd,708),timestr); // The player is now VIP until: %s
 			clif_displaymessage(fd,atcmd_output);
 		}
 	}
-	chrif_req_login_operation(pl_sd->status.account_id, pl_sd->status.name, CHRIF_OP_LOGIN_VIP, vipdifftime, 7, 0); 
+	chrif_req_login_operation(pl_sd->status.account_id, pl_sd->status.name, CHRIF_OP_LOGIN_VIP, vipdifftime, 7, vip_level);
 	return 0;
 #else
 	clif_displaymessage( fd, msg_txt( sd, 774 ) ); // This command is disabled via configuration.

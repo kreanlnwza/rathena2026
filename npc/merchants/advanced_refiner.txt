@@ -96,6 +96,13 @@ S_RefineValidate:
 	.@part = getarg(3);
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 
+	// VIP refine discount: each level = 5% off (level 10 = 50% off)
+	if (vip_status(VIP_STATUS_ACTIVE)) {
+		.@vip_lv = vip_status(VIP_STATUS_LEVEL);
+		.@price = .@price * (100 - .@vip_lv * 5) / 100;
+		if (.@price < 1) set .@price, 1;
+	}
+
 	if( .@itemtype == IT_ARMOR ){
 		.@equip_lv = getequiparmorlv( .@part );
 

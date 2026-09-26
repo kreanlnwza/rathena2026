@@ -22606,7 +22606,16 @@ void clif_refineui_info( map_session_data* sd, uint16 index ){
 
 			entry.itemId = client_nameid( cost->nameid );
 			entry.chance = static_cast<decltype(entry.chance)>( cost->chance / 100 );
-			entry.zeny = cost->zeny;
+			{
+				int32 display_zeny = cost->zeny;
+#ifdef VIP_ENABLE
+				if( pc_isvip(sd) && sd->vip.level > 0 ){
+					display_zeny = display_zeny * (100 - sd->vip.level * 5) / 100;
+					if( display_zeny < 0 ) display_zeny = 0;
+				}
+#endif
+				entry.zeny = display_zeny;
+			}
 
 			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
 			count++;
@@ -22745,9 +22754,18 @@ void clif_parse_refineui_refine( int32 fd, map_session_data* sd ){
 	}
 
 	// Try to pay for the refine
-	if( pc_payzeny( sd, cost->zeny, LOG_TYPE_CONSUME ) ){
-		clif_npc_buy_result( sd, e_purchase_result::PURCHASE_FAIL_MONEY ); // "You do not have enough zeny."
-		return;
+	{
+		int32 zeny_cost = cost->zeny;
+#ifdef VIP_ENABLE
+		if( pc_isvip(sd) && sd->vip.level > 0 ){
+			zeny_cost = zeny_cost * (100 - sd->vip.level * 5) / 100;
+			if( zeny_cost < 0 ) zeny_cost = 0;
+		}
+#endif
+		if( pc_payzeny( sd, zeny_cost, LOG_TYPE_CONSUME ) ){
+			clif_npc_buy_result( sd, e_purchase_result::PURCHASE_FAIL_MONEY ); // "You do not have enough zeny."
+			return;
+		}
 	}
 
 	// Delete the required material

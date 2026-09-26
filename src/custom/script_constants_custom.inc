@@ -17,6 +17,8 @@
 
 /* Custom Status Changes */
 //export_constant(SC_EXAMPLE);
+export_constant(SC_VIP);
 
 /* Custom Effect Statuses */
 //export_constant(EFST_EXAMPLE);
+export_constant(EFST_VIP);
