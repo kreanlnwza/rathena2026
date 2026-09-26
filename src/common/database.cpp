@@ -6,6 +6,13 @@
 #include <iostream>
 #include <sstream>
 
+#ifndef _WIN32
+#	include <fcntl.h>
+#	include <sys/mman.h>
+#	include <sys/stat.h>
+#	include <unistd.h>
+#endif
+
 #include "malloc.hpp"
 #include "showmsg.hpp"
 #include "utilities.hpp"
@@ -91,57 +98,113 @@ bool YamlDatabase::reload(){
 
 bool YamlDatabase::load(const std::string& path) {
 	ShowStatus("Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str());
-	FILE* f = fopen(path.c_str(), "r");
-	if (f == nullptr) {
-		ShowError("Failed to open %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
-		return false;
-	}
-	fseek(f, 0, SEEK_END);
-	size_t size = ftell(f);
-	char* buf = (char *)aMalloc(size+1);
-	rewind(f);
-	size_t real_size = fread(buf, sizeof(char), size, f);
-	// Zero terminate
-	buf[real_size] = '\0';
-	fclose(f);
-
-	parser = {};
-	ryml::Tree tree;
-
-	try{
-		tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
-	}catch( const std::runtime_error& e ){
-		ShowError( "Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str() );
-		ShowError( "There is likely a syntax error in the file.\n" );
-		ShowError( "Error message: %s\n", e.what() );
-		aFree(buf);
-		return false;
-	}
 
 	// Required here already for header error reporting
 	this->currentFile = path;
 
-	if (!this->verifyCompatibility(tree)){
+	const char* buf = nullptr;
+	size_t real_size = 0;
+	bool use_mmap = false;
+#ifndef _WIN32
+	size_t mmap_size = 0;
+	{
+		int fd = open(path.c_str(), O_RDONLY);
+		if (fd != -1) {
+			struct stat st;
+			if (fstat(fd, &st) == 0 && st.st_size > 0) {
+				mmap_size = (size_t)st.st_size;
+				void* m = mmap(nullptr, mmap_size, PROT_READ, MAP_PRIVATE
+#ifdef MAP_POPULATE
+					| MAP_POPULATE
+#endif
+					, fd, 0);
+				close(fd);
+				if (m != MAP_FAILED) {
+					buf = static_cast<const char*>(m);
+					real_size = mmap_size;
+					use_mmap = true;
+				}
+			} else {
+				close(fd);
+			}
+		}
+	}
+	if (!use_mmap) {
+#endif
+		FILE* f = fopen(path.c_str(), "r");
+		if (f == nullptr) {
+			ShowError("Failed to open %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
+			return false;
+		}
+		fseek(f, 0, SEEK_END);
+		size_t size = ftell(f);
+		char* rw_buf = (char*)aMalloc(size + 1);
+		rewind(f);
+		real_size = fread(rw_buf, sizeof(char), size, f);
+		rw_buf[real_size] = '\0';
+		fclose(f);
+		buf = rw_buf;
+#ifndef _WIN32
+	}
+#endif
+
+	parser = {};
+	ryml::Tree tree;
+
+	try {
+#ifndef _WIN32
+		if (use_mmap) {
+			// parse_in_arena copies the file content into its own arena,
+			// so we can safely munmap immediately after this call.
+			tree = parser.parse_in_arena(c4::to_csubstr(path), c4::csubstr(buf, real_size));
+		} else
+#endif
+		{
+			tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
+		}
+	} catch (const std::runtime_error& e) {
+		ShowError("Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
+		ShowError("There is likely a syntax error in the file.\n");
+		ShowError("Error message: %s\n", e.what());
+#ifndef _WIN32
+		if (use_mmap) munmap(const_cast<char*>(buf), mmap_size);
+		else
+#endif
+			aFree(const_cast<char*>(buf));
+		return false;
+	}
+
+	// Release the read buffer: parse_in_arena copied the content into ryml's
+	// internal arena, so the source buffer is no longer needed.
+#ifndef _WIN32
+	if (use_mmap) {
+		munmap(const_cast<char*>(buf), mmap_size);
+	} else
+#endif
+	{
+		aFree(const_cast<char*>(buf));
+	}
+	buf = nullptr;
+
+	if (!this->verifyCompatibility(tree)) {
 		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), this->currentFile.c_str());
-		aFree(buf);
 		return false;
 	}
 
 	const ryml::NodeRef& header = tree["Header"];
 
-	if( this->nodeExists( header, "Clear" ) ){
+	if (this->nodeExists(header, "Clear")) {
 		bool clear;
 
-		if( this->asBool( header, "Clear", clear ) && clear ){
+		if (this->asBool(header, "Clear", clear) && clear) {
 			this->clear();
 		}
 	}
 
-	this->parse( tree );
+	this->parse(tree);
 
-	this->parseImports( tree );
+	this->parseImports(tree);
 
-	aFree(buf);
 	return true;
 }
 

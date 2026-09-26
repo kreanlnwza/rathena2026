@@ -4,8 +4,15 @@
 #include "npc.hpp"
 
 #include <cerrno>
+#include <condition_variable>
 #include <cstdlib>
+#include <deque>
+#include <functional>
+#include <future>
 #include <map>
+#include <mutex>
+#include <queue>
+#include <thread>
 #include <vector>
 
 #include <common/cbasetypes.hpp>
@@ -122,6 +129,7 @@ std::map<enum npce_event, std::vector<struct script_event_s>> script_event;
 // Static functions
 static npc_data* npc_create_npc( int16 m, int16 x, int16 y );
 static void npc_parsename( npc_data* nd, const char* name, const char* start, const char* buffer, const char* filepath );
+static int32 npc_parsebuffer( const char* filepath, char* buffer, size_t len );
 
 const std::string StylistDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/stylist.yml";
@@ -3641,16 +3649,136 @@ void npc_delsrcfile(const char* name)
 }
 
 /**
- * Load all npc files
+ * Load all npc files using parallel pre-reading.
+ *
+ * A fixed-size thread pool of NPC_IO_THREADS worker threads is created once
+ * and reused for every file read, avoiding the per-file thread-creation
+ * overhead that would occur with raw std::async.  The main thread maintains
+ * a sliding window of at most NPC_IO_THREADS in-flight reads and processes
+ * each result (parse + NPC registration) single-threadedly, so no
+ * synchronisation is needed for the rAthena global state.
  */
 void npc_loadsrcfiles() {
 	ShowStatus("Loading NPCs...\n");
-	for (const auto& file : npc_src_files) {
+
+	// Number of persistent I/O worker threads and the maximum number of
+	// files pre-read ahead of the file currently being processed.
+	static constexpr size_t NPC_IO_THREADS = 4;
+
+	// Result of one file read: (null-terminated content, success flag).
+	using ReadResult = std::pair<std::vector<char>, bool>;
+
+	// Minimal fixed-size thread pool.  All threads are created once in the
+	// constructor and joined in the destructor — no per-task thread creation.
+	struct IOPool {
+		std::vector<std::thread>                         workers;
+		std::queue<std::packaged_task<ReadResult()>>     tasks;
+		std::mutex                                       mtx;
+		std::condition_variable                          cv;
+		bool                                             stop{ false };
+
+		explicit IOPool(size_t n) {
+			workers.reserve(n);
+			for (size_t i = 0; i < n; ++i) {
+				workers.emplace_back([this] {
+					for (;;) {
+						std::packaged_task<ReadResult()> task;
+						{
+							std::unique_lock<std::mutex> lk(mtx);
+							cv.wait(lk, [this] { return stop || !tasks.empty(); });
+							if (stop && tasks.empty())
+								return;
+							task = std::move(tasks.front());
+							tasks.pop();
+						}
+						task();
+					}
+				});
+			}
+		}
+
+		std::future<ReadResult> submit(std::function<ReadResult()> fn) {
+			std::packaged_task<ReadResult()> pt(std::move(fn));
+			auto fut = pt.get_future();
+			{
+				std::lock_guard<std::mutex> lk(mtx);
+				tasks.push(std::move(pt));
+			}
+			cv.notify_one();
+			return fut;
+		}
+
+		~IOPool() {
+			{ std::lock_guard<std::mutex> lk(mtx); stop = true; }
+			cv.notify_all();
+			for (auto& w : workers)
+				w.join();
+		}
+	};
+
+	// Read a single NPC script file into a heap buffer.
+	// Runs on worker threads — uses only thread-safe POSIX/C APIs.
+	auto preread = [](std::string path) -> ReadResult {
+		if (check_filepath(path.c_str()) != 2)
+			return {{}, false};
+
+		FILE* fp = fopen(path.c_str(), "rb");
+		if (!fp)
+			return {{}, false};
+
+		fseek(fp, 0, SEEK_END);
+		size_t len = (size_t)ftell(fp);
+		fseek(fp, 0, SEEK_SET);
+
+		std::vector<char> buf(len + 1, 0);
+		size_t nread = fread(buf.data(), 1, len, fp);
+		buf[nread] = '\0';
+		bool ok = !ferror(fp);
+		fclose(fp);
+
+		if (!ok)
+			return {{}, false};
+
+		buf.resize(nread + 1);
+		return {std::move(buf), true};
+	};
+
+	IOPool pool(NPC_IO_THREADS);
+
+	// Sliding window: (filepath, future) pairs for in-flight reads.
+	std::deque<std::pair<std::string, std::future<ReadResult>>> queue;
+
+	auto it = npc_src_files.cbegin();
+
+	// Prime: fill the window with the first NPC_IO_THREADS reads.
+	for (size_t i = 0; i < NPC_IO_THREADS && it != npc_src_files.cend(); ++i, ++it)
+		queue.emplace_back(*it, pool.submit([preread, path = *it] { return preread(path); }));
+
+	while (!queue.empty()) {
+		// Block until the oldest in-flight read finishes.
+		auto& [filepath, fut] = queue.front();
+		auto [buf, ok] = fut.get();
+		std::string fp_copy = std::move(filepath);
+		queue.pop_front();
+
+		// Immediately submit the next file so I/O stays ahead of parsing.
+		if (it != npc_src_files.cend()) {
+			queue.emplace_back(*it, pool.submit([preread, path = *it] { return preread(path); }));
+			++it;
+		}
+
+		// Parse and register on the main thread (single-threaded by design).
+		if (ok && buf.size() > 1) {
 #ifdef DETAILED_LOADING_OUTPUT
-		ShowStatus("Loading NPC file: %s" CL_CLL "\r", file.c_str());
+			ShowStatus("Loading NPC file: %s" CL_CLL "\r", fp_copy.c_str());
 #endif
-		npc_parsesrcfile(file.c_str());
+			npc_parsebuffer(fp_copy.c_str(), buf.data(), buf.size() - 1);
+		} else if (!ok) {
+			ShowError("npc_loadsrcfiles: Could not read '%s'.\n", fp_copy.c_str());
+		}
 	}
+	// pool destructor joins all worker threads here.
+
 	int32 npc_total = npc_warp + npc_shop + npc_script;
 
 	ShowInfo ("Done loading '" CL_WHITE "%d" CL_RESET "' NPCs:" CL_CLL "\n"
@@ -5638,38 +5766,15 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 }
 
 /**
- * Read file and create npc/func/mapflag/monster... accordingly.
- * @param filepath : Relative path of file from map-serv bin
- * @param runOnInit :  should we exec OnInit when it's done ?
+ * Parse a pre-loaded NPC script buffer and register its contents.
+ * The caller owns the buffer and must free it after this call returns.
+ * @param filepath : Source path for error messages
+ * @param buffer   : Null-terminated file content
+ * @param len      : Length of buffer (excluding null terminator)
  * @return 0:error, 1:success
  */
-int32 npc_parsesrcfile(const char* filepath)
+static int32 npc_parsebuffer(const char* filepath, char* buffer, size_t len)
 {
-	if (check_filepath(filepath) != 2) { //this is not a file 
-		ShowDebug("npc_parsesrcfile: Path doesn't seem to be a file skipping it : '%s'.\n", filepath);
-		return 0;
-	} 
-            
-	// read whole file to buffer
-	FILE* fp = fopen(filepath, "rb");
-	if (fp == nullptr) {
-		ShowError("npc_parsesrcfile: File not found '%s'.\n", filepath);
-		return 0;
-	}
-	fseek(fp, 0, SEEK_END);
-	size_t len = ftell(fp);
-	char* buffer = (char*)aMalloc(len+1);
-	fseek(fp, 0, SEEK_SET);
-	len = fread(buffer, 1, len, fp);
-	buffer[len] = '\0';
-	if (ferror(fp)) {
-		ShowError("npc_parsesrcfile: Failed to read file '%s' - %s\n", filepath, strerror(errno));
-		aFree(buffer);
-		fclose(fp);
-		return 0;
-	}
-	fclose(fp);
-
 	if ((unsigned char)buffer[0] == 0xEF && (unsigned char)buffer[1] == 0xBB && (unsigned char)buffer[2] == 0xBF) {
 		// UTF-8 BOM. This is most likely an error on the user's part, because:
 		// - BOM is discouraged in UTF-8, and the only place where you see it is Notepad and such.
@@ -5677,7 +5782,6 @@ int32 npc_parsesrcfile(const char* filepath)
 		// - If the user really wants to use UTF-8 (instead of latin1, EUC-KR, SJIS, etc), then they can still do it <without BOM>.
 		// More info at http://unicode.org/faq/utf_bom.html#bom5 and http://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
 		ShowError("npc_parsesrcfile: Detected unsupported UTF-8 BOM in file '%s'. Stopping (please consider using another character set).\n", filepath);
-		aFree(buffer);
 		return 0;
 	}
 
@@ -5816,9 +5920,45 @@ int32 npc_parsesrcfile(const char* filepath)
 			p = strchr(p,'\n');// skip and continue
 		}
 	}
-	aFree(buffer);
 
 	return 1;
+}
+
+/**
+ * Read file and create npc/func/mapflag/monster... accordingly.
+ * @param filepath : Relative path of file from map-serv bin
+ * @return 0:error, 1:success
+ */
+int32 npc_parsesrcfile(const char* filepath)
+{
+	if (check_filepath(filepath) != 2) { //this is not a file
+		ShowDebug("npc_parsesrcfile: Path doesn't seem to be a file skipping it : '%s'.\n", filepath);
+		return 0;
+	}
+
+	// read whole file to buffer
+	FILE* fp = fopen(filepath, "rb");
+	if (fp == nullptr) {
+		ShowError("npc_parsesrcfile: File not found '%s'.\n", filepath);
+		return 0;
+	}
+	fseek(fp, 0, SEEK_END);
+	size_t len = ftell(fp);
+	char* buffer = (char*)aMalloc(len+1);
+	fseek(fp, 0, SEEK_SET);
+	len = fread(buffer, 1, len, fp);
+	buffer[len] = '\0';
+	if (ferror(fp)) {
+		ShowError("npc_parsesrcfile: Failed to read file '%s' - %s\n", filepath, strerror(errno));
+		aFree(buffer);
+		fclose(fp);
+		return 0;
+	}
+	fclose(fp);
+
+	int32 ret = npc_parsebuffer(filepath, buffer, len);
+	aFree(buffer);
+	return ret;
 }
 
 size_t npc_script_event( map_session_data& sd, enum npce_event type ){
