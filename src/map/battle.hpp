@@ -641,6 +641,7 @@ struct Battle_Config
 	int32 default_fixed_castrate;
 	int32 default_bind_on_equip;
 	int32 pet_ignore_infinite_def; // Makes fixed damage of petskillattack2 ignores infinite defense
+	int32 mob_ignore_infinite_defense; // Enables MD_IGNOREMELEE/MAGIC/RANGED/MISC mode checks in is_infinite_defense
 	int32 homunculus_evo_intimacy_need;
 	int32 homunculus_evo_intimacy_reset;
 	int32 monster_loot_search_type;
