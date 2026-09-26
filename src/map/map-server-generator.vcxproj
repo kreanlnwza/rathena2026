@@ -196,6 +196,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="autoattack.hpp" />
+    <ClInclude Include="autoattack_script.hpp" />
     <ClInclude Include="achievement.hpp" />
     <ClInclude Include="atcommand.hpp" />
     <ClInclude Include="battle.hpp" />
@@ -247,6 +249,8 @@
     <ClInclude Include="vending.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="autoattack.cpp" />
+    <ClCompile Include="autoattack_script.cpp" />
     <ClCompile Include="achievement.cpp" />
     <ClCompile Include="atcommand.cpp" />
     <ClCompile Include="battle.cpp" />

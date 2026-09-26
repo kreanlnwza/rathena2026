@@ -37375,6 +37375,67 @@ Body:
       NoAuction: true
     Script: |
       percentheal 20,0;
+  - Id: 14991
+    AegisName: AutoAttack_Device
+    Name: AutoAttack Device
+    Type: Usable
+    Buy: 20
+    Weight: 0
+    Flags:
+      NoConsume: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoGuildStorage: true
+    Script: |
+      callfunc "F_autoattacktoggle";
+    UnEquipScript: |
+      sc_end SC_AUTOATTACK;
+  - Id: 14992
+    AegisName: AutoAttack_Pack
+    Name: AutoAttack Pack
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      rentitem 14991,604800;
+  - Id: 14993
+    AegisName: AutoAttack_Offline_Device
+    Name: AutoAttack Offline Device
+    Type: Usable
+    Buy: 20
+    Weight: 0
+    Flags:
+      NoConsume: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoGuildStorage: true
+    Script: |
+      callfunc "F_autoattacktoggle";
+      if (aa_getstate()) atcommand "@afk";
+    UnEquipScript: |
+      sc_end SC_AUTOATTACK;
+  - Id: 14994
+    AegisName: AutoAttack_Offline_Pack
+    Name: AutoAttack Offline Pack
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      rentitem 14993,604800;
   - Id: 16100
     AegisName: Angry_Mouth_C_Box
     Name: Angry Mouth Box
