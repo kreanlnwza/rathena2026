@@ -23996,6 +23996,8 @@ void clif_parse_enchantgrade_add( int32 fd, map_session_data* sd ){
 		level = sd->inventory_data[index]->weapon_level;
 	}else if( sd->inventory_data[index]->type == IT_ARMOR ){
 		level = sd->inventory_data[index]->armor_level;
+	}else if( sd->inventory_data[index]->type == IT_SHADOWGEAR ){
+		level = 1; // Shadow gear always uses level 1
 	}
 
 	const auto& enchantgradelevels = enchantgrade->levels.find( level );
