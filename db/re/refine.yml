@@ -32,6 +32,9 @@
 #           BlacksmithBlessingAmount    Amount of Blacksmith Blessing required. (Default: 0)
 #           BroadcastSuccess            Broadcast to the whole server when a refine attempt at this level succeeds. (Default: false)
 #           BroadcastFailure            Broadcast to the whole server when a refine attempt at this level fails. (Default: false)
+#           RandomOptionGroup           Random option group rolled on successful refine.
+#                                       One random option is placed into the next empty
+#                                       item option slot. (Default: none)
 #           Chances:                    Success chance based on cost type. (Default: null)
 #             - Type                    Refinement cost type based on ore used.
 #               Rate                    Chance of success out of 0~10000. (Default: 0)
