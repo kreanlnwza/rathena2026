@@ -36,6 +36,7 @@
 #include "clan.hpp"
 #include "clif.hpp"
 #include "elemental.hpp"
+#include "enchantgrade_randopt.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
@@ -24197,14 +24198,24 @@ void clif_parse_enchantgrade_start( int32 fd, map_session_data* sd ){
 	}
 
 	if( rnd()%10000 < totalChance ){
+		struct item& target = sd->inventory.u.items_inventory[index];
+
 		// Log removal of item
-		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, -1, &sd->inventory.u.items_inventory[index] );
+		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, -1, &target );
+		// Visually remove it from the client so the updated data can be re-sent
+		clif_delitem( *sd, index, 1, 0 );
 		// Increase enchantgrade
-		sd->inventory.u.items_inventory[index].enchantgrade = min( sd->inventory.u.items_inventory[index].enchantgrade + 1, MAX_ENCHANTGRADE );
+		target.enchantgrade = min( target.enchantgrade + 1, MAX_ENCHANTGRADE );
 		// On successful enchantgrade increase the refine is reset
-		sd->inventory.u.items_inventory[index].refine = 0;
-		// Log retrieving the item again -> with the new refine and enchantgrade
-		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &sd->inventory.u.items_inventory[index] );
+		target.refine = 0;
+		// Roll one random option from the configured group into the next empty slot
+		if( enchantgradelevel->randomOptionGroup != nullptr ){
+			enchantgrade_apply_random_option( target, *enchantgradelevel->randomOptionGroup );
+		}
+		// Log retrieving the item again -> with the new refine, enchantgrade and options
+		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &target );
+		// Make the updated item visible to the client again
+		clif_additem( sd, index, 1, 0 );
 		// Show success
 		clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_SUCCESS );
 

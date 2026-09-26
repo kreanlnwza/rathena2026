@@ -1,0 +1,311 @@
+//===== rAthena Script =======================================
+//= Enchantgrade Option Service
+//===== Description: =========================================
+//= NPC ที่ให้บริการเกี่ยวกับ random option ที่ได้มาจาก
+//= ระบบ enchantgrade
+//= 1) ดาวน์เกรดไอเทมลง 1 ขั้น (ลบออฟของเกรดนั้นออก)
+//= 2) เพิ่มออฟแถวที่ 5 (ต้องเกรด A และมีออฟครบ 4 แถวก่อน)
+//= 3) รีออฟแถวที่ 5 (ต้องมีออฟแถวที่ 5 อยู่แล้ว)
+//=
+//= NOTE: ต้องใช้ script command ที่ implement ใน
+//=       src/map/script.cpp (downgradeitemgrade,
+//=       addenchantgradeoption, rerollitemoption)
+//=       และ random option group ใน
+//=       db/(pre-)re/item_randomopt_group.yml
+//===== Changelogs: ==========================================
+//= 1.0 First version. V!be Coding [kreanlnwza] AI Assistant (Antigravity)
+//= 1.1 Fix: ย้าย item picker มา inline เพราะ callsub ใน rAthena
+//=     สร้าง scope.vars ใหม่ ทำให้ .@picked_idx/.@picked_slot
+//=     หายเมื่อ return → ส่ง index 0 ไปให้ buildin เสมอ
+//= 1.2 Style: ปรับรูปแบบให้ตรงตาม ai-memory.md (= แทน set, .@i++ แทน set .@i .@i+1)
+//= 1.3 Downgrade: เพิ่มเงื่อนไขวัสดุ Shadowdecon x5 + Zelunium Ore x5
+//=     และโอกาสเสียหาย 10% (ทำลายไอเทม) / สำเร็จ 90% ตามแบบ refine.txt
+//= 1.4 UI: เพิ่ม Dialog Formatting (setdialogalign, setdialogsize, setdialogpospercent)
+//= 1.5 UI: เพิ่มเมนูเปิด Enchant Grade UI, ใช้ F_InsertComma กับทุกการแสดงราคา
+//= 1.6 Menu: ปรับลำดับเมนูใหม่ - enchantgradeui, downgrade, option5(submenu), cancel
+//= 1.7 Downgrade Protection: ใช้ item 1000337 เพื่อป้องกันการทำลายไอเทม
+//============================================================
+
+prontera,150,180,4	script	Grade Refiner#gradeopt	4_JP_GARM_H,{
+
+	// ---- ตั้งค่าราคาและ option group ----
+	.@cost_downgrade = 500000;	// ราคาดาวน์เกรด
+	.@cost_add5 = 7500000;		// ราคาเพิ่มออฟแถวที่ 5
+	.@cost_reroll5 = 3500000;	// ราคารีออฟแถวที่ 5
+	.@failedrefitem = 10;		// โอกาสทำลายไอเทม when downgrade (20%)
+	.@option_group$ = "Group_id_5"; // ต้องมีจริงใน db/re/item_randomopt_group.yml
+	.@protection_item = 1000337; // Item ป้องกันการทำลายไอเทม when downgrade
+	.@protection_item_qty = 3; // จำนวน item ป้องกันที่ต้องใช้
+
+	// Dialog formatting - กึ่งกลางหน้าจอ ขนาดพอดี
+	setdialogalign(DIALOG_ALIGN_CENTER);
+	setdialogalign(DIALOG_ALIGN_MIDDLE);
+	setdialogsize(450, 250);
+	setdialogpospercent(50, 50);
+
+	mes "[Grade Refiner]";
+	mes "สวัสดี " + strcharinfo(0) + " ต้องการบริการอะไร?";
+	next;
+	.@main_menu = select(
+		"^009900Refine UI^000000:"+
+		"Enchant Grade UI:"+
+		"Option V:"+
+		"ยกเลิก"
+	);
+	if (.@main_menu == 4) close;
+
+	// ---- Sub-menu: Enchant Grade UI ----
+	if (.@main_menu == 2) {
+		mes "[Grade Refiner]";
+		mes "เลือกบริการ Enchant Grade UI";
+		next;
+		.@sub_menu = select(
+			"เปิด Enchant Grade UI:"+
+			"Downgrade Enchant Grade:"+
+			"ยกเลิก"
+		);
+		if (.@sub_menu == 3) close;
+		.@action = .@sub_menu + 1; // 2 = enchantgradeui, 3 = downgrade
+	}
+
+	// ---- Sub-menu: Option ----
+	else if (.@main_menu == 3) {
+		mes "[Grade Refiner]";
+		mes "เลือกบริการ Option";
+		next;
+		.@sub_menu = select(
+			"Add Opt V:"+
+			"Re Opt V:"+
+			"ยกเลิก"
+		);
+		if (.@sub_menu == 3) close;
+		.@action = .@sub_menu + 3; // 4 = add5, 5 = reroll5
+	}
+
+	// ---- Direct action ----
+	else {
+		.@action = .@main_menu; // 1 = refineui
+	}
+
+	// UI commands don't need item picker
+	if (.@action == 1) {
+		refineui;
+		end;
+	}
+	if (.@action == 2) {
+		enchantgradeui;
+		end;
+	}
+
+	// -------- inline: เลือกอุปกรณ์จากกระเป๋า --------
+	// (อยู่ในสายตรงกับ main scope เพื่อหลีกเลี่ยงปัญหา callsub
+	//  ที่ทำให้ .@var หาย — ดู changelog 1.1)
+	getinventorylist;
+	.@menu$ = "";
+	.@count = 0;
+
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		// แสดงเฉพาะ weapon / armor
+		.@type = getiteminfo(@inventorylist_id[.@i], ITEMINFO_TYPE);
+		if (.@type != IT_WEAPON && .@type != IT_ARMOR) continue;
+		// ใช้เฉพาะไอเทมที่ยังไม่ได้สวม
+		if (@inventorylist_equip[.@i] != 0) continue;
+
+		.@label$ = "[" + callfunc("F_GetEnchantGradeName", @inventorylist_enchantgrade[.@i]) + "] " + getitemname(@inventorylist_id[.@i]);
+		if (@inventorylist_refine[.@i] != 0)
+			.@label$ = "+" + @inventorylist_refine[.@i] + " " + .@label$;
+
+		.@menu$ = .@menu$ + .@label$ + ":";
+		.@pick_idx_arr[.@count] = @inventorylist_idx[.@i];
+		.@pick_slot_arr[.@count] = .@i;
+		.@count++;
+	}
+
+	if (.@count == 0) {
+		mes "[Grade Refiner]";
+		mes "ไม่มีไอเทมที่ใช้ได้ในกระเป๋า (ต้องเป็นอาวุธหรือเกราะ และต้องถอดออกจากตัว)";
+		close;
+	}
+
+	.@menu$ = .@menu$ + "ยกเลิก";
+	.@sel = select(.@menu$);
+	if (.@sel > .@count) close;
+
+	.@picked_idx = .@pick_idx_arr[.@sel - 1];
+	.@picked_slot = .@pick_slot_arr[.@sel - 1];
+
+	switch (.@action) {
+
+	case 3: // Downgrade Enchant Grade
+		if (@inventorylist_enchantgrade[.@picked_slot] <= 0) {
+			mes "[Grade Refiner]";
+			mes "ไอเทมนี้ยังไม่มีเกรด ดาวน์เกรดไม่ได้";
+			close;
+		}
+
+		.@mat1 = 25729; // Shadowdecon
+		.@mat2 = 25730; // Zelunium Ore
+		.@mat_qty = 5;
+
+		mes "[Grade Refiner]";
+		mes "ดาวน์เกรดไอเทมนี้ลง 1 ขั้น";
+		mes "^FF0000หมายเหตุ: ออฟของเกรดปัจจุบันและออฟแถวที่ 5 จะถูกลบ^000000";
+		mes " ";
+		mes "วัสดุที่ต้องใช้:";
+		mes "- ^i[" + .@mat1 + "] " + getitemname(.@mat1) + " x" + .@mat_qty + " (มี " + countitem(.@mat1) + ")";
+		mes "- ^i[" + .@mat2 + "] " + getitemname(.@mat2) + " x" + .@mat_qty + " (มี " + countitem(.@mat2) + ")";
+		mes "ค่าบริการ: " + callfunc("F_InsertComma", .@cost_downgrade) + " Zeny";
+		mes " ";
+		mes "^FF0000คำเตือน: มีโอกาส 10%% ที่ไอเทมจะถูกทำลาย!^000000";
+		mes "(ใช้ ^i[" + .@protection_item + "] " + getitemname(.@protection_item) + " x3 เพื่อป้องกันการทำลาย)";
+		next;
+		if (select("ยืนยัน:ยกเลิก") == 2) close;
+
+		if (countitem(.@mat1) < .@mat_qty || countitem(.@mat2) < .@mat_qty) {
+			mes "[Grade Refiner]";
+			mes "วัสดุไม่พอ";
+			close;
+		}
+		if (Zeny < .@cost_downgrade) {
+			mes "[Grade Refiner]";
+			mes "มี zeny ไม่พอ";
+			close;
+		}
+
+		delitem .@mat1, .@mat_qty;
+		delitem .@mat2, .@mat_qty;
+		Zeny -= .@cost_downgrade;
+
+		if (rand(100) < .@failedrefitem) {
+			// 10% ไอเทมถูกทำลาย (เหมือน failedrefitem ใน refine.txt)
+			if (countitem(.@protection_item) >= .@protection_item_qty) {
+				// มีไอเทมป้องกัน ทำลายไอเทมป้องกันแทน
+				delitem .@protection_item, .@protection_item_qty;
+				specialeffect2 EF_REFINEFAIL;
+				next;
+				emotion ET_SCISSOR;
+				mes "[Grade Refiner]";
+				mes "^FF0000ล้มเหลว!^000000";
+				mes "แต่ ^i[" + .@protection_item + "] " + getitemname(.@protection_item) + " ได้ปกป้องไอเทมของคุณไว้!";
+			} else {
+				delitemidx .@picked_idx;
+				specialeffect2 EF_REFINEFAIL;
+				next;
+				emotion ET_HUK;
+				mes "[Grade Refiner]";
+				mes "^FF0000ล้มเหลว! ไอเทมของคุณถูกทำลาย!^000000";
+			}
+		} else {
+			// 90% ดาวน์เกรดสำเร็จ
+			if (!downgradeitemgrade(.@picked_idx)) {
+				mes "[Grade Refiner]";
+				mes "ทำรายการไม่สำเร็จ";
+				close;
+			}
+			specialeffect2 EF_REFINEOK;
+			next;
+			emotion ET_BEST;
+			mes "[Grade Refiner]";
+			mes "ดาวน์เกรดสำเร็จ!";
+		}
+		close;
+
+	case 4: // add Opt V
+		if (@inventorylist_enchantgrade[.@picked_slot] != 4) { // ENCHANTGRADE_A = 4
+			mes "[Grade Refiner]";
+			mes "ไอเทมต้องเกรด A ก่อน";
+			close;
+		}
+		if (@inventorylist_option_id1[.@picked_slot] == 0 ||
+			@inventorylist_option_id2[.@picked_slot] == 0 ||
+			@inventorylist_option_id3[.@picked_slot] == 0 ||
+			@inventorylist_option_id4[.@picked_slot] == 0) {
+			mes "[Grade Refiner]";
+			mes "ไอเทมต้องมีออฟครบ 4 แถวก่อน";
+			close;
+		}
+		if (@inventorylist_option_id5[.@picked_slot] != 0) {
+			mes "[Grade Refiner]";
+			mes "ไอเทมมีออฟแถวที่ 5 อยู่แล้ว ใช้เมนู ^0055FF'รีออฟแถวที่ 5'^000000 แทน";
+			close;
+		}
+
+		mes "[Grade Refiner]";
+		mes "เพิ่มออฟแถวที่ 5 จากกลุ่มออฟ: ^0055FF" + .@option_group$ + "^000000";
+		mes "ค่าบริการ: " + callfunc("F_InsertComma", .@cost_add5) + " Zeny";
+		next;
+		if (select("ยืนยัน:ยกเลิก") == 2) close;
+
+		if (Zeny < .@cost_add5) {
+			mes "[Grade Refiner]";
+			mes "มี zeny ไม่พอ";
+			close;
+		}
+
+		// Progress bar 3 วินาที
+		progressbar "0xFFFF00", 4;
+
+		if (!addenchantgradeoption(.@picked_idx, .@option_group$)) {
+			mes "[Grade Refiner]";
+			mes "ทำรายการไม่สำเร็จ";
+			close;
+		}
+
+		Zeny -= .@cost_add5;
+		specialeffect2 EF_REFINEOK;
+		mes "[Grade Refiner]";
+		mes "^00FF00ได้ออฟแถวที่ 5 แล้ว!^000000";
+		close;
+
+	case 5: // Re Opt V
+		if (@inventorylist_option_id5[.@picked_slot] == 0) {
+			mes "[Grade Refiner]";
+			mes "ไอเทมยังไม่มีออฟแถวที่ 5 ใช้เมนู ^0055FF'เพิ่มออฟแถวที่ 5'^000000";
+			close;
+		}
+
+		mes "[Grade Refiner]";
+		mes "รีออฟแถวที่ 5 จากกลุ่มออฟ: ^0055FF" + .@option_group$ + "^000000";
+		mes "ค่าบริการ: " + callfunc("F_InsertComma", .@cost_reroll5) + " Zeny";
+		next;
+		if (select("ยืนยัน:ยกเลิก") == 2) close;
+
+		if (Zeny < .@cost_reroll5) {
+			mes "[Grade Refiner]";
+			mes "มี zeny ไม่พอ";
+			close;
+		}
+
+		// Progress bar 3 วินาที
+		progressbar "0xFFFF00", 4;
+
+		if (!rerollitemoption(.@picked_idx, 4, .@option_group$)) {
+			mes "[Grade Refiner]";
+			mes "ทำรายการไม่สำเร็จ";
+			close;
+		}
+
+		Zeny -= .@cost_reroll5;
+		specialeffect2 EF_REFINEOK;
+		mes "[Grade Refiner]";
+		mes "^00FF00รีออฟแถวที่ 5 สำเร็จ!^000000";
+		close;
+
+	}
+
+OnInit:
+	setunittitle(getnpcid(0), "<Grade Option Service>");
+	end;
+}
+
+// helper function: แปลงค่า enchantgrade เป็นตัวอักษร
+function	script	F_GetEnchantGradeName	{
+	switch(getarg(0)) {
+		case 0: return "None";
+		case 1: return "D";
+		case 2: return "C";
+		case 3: return "B";
+		case 4: return "A";
+		default: return "?";
+	}
+}

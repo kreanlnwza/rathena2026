@@ -48,6 +48,9 @@
 #               Zeny                    Amount of zeny required. (Default: 0)
 #               BreakingRate            Chance of item breaking out of 0~10000. (Default: 0)
 #               DowngradeAmount         Number of refine levels reduced on failure. (Default: 0)
+#           RandomOptionGroup           Random option group rolled on successful upgrade.
+#                                       One random option is placed into the next empty
+#                                       item option slot. (Default: none)
 ###########################################################################
 
 Header:
@@ -86,6 +89,7 @@ Body:
               - Refine: 20
                 Chance: 8000
             Bonus: 10
+            RandomOptionGroup: Group_id_1
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 1
@@ -126,6 +130,7 @@ Body:
               - Refine: 20
                 Chance: 7000
             Bonus: 30
+            RandomOptionGroup: Group_id_2
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 3
@@ -164,6 +169,7 @@ Body:
               - Refine: 20
                 Chance: 6000
             Bonus: 50
+            RandomOptionGroup: Group_id_3
             AnnounceFail: true
             Catalyst:
                 Item: Blessed_Etel_Dust
@@ -203,6 +209,7 @@ Body:
               - Refine: 20
                 Chance: 5000
             Bonus: 100
+            RandomOptionGroup: Group_id_4
             AnnounceFail: true
             Catalyst:
                 Item: Blessed_Etel_Dust
@@ -250,6 +257,7 @@ Body:
               - Refine: 20
                 Chance: 8000
             Bonus: 10
+            RandomOptionGroup: Group_id_1
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 1
@@ -290,6 +298,7 @@ Body:
               - Refine: 20
                 Chance: 7000
             Bonus: 30
+            RandomOptionGroup: Group_id_2
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 3
@@ -328,6 +337,7 @@ Body:
               - Refine: 20
                 Chance: 6000
             Bonus: 50
+            RandomOptionGroup: Group_id_3
             AnnounceFail: true
             Catalyst:
                 Item: Blessed_Etel_Dust
@@ -367,6 +377,7 @@ Body:
               - Refine: 20
                 Chance: 5000
             Bonus: 100
+            RandomOptionGroup: Group_id_4
             AnnounceFail: true
             Catalyst:
                 Item: Blessed_Etel_Dust
