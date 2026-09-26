@@ -62,6 +62,7 @@
 #include "status.hpp" // OPTION_*, struct weapon_atk
 #include "storage.hpp"
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
+#include "item_override.hpp"
 #include "vending.hpp" // struct s_vending
 
 using namespace rathena;
@@ -1959,11 +1960,18 @@ uint8 pc_isequip( const map_session_data* sd, int32 n )
 	}
 
 	//Not equipable by class. [Skotlex]
-	if (!pc_job_can_use_item(sd,item))
-		return ITEM_EQUIP_ACK_FAIL;
-
-	if (!pc_isItemClass(sd, item))
-		return ITEM_EQUIP_ACK_FAIL;
+	// When override_equip_all_jobs is disabled, always use original job/class checks.
+	// When enabled, weapon/ammo slots (EQP_ARMS, EQP_AMMO) still use original checks;
+	// all other equip slots bypass restrictions via item_override_alljob_equip().
+	if (!battle_config.override_equip_all_jobs || (item->equip & (EQP_ARMS | EQP_AMMO))) {
+		if (!pc_job_can_use_item(sd, item))
+			return ITEM_EQUIP_ACK_FAIL;
+		if (!pc_isItemClass(sd, item))
+			return ITEM_EQUIP_ACK_FAIL;
+	} else {
+		if (!item_override_alljob_equip(sd, item))
+			return ITEM_EQUIP_ACK_FAIL;
+	}
 
 	return ITEM_EQUIP_ACK_OK;
 }
