@@ -42,6 +42,9 @@ jobs:
         run: |
           brew update
           brew install pcre
+          # The macos-15 image ships a partially linked openssl@3; without this,
+          # upgrading it as a mysql dependency fails the brew link step.
+          brew link --overwrite openssl@3 || true
           brew install mysql
           brew install mysql-client
 
