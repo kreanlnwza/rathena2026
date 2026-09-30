@@ -42,9 +42,12 @@ jobs:
         run: |
           brew update
           brew install pcre
-          # The macos-15 image links openssl@1.1, which blocks the openssl@3
-          # upgrade (pulled in by mysql) from symlinking bin/openssl.
-          brew unlink openssl@1.1 || true
+          # The macos-15 image leaves stale openssl@1.1 symlinks (bin/openssl
+          # etc.) that block the openssl@3 upgrade pulled in by mysql from
+          # linking. Redo openssl@3's links with --overwrite so the upgrade
+          # can relink cleanly.
+          rm -f "$(brew --prefix)/bin/openssl"
+          brew unlink openssl@3 || true
           brew link --overwrite openssl@3 || true
           brew install mysql
           brew install mysql-client
